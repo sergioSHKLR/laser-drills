@@ -5,13 +5,17 @@ DPI=150
 DOC=json.load(open('targets.json')); T=DOC['targets']; DR=json.load(open('drills.json'))
 def safe(img,cap=30):   # compress red-dominance (r-(g+b)/2) to <=cap so the red laser always stands out
     b,g,r=[c.astype(np.float32) for c in cv2.split(img)]; e=np.maximum(0,r-(g+b)/2-cap)
-    b=np.minimum(255,b+2*e); g=np.minimum(255,g+0.3*e); d=r-(g+b)/2; r=r-np.maximum(0,d-cap)  # lighten (pale yellow) before cutting red
+    dg=np.minimum(255-g,2*e); g=g+dg; b=np.minimum(255,b+np.maximum(0,2*e-dg)); d=r-(g+b)/2; r=r-np.maximum(0,d-cap)  # lighten (pale yellow) before cutting red
     return cv2.merge([np.clip(c,0,255).astype(np.uint8) for c in (b,g,r)])
 def reddom(img): b,g,r=[c.astype(np.float32) for c in cv2.split(img)]; return r-(g+b)/2
 def sprite(path,crop_white=True,thr=235):
     s=cv2.imread(path)
     if crop_white:
-        m=(s.min(axis=2)<thr).astype(np.uint8); ys,xs=np.nonzero(m); s=s[ys.min():ys.max()+1,xs.min():xs.max()+1]
+        m=(s.min(axis=2)<thr).astype(np.uint8); m=cv2.morphologyEx(m,cv2.MORPH_CLOSE,np.ones((9,9),np.uint8))
+        n,lab,st,_=cv2.connectedComponentsWithStats(m); H,W=m.shape
+        keep=[i for i in range(1,n) if st[i][4]>1500 and not (st[i][0]<=1 or st[i][1]<=1 or st[i][0]+st[i][2]>=W-1 or st[i][1]+st[i][3]>=H-1)]
+        x0=min(st[i][0] for i in keep); y0=min(st[i][1] for i in keep); x1=max(st[i][0]+st[i][2] for i in keep); y1=max(st[i][1]+st[i][3] for i in keep)
+        s=s[y0:y1,x0:x1].copy(); s[(np.isin(lab[y0:y1,x0:x1],keep)==0)]=255
     return s
 def tint(s,rgb,lo=0.35):   # recolour a sprite by luminance into one laser-safe hue (keeps white background white)
     L=cv2.cvtColor(s,cv2.COLOR_BGR2GRAY).astype(np.float32)/255; k=lo+(1-lo)*L
@@ -141,6 +145,59 @@ def cards(key='cards',F=LETTER,mk=(308,309,310,311),code='LD-403',grid=(8,7),lay
     upsert(key,t,D)
 GAMES['cards']=cards
 GAMES['cards-tabloid']=lambda:cards('cards-tabloid',TAB,(336,337,338,339),'LD-404',(13,4),TABLAY)
+
+# ---------------------------------------------------------------- Maritime Interdiction (light seascape; civilians no-shoot; go-fast / semi-sub hull -1, engine -0)
+VESSEL=dict(  # threat zones in fractions of the cropped sprite: (fx0,fy0,fx1,fy1)
+    gofast=dict(hull=(0.02,0.55,0.86,0.97),eng=(0.81,0.38,1.0,0.95),tags=['gofast','smuggler','fast']),
+    semisub=dict(hull=(0.02,0.35,0.76,0.95),eng=(0.76,0.1,0.99,0.98),tags=['semisub','smuggler']),
+    speedboat=dict(civ=True,tags=['speedboat','fast','civilian']),
+    fishing=dict(civ=True,tags=['fishing','civilian']),sail=dict(civ=True,tags=['sailboat','civilian']),yacht=dict(civ=True,tags=['yacht','civilian']),
+    jetski=dict(civ=True,tags=['jetski','civilian']),ferry=dict(civ=True,tags=['ferry','civilian']),kayaks=dict(civ=True,tags=['kayak','civilian']))
+def seascape(F):
+    h=int(F['h']*DPI); w=int(F['w']*DPI); can=np.zeros((h,w,3),np.uint8); hz=int(h*0.1)
+    for y in range(h):
+        if y<hz: c=(250,240,228)
+        else: t=(y-hz)/(h-hz); c=(int(246-26*t),int(236-26*t),int(222-30*t))   # BGR pale sea
+        can[y]=c
+    cv2.line(can,(0,hz),(w,hz),(200,190,175),2)
+    rng=np.random.default_rng(7)
+    for _ in range(int(w*h/9000)):
+        x,y=int(rng.integers(0,w)),int(rng.integers(hz+8,h)); L=int(rng.integers(10,40)); cv2.line(can,(x,y),(x+L,y),(214,200,186),2)
+    return can
+def maritime(key='maritime',F=LETTER,mk=(312,313,314,315),code='LD-501',place=None,lay=None):
+    can=seascape(F); zones=[]; cnt={}
+    for v,fx,fy,w,fl in place:
+        sp=safe(sprite(f'art/src2/{v}.jpg')); x0,y0,x1,y1=paste(can,sp,F['x']+fx*F['w'],F['y']+fy*F['h'],w,F,flip=fl)
+        V=VESSEL[v]; cnt[v]=cnt.get(v,0)+1; n=f'{v.upper()}{cnt[v]}'; W,H=x1-x0,y1-y0
+        def R(b):
+            a,b2,c,d=b
+            if fl: a,c=1-c,1-a
+            return dict(shape='rect',x=round(x0+a*W,3),y=round(y0+b2*H,3),w=round((c-a)*W,3),h=round((d-b2)*H,3))
+        if V.get('civ'): zones.append(dict(name=n+' NS',kind='noshoot',penalty=-10,group=n,tags=V['tags']+[n],art=True,subtle=True,**R((0.03,0.05,0.97,0.97))))
+        else:
+            zones.append(dict(name=n+' ENGINE',kind='score',score=0,tier='tier5',z=2,group=n,part='engine',tags=V['tags']+[n,'engine'],art=True,subtle=True,noGrow=True,**R(V['eng'])))
+            zones.append(dict(name=n+' HULL',kind='score',score=-1,tier='tier3',z=1,group=n,part='hull',tags=V['tags']+[n,'hull'],art=True,subtle=True,noGrow=True,**R(V['hull'])))
+    check_zones(key,can,zones,F); cv2.imwrite(f'art/{key}.png',can)
+    thr=sorted({z['group'] for z in zones if z['kind']=='score'})
+    easy=[dict(say=f'disable {g[:-1].replace("GOFAST","go-fast").replace("SEMISUB","semi-sub").lower()} {g[-1]}, engine',tags=[g]) for g in thr]
+    med=[dict(say='disable the semi-sub',tags=['semisub']),dict(say='disable a go-fast',tags=['gofast']),dict(say='stop all smugglers',tags=['smuggler'],n=len(thr))]
+    hard=[dict(say='engage the smuggler',tags=['smuggler']),dict(say='stop the drug boat',tags=['gofast']),dict(say='fast mover with cargo, disable',tags=['gofast'])]
+    sfx='-tab' if lay else ''; nm=' (Tabloid)' if lay else ''
+    G=lambda c,r:dict(type='calls',calls=c,rounds=r,noShoot=-20,wrong=-2)
+    t=dict(code=code,name='Maritime Interdiction'+nm,markerIds=list(mk),distance='5-10 yd',set=None,art=[dict(src=f'art/{key}.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'])],zones=zones,
+        instructions=['Engines = -0 (disabling fire), hull = -1.','All civilian craft (fishing, sail, yacht, jet ski, ferry, kayaks, sport boat) are NO-SHOOT: -20.','Decision mode: only fast boats with bales/drums are smugglers.','Mic on. Say "start" or tap.'])
+    if lay: t['layout']=lay
+    t.pop('set')
+    D=[dict(id='mar-easy'+sfx,name='Maritime: easy (named target)'+nm,category='training',target=key,shots=20,startDelay=[2,3],parTime=30,timeout=60,game=G(easy,len(thr)),notes='The app names the boat. Aim at the engines.'),
+       dict(id='mar-med'+sfx,name='Maritime: medium (by type)'+nm,category='training',target=key,shots=20,startDelay=[2,3],parTime=30,timeout=60,game=G(med,4),notes='The app calls a craft type. Civilians -20.'),
+       dict(id='mar-decision'+sfx,name='Maritime: decision (smuggler or civilian?)'+nm,category='training',target=key,shots=20,startDelay=[2,4],parTime=20,timeout=45,game=G(hard,4),notes='Some fast boats are civilian (no cargo). Only engage boats with bales/drums or the semi-sub.')]
+    upsert(key,t,D)
+GAMES['maritime']=lambda:maritime(place=[('ferry',.22,.14,2.6,False),('sail',.55,.12,1.3,False),('yacht',.83,.15,2.4,True),
+    ('gofast',.27,.38,3.0,False),('fishing',.77,.37,2.4,True),('semisub',.3,.62,3.3,False),('jetski',.8,.62,1.5,True),('kayaks',.22,.87,2.4,False),('speedboat',.72,.87,3.0,True)])
+GAMES['maritime-tabloid']=lambda:maritime('maritime-tabloid',TAB,(316,317,318,319),'LD-502',lay=TABLAY,place=[
+    ('ferry',.12,.15,3.0,False),('sail',.33,.12,1.4,False),('yacht',.55,.15,2.8,True),('fishing',.83,.16,2.6,True),
+    ('gofast',.15,.48,3.2,False),('speedboat',.43,.47,3.2,True),('semisub',.72,.48,3.6,False),('jetski',.95,.47,1.2,True),
+    ('kayaks',.13,.83,2.6,False),('gofast',.42,.83,3.2,True),('jetski',.62,.82,1.5,False),('speedboat',.83,.83,3.0,False)])
 if __name__=='__main__':
     for k in (sys.argv[1:] or list(GAMES)): GAMES[k]()
     save(); print('ok games')

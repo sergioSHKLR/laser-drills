@@ -12321,6 +12321,629 @@
     "weapon": "pistol"
    }
   },
+  "maritime": {
+   "code": "LD-501",
+   "name": "Maritime Interdiction",
+   "markerIds": [
+    312,
+    313,
+    314,
+    315
+   ],
+   "distance": "5-10 yd",
+   "art": [
+    {
+     "src": "art/maritime.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 7.7,
+     "h": 7.3
+    }
+   ],
+   "zones": [
+    {
+     "name": "FERRY1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "FERRY1",
+     "tags": [
+      "ferry",
+      "civilian",
+      "FERRY1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 0.872,
+     "y": 2.402,
+     "w": 2.444,
+     "h": 0.96
+    },
+    {
+     "name": "SAIL1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "SAIL1",
+     "tags": [
+      "sailboat",
+      "civilian",
+      "SAIL1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 4.024,
+     "y": 2.217,
+     "w": 1.222,
+     "h": 1.04
+    },
+    {
+     "name": "YACHT1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "YACHT1",
+     "tags": [
+      "yacht",
+      "civilian",
+      "YACHT1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 5.663,
+     "y": 2.552,
+     "w": 2.256,
+     "h": 0.804
+    },
+    {
+     "name": "GOFAST1 ENGINE",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "GOFAST1",
+     "part": "engine",
+     "tags": [
+      "gofast",
+      "smuggler",
+      "fast",
+      "GOFAST1",
+      "engine"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 3.409,
+     "y": 4.509,
+     "w": 0.57,
+     "h": 0.547
+    },
+    {
+     "name": "GOFAST1 HULL",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "GOFAST1",
+     "part": "hull",
+     "tags": [
+      "gofast",
+      "smuggler",
+      "fast",
+      "GOFAST1",
+      "hull"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 1.039,
+     "y": 4.672,
+     "w": 2.52,
+     "h": 0.403
+    },
+    {
+     "name": "FISHING1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "FISHING1",
+     "tags": [
+      "fishing",
+      "civilian",
+      "FISHING1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 5.201,
+     "y": 3.865,
+     "w": 2.256,
+     "h": 1.402
+    },
+    {
+     "name": "SEMISUB1 ENGINE",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "SEMISUB1",
+     "part": "engine",
+     "tags": [
+      "semisub",
+      "smuggler",
+      "SEMISUB1",
+      "engine"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 3.568,
+     "y": 6.142,
+     "w": 0.759,
+     "h": 0.515
+    },
+    {
+     "name": "SEMISUB1 HULL",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "SEMISUB1",
+     "part": "hull",
+     "tags": [
+      "semisub",
+      "smuggler",
+      "SEMISUB1",
+      "hull"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 1.126,
+     "y": 6.288,
+     "w": 2.442,
+     "h": 0.351
+    },
+    {
+     "name": "JETSKI1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "JETSKI1",
+     "tags": [
+      "jetski",
+      "civilian",
+      "JETSKI1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 5.855,
+     "y": 6.0,
+     "w": 1.41,
+     "h": 0.769
+    },
+    {
+     "name": "KAYAKS1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "KAYAKS1",
+     "tags": [
+      "kayak",
+      "civilian",
+      "KAYAKS1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 0.966,
+     "y": 7.929,
+     "w": 2.256,
+     "h": 0.555
+    },
+    {
+     "name": "SPEEDBOAT1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "SPEEDBOAT1",
+     "tags": [
+      "speedboat",
+      "fast",
+      "civilian",
+      "SPEEDBOAT1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 4.534,
+     "y": 7.726,
+     "w": 2.82,
+     "h": 0.972
+    }
+   ],
+   "instructions": [
+    "Engines = -0 (disabling fire), hull = -1.",
+    "All civilian craft (fishing, sail, yacht, jet ski, ferry, kayaks, sport boat) are NO-SHOOT: -20.",
+    "Decision mode: only fast boats with bales/drums are smugglers.",
+    "Mic on. Say \"start\" or tap."
+   ],
+   "drills": [
+    "mar-easy",
+    "mar-med",
+    "mar-decision"
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
+  },
+  "maritime-tabloid": {
+   "code": "LD-502",
+   "name": "Maritime Interdiction (Tabloid)",
+   "markerIds": [
+    316,
+    317,
+    318,
+    319
+   ],
+   "distance": "5-10 yd",
+   "art": [
+    {
+     "src": "art/maritime-tabloid.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 16.2,
+     "h": 7.3
+    }
+   ],
+   "zones": [
+    {
+     "name": "FERRY1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "FERRY1",
+     "tags": [
+      "ferry",
+      "civilian",
+      "FERRY1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 0.934,
+     "y": 2.403,
+     "w": 2.82,
+     "h": 1.108
+    },
+    {
+     "name": "SAIL1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "SAIL1",
+     "tags": [
+      "sailboat",
+      "civilian",
+      "SAIL1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 5.088,
+     "y": 2.178,
+     "w": 1.316,
+     "h": 1.12
+    },
+    {
+     "name": "YACHT1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "YACHT1",
+     "tags": [
+      "yacht",
+      "civilian",
+      "YACHT1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 7.994,
+     "y": 2.486,
+     "w": 2.632,
+     "h": 0.938
+    },
+    {
+     "name": "FISHING1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "FISHING1",
+     "tags": [
+      "fishing",
+      "civilian",
+      "FISHING1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 12.624,
+     "y": 2.275,
+     "w": 2.444,
+     "h": 1.519
+    },
+    {
+     "name": "GOFAST1 ENGINE",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "GOFAST1",
+     "part": "engine",
+     "tags": [
+      "gofast",
+      "smuggler",
+      "fast",
+      "GOFAST1",
+      "engine"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 3.822,
+     "y": 5.231,
+     "w": 0.608,
+     "h": 0.584
+    },
+    {
+     "name": "GOFAST1 HULL",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "GOFAST1",
+     "part": "hull",
+     "tags": [
+      "gofast",
+      "smuggler",
+      "fast",
+      "GOFAST1",
+      "hull"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 1.294,
+     "y": 5.405,
+     "w": 2.688,
+     "h": 0.43
+    },
+    {
+     "name": "SPEEDBOAT1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "SPEEDBOAT1",
+     "tags": [
+      "speedboat",
+      "fast",
+      "civilian",
+      "SPEEDBOAT1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 5.862,
+     "y": 4.774,
+     "w": 3.008,
+     "h": 1.036
+    },
+    {
+     "name": "SEMISUB1 ENGINE",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "SEMISUB1",
+     "part": "engine",
+     "tags": [
+      "semisub",
+      "smuggler",
+      "SEMISUB1",
+      "engine"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 13.0,
+     "y": 5.099,
+     "w": 0.828,
+     "h": 0.562
+    },
+    {
+     "name": "SEMISUB1 HULL",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "SEMISUB1",
+     "part": "hull",
+     "tags": [
+      "semisub",
+      "smuggler",
+      "SEMISUB1",
+      "hull"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 10.336,
+     "y": 5.258,
+     "w": 2.664,
+     "h": 0.383
+    },
+    {
+     "name": "JETSKI1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "JETSKI1",
+     "tags": [
+      "jetski",
+      "civilian",
+      "JETSKI1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 15.226,
+     "y": 4.98,
+     "w": 1.128,
+     "h": 0.615
+    },
+    {
+     "name": "KAYAKS1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "KAYAKS1",
+     "tags": [
+      "kayak",
+      "civilian",
+      "KAYAKS1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 1.284,
+     "y": 7.615,
+     "w": 2.444,
+     "h": 0.601
+    },
+    {
+     "name": "GOFAST2 ENGINE",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "GOFAST2",
+     "part": "engine",
+     "tags": [
+      "gofast",
+      "smuggler",
+      "fast",
+      "GOFAST2",
+      "engine"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 5.604,
+     "y": 7.786,
+     "w": 0.608,
+     "h": 0.584
+    },
+    {
+     "name": "GOFAST2 HULL",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "GOFAST2",
+     "part": "hull",
+     "tags": [
+      "gofast",
+      "smuggler",
+      "fast",
+      "GOFAST2",
+      "hull"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "shape": "rect",
+     "x": 6.052,
+     "y": 7.96,
+     "w": 2.688,
+     "h": 0.43
+    },
+    {
+     "name": "JETSKI2 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "JETSKI2",
+     "tags": [
+      "jetski",
+      "civilian",
+      "JETSKI2"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 9.739,
+     "y": 7.46,
+     "w": 1.41,
+     "h": 0.769
+    },
+    {
+     "name": "SPEEDBOAT2 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "SPEEDBOAT2",
+     "tags": [
+      "speedboat",
+      "fast",
+      "civilian",
+      "SPEEDBOAT2"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 12.436,
+     "y": 7.434,
+     "w": 2.82,
+     "h": 0.972
+    }
+   ],
+   "instructions": [
+    "Engines = -0 (disabling fire), hull = -1.",
+    "All civilian craft (fishing, sail, yacht, jet ski, ferry, kayaks, sport boat) are NO-SHOOT: -20.",
+    "Decision mode: only fast boats with bales/drums are smugglers.",
+    "Mic on. Say \"start\" or tap."
+   ],
+   "layout": {
+    "page": {
+     "w": 17,
+     "h": 11
+    },
+    "field": {
+     "x": 0.4,
+     "y": 1.85,
+     "w": 16.2,
+     "h": 7.3
+    }
+   },
+   "drills": [
+    "mar-easy-tab",
+    "mar-med-tab",
+    "mar-decision-tab"
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "tabloid",
+    "people": "multi",
+    "features": [
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
+  },
   "idpa-threat": {
    "code": "LD-101",
    "name": "IDPA-style Threat",

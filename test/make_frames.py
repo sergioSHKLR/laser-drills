@@ -42,6 +42,8 @@ CASES={
  'battle':[(1.57,2.82,1),(4.92,5.33,1),(7.43,8.68,1),(0.62,5.0,0)],
  'cards':[(0.88,2.37,1),(4.73,4.46,1),(5.69,8.63,1),(0.45,9.05,0)],
  'cards-tabloid':[(1.02,2.76,1),(9.75,4.59,1),(15.98,8.24,1),(0.45,9.1,0)],
+ 'maritime':S('maritime','GOFAST1 ENGINE','GOFAST1 HULL','SEMISUB1 ENGINE','SPEEDBOAT1 NS','KAYAKS1 NS'),
+ 'maritime-tabloid':S('maritime-tabloid','GOFAST2 ENGINE','SEMISUB1 HULL','JETSKI1 NS','FERRY1 NS'),
  'clays':[(2.45,3.55,5),(5.85,5.15,5),(5.85,6.45,2),(2.95+1.15,7.55-0.3,3),(7.6,2.5,0)],  # 1-2 dome 5; 4th orange rim via spread 3
 }
 meta={'w':W,'h':H,'sets':{}}
