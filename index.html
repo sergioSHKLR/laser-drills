@@ -1,66 +1,152 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111"><link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f1115"><link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png"><title>Laser Drills</title>
 <style>
-*{box-sizing:border-box}html,body{height:100%;max-width:100vw;overflow-x:hidden}body{margin:0;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;background:#111;color:#eee;font:15px system-ui,sans-serif}
-header{display:flex;gap:6px;padding:8px;flex-wrap:wrap;align-items:center}
-button,select{background:#2a2a2a;color:#eee;border:1px solid #444;border-radius:8px;padding:9px 12px;font-size:15px}
-button.on{background:#c62828;border-color:#e53935}
-#stage{position:relative;width:100%;flex:0 0 auto;height:calc(var(--vf,45) * 1dvh);flex-shrink:1;min-height:60px;background:#000;transition:height .2s}
+:root{--bg:#0f1115;--s1:#171a20;--s2:#1f242c;--bd:#2a2f38;--tx:#e8eaed;--mu:#9aa0a6;--ac:#8ab4f8;--acd:#244a8f;--go:#2e7d32;--st:#c62828;--navh:76px}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{height:100dvh;overflow:hidden;background:var(--bg);color:var(--tx);font:15px Roboto,'Segoe UI',system-ui,sans-serif;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent}
+button,select{font:inherit;color:var(--tx);background:var(--s2);border:1px solid var(--bd);border-radius:14px;min-height:48px;padding:0 16px;cursor:pointer}
+button:active{filter:brightness(1.25)}button:disabled{opacity:.5}
+a{color:var(--ac)}.hidden{display:none!important}
+main{flex:1;min-height:0;position:relative}
+.view{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px 24px}
+.top{display:flex;align-items:center;gap:8px;padding:14px 0 10px;position:sticky;top:0;background:var(--bg);z-index:4;flex-wrap:wrap}
+.top h1{font-size:22px;font-weight:600;margin:0;flex:1;min-width:120px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:0 14px;min-height:36px;font-size:13px;background:var(--s2);color:#c4c7cc;border:1px solid var(--bd)}
+.pill.ok{background:#12331f;color:#7ee2a0;border-color:#1f5c35}.pill.warn{background:#3a2c0e;color:#ffd166;border-color:#5c4514}
+#micBtn.on{background:#2a1740;color:#d6b4ff;border-color:#4d2c78}#camBtn.on{background:#12331f;color:#7ee2a0;border-color:#1f5c35}
+.card{background:var(--s1);border:1px solid #252a33;border-radius:20px;padding:16px;margin-bottom:12px}
+.card h2{font-size:16px;margin:0 0 6px}.muted{color:var(--mu);font-size:13px;line-height:1.45}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.step{background:var(--s2);border-radius:14px;padding:10px 4px;text-align:center;font-size:12px;color:#c4c7cc}
+.step b{display:block;width:26px;height:26px;line-height:26px;border-radius:50%;background:var(--acd);color:#fff;margin:0 auto 6px}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.btn{min-height:56px;border-radius:28px;font-size:17px;font-weight:600;border:0}.go{background:var(--go);color:#fff}.st{background:var(--st);color:#fff}
+.sec-h{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ac);margin:16px 4px 8px}
+input[type=search]{width:100%;height:48px;border-radius:24px;background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:0 18px;font-size:15px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:6px 0;scrollbar-width:none;align-items:center}.chips::-webkit-scrollbar{display:none}
+.chips b{font-size:11px;color:var(--mu);min-width:62px;font-weight:500}
+.chip{flex:none;min-height:38px;border-radius:12px;padding:0 14px;font-size:13.5px;background:var(--s1);border:1px solid #333a45;color:#c4c7cc}.chip.on{background:var(--acd);border-color:var(--ac);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.tcard{background:var(--s1);border:1px solid #252a33;border-radius:18px;overflow:hidden;cursor:pointer;text-align:left;padding:0;min-height:0}
+.tcard img{width:100%;aspect-ratio:11/8.5;object-fit:cover;display:block;background:#fff}.tcard .b{padding:9px 11px}.tcard .n{font-size:14px;font-weight:600}.tcard .c{font-size:11.5px;color:var(--mu);margin-top:2px}
+.tag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:6px;background:#23303f;color:var(--ac);margin:5px 4px 0 0}
+.seg{display:flex;background:var(--s2);border-radius:14px;padding:4px;gap:4px;margin:10px 0}.seg button{flex:1;border:0;background:none;color:var(--mu);min-height:42px;border-radius:10px}.seg .on{background:var(--acd);color:#fff}
+.drow{display:flex;gap:12px;align-items:center;padding:10px;background:var(--s1);border:1px solid #252a33;border-radius:16px;margin-bottom:10px;width:100%;text-align:left;min-height:72px}
+.drow img{width:68px;height:52px;object-fit:cover;border-radius:10px;background:#fff;flex:none}.drow .t{flex:1;min-width:0}.drow .t b{font-size:14.5px;display:block;font-weight:600}.drow .t span{font-size:12px;color:var(--mu)}
+.drow.sel{border-color:var(--ac);background:#1a2433}.badge{font-size:11px;padding:4px 8px;border-radius:8px;background:var(--s2);color:#c4c7cc;flex:none}.badge.live{background:#12331f;color:#7ee2a0}
+.sticky{position:sticky;bottom:0;padding:10px 0;background:linear-gradient(transparent,var(--bg) 30%)}
+#stage{position:relative;border-radius:22px;overflow:hidden;background:#000;height:calc(var(--vf,45) * 1dvh);min-height:120px;transition:height .2s}
 #stage canvas{width:100%;height:100%;display:block;object-fit:contain}
-#dock{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
-#bar{flex:0 0 auto;background:#111;border-bottom:1px solid #333}
-body.vfmin #stage{height:56px;flex-shrink:0}
-#cmds button{padding:12px 4px!important;font-size:19px!important}
-#vfset{flex:0 0 auto;padding:8px 10px;background:#1a1a1a;border-bottom:1px solid #333}#vfset button{padding:6px 10px}
-@media (orientation:landscape) and (max-height:600px){
- body{display:grid;grid-template-columns:minmax(0,calc(var(--vf,45)*1.2vw)) 1fr;grid-template-rows:auto auto 1fr}
- header{grid-column:1/3;padding:4px}header button,header select{padding:5px 8px;font-size:13px}
- #vfset{position:fixed;top:44px;right:8px;z-index:5;width:min(420px,60vw);border:1px solid #444;border-radius:8px}
- #stage{height:auto;grid-row:2/4;min-height:0}body.vfmin #stage{height:auto;width:56px}
- body.vfmin{grid-template-columns:56px 1fr}#bar{grid-row:2;grid-column:2}#dock{grid-row:3;grid-column:2}
- #cmds{grid-template-columns:repeat(4,1fr)}#cmds button{padding:8px 2px!important;font-size:16px!important}#big{font-size:22px}}
-#status{padding:6px 10px;font-size:13px;color:#aaa}
-.panel{padding:10px}.hidden{display:none}
-label{display:block;margin:8px 0}input[type=range]{width:100%}
-table{border-collapse:collapse;width:100%;table-layout:fixed}select{max-width:100%}td,th{border-bottom:1px solid #333;padding:4px;text-align:right}
-#cmds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px}#cmds button{font-size:22px;padding:18px 6px;font-weight:700}
-#cmds .go{background:#1b5e20}#cmds .st{background:#7f1d1d}#heard{text-align:center;color:#8ab4f8;font-size:13px;min-height:1em;padding:0 8px}
-#big{font-size:28px;font-weight:700;text-align:center;padding:6px}
+#stage .ov{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none}
+#status{background:#000a;color:#fff;border-color:#fff3}
+body.vfmin #stage{height:56px}
+#big{font-size:clamp(22px,7vw,40px);font-weight:600;text-align:center;padding:10px 4px 2px;font-variant-numeric:tabular-nums;min-height:1.4em}
+#cmds{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0}#cmds button{min-height:52px;font-weight:600;font-size:14px;border-radius:16px;padding:0 4px}
+#heard{text-align:center;color:#d6b4ff;font-size:13px;min-height:1em;padding:4px 8px}
+.dsum{display:flex;align-items:center;gap:10px;margin:12px 4px 0}.dsum b{font-size:15px}
+#drillNotes{white-space:pre-line;font-size:12.5px;color:var(--mu);margin:4px 4px 0}
+table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}td,th{border-bottom:1px solid #232830;padding:8px 4px;text-align:left}th{color:var(--mu);font-weight:500}
+.set{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 4px;border-bottom:1px solid #232830;min-height:64px;margin:0;cursor:pointer}
+.set .l b{font-size:15px;font-weight:500;display:block}.set .l span{font-size:12px;color:var(--mu)}
+input.sw{appearance:none;-webkit-appearance:none;width:52px;height:32px;border-radius:16px;background:#3c4043;position:relative;flex:none;margin:0;cursor:pointer}
+input.sw:after{content:'';position:absolute;width:24px;height:24px;border-radius:50%;background:var(--mu);top:4px;left:4px;transition:.15s}
+input.sw:checked{background:var(--ac)}input.sw:checked:after{left:24px;background:#0b2a5c}
+input[type=range]{width:100%;accent-color:var(--ac);height:32px}
+#sliders label{display:block;margin:6px 4px}
+.link{display:flex;justify-content:space-between;align-items:center;padding:16px 4px;border-bottom:1px solid #232830;text-decoration:none;color:var(--tx);min-height:64px}
+.big2{font-size:40px;font-weight:600;font-variant-numeric:tabular-nums}
+.kv{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.kv div{background:var(--s2);border-radius:12px;padding:8px;text-align:center;font-size:11px;color:var(--mu)}.kv b{display:block;font-size:18px;color:var(--tx)}
+#sheet{position:fixed;left:0;right:0;bottom:0;z-index:20;background:#1b1f26;border-radius:28px 28px 0 0;padding:14px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px #000a;border-top:1px solid #2c313a;max-height:85dvh;overflow:auto}
+#scrim{position:fixed;inset:0;background:#0008;z-index:19}.grab{width:40px;height:4px;border-radius:2px;background:#5f6368;margin:0 auto 12px}
+nav{flex:none;height:calc(var(--navh) + env(safe-area-inset-bottom));padding:8px 4px env(safe-area-inset-bottom);background:#14171c;border-top:1px solid #232830;display:flex}
+nav button{flex:1;background:none;border:0;color:var(--mu);font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0;min-height:56px;border-radius:0}
+nav i{display:block;width:56px;height:32px;line-height:32px;border-radius:16px;font-style:normal;font-size:18px;text-align:center}
+nav .on{color:var(--tx);font-weight:600}nav .on i{background:var(--acd)}nav .shoot i{background:var(--st);color:#fff}nav .shoot.on i{box-shadow:0 0 0 2px var(--ac)}
+nav .brand{display:none}
+@media (min-width:840px){body{flex-direction:row-reverse}nav{flex-direction:column;width:96px;height:auto;border-top:0;border-right:1px solid #232830;padding:16px 0;gap:10px;justify-content:flex-start}
+ nav button{flex:none;min-height:64px}nav .brand{display:block;color:var(--ac);font-weight:700;text-align:center;margin-bottom:14px}
+ .view{padding:0 28px 28px}#v-shoot.wide{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,1fr);gap:24px;align-content:start}#v-shoot.wide .top{grid-column:1/3}
+ #stage{height:calc(var(--vf,45) * 1.4dvh);max-height:calc(100dvh - 220px)}}
+@media (orientation:landscape) and (max-height:600px){nav{display:none}}
 </style></head><body>
-<header>
- <button id="camBtn">Start Camera</button>
- <button data-tab="drill" class="on">Drill</button><button data-tab="cal">Calibrate</button>
- <select id="drillSel"></select>
- <label style="margin:0" title="IDPA-style: no hit dots, hit sounds or live score during the string; full results at the end"><input type="checkbox" id="saeChk"> Score at end (IDPA)</label> <label style="margin:0"><input type="checkbox" id="tickChk"> Shot tick</label> <label style="margin:0"><input type="checkbox" id="shotgun"> Shotgun mode</label> <button id="vfBtn">⚙ View</button> <a href="targets/" style="color:#8ab4f8">Print targets</a> <a href="editor.html" style="color:#8ab4f8">Zone editor</a>
-</header>
-<div id="vfset" class="hidden">Viewfinder height: <b id="vfVal"></b>%
- <input type="range" id="vfRange" min="20" max="80" step="1">
- <button data-vf="25">Small</button> <button data-vf="45">Medium</button> <button data-vf="70">Large</button>
- <label><input type="checkbox" id="vfHide"> Minimize viewfinder during drill (detection keeps running)</label>
- <label><input type="checkbox" id="vfMin"> Minimize viewfinder now</label></div>
-<div id="stage"><canvas id="view"></canvas></div>
-<div id="bar"><div id="status">Camera off.</div>
-<div id="big"></div>
-<div id="cmds"><button data-cmd="start" class="go">START</button><button data-cmd="stop" class="st">STOP</button><button id="micBtn">🎤 Voice off</button>
- <button data-cmd="repeat">REPEAT</button><button data-cmd="next">NEXT</button><button data-cmd="score">SCORE</button><button data-cmd="reset">RESET</button></div>
-<div id="heard">Say: start · stop · reset · next · repeat · score (or tap / BT media button)</div></div>
-<div id="dock">
-
-<div class="panel" id="tab-drill">
- <button id="goBtn">Start drill</button> <button id="freeBtn">Free fire</button> <button id="stopBtn">Stop</button>
- <p id="drillNotes" style="color:#999;font-size:13px"></p>
- <table><thead><tr><th>#</th><th>Time</th><th>Split</th><th>Zone</th><th>Pts</th></tr></thead><tbody id="shots"></tbody></table>
-</div>
-<div class="panel hidden" id="tab-cal">
- <p style="font-size:13px;color:#aaa">Aim at the target and fire. Pixels passing thresholds show magenta. Raise thresholds if you get false hits; lower if shots are missed.</p>
+<main>
+<!-- HOME -->
+<section class="view" id="v-home">
+ <div class="top"><h1>Laser Drills</h1><span class="pill warn" id="homeCam">● Camera off</span></div>
+ <div class="card"><h2>Get started</h2><div class="muted">Print a target at 100%, prop your phone 1–3 yd away so all 4 corner markers are visible, pick a drill, then say “start” or tap START.</div>
+  <div class="steps"><div class="step"><b>1</b>Print target</div><div class="step"><b>2</b>Aim camera</div><div class="step"><b>3</b>Pick drill</div><div class="step"><b>4</b>Shoot</div></div>
+  <details id="howto" style="margin-top:10px"><summary class="muted" style="cursor:pointer;min-height:32px">How it works</summary><div class="muted">
+  • Shoot tab: <b>Start Camera</b>, wait for the blue outline (target locked), then START. Random start beep, par time, auto-stop on shot count or time limit.<br>
+  • <b>Score at end (IDPA)</b>: Self-Defense drills hide hits until the string ends, then reveal hits, points down, PE/HNT, time and a spoken summary. Fun drills give live feedback (change in Settings).<br>
+  • Voice: tap 🎤 and say start · stop · reset · next · repeat · score. Bluetooth media buttons and keyboard (Space start/stop, Esc stop) work too.<br>
+  • Missed or false shots? Settings › Calibrate.</div></details>
+  <div class="row" style="margin-top:12px"><button class="btn" onclick="UI.go('drills')">Pick a drill</button><button class="btn go" onclick="UI.go('shoot')">Quick start ▶</button></div></div>
+ <div class="sec-h">Target gallery · <span id="gN"></span></div>
+ <input type="search" id="gq" placeholder="Search targets (name, code, character…)">
+ <div id="gf"></div>
+ <div class="grid" id="grid" style="margin-top:8px"></div>
+ <p class="muted" style="margin-top:16px">Blank scoring mask template: Letter <a href="targets/mask-template-letter.pdf">PDF</a> · <a href="targets/mask-template-letter.png">PNG</a> · <a href="targets/mask-template-letter.svg">SVG</a> | Tabloid 17×11 <a href="targets/mask-template-tabloid.pdf">PDF</a> · <a href="targets/mask-template-tabloid.png">PNG</a> · <a href="targets/mask-template-tabloid.svg">SVG</a></p>
+</section>
+<!-- DRILLS -->
+<section class="view hidden" id="v-drills">
+ <div class="top"><h1>Drills</h1><span class="pill" id="drLock">No target locked</span></div>
+ <input type="search" id="dq" placeholder="Search drills">
+ <div class="seg" id="dseg"><button data-c="training" class="on">Self-Defense</button><button data-c="fun">Fun</button><button data-c="course">Courses</button></div>
+ <div class="chips" id="dchips"></div>
+ <div id="dlist"></div>
+ <select id="drillSel" class="hidden"></select>
+ <div class="sticky"><button class="btn go" style="width:100%" id="dShoot" onclick="UI.go('shoot')">◎ Shoot</button></div>
+</section>
+<!-- SHOOT -->
+<section class="view hidden" id="v-shoot">
+ <div class="top"><h1 id="shootH">Shoot</h1><button id="camBtn" class="pill">📷 Start Camera</button><button id="micBtn" class="pill">🎤 Voice off</button></div>
+ <div><div id="stage"><canvas id="view"></canvas><div class="ov"><span class="pill" id="status">Camera off.</span></div></div>
+  <div class="dsum"><div style="flex:1;min-width:0"><b id="dName"></b></div><span class="badge" id="saeBadge"></span></div>
+  <div id="drillNotes"></div></div>
+ <div><div id="big"></div><div id="heard">Say: start · stop · reset · next · repeat · score (or tap / BT media button / Space, Esc)</div>
+  <div class="row" style="margin-top:8px"><button id="freeBtn" class="btn" style="flex:.6">Free fire</button><button id="goBtn" class="btn go">▶ START</button><button id="stopBtn" class="btn st hidden">■ STOP</button></div>
+  <div id="cmds"><button data-cmd="repeat">↻ Repeat</button><button data-cmd="next">Next ›</button><button data-cmd="score">🔊 Score</button><button data-cmd="reset">Reset</button></div>
+  <table><thead><tr><th>#</th><th>Time</th><th>Split</th><th>Zone</th><th>Pts</th></tr></thead><tbody id="shots"></tbody></table></div>
+</section>
+<!-- RESULTS -->
+<section class="view hidden" id="v-results">
+ <div class="top"><h1>Results</h1><button class="pill" id="csvBtn">⤓ Export CSV</button></div>
+ <div class="seg" id="rseg"><button data-r="1" class="on">Today</button><button data-r="7">Week</button><button data-r="0">All</button></div>
+ <div id="rbody"></div>
+ <button class="btn" style="width:100%;margin-top:16px" id="clrHist">Clear history</button>
+</section>
+<!-- SETTINGS -->
+<section class="view hidden" id="v-settings">
+ <div class="top"><h1>Settings</h1></div>
+ <div class="sec-h">Scoring</div>
+ <label class="set"><div class="l"><b>Score at end (IDPA) · Self-Defense</b><span>Hide hits, hit sounds and live score until the string ends</span></div><input type="checkbox" class="sw" id="saeTrain"></label>
+ <label class="set"><div class="l"><b>Score at end · Fun</b><span>Off = live hits, sounds and score</span></div><input type="checkbox" class="sw" id="saeFun"></label>
+ <label class="set"><div class="l"><b>Shot tick</b><span>Neutral beep per detected shot while hits are hidden</span></div><input type="checkbox" class="sw" id="tickChk"></label>
+ <label class="set"><div class="l"><b>Shotgun mode</b><span>Grow hit zones by the shotgun spread</span></div><input type="checkbox" class="sw" id="shotgun"></label>
+ <div class="sec-h">Viewfinder</div>
+ <div class="set" style="display:block"><div class="l"><b>Viewfinder height · <span id="vfVal"></span>%</b></div><input type="range" id="vfRange" min="20" max="80" step="1">
+  <div class="chips"><button class="chip" data-vf="25">Small</button><button class="chip" data-vf="45">Medium</button><button class="chip" data-vf="70">Large</button></div></div>
+ <label class="set"><div class="l"><b>Minimize during drill</b><span>Detection keeps running</span></div><input type="checkbox" class="sw" id="vfHide"></label>
+ <label class="set"><div class="l"><b>Minimize viewfinder now</b><span>Collapse the camera view</span></div><input type="checkbox" class="sw" id="vfMin"></label>
+ <div class="sec-h">Tools</div>
+ <a class="link" href="#calibrate"><div class="l"><b>Calibrate detection</b><div class="muted">Thresholds, target mask, fps</div></div>›</a>
+ <a class="link" href="editor.html"><div class="l"><b>Zone editor</b><div class="muted">Custom zones · share link</div></div>›</a>
+ <p class="muted" style="margin-top:14px">Keyboard: Space/Enter start-stop · Esc stop. Voice: tap 🎤 on the Shoot tab.</p>
+</section>
+<!-- CALIBRATE -->
+<section class="view hidden" id="v-calibrate"><div id="tab-cal" class="hidden">
+ <div class="top"><h1><a href="#settings" style="text-decoration:none">‹</a> Calibrate</h1><button class="pill" onclick="$('camBtn').click()" id="calCam">📷 Camera</button><span class="pill"><b id="fps">0</b>&nbsp;fps · <b id="cnt">0</b>&nbsp;px</span></div>
+ <div id="calStage"></div>
+ <p class="muted">Aim at the target and fire. Pixels passing thresholds show magenta. Raise thresholds if you get false hits; lower if shots are missed.</p>
  <div id="sliders"></div>
- <label><input type="checkbox" id="maskTgt" checked> Only detect inside the locked target</label>
- <label><input type="checkbox" id="showMask" checked> Show detection pixels</label>
- <button id="resetBtn">Reset defaults</button>
- <p>Live candidate pixels: <b id="cnt">0</b> · Camera fps: <b id="fps">0</b></p>
-</div>
-</div>
-<script src="vendor/cv.js"></script><script src="vendor/aruco.js"></script><script src="core.js"></script><script src="app.js"></script>
+ <label class="set"><div class="l"><b>Only detect inside the locked target</b></div><input type="checkbox" class="sw" id="maskTgt" checked></label>
+ <label class="set"><div class="l"><b>Show detection pixels</b></div><input type="checkbox" class="sw" id="showMask" checked></label>
+ <button id="resetBtn" class="btn" style="width:100%;margin-top:12px">Reset defaults</button>
+</div></section>
+</main>
+<nav id="nav"><div class="brand">LD</div>
+ <button data-v="home"><i>⌂</i>Home</button><button data-v="drills"><i>☰</i>Drills</button><button data-v="shoot" class="shoot"><i>◎</i>Shoot</button><button data-v="results"><i>▤</i>Results</button><button data-v="settings"><i>⚙</i>Settings</button></nav>
+<div id="scrim" class="hidden"></div><div id="sheet" class="hidden"></div>
+<script src="vendor/cv.js"></script><script src="vendor/aruco.js"></script><script src="core.js"></script><script src="app.js"></script><script src="ui.js"></script>
 </body></html>

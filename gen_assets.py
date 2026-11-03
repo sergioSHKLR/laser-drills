@@ -328,7 +328,9 @@ function draw(){const L=C.filter(ok);document.getElementById('n').textContent=L.
  document.getElementById('grid').innerHTML=L.map(c=>`<div class=card><a href='${c.k}-letter.pdf'><img loading=lazy src='${c.k}-letter.png' alt=''></a><div class=t><b>${esc(c.name)}</b>${esc(c.code)} · ${esc(c.dist)}<div class=tags><span>${c.category}</span><span>${c.paper}</span><span>${c.people=="none"?"no people":c.people}</span><span>${c.weapon}</span>${c.features.map(f=>'<span>'+f+'</span>').join('')}</div></div><div class=lk><a href='${c.k}-letter.pdf'>Target PDF</a><a href='${c.k}-mask.pdf'>Mask PDF</a><a href='${c.k}-mask.png'>Mask PNG</a></div></div>`).join('')}
 document.getElementById('q').oninput=draw;draw();
 </script>"""
-    open('targets/index.html','w').write(page.replace('__DATA__',data))
+    open('targets/catalog.json','w').write(data)
+    # Gallery moved into the app (Home tab); keep old URL working. PDFs/PNGs stay in targets/.
+    open('targets/index.html','w').write("<!doctype html><meta charset=utf-8><title>Laser Drills targets</title><meta http-equiv=refresh content='0;url=../#home'><script>location.replace('../#home'+(location.search?'':''))</script><p>Moved: <a href='../#home'>target gallery in the app</a></p>")
 if __name__=='__main__':
     os.makedirs('targets',exist_ok=True)
     print('\n'.join(check_palette()))

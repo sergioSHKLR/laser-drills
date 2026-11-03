@@ -23,13 +23,13 @@ const target=()=>lock?lock.target:DOC.targets[drill().target==='any'?'bullseye':
 const spread=()=>($('shotgun').checked||drill().shotgun)?(target().spread||settings.shotgunSpread):0;
 function showNotes(){const c=sel(),d=drill();let t=`${d.shots} shots · par ${d.parTime}s · random start ${d.startDelay[0]}–${d.startDelay[1]}s. ${d.notes||''}`;
   if(c.type==='course')t=`${c.notes}\nNOW: ${d.name} [target ${DOC.targets[d.target].code} ${DOC.targets[d.target].name}] ${d.brief} (${d.shots} shots, par ${d.parTime}s)`+(course.results.length?'\nDone: '+course.results.map(r=>`${r.name}: ${r.final.toFixed(2)}`).join(' | '):'');
-  $('drillNotes').textContent=t;$('drillNotes').style.whiteSpace='pre-line';}
+  $('drillNotes').textContent=t;if(window.UI)UI.onDrill();$('drillNotes').style.whiteSpace='pre-line';}
 const SAE=JSON.parse(localStorage.getItem('ld.sae')||'{}');let TICK=localStorage.getItem('ld.tick')!=='0';
 function blind(){return Core.scoreAtEnd(drill(),SAE);}
 function live(){return state.mode==='live'||state.mode==='free';}
 function hidden(){return blind()&&live();}
-function syncSae(){$('saeChk').checked=blind();$('tickChk').checked=TICK;}
-$('saeChk').onchange=e=>{SAE[drill().category||'training']=e.target.checked;localStorage.setItem('ld.sae',JSON.stringify(SAE));};
+function syncSae(){$('saeTrain').checked=Core.scoreAtEnd({category:'training'},SAE);$('saeFun').checked=Core.scoreAtEnd({category:'fun'},SAE);$('tickChk').checked=TICK;if(window.UI)UI.onDrill();}
+[['saeTrain','training'],['saeFun','fun']].forEach(([id,c])=>$(id).onchange=e=>{SAE[c]=e.target.checked;localStorage.setItem('ld.sae',JSON.stringify(SAE));syncSae();});
 $('tickChk').onchange=e=>{TICK=e.target.checked;localStorage.setItem('ld.tick',TICK?'1':'0');};
 function shotTone(bad){if(hidden()){if(TICK)tone(1000,20);}else tone(bad?300:1600,bad?200:40);}
 $('drillSel').onchange=()=>{syncSae();course={idx:0,results:[]};showNotes();lock=null;};
@@ -37,12 +37,10 @@ function buildSliders(){const s=$('sliders');s.innerHTML='';for(const k in RANGE
   const l=document.createElement('label');l.innerHTML=`${k}: <b>${settings[k]}</b><input type=range min=${a} max=${b} step=${st} value=${settings[k]}>`;
   l.querySelector('input').oninput=e=>{settings[k]=+e.target.value;l.querySelector('b').textContent=settings[k];Object.assign(laser.o,settings);localStorage.setItem('ld-settings',JSON.stringify(settings));};s.appendChild(l);}}
 $('resetBtn').onclick=()=>{settings=Object.assign({},DEF);localStorage.removeItem('ld-settings');Object.assign(laser.o,settings);buildSliders();};
-document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));
-  ['drill','cal'].forEach(t=>$('tab-'+t).classList.toggle('hidden',t!==b.dataset.tab));});
 let camStream=null,camGen=0;
 function stopCamera(){camGen++;if(camStream)camStream.getTracks().forEach(t=>t.stop());camStream=null;
   if(video){video.pause();video.srcObject=null;}video=null;reset();laser=new Core.LaserDetector(settings);lock=null;lockAge=0;mask=null;lastDetect=0;marks=[];
-  ctx.clearRect(0,0,view.width,view.height);$('fps').textContent='0';$('camBtn').textContent='Start Camera';$('status').textContent='Camera stopped.';}
+  ctx.clearRect(0,0,view.width,view.height);$('fps').textContent='0';$('camBtn').textContent='📷 Start Camera';$('camBtn').classList.remove('on');if(window.UI)UI.cam(false);$('status').textContent='Camera stopped.';}
 $('camBtn').onclick=async()=>{if(camStream){stopCamera();return;}ac.resume();$('camBtn').disabled=true;try{
   const st=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720},frameRate:{ideal:60}}});
   video=document.createElement('video');video.playsInline=true;video.muted=true;video.srcObject=st;camStream=st;await video.play();
@@ -50,7 +48,7 @@ $('camBtn').onclick=async()=>{if(camStream){stopCamera();return;}ac.resume();$('
   // Lock exposure low if supported: laser pops more on a darker image.
   try{const adv={};if(caps.exposureMode&&caps.exposureMode.includes('manual'))adv.exposureMode='manual';
     if(caps.focusMode&&caps.focusMode.includes('continuous'))adv.focusMode='continuous';await tr.applyConstraints({advanced:[adv]});}catch(e){}
-  W=Math.min(video.videoWidth||640,1280);H=Math.round(W*video.videoHeight/video.videoWidth);view.width=W;view.height=H;$('camBtn').disabled=false;$('camBtn').textContent='Stop Camera';loop();
+  W=Math.min(video.videoWidth||640,1280);H=Math.round(W*video.videoHeight/video.videoWidth);view.width=W;view.height=H;$('camBtn').disabled=false;$('camBtn').textContent='📷 Stop Camera';$('camBtn').classList.add('on');if(window.UI)UI.cam(true);loop();
  }catch(e){$('camBtn').disabled=false;if(camStream)stopCamera();$('status').textContent='Camera error: '+e.message+' (needs HTTPS + permission)';}};
 function buildMask(){mask=new Uint8Array(W*H);const f=TPL().field,p=[[f.x,f.y],[f.x+f.w,f.y],[f.x+f.w,f.y+f.h],[f.x,f.y+f.h]].map(q=>Core.apply(lock.tgtToImg,{x:q[0],y:q[1]}));
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){let inside=false;for(let i=0,j=3;i<4;j=i++){const a=p[i],b=p[j];
@@ -107,7 +105,7 @@ function onVerbal(txt,now){if(state.mode!=='live'||!drill().scenario)return;cons
   $('heard').textContent=`verbal @${t.toFixed(2)}s: "${txt.trim()}"`;if(!hidden()){state.shots.push({t:now,zone:'VERBAL',verbal:true});render();state.shots.pop();}
   const d=drill();if(state.shots.length>=d.shots&&state.verbal.length>=d.compliant.length)finish();}
 function finish(){clearTimeout(state.timer);clearTimeout(state.par);const was=state.mode;state.mode='done';render();
-  lastSay=spokenResult();if(was==='live'||was==='free')setTimeout(()=>{say(lastSay);Voice.resume();},400);else Voice.resume();
+  lastSay=spokenResult();if(window.UI&&was==='live')UI.record();if(was==='live'||was==='free')setTimeout(()=>{say(lastSay);Voice.resume();},400);else Voice.resume();
   const c=sel();if(c.type==='course'&&was==='live'){const d=drill(),s=Core.drillSummary(d,state.beep,state.shots),r=Core.idpaSummary(d,state.shots,s.total);
     course.results.push(Object.assign({name:d.name},r));course.idx++;
     if(course.idx>=c.stages.length){const tot=course.results.reduce((a,r)=>a+r.final,0);$('big').textContent+=` · COURSE TOTAL ${tot.toFixed(2)}s`;}
@@ -129,8 +127,8 @@ const CMD={start:()=>{if(state.mode==='wait'||state.mode==='live')return;$('goBt
   score:()=>say(lastSay)};
 function command(cmd,src){if(!CMD[cmd])return;$('heard').textContent=`${src}: ${cmd}`;CMD[cmd]();}
 document.querySelectorAll('[data-cmd]').forEach(b=>b.onclick=()=>{ac.resume();command(b.dataset.cmd,'tap');});
-document.addEventListener('keydown',e=>{if(e.target&&/INPUT|SELECT/.test(e.target.tagName))return;
-  const k=e.key,m={MediaPlayPause:'toggle',MediaPlay:'start',MediaStop:'stop',MediaPause:'stop',MediaTrackNext:'next',MediaTrackPrevious:'repeat',Enter:'toggle',' ':'toggle'};
+document.addEventListener('keydown',e=>{if(e.target&&/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if((e.key===' '||e.key==='Enter')&&(/^(A|SUMMARY)$/.test(e.target.tagName)||(window.UI&&UI.view!=='shoot')))return;
+  const k=e.key,m={MediaPlayPause:'toggle',MediaPlay:'start',MediaStop:'stop',MediaPause:'stop',MediaTrackNext:'next',MediaTrackPrevious:'repeat',Enter:'toggle',' ':'toggle',Escape:'stop'};
   if(!m[k])return;e.preventDefault();ac.resume();const c=m[k]==='toggle'?((state.mode==='live'||state.mode==='wait'||state.mode==='free')?'stop':'start'):m[k];command(c,'key '+k);});
 try{if('mediaSession'in navigator){navigator.mediaSession.setActionHandler('play',()=>command('start','media'));navigator.mediaSession.setActionHandler('pause',()=>command('stop','media'));
   navigator.mediaSession.setActionHandler('nexttrack',()=>command('next','media'));navigator.mediaSession.setActionHandler('previoustrack',()=>command('repeat','media'));}}catch(e){}
@@ -162,7 +160,6 @@ const VF={get(){try{return Object.assign({h:45,hide:false,min:false},JSON.parse(
  set(p){const v=Object.assign(VF.get(),p);localStorage.setItem('ld.vf',JSON.stringify(v));VF.apply();},
  apply(){const v=VF.get();document.documentElement.style.setProperty('--vf',v.h);$('vfRange').value=v.h;$('vfVal').textContent=v.h;$('vfHide').checked=v.hide;$('vfMin').checked=v.min;
   document.body.classList.toggle('vfmin',v.min||(v.hide&&state.mode==='live'));}};
-$('vfBtn').onclick=()=>$('vfset').classList.toggle('hidden');
 $('vfRange').oninput=e=>VF.set({h:+e.target.value});
 document.querySelectorAll('[data-vf]').forEach(b=>b.onclick=()=>VF.set({h:+b.dataset.vf}));
 $('vfHide').onchange=e=>VF.set({hide:e.target.checked});$('vfMin').onchange=e=>VF.set({min:e.target.checked});
