@@ -88,7 +88,14 @@
      "score": 5,
      "tier": "tier5"
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "none",
+    "features": [],
+    "weapon": "pistol"
+   }
   },
   "silhouette": {
    "code": "LD-002",
@@ -218,7 +225,16 @@
      "h": 2.3,
      "penalty": -5
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "five-dot": {
    "code": "LD-003",
@@ -291,7 +307,14 @@
      "score": 5,
      "tier": "tier5"
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "none",
+    "features": [],
+    "weapon": "pistol"
+   }
   },
   "clays": {
    "code": "LD-004",
@@ -444,7 +467,14 @@
      "h": 7.3,
      "warm": true
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "none",
+    "features": [],
+    "weapon": "shotgun"
+   }
   },
   "hostage": {
    "code": "LD-005",
@@ -632,7 +662,17 @@
       ]
      ]
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "hostage",
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "crowd": {
    "code": "LD-301",
@@ -4611,7 +4651,16 @@
      "cover",
      "Faded = BYSTANDER +10 s"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "backstop"
+    ],
+    "weapon": "pistol"
+   }
   },
   "crowd-tabloid": {
    "code": "LD-302",
@@ -8778,10 +8827,19 @@
      "w": 16.2,
      "h": 7.15
     }
+   },
+   "meta": {
+    "category": "tactical",
+    "paper": "tabloid",
+    "people": "multi",
+    "features": [
+     "backstop"
+    ],
+    "weapon": "pistol"
    }
   },
   "carnival": {
-   "code": "LD-301",
+   "code": "LD-401",
    "name": "Carnival Shoot",
    "markerIds": [
     300,
@@ -9058,7 +9116,14 @@
    "drills": [
     "carnival-free",
     "carnival-calls"
-   ]
+   ],
+   "meta": {
+    "category": "fun",
+    "paper": "letter",
+    "people": "none",
+    "features": [],
+    "weapon": "pistol"
+   }
   },
   "idpa-threat": {
    "code": "LD-101",
@@ -9236,7 +9301,14 @@
      "pd": 0,
      "part": "body"
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "single",
+    "features": [],
+    "weapon": "pistol"
+   }
   },
   "idpa-hc-left": {
    "code": "LD-102",
@@ -9442,7 +9514,16 @@
       6.644
      ]
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "hard cover"
+    ],
+    "weapon": "pistol"
+   }
   },
   "idpa-hc-lower": {
    "code": "LD-103",
@@ -9648,7 +9729,16 @@
       7.644
      ]
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "hard cover"
+    ],
+    "weapon": "pistol"
+   }
   },
   "idpa-hc-diagonal": {
    "code": "LD-104",
@@ -9854,7 +9944,16 @@
       7.089
      ]
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "hard cover"
+    ],
+    "weapon": "pistol"
+   }
   },
   "idpa-nonthreat": {
    "code": "LD-105",
@@ -10350,7 +10449,16 @@
      "fill": "handInk",
      "line": "ink"
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "idpa-practice": {
    "code": "LD-106",
@@ -10539,7 +10647,14 @@
      "pd": 0,
      "part": "body"
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "single",
+    "features": [],
+    "weapon": "pistol"
+   }
   },
   "idpa-nt-pair": {
    "code": "LD-107",
@@ -11201,7 +11316,16 @@
      "pd": 0,
      "part": "body"
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "idpa-multi": {
    "code": "LD-108",
@@ -11725,7 +11849,14 @@
      "part": "body",
      "z": 2
     }
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "multi",
+    "features": [],
+    "weapon": "pistol"
+   }
   },
   "idpa-all-tabloid": {
    "code": "LD-110",
@@ -13987,7 +14118,17 @@
     "T6 and the front figure on T8 are NON-THREATS: +5 s/hit.",
     "Black = hard cover: hits there do not count.",
     "Out of order / wrong Mozambique part = PE +3 s."
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "tabloid",
+    "people": "multi",
+    "features": [
+     "hard cover",
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "idpa-all-letter": {
    "code": "LD-111",
@@ -16249,7 +16390,17 @@
     "T6 and the front figure on T8 are NON-THREATS: +5 s/hit.",
     "Black = hard cover: hits there do not count.",
     "Out of order / wrong Mozambique part = PE +3 s."
-   ]
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "hard cover",
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-hans": {
    "code": "LD-201",
@@ -17063,7 +17214,16 @@
      "cover",
      "Faded people behind = BYSTANDER +10 s, backstop fail"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "backstop"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-karl": {
    "code": "LD-202",
@@ -17747,7 +17907,17 @@
      "cover",
      "Faded people behind = BYSTANDER +10 s, backstop fail"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "backstop",
+     "hard cover"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-tony": {
    "code": "LD-203",
@@ -19015,7 +19185,17 @@
      "cover",
      "Faded people behind = BYSTANDER +10 s, backstop fail"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "backstop",
+     "hard cover"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-franco": {
    "code": "LD-204",
@@ -19747,7 +19927,17 @@
      "cover",
      "Faded people behind = BYSTANDER +10 s, backstop fail"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "backstop",
+     "hard cover"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-heinrich": {
    "code": "LD-205",
@@ -20987,7 +21177,17 @@
      "cover",
      "Faded people behind = BYSTANDER +10 s, backstop fail"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "backstop",
+     "hard cover"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-eddie": {
    "code": "LD-206",
@@ -21396,7 +21596,14 @@
      "#FFFFFF",
      "Miss: +5 s"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [],
+    "weapon": "pistol"
+   }
   },
   "dh-theo": {
    "code": "LD-207",
@@ -21953,7 +22160,14 @@
      "#FFFFFF",
      "Miss: +5 s"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [],
+    "weapon": "pistol"
+   }
   },
   "dh-uli": {
    "code": "LD-212",
@@ -23331,7 +23545,16 @@
      "cover",
      "Faded people behind = BYSTANDER +10 s, backstop fail"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "backstop"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-powell": {
    "code": "LD-213",
@@ -24125,7 +24348,17 @@
      "#FFFFFF",
      "Miss: +5 s"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [
+     "backstop",
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-billclay": {
    "code": "LD-208",
@@ -24907,7 +25140,14 @@
      "#FFFFFF",
      "Miss: +5 s"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "single",
+    "features": [],
+    "weapon": "pistol"
+   }
   },
   "dh-finale": {
    "code": "LD-209",
@@ -25580,7 +25820,17 @@
      "noshoot",
      "Unarmed (phone, drink, wallet) = NO-SHOOT +5 s"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "hostage",
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-party": {
    "code": "LD-210",
@@ -26645,7 +26895,16 @@
      "noshoot",
      "Unarmed (phone, drink, wallet) = NO-SHOOT +5 s"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-lobby": {
    "code": "LD-214",
@@ -27500,7 +27759,16 @@
      "noshoot",
      "Police officer = FRIENDLY: hit = +10 s, FAIL"
     ]
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   },
   "dh-nakatomi": {
    "code": "LD-211",
@@ -31211,7 +31479,16 @@
      "y": 2.05,
      "size": 10
     }
-   ]
+   ],
+   "meta": {
+    "category": "themed",
+    "paper": "tabloid",
+    "people": "multi",
+    "features": [
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
   }
  }
 }

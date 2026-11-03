@@ -80,7 +80,7 @@ def carnival():
     check_zones('carnival',can,zones,F)
     cv2.imwrite('art/carnival.png',can)
     calls=[dict(say=f'duck {i}',tags=[f'D{i}']) for i in range(1,6)]+[dict(say=f'pig {i}',tags=[f'P{i}']) for i in range(1,4)]+[dict(say=f'bullseye {i}',tags=[f'B{i}']) for i in (1,2)]+[dict(say='all pigs',tags=['pig'],n=3),dict(say='any duck',tags=['duck']),dict(say='two ducks',tags=['duck'],n=2)]
-    t=dict(code='LD-301',name='Carnival Shoot',markerIds=[300,301,302,303],distance='3-5 yd',set='games',art=[dict(src='art/carnival.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'],warm=True)],zones=zones,
+    t=dict(code='LD-401',name='Carnival Shoot',markerIds=[300,301,302,303],distance='3-5 yd',set='games',art=[dict(src='art/carnival.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'],warm=True)],zones=zones,
         instructions=['Free fire: duck 2, pig 3, bullseye 5/3/1.','Called mode: the app calls "duck 3", "all pigs"...','Wrong item = -2. Red is decor only.','Mic on. Say "start" or tap.'])
     D=[dict(id='carnival-free',name='Carnival Shoot: free fire (60 s)',category='fun',target='carnival',shots=20,startDelay=[2,3],parTime=30,timeout=60,notes='Shoot anything: duck 2, pig 3, bullseye 5/3/1.'),
        dict(id='carnival-calls',name='Carnival Shoot: called shots',category='fun',target='carnival',shots=40,startDelay=[2,3],parTime=60,timeout=120,game=dict(type='calls',calls=calls,rounds=8,wrong=-2),notes='The app calls an item ("duck 3", "all pigs"); hit it to get the next call. Wrong item -2.')]

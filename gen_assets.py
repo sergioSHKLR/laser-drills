@@ -267,18 +267,75 @@ def draw_target(key,t,path,maskmode=False):
     bad=[(b[4],k) for b in rec.boxes+artbox for k in keepouts() if hit(b,k)]
     assert not bad, f'{key}: text/art overlaps marker quiet zone: {bad[:3]}'
     c.showPage(); c.save()
+def target_meta(k,t):
+    zs=t.get('zones',[]); kinds={z['kind'] for z in zs}; names=' '.join((z.get('name','')+' '+str(z.get('group',''))).lower() for z in zs)
+    cat={'diehard':'themed','games':'fun'}.get(t.get('set'),'tactical')
+    paper='tabloid' if t.get('layout',{}).get('page',{}).get('w',8.5)>=17 else 'letter'
+    groups={z.get('group') for z in zs if z.get('group') and z['kind'] in('score','noshoot')}
+    nopeople={'bullseye','five-dot','clays','carnival','battle','cards'}
+    people='none' if k in nopeople or t.get('set')=='games' else ('multi' if len(groups)>1 or k in('crowd','crowd-tabloid','idpa-nt-pair','idpa-multi','idpa-all-tabloid','idpa-all-letter','hostage','dh-finale','dh-party','dh-lobby','dh-nakatomi') else 'single')
+    f=set()
+    if 'noshoot' in kinds: f.add('no-shoot')
+    if 'hostage' in names or 'holly' in names or k=='hostage': f.add('hostage')
+    if 'hardcover' in kinds: f.add('hard cover')
+    if 'bystander' in kinds: f.add('backstop')
+    if any(z.get('needs',1)>1 for z in zs): f.add('two-hit')
+    if any(z.get('after') for z in zs): f.add('conditional')
+    if any(z.get('headOnly') for z in zs): f.add('head-only')
+    m=dict(category=cat,paper=paper,people=people,features=sorted(f),weapon='shotgun' if t.get('spread') or 'shotgun' in t.get('name','').lower() else 'pistol')
+    m.update(t.get('metaOverride',{})); return m
+def write_gallery(DOC):
+    import json,html
+    cards=[]
+    for k,t in DOC['targets'].items():
+        m=target_meta(k,t); t['meta']=m
+        cards.append(dict(k=k,code=t['code'],name=t['name'],dist=t.get('distance',''),**m,text=' '.join([k,t['code'],t['name'],t.get('distance','')]+t.get('instructions',[])).lower()))
+    json.dump({**DOC,'template':BASE},open('targets.json','w'),indent=1)   # TPL (=DOC['template']) is mutated per target
+    data=json.dumps(cards)
+    page=r"""<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><title>Laser Drills targets</title>
+<style>
+body{font:15px system-ui,sans-serif;background:#111;color:#eee;margin:0;padding:12px}a{color:#8ab4f8}h1{margin:.2em 0;font-size:1.4em}
+.bar{background:#111;padding:6px 0 8px;z-index:2;border-bottom:1px solid #333}
+#q{position:sticky;top:0;z-index:3;width:100%;box-sizing:border-box;padding:10px;font-size:16px;border-radius:8px;border:1px solid #444;background:#1c1c1c;color:#eee}
+.row::-webkit-scrollbar{display:none}
+.row{scrollbar-width:none;display:flex;gap:6px;overflow-x:auto;padding:6px 0;-webkit-overflow-scrolling:touch;align-items:center}.row b{font-size:12px;color:#999;min-width:64px}
+.chip{flex:none;border:1px solid #555;background:#1c1c1c;color:#ddd;border-radius:16px;padding:7px 12px;font-size:14px;min-height:36px;cursor:pointer}
+.chip.on{background:#1F4E9A;border-color:#8ab4f8;color:#fff}
+#grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.card{background:#1b1b1b;border:1px solid #333;border-radius:10px;overflow:hidden;display:flex;flex-direction:column}
+.card img{width:100%;aspect-ratio:8.5/11;object-fit:contain;background:#fff}.card .t{padding:8px;font-size:13px;flex:1}.card .t b{display:block;font-size:14px}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}.tags span{font-size:11px;background:#2a2a2a;border-radius:8px;padding:2px 6px;color:#bbb}
+.lk{display:flex;border-top:1px solid #333}.lk a{flex:1;text-align:center;padding:10px 0;text-decoration:none;font-size:13px;border-right:1px solid #333}.lk a:last-child{border:0}
+.tpl{font-size:13px;color:#bbb}#n{color:#999;font-size:13px}
+</style><body>
+<h1>Printable targets</h1><p class=tpl>Print at 100% / Actual size (paper is in each sheet footer). Blank scoring mask template: Letter <a href='mask-template-letter.pdf'>PDF</a> · <a href='mask-template-letter.png'>PNG</a> · <a href='mask-template-letter.svg'>SVG</a> | Tabloid 17x11 <a href='mask-template-tabloid.pdf'>PDF</a> · <a href='mask-template-tabloid.png'>PNG</a> · <a href='mask-template-tabloid.svg'>SVG</a> · <a href='../'>Back to app</a></p>
+<div class=bar><input id=q type=search placeholder='Search targets (name, code, character...)'><div id=f></div><div id=n></div></div>
+<div id=grid></div>
+<script>
+const C=__DATA__;
+const F=[['category','Category',[['themed','Themed (Die Hard)'],['tactical','Tactical (IDPA, hostage, crowd)'],['fun','Fun']]],
+ ['paper','Paper',[['letter','Letter'],['tabloid','Tabloid 17x11']]],
+ ['people','People',[['single','Single'],['multi','Multi'],['none','No people']]],
+ ['features','Features',[['hostage','Hostage'],['no-shoot','No-shoot'],['hard cover','Hard cover'],['backstop','Backstop'],['two-hit','Two-hit'],['conditional','Conditional'],['head-only','Head-only']]],
+ ['weapon','Weapon',[['pistol','Pistol'],['shotgun','Shotgun']]]];
+const S={};F.forEach(([k])=>S[k]=new Set());
+const fd=document.getElementById('f');
+F.forEach(([k,l,o])=>{const r=document.createElement('div');r.className='row';r.innerHTML='<b>'+l+'</b>';o.forEach(([v,t])=>{const b=document.createElement('button');b.className='chip';b.textContent=t;b.onclick=()=>{S[k].has(v)?S[k].delete(v):S[k].add(v);b.classList.toggle('on');draw()};r.appendChild(b)});fd.appendChild(r)});
+const esc=s=>s.replace(/[&<>']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;'}[c]));
+function ok(c){const q=document.getElementById('q').value.trim().toLowerCase();if(q&&!q.split(/\s+/).every(w=>c.text.includes(w)))return false;
+ for(const[k]of F){const s=S[k];if(!s.size)continue;if(k=='features'){if(![...s].every(v=>c.features.includes(v)))return false}else if(!s.has(c[k]))return false}return true}
+function draw(){const L=C.filter(ok);document.getElementById('n').textContent=L.length+' of '+C.length+' targets';
+ document.getElementById('grid').innerHTML=L.map(c=>`<div class=card><a href='${c.k}-letter.pdf'><img loading=lazy src='${c.k}-letter.png' alt=''></a><div class=t><b>${esc(c.name)}</b>${esc(c.code)} · ${esc(c.dist)}<div class=tags><span>${c.category}</span><span>${c.paper}</span><span>${c.people=="none"?"no people":c.people}</span><span>${c.weapon}</span>${c.features.map(f=>'<span>'+f+'</span>').join('')}</div></div><div class=lk><a href='${c.k}-letter.pdf'>Target PDF</a><a href='${c.k}-mask.pdf'>Mask PDF</a><a href='${c.k}-mask.png'>Mask PNG</a></div></div>`).join('')}
+document.getElementById('q').oninput=draw;draw();
+</script>"""
+    open('targets/index.html','w').write(page.replace('__DATA__',data))
 if __name__=='__main__':
     os.makedirs('targets',exist_ok=True)
     print('\n'.join(check_palette()))
     for key,t in DOC['targets'].items():
         p=f'targets/{key}-letter.pdf'; draw_target(key,t,p); print('wrote',p)
         draw_target(key,t,f'targets/{key}-mask.pdf',maskmode=True)
-    li=lambda k,t:f"<li><a href='{k}-letter.pdf'><img src='{k}-letter.png' width=160><br>{t['code']} {t['name']}</a> — {t['distance']} · <a href='{k}-mask.pdf'>scoring mask</a> (<a href='{k}-mask.png'>png</a>)</li>"
-    rows=''.join(li(k,t) for k,t in DOC['targets'].items() if t.get('set') not in ('diehard','games'))
-    gm=''.join(li(k,t) for k,t in DOC['targets'].items() if t.get('set')=='games')
-    dh=''.join(li(k,t) for k,t in DOC['targets'].items() if t.get('set')=='diehard')
-    UL="<ul style='list-style:none;display:flex;flex-wrap:wrap;gap:16px;padding:0'>"
-    open('targets/index.html','w').write(f"<!doctype html><meta name=viewport content='width=device-width'><title>Laser Drills targets</title><body style='font:15px system-ui;background:#111;color:#eee'><h1>Printable targets</h1><p>Print at 100% / Actual size. Paper is printed in each sheet footer (US Letter unless marked LANDSCAPE / Tabloid 11x17).</p><h2 id=training>Self-Defense Training</h2><p>Bullseye, IDPA, hostage, hard cover and shoot/don't-shoot sheets.</p>{UL}{rows}</ul><h2 id=fun>Fun</h2><h3 id=diehard>Die Hard (Set 1: Nakatomi Plaza)</h3><p>Full-colour illustrated characters with faint anatomy-based -0/-1/-3 outlines. Hatched = hostage; rendered desk/rail/pillar/cabinet = hard cover. Fan-made training targets; characters are drawn, not actor likenesses.</p>{UL}{dh}</ul><h3 id=games>Games</h3><p>Carnival, battleship, cards: the app calls the shots and keeps score.</p>{UL}{gm}</ul><p><a href='../' style='color:#8ab4f8'>Back to app</a></p>".replace('<a ',"<a style='color:#8ab4f8' "))
+    write_gallery(DOC)
     import subprocess
     for k in DOC['targets']: subprocess.run(['pdftoppm','-r','50','-png','-singlefile',f'targets/{k}-letter.pdf',f'targets/{k}-letter'],check=True); subprocess.run(['pdftoppm','-r','50','-png','-singlefile',f'targets/{k}-mask.pdf',f'targets/{k}-mask'],check=True)
     # blank mask template (letter portrait + tabloid landscape): markers, quiet zones, scan field, rule colour legend
@@ -288,6 +345,3 @@ if __name__=='__main__':
         p=f'targets/mask-template-{suf}'; draw_target('mask-template',tt,p+'.pdf',maskmode=True)
         subprocess.run(['pdftoppm','-r','100','-png','-singlefile',p+'.pdf',p],check=True)
         subprocess.run(['pdftocairo','-svg',p+'.pdf',p+'.svg'],check=True)
-    h=open('targets/index.html').read()
-    h=h.replace("<h2 id=training>","<p><b>Blank scoring mask template</b> (rule-colour legend): Letter <a style='color:#8ab4f8' href='mask-template-letter.pdf'>PDF</a> · <a style='color:#8ab4f8' href='mask-template-letter.png'>PNG</a> · <a style='color:#8ab4f8' href='mask-template-letter.svg'>SVG</a> | Tabloid 11x17 landscape <a style='color:#8ab4f8' href='mask-template-tabloid.pdf'>PDF</a> · <a style='color:#8ab4f8' href='mask-template-tabloid.png'>PNG</a> · <a style='color:#8ab4f8' href='mask-template-tabloid.svg'>SVG</a></p><h2 id=training>",1)
-    open('targets/index.html','w').write(h)
