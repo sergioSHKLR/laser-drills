@@ -64,4 +64,11 @@ if(bad)throw new Error('crowd calls bad '+bad);console.log('[crowd] 1800 call se
  const c=Core.score(t,{x:DOC.targets['dh-lobby'].zones.find(z=>z.name==='T1 -0').cx,y:DOC.targets['dh-lobby'].zones.filter(z=>z.name==='T1 -0')[1].cy},0,Core.tpl(DOC,t));
  const r=Core.idpaSummary(Object.assign({},st,{failOnFriendly:true}),[c,c,h],3);const ok=h.friendly&&r.ff===1&&r.final>=13&&r.fail;
  if(!ok)fail++;console.log('[friendly]',JSON.stringify(h),JSON.stringify(r),ok?'ok':'FAIL');}
+{// Zone Editor rules: Mozambique = head counts only after 2 body hits; 'needs 2' zone counts on 2nd hit; overrides apply
+ const t={zones:[{name:'BODY',kind:'score',shape:'rect',x:0,y:3,w:2,h:3,score:3,pd:0},{name:'HEAD',kind:'score',shape:'circle',cx:1,cy:1,r:0.5,score:5,pd:0,after:['BODY'],afterN:2},{name:'PLATE',kind:'score',shape:'circle',cx:5,cy:5,r:0.5,score:5,pd:0,needs:2}]};
+ const run=pts=>{const h=[];for(const q of pts)h.push(Core.applyRules(t,Core.score(t,{x:q[0],y:q[1]}),h));return h;};
+ const a=run([[1,4],[1,4],[1,1]]),b=run([[1,1],[1,4],[1,4]]),c=run([[5,5],[5,5]]);
+ const d=Core.applyOverrides(JSON.parse(JSON.stringify(DOC)),{bullseye:{zones:t.zones}});
+ const ok=a[2].score===5&&!a[2].outOfOrder&&b[0].outOfOrder&&b[0].score===0&&c[0].pending&&c[0].score===0&&c[1].score===5&&d.targets.bullseye.zones.length===3;
+ if(!ok)fail++;console.log('[zone rules] mozambique ok-order',a.map(x=>x.score).join(','),'| head-first',b.map(x=>x.score).join(','),'| needs2',c.map(x=>x.score).join(','),ok?'ok':'FAIL');}
 console.log(fail?`FAIL (${fail})`:'PASS');process.exit(fail?1:0);

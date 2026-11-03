@@ -56,6 +56,14 @@ Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
   for(const z of target.zones)if(z.kind==='bystander'&&Core.inZone(z,pt,0))return {zone:z.name,score:z.penalty||-10,pd:5,bystander:true,backstop:true};
   if(expectName&&!target.scoring){for(const z of target.zones)if(z.kind==='score'&&Core.inZone(z,pt,spread))return {zone:z.name,score:0,pd:5,outOfOrder:true};}
   return {zone:null,score:0,pd:5};};
+// Custom zone rules (Zone Editor): z.needs=N -> a zone hit counts only on its Nth hit (earlier ones 'pending', score 0);
+// z.after=[names], z.afterN=N -> counts only after N hits in those zones (else out of order). history = earlier results.
+Core.applyRules=function(target,res,history){if(!res||!res.zone)return res;const z=target.zones.find(q=>q.name===res.zone&&q.kind==='score');if(!z)return res;history=history||[];
+  if(z.after&&z.after.length){const n=history.filter(h=>z.after.includes(h.zone)&&!h.pending&&!h.outOfOrder).length;if(n<(z.afterN||1))return Object.assign({},res,{score:0,pd:5,outOfOrder:true,rule:`needs ${z.afterN||1} in ${z.after.join('/')} first`});}
+  if(z.needs>1){const n=history.filter(h=>h.zone===res.zone).length+1;if(n<z.needs)return Object.assign({},res,{score:0,pd:0,pending:true,rule:`hit ${n}/${z.needs}`});}
+  return res;};
+// Zone overrides from the Zone Editor (localStorage 'ld-zones') applied over targets.json
+Core.applyOverrides=function(doc,ov){for(const k in ov||{})if(doc.targets[k]&&ov[k]&&ov[k].zones)doc.targets[k].zones=ov[k].zones;return doc;};
 // IDPA-style stage result: raw + PD*1s + PE*3s + HNT*5s. Each required hit missing (or on hard cover / non-threat) = 5 PD.
 Core.idpaSummary=function(stage,shots,rawTime){
   const req=stage.shots,comp=stage.compliant||[],cnt=shots.slice(0,Math.max(req,shots.length)).map(s=>s.group&&comp.includes(s.group)?Object.assign({},s,{noshoot:true,compliantHit:true}):s);let pd=0,valid=0,hnt=0,pe=0,bys=0,ff=0;

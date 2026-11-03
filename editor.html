@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Laser Drills · Zone Editor</title>
+<style>body{margin:0;font:13px system-ui;background:#1e1f22;color:#ddd;display:flex;height:100vh}#wrap{flex:1;position:relative;overflow:hidden}canvas{display:block}
+#side{width:290px;padding:10px;background:#2b2d31;overflow:auto}#side h3{margin:12px 0 4px}button,select,input{font:inherit;margin:2px 0}button.on{background:#5865f2;color:#fff}
+.row{display:flex;gap:4px;flex-wrap:wrap;align-items:center}label{display:block;margin:3px 0}#help{color:#999;font-size:12px}a{color:#8ab4f8}input[type=number]{width:60px}#menu{position:fixed;display:none;background:#333;border:1px solid #555;z-index:9}#menu div{padding:4px 12px;cursor:pointer}#menu div:hover{background:#5865f2}</style></head><body>
+<div id="wrap"><canvas id="cv"></canvas></div>
+<div id="side"><b>Zone Editor</b> · <a href="index.html">back to app</a>
+<label>Target <select id="tsel"></select></label>
+<div class="row"><button data-t="sel" class="on" title="V">Select</button><button data-t="circle" title="C">Circle</button><button data-t="rect" title="R">Rect</button><button data-t="poly" title="P">Polygon</button></div>
+<div id="help">Wheel = zoom · drag empty space / middle button = pan · Circle/Rect: click-drag · Polygon: click points, double-click or Enter to close · drag a zone or its handles · Delete removes · right-click a zone for its rule</div>
+<h3>Selected zone</h3><div id="zp">none</div>
+<h3>Zone set</h3><div class="row"><button id="save">Save (this browser)</button><button id="reset">Reset to default</button></div>
+<div class="row"><button id="exp">Export JSON</button><button id="imp">Import JSON</button><input type="file" id="file" accept=".json" hidden></div>
+<div class="row"><button id="share">Copy phone link</button></div><div id="msg" style="color:#8f8"></div>
+<label><input type="checkbox" id="showAll" checked> show bystanders/decor</label>
+<div id="list"></div></div>
+<div id="menu"></div>
+<script src="core.js"></script><script src="editor.js"></script></body></html>

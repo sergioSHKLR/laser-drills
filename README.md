@@ -74,3 +74,8 @@ Red cap: art red dominance is hard-capped at 36 (detector gate 40), so lipstick 
 - All die-hard sheets scaled to fill the scan field (clear of margins/marker quiet zones); tabloids spread to fill.
 - Clays: lifelike bright-orange clays with a black dome. Synthetic tests: laser dot detected 40/40 on the black dome but only ~9-29/40 on bright orange, so the dome is the 5-pt zone and orange body scores 3. Real-laser behaviour on orange is untested.
 - Rotated ellipse zones supported.
+
+## v14: Zone Editor (editor.html)
+A desktop, mouse-driven editor. Pick a target. Wheel zooms; drag empty space (or use the middle button) to pan. Circle/Rect: click-drag. Polygon: click points, then double-click or Enter. Drag zones or their handles to move or resize; Delete removes a zone; right-click or the side panel sets the rule.
+Rules: Hit (points, IDPA -0/-1/-3); No-hit (penalty, seconds); Requires N shots (counts on the Nth hit); Sequence (counts only after N hits in the chosen zones, e.g. Mozambique); Hard cover; Bystander.
+Save keeps the set in this browser's localStorage, and the app uses it there. Export/Import JSON. "Copy phone link" makes a link that loads the set into the app on the phone. Reset restores the default.
