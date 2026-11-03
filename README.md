@@ -92,3 +92,4 @@ All Die Hard characters (Hans, Karl, Tony, Uli, Theo, Eddie, Franco, Heinrich, B
 - v21: Eddie solo + line-up redrawn to match the Finale (gray three-piece, black pants/shoes, MP5A3 low ready, faceless); zones refit.
 - v22: Finale Hans moved right, upper chest exposed; zones + mask refit.
 - v23: blank scoring-mask template (Letter + Tabloid landscape, PDF/PNG/SVG); unified rule colours (hit/no-hit/cover/two-hit/conditional/head-only/penalty) across all -mask sheets and the Zone Editor.
+- v24: mask label placement (no overlaps), template header cleanup.

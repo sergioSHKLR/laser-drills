@@ -86,7 +86,7 @@ def draw_mask(d,t):
         ru=rule_of(z); col=HITSHADE.get(z.get('score'),RULECOL['hit']) if ru=='hit' else RULECOL[ru]
         d.color(col); c.drawPath(d.path(z),stroke=1,fill=1)
         if k=='noshoot': d.hatch(z,PAL['noshootInk'],gap=0.1,width=0.8); c.drawPath(d.path(z),stroke=1,fill=0)
-    seen=set()
+    seen=set(); placed=[]
     for z in zs:
         k=z['kind']
         if k=='decor': continue
@@ -99,6 +99,14 @@ def draw_mask(d,t):
         if not z.get('label') and z['shape']=='circle' and z['r']>0.6: cy=cy-z['r']+0.15
         if (lab,round(cx,1),round(cy,1)) in seen: continue
         seen.add((lab,round(cx,1),round(cy,1)))
+        if z['shape'] in('poly','rect') and not z.get('label') and z['kind']=='score' and z.get('score',9)<0:
+            ys=[p[1] for p in z['pts']] if z['shape']=='poly' else [z['y']]; xs=[p[0] for p in z['pts'] if p[1]<min(ys)+0.6] if z['shape']=='poly' else [z['x'],z['x']+z['w']]
+            cy=min(ys)+0.6 if z['score']==-1 else (min(ys)+1.0 if z['score']==-3 else cy); cx=sum(xs)/len(xs) if z['score']!=-3 else cx
+        if z['shape']=='ellipse' and z.get('ry',0)>0.45 and not z.get('label'): cy=cy-z['ry']+0.14   # big ellipse: label at its top edge
+        for _ in range(8):   # nudge away from labels already placed
+            if any(abs(cx-px)<0.45 and abs(cy-py)<0.13 for px,py in placed): cy+=0.14
+            else: break
+        placed.append((cx,cy))
         dark=(k=='hardcover') or (rule_of(z)!='nohit' and lum(HITSHADE.get(z.get('score'),RULECOL[rule_of(z)]) if rule_of(z)=='hit' else RULECOL[rule_of(z)])<0.3)
         sz=6 if (z.get('rx',z.get('r',1))<0.35) else 7
         c.setFont('Helvetica-Bold',sz); tw=c.stringWidth(lab,'Helvetica-Bold',sz); x,y=d.P(cx,cy)
@@ -215,7 +223,7 @@ def draw_target(key,t,path,maskmode=False):
     c.drawString(*d.P(hx,M+0.55),fitfont(c,f"{t['code']}  ·  key '{key}'  ·  markers {t['markerIds'][0]}-{t['markerIds'][-1]}",'Helvetica',8.5,hw))
     c.drawString(*d.P(hx,M+0.78),fitfont(c,f"Recommended distance: {t['distance']}",'Helvetica',8.5,hw))
     dn=[DRILLS[x]['name'] for x in t['drills'] if x in DRILLS]
-    c.drawString(*d.P(hx,M+1.0),fitfont(c,'Pairs with: '+'; '.join(dn),'Helvetica',8.5,hw))
+    if dn: c.drawString(*d.P(hx,M+1.0),fitfont(c,'Pairs with: '+'; '.join(dn),'Helvetica',8.5,hw))
     c.setFont('Helvetica-Bold',7); c.drawRightString(*d.P(hx+hw-0.03,M+0.3),'LASER DRILLS')
     # footer band: instructions | legend
     fy=PH-M-MS; c.setFont('Helvetica-Bold',8); c.drawString(*d.P(hx,fy+0.12),'HOW TO')
