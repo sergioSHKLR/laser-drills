@@ -89,10 +89,7 @@ def draw_target(key,t,path):
     for z in t['zones']:
         if z.get('subtle'):
             c.setDash(2,2); c.setLineWidth(0.6); d.color(PAL['subtle'],True); c.drawPath(d.path(z),stroke=1,fill=0); c.setDash(); continue
-        if z['kind']=='noshoot' and z.get('art'):
-            d.hatch(z,PAL['hatchArt'],gap=0.14,width=0.7); c.setLineJoin(1); c.setLineWidth(1.6); d.color(PAL['noshootInk'],True); c.drawPath(d.path(z),stroke=1,fill=0)
-            cx,cy=zone_center(z); bx,by=d.P(cx,cy); txt='HOSTAGE +5s'; c.setFont('Helvetica-Bold',9); tw=c.stringWidth(txt,'Helvetica-Bold',9)+8
-            c.setFillColor(white); c.rect(bx-tw/2,by-5,tw,15,stroke=0,fill=1); c.setFillColor(black); c.drawCentredString(bx,by,txt); continue
+        if z['kind'] in ('bystander',) or (z['kind']=='noshoot' and z.get('art')): continue   # unmarked on the art: shooter must discriminate
         c.setLineWidth(1.4); d.color(PAL['outline'],True)
         if z['kind']=='decor' and z.get('line'):
             zl=t['zones']; i0=next(i for i,q in enumerate(zl) if q is z)
@@ -190,7 +187,7 @@ def draw_target(key,t,path):
         c.setFillColor(black); c.drawString(x+0.3*K,y+1,txt)
     PAPER={(8.5,11):'US Letter portrait',(11,8.5):'US Letter LANDSCAPE',(17,11):'Tabloid 11x17 LANDSCAPE'}[(PW,PH)]
     c.setFont('Helvetica',6); c.setFillColor(HexColor('#555555'))
-    c.drawCentredString(*d.P(PW/2,PH-M-0.02),f'Print at 100% (Actual size), {PAPER}. Keep the white quiet zone around each corner marker clear. Dry fire only: verify the firearm is unloaded.')
+    c.drawCentredString(*d.P(PW/2,PH-M-0.02),f'Print at 100% (Actual size), {PAPER}. Keep the white quiet zone around each corner marker clear. Know your target and what is beyond it. Dry fire only: verify unloaded.')
     c.showPage(); c.save()
 if __name__=='__main__':
     os.makedirs('targets',exist_ok=True)

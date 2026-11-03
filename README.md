@@ -47,3 +47,8 @@ Targets and drills are split into **Self-Defense Training** (bullseye, IDPA, hos
 Die Hard art is now full colour. Hard cover is drawn as a real object (stair rail, desk, pillar, file cabinet) rather than a black block, which uses less ink and leaves less toner sheen. It still scores as hard cover.
 Laser-safety note: red dominance in the art is compressed above a soft knee. Skin tones keep some warmth (max r-(g+b)/2 ≈ 38), which is under the detector's red-dominance gate of 40, so frame differencing still sees the laser.
 Roof Finale (LD-209): exactly 2 shots. Hans exposed chest -0, then Eddie head -0. Any hit on Holly is a hostage penalty and the run FAILS.
+
+## Discrimination and backstop (v10)
+Hostages and non-threats are no longer marked on the art (no hatch, outline or tag). They are drawn in normal colour holding a phone, drink, wallet or keys, so you have to see the gun. Their no-shoot zones still exist in targets.json, and the legend stays in the footer.
+Single-threat Die Hard sheets have faded, smaller **bystanders** behind the threat (office workers, party guests). Any shot that misses the threat and lands on a bystander adds +10 s and is flagged **BACKSTOP FAILURE**. The flag is shown and spoken in the results. Threat zones in front of a bystander take priority, and hard cover blocks the shot. Know your target and what is beyond it.
+Red cap: art red dominance is hard-capped at 36 (detector gate 40), so lipstick and nails are slightly muted.

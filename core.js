@@ -50,18 +50,20 @@ Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
   for(const z of target.zones){if(z.kind!=='score')continue;if(expectName&&!target.scoring&&z.name!==expectName)continue;
     if(Core.inZone(z,pt,z.noGrow?0:spread)&&(!best||z.score>best.score))best={zone:z.name,score:z.score,pd:z.pd!=null?z.pd:0,group:z.group,part:z.part};}
   if(best)return best;
+  // backstop: bystanders sit BEHIND threats, so only shots that miss every scoring zone land on them
+  for(const z of target.zones)if(z.kind==='bystander'&&Core.inZone(z,pt,0))return {zone:z.name,score:z.penalty||-10,pd:5,bystander:true,backstop:true};
   if(expectName&&!target.scoring){for(const z of target.zones)if(z.kind==='score'&&Core.inZone(z,pt,spread))return {zone:z.name,score:0,pd:5,outOfOrder:true};}
   return {zone:null,score:0,pd:5};};
 // IDPA-style stage result: raw + PD*1s + PE*3s + HNT*5s. Each required hit missing (or on hard cover / non-threat) = 5 PD.
 Core.idpaSummary=function(stage,shots,rawTime){
-  const req=stage.shots,comp=stage.compliant||[],cnt=shots.slice(0,Math.max(req,shots.length)).map(s=>s.group&&comp.includes(s.group)?Object.assign({},s,{noshoot:true,compliantHit:true}):s);let pd=0,valid=0,hnt=0,pe=0;
+  const req=stage.shots,comp=stage.compliant||[],cnt=shots.slice(0,Math.max(req,shots.length)).map(s=>s.group&&comp.includes(s.group)?Object.assign({},s,{noshoot:true,compliantHit:true}):s);let pd=0,valid=0,hnt=0,pe=0,bys=0;
   const win=stage.window||3,vt=(stage.verbalTimes||[]).filter(t=>t<=win),fc=Math.max(0,comp.length-vt.length),fcs=stage.failCommand||3;
-  for(const s of cnt){if(s.noshoot)hnt++;if(s.zone&&!s.noshoot&&!s.hardcover){if(valid<req){pd+=s.pd;valid++;}}}
+  for(const s of cnt){if(s.bystander){bys++;continue;}if(s.noshoot)hnt++;if(s.zone&&!s.noshoot&&!s.hardcover){if(valid<req){pd+=s.pd;valid++;}}}
   pd+=5*Math.max(0,req-valid);
   if(stage.order){const got=cnt.filter(s=>s.group&&!s.noshoot);for(let i=0;i<got.length;i++)
     if(stage.order[i]&&(got[i].group!==stage.order[i]||(stage.parts&&stage.parts[i]&&got[i].part!==stage.parts[i]))){pe=1;break;}}
   const raw=rawTime==null?stage.timeout:rawTime;
-  return {raw,pd,pe,hnt,fc,fail:!!(stage.failOnNoShoot&&hnt>0),final:raw+pd+3*pe+5*hnt+fcs*fc};};
+  return {raw,pd,pe,hnt,fc,bys,backstop:bys>0,fail:!!(stage.failOnNoShoot&&hnt>0),final:raw+pd+3*pe+5*hnt+fcs*fc+10*bys};};
 // Voice: app commands (only when NOT live) and verbal scenario commands (only during live scenario drills).
 Core.VOICE={start:['start','standby','stand by','stand-by','begin','shooter ready'],stop:['stop','halt','cease'],reset:['reset','clear'],
   next:['next','next stage','skip'],repeat:['repeat','again','redo'],score:['score','result','results','how did i do']};

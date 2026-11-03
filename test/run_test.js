@@ -46,3 +46,5 @@ for(const key in meta.sets){const set=meta.sets[key],det=new ctx.AR.Detector(),l
  const ok=ok1&&r1.fc===0&&r1.hnt===0&&r2.fc===c.compliant.length&&r2.hnt===1&&r2.final===r1.final+5+3*c.compliant.length;
  if(!ok)fail++;console.log('[voice+scenario] calls',c.text,'| clean',JSON.stringify(r1),'| shot compliant + no commands',JSON.stringify(r2),ok?'ok':'FAIL');}
 console.log(fail?`FAIL (${fail})`:'PASS');process.exit(fail?1:0);
+{const r=Core.idpaSummary({shots:2},[{zone:'T1 -0',pd:0,group:'T1'},{zone:'BYSTANDER 1',bystander:true,pd:5}],3);
+ console.log('[backstop]',JSON.stringify(r));if(!(r.bys===1&&r.backstop&&r.final===18)){console.log('FAIL backstop');process.exit(1);}}

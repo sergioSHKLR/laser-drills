@@ -1,12 +1,12 @@
 """Die Hard Set 1 (category Fun): full-colour GenerateImage illustrations (art/src2) + rendered cover objects
 composited into one PNG per sheet; target specs (targets.json) + drills (drills.json).
-Vector is ONLY faint scoring outlines, hostage hatch/outline, markers, text."""
+Vector is ONLY faint scoring outlines (hostages/bystanders are NOT marked on the art), markers, text."""
 import json, cv2, numpy as np
 SRC='art/src2/'; OUT='art/'
 KNEE,KEEP=25,0.2   # red-dominance soft knee: keeps full colour, compresses only warm skin highlights (max dom < 40)
 def safe(img):
     b,g,r=[c.astype(np.float32) for c in cv2.split(img)]
-    d=r-(g+b)/2; d2=np.where(d>KNEE,KNEE+(d-KNEE)*KEEP,d); r=r-(d-d2)
+    d=r-(g+b)/2; d2=np.minimum(np.where(d>KNEE,KNEE+(d-KNEE)*KEEP,d),36); r=r-(d-d2)
     return cv2.merge([np.clip(c,0,255).astype(np.uint8) for c in (b,g,r)])
 def load(k,size=(768,1024)): return cv2.resize(cv2.imread(SRC+k+'.jpg'),size,interpolation=cv2.INTER_AREA)
 def mask(img,xmax=None,xmin=None):
@@ -36,7 +36,29 @@ PLAIN={k:IMG[k] for k in COV}
 for k,im in PLAIN.items(): cv2.imwrite(OUT+f'dh-{k}-plain.png',im)
 for k,(cv,(x0,y0,x1,y1),(px0,py0,px1,py1)) in COV.items():
     o=safe(cv2.imread(SRC+cv+'.jpg'))[y0:y1,x0:x1]; IMG[k]=IMG[k].copy(); IMG[k][py0:py1,px0:px1]=cv2.resize(o,(px1-px0,py1-py0),interpolation=cv2.INTER_AREA); HCR[k]=(px0,py0,px1,py1)
-for k,im in IMG.items(): cv2.imwrite(OUT+f'dh-{k}.png',im)
+# backstop: faded, smaller bystanders BEHIND the threat (depth). Zones from the unfaded layer; scoring checks them only after threat zones.
+BYS={'hans':'bys-office','karl':'bys-office','tony':'bys-party','franco':'bys-office','heinrich':'bys-party'}
+BZ={}; FADE=0.42
+def people(src):
+    b=safe(cv2.imread(SRC+src+'.jpg')); m=(b.min(axis=2)<232).astype(np.uint8)*255; m=cv2.morphologyEx(m,cv2.MORPH_CLOSE,np.ones((9,9),np.uint8))
+    n,lab,st,_=cv2.connectedComponentsWithStats(m); ps=sorted([st[i] for i in range(1,n) if st[i][4]>20000],key=lambda r:r[0])
+    return [(b[y:y+h,x:x+w],(lab[y:y+h,x:x+w]==i0)) for (x,y,w,h,_),i0 in [(r,[i for i in range(1,n) if (st[i]==r).all()][0]) for r in ps]]
+for k,src in BYS.items():
+    fig=IMG[k]; fm=cv2.dilate((fig.min(axis=2)<240).astype(np.uint8),np.ones((5,5),np.uint8)).astype(bool)
+    bg=np.full_like(fig,255); polys=[]; ppl=people(src); H=400; FEET=640
+    xs=[8,590,300] if len(ppl)==3 else [8,600]   # left edge, right edge, (middle behind the threat)
+    order=[0,len(ppl)-1]+([1] if len(ppl)==3 else [])
+    for xi,pi in zip(xs,order):
+        im,mk=ppl[pi]; h,w=mk.shape; sc=H/h; W=int(w*sc); im=cv2.resize(im,(W,H),interpolation=cv2.INTER_AREA); mk=cv2.resize(mk.astype(np.uint8),(W,H),interpolation=cv2.INTER_NEAREST)
+        x0=min(xi,768-W-4); y0=FEET-H; reg=bg[y0:y0+H,x0:x0+W]; f=(255-(255-im.astype(np.float32))*FADE).astype(np.uint8)
+        reg[mk>0]=f[mk>0]
+        cs,_=cv2.findContours(mk*255,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE); c=max(cs,key=cv2.contourArea)
+        polys.append((cv2.approxPolyDP(c,2.5,True)[:,0,:]+[x0,y0]).tolist())
+    out=np.where(fm[...,None],fig,bg); cv2.imwrite(OUT+f'dh-{k}.png',out); BZ[k]=polys
+for k,im in IMG.items():
+    if k not in BYS: cv2.imwrite(OUT+f'dh-{k}.png',im)
+def byz(k,X,Y,S):
+    return [dict(name=f'BYSTANDER {i+1}',kind='bystander',shape='poly',pts=[[round(X+x*S,3),round(Y+y*S,3)] for x,y in p],penalty=-10) for i,p in enumerate(BZ.get(k,[]))]
 def zones_for(k,G,X,Y,S,crop=0,img=None,xmin=None,xmax=None,c=None,cover=True):
     """Zones (inches) for character k placed with image px->in: x=X+(px-crop)*S, y=Y+py*S."""
     c=c or C[k]; T=lambda x,y:[round(X+(x-crop)*S,3),round(Y+y*S,3)]
@@ -56,7 +78,7 @@ def hostage(k,G,X,Y,S,crop=0,xmax=None,pts=None):
     T=lambda x,y:[round(X+(x-crop)*S,3),round(Y+y*S,3)]
     return dict(name=f'{G} NT',kind='noshoot',shape='poly',art=True,group=G,pts=[T(*p) for p in (pts or mask(IMG[k],xmax=xmax))],penalty=-5,ntSeconds=5)
 LEG_T=[('tier1','Core head/chest: -0'),('tier1','Head, torso: -1 (+1 s)'),('tier1','Limbs, hands: -3 (+3 s)'),('#FFFFFF','Miss: +5 s')]
-HC=('cover','Desk/rail/pillar/cabinet = hard cover'); NT=('noshoot','Hatched = HOSTAGE +5 s')
+HC=('cover','Desk/rail/pillar/cabinet = hard cover'); NT=('noshoot','Unarmed (phone, drink, wallet) = NO-SHOOT +5 s'); BY=('cover','Faded people behind = BYSTANDER +10 s, backstop fail')
 S1=7.2/1024; X1=(8.5-768*S1)/2; Y1=1.9
 DOC=json.load(open('targets.json')); T=DOC['targets']
 for k in [k for k in T if k.startswith('dh-')]: del T[k]
@@ -69,7 +91,8 @@ A=lambda k:[dict(src=f'art/dh-{k}.png',x=round(X1,3),y=Y1,w=round(768*S1,3),h=7.
 def one(key,code,mid,name,ch,drills,ins):
     z=zones_for(ch,'T1',X1,Y1,S1)
     if ch in HCR: z=[hcz(ch,X1,Y1,S1)]+z
-    sheet(key,code,mid,name,drills,ins,z,A(ch),LEG_T+([HC] if ch in HCR else []))
+    z+=byz(ch,X1,Y1,S1)
+    sheet(key,code,mid,name,drills,ins,z,A(ch),LEG_T+([HC] if ch in HCR else [])+([BY] if ch in BZ else []))
 one('dh-hans','LD-201',101,'Die Hard: Hans (HK P7)','hans',['dh-hans-mozambique','dh-course'],['Nakatomi 30th floor: the leader draws his P7.','Mozambique: 2 to the chest -0, then 1 to the head -0.','Outlines are faint on purpose: read the anatomy.','Say "start" or tap; gun holstered until the beep.'])
 one('dh-karl','LD-202',105,'Die Hard: Karl (MP5A3, stairwell)','karl',['dh-stairwell','dh-course'],['Stairwell: Karl comes up the stairs, lower body behind the rail.','2 to the exposed chest/head. Concrete rail = hard cover.','Faint outlines = scoring zones on real anatomy.','Say "start" or tap.'])
 one('dh-tony','LD-203',109,'Die Hard: Tony (MP5A3, cabinet)','tony',['dh-tony','dh-course'],['31st floor: Tony behind a file cabinet.','2 to the exposed chest -0. Cabinet = hard cover.','Faint outlines = scoring zones.','Say "start" or tap.'])
@@ -92,12 +115,12 @@ zH=[dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -3',shape='po
  dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(608,118),(722,140),(714,372),(608,372)]],score=-1,pd=1,part='body'),
  dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -0',shape='ellipse',cx=TH(660,255)[0],cy=TH(660,255)[1],rx=round(32*S4,3),ry=round(52*S4,3),score=0,pd=0,part='body')]
 z+=zE+zH
-sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans holds Holly at gunpoint; Eddie covers him.','Exactly 2: Hans exposed chest -0, then Eddie head -0.','Holly (hatched) = HOSTAGE: hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=Y4,w=7.6,h=round(768*S4,3))],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
+sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans holds Holly at gunpoint; Eddie covers him.','Exactly 2: Hans exposed chest -0, then Eddie head -0.','Holly = HOSTAGE: any hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=Y4,w=7.6,h=round(768*S4,3))],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
 # lobby: party guest (NT) + Tony, cropped 2-up on letter
 S2=6.9/1024; CR=150; W2=470*S2; X2a=0.4+(7.7-2*W2)/2; X2b=X2a+W2; Y2=2.05
 z=[hostage('partyguest','GUEST',X2a,Y2,S2,crop=CR)]+zones_for('tony','T1',X2b,Y2,S2,crop=CR,img=PLAIN['tony'],cover=False)
 art=[dict(src='art/dh-partyguest.png',x=round(X2a,3),y=Y2,w=round(W2,3),h=6.9,crop=[CR,0,620,1024]),dict(src='art/dh-tony-plain.png',x=round(X2b,3),y=Y2,w=round(W2,3),h=6.9,crop=[CR,0,620,1024])]
-sheet('dh-party','LD-210',137,'Die Hard: Christmas Party',['dh-party'],['30th floor party: a guest stands beside Tony.','2 to Tony only. Hatched white guest = HOSTAGE (+5 s).','Faint outlines = scoring zones.','Say "start" or tap.'],z,art,LEG_T+[NT])
+sheet('dh-party','LD-210',137,'Die Hard: Christmas Party',['dh-party'],['30th floor party: a guest stands beside Tony.','Find the gun: 2 to the armed man only. Unarmed guest = +5 s.','Faint outlines = scoring zones.','Say "start" or tap.'],z,art,LEG_T+[NT])
 # Nakatomi tabloid line-up
 S3=5.9/1024; W3=470*S3; X3=0.4+(16.2-6*W3)/2; Y3=2.6
 cast=[('hans','T1'),('karl','T2'),('franco','T3'),('eddie','T4'),('theo','T5'),('billclay','T6')]

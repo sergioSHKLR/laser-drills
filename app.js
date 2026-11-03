@@ -56,17 +56,17 @@ function onHit(h,now){const T=target(),d=drill();
   const exp=state.mode==='live'&&d.sequence?d.sequence[state.shots.length]:null;
   const p=lock?Core.apply(lock.imgToTgt,h):null,sc=p?Core.score(T,p,spread(),TPL(),exp):{zone:null,score:0};
   marks.push({x:h.x,y:h.y,t:now});if(marks.length>30)marks.shift();
-  if(state.mode==='free'||state.mode==='live'){state.shots.push(Object.assign({},sc,{t:now,p,ooo:sc.outOfOrder}));tone(sc.noshoot?300:1600,sc.noshoot?200:40);render();
+  if(state.mode==='free'||state.mode==='live'){state.shots.push(Object.assign({},sc,{t:now,p,ooo:sc.outOfOrder}));tone(sc.noshoot||sc.bystander?300:1600,sc.noshoot||sc.bystander?200:40);render();
     if(state.mode==='live'&&state.shots.length>=d.shots&&(!d.compliant||(state.verbal||[]).length>=d.compliant.length))finish();}}
 function poly(pts,col,dash){ctx.strokeStyle=col;ctx.setLineDash(dash||[]);ctx.beginPath();pts.forEach((q,i)=>{const r=Core.apply(lock.tgtToImg,q);i?ctx.lineTo(r.x,r.y):ctx.moveTo(r.x,r.y);});ctx.stroke();ctx.setLineDash([]);}
 function draw(){if(lock){ctx.lineWidth=2;const tp=TPL(),f=tp.field,T=lock.target,g=spread();
    poly(Core.outline({shape:'rect',x:f.x,y:f.y,w:f.w,h:f.h}),'#29b6f6',[6,4]);
-   for(const z of T.zones)if(z.kind!=='decor')poly(Core.outline(z,z.noGrow?0:g),z.kind==='noshoot'?'rgba(255,255,255,.9)':'rgba(255,235,59,.75)');}
+   for(const z of T.zones)if(z.kind!=='decor')poly(Core.outline(z,z.noGrow?0:g),z.kind==='noshoot'||z.kind==='bystander'?'rgba(255,255,255,.9)':'rgba(255,235,59,.75)');}
   for(const m of marks){ctx.fillStyle='#00e676';ctx.beginPath();ctx.arc(m.x,m.y,5,0,7);ctx.fill();}}
 function render(){const s=Core.drillSummary(drill(),state.beep,state.shots);
-  $('shots').innerHTML=state.shots.map((x,i)=>`<tr><td>${i+1}</td><td>${s.times[i].toFixed(2)}</td><td>${s.splits[i].toFixed(2)}</td><td>${x.hardcover?'HARD COVER':x.noshoot?(drill().scoring==='idpa'?'NON-THREAT':'NO-SHOOT'):x.ooo?x.zone+' (order)':(x.zone||'miss')}</td><td>${drill().scoring==='idpa'?(x.noshoot?'+5s':'-'+x.pd):x.score}</td></tr>`).join('');
+  $('shots').innerHTML=state.shots.map((x,i)=>`<tr><td>${i+1}</td><td>${s.times[i].toFixed(2)}</td><td>${s.splits[i].toFixed(2)}</td><td>${x.bystander?'BYSTANDER +10s':x.hardcover?'HARD COVER':x.noshoot?(drill().scoring==='idpa'?'NON-THREAT':'NO-SHOOT'):x.ooo?x.zone+' (order)':(x.zone||'miss')}</td><td>${drill().scoring==='idpa'?(x.noshoot?'+5s':'-'+x.pd):x.score}</td></tr>`).join('');
   if(state.mode==='done'&&drill().scoring==='idpa'){const r=Core.idpaSummary(drill(),state.shots,s.total);
-    $('big').textContent=`${drill().name||'Stage'}: raw ${r.raw.toFixed(2)}s + PD ${r.pd} + PE ${r.pe}×3 + HNT ${r.hnt}×5${r.fc!=null&&drill().scenario?` + no-command ${r.fc}×${drill().failCommand}`:''} = ${r.final.toFixed(2)}${r.fail?' · FAIL: hostage hit':''}`+(drill().scenario?` · calls: ${drill().text} · verbal at ${(state.verbal||[]).map(x=>x.toFixed(1)+'s').join(', ')||'none'}`:'');}
+    $('big').textContent=`${drill().name||'Stage'}: raw ${r.raw.toFixed(2)}s + PD ${r.pd} + PE ${r.pe}×3 + HNT ${r.hnt}×5${r.fc!=null&&drill().scenario?` + no-command ${r.fc}×${drill().failCommand}`:''} = ${r.final.toFixed(2)}${r.bys?` + BYSTANDER ${r.bys}×10 · BACKSTOP FAILURE`:''}${r.fail?' · FAIL: hostage hit':''}`+(drill().scenario?` · calls: ${drill().text} · verbal at ${(state.verbal||[]).map(x=>x.toFixed(1)+'s').join(', ')||'none'}`:'');}
   else if(state.mode==='done')$('big').textContent=`${s.score}/${s.maxScore} pts · ${s.total!=null?s.total.toFixed(2)+'s':'—'} ${s.underPar?'✅ under par':'❌ over par/incomplete'}`;}
 function reset(){clearTimeout(state.timer);clearTimeout(state.par);state={mode:'idle',shots:[],beep:0};if(typeof Voice!=='undefined')Voice.resume();marks=[];$('shots').innerHTML='';$('big').textContent='';}
 $('goBtn').onclick=()=>{ac.resume();reset();const d=drill();if(!lock){$('big').textContent='No target lock yet';return;}
@@ -95,7 +95,7 @@ function finish(){clearTimeout(state.timer);clearTimeout(state.par);const was=st
 let lastSay='No result yet.';
 function say(t,keepListening){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=1.05;if(!keepListening)Voice.mute(true);u.onend=u.onerror=()=>setTimeout(()=>Voice.mute(false),500);speechSynthesis.speak(u);}catch(e){}}
 function spokenResult(){const d=drill(),s=Core.drillSummary(d,state.beep,state.shots);
-  if(d.scoring==='idpa'){const r=Core.idpaSummary(d,state.shots,s.total);return `Final ${r.final.toFixed(2)} seconds. Raw ${r.raw.toFixed(2)}, ${r.pd} down`+(r.pe?`, ${r.pe} procedural`:'')+(r.hnt?`, ${r.hnt} non-threat hits`:'')+(d.scenario&&r.fc?`, ${r.fc} missed commands`:'')+(r.fail?'. Fail, hostage hit':'')+'.';}
+  if(d.scoring==='idpa'){const r=Core.idpaSummary(d,state.shots,s.total);return `Final ${r.final.toFixed(2)} seconds. Raw ${r.raw.toFixed(2)}, ${r.pd} down`+(r.pe?`, ${r.pe} procedural`:'')+(r.hnt?`, ${r.hnt} non-threat hits`:'')+(d.scenario&&r.fc?`, ${r.fc} missed commands`:'')+(r.bys?`. Backstop failure, ${r.bys} bystander hit${r.bys>1?'s':''}, plus ${10*r.bys} seconds`:'')+(r.fail?'. Fail, hostage hit':'')+'.';}
   return `${s.score} of ${s.maxScore} points`+(s.total!=null?`, ${s.total.toFixed(2)} seconds`:'')+(s.underPar?', under par.':'.');}
 // ---- commands (voice, big buttons, media keys)
 const CMD={start:()=>{if(state.mode==='wait'||state.mode==='live')return;$('goBtn').onclick();},
