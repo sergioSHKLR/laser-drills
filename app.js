@@ -31,20 +31,24 @@ function buildSliders(){const s=$('sliders');s.innerHTML='';for(const k in RANGE
 $('resetBtn').onclick=()=>{settings=Object.assign({},DEF);localStorage.removeItem('ld-settings');Object.assign(laser.o,settings);buildSliders();};
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-tab]').forEach(x=>x.classList.toggle('on',x===b));
   ['drill','cal'].forEach(t=>$('tab-'+t).classList.toggle('hidden',t!==b.dataset.tab));});
-$('camBtn').onclick=async()=>{ac.resume();try{
+let camStream=null,camGen=0;
+function stopCamera(){camGen++;if(camStream)camStream.getTracks().forEach(t=>t.stop());camStream=null;
+  if(video){video.pause();video.srcObject=null;}video=null;reset();laser=new Core.LaserDetector(settings);lock=null;lockAge=0;mask=null;lastDetect=0;marks=[];
+  ctx.clearRect(0,0,view.width,view.height);$('fps').textContent='0';$('camBtn').textContent='Start Camera';$('status').textContent='Camera stopped.';}
+$('camBtn').onclick=async()=>{if(camStream){stopCamera();return;}ac.resume();$('camBtn').disabled=true;try{
   const st=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720},frameRate:{ideal:60}}});
-  video=document.createElement('video');video.playsInline=true;video.muted=true;video.srcObject=st;await video.play();
+  video=document.createElement('video');video.playsInline=true;video.muted=true;video.srcObject=st;camStream=st;await video.play();
   const tr=st.getVideoTracks()[0],caps=tr.getCapabilities?tr.getCapabilities():{};
   // Lock exposure low if supported: laser pops more on a darker image.
   try{const adv={};if(caps.exposureMode&&caps.exposureMode.includes('manual'))adv.exposureMode='manual';
     if(caps.focusMode&&caps.focusMode.includes('continuous'))adv.focusMode='continuous';await tr.applyConstraints({advanced:[adv]});}catch(e){}
-  W=Math.min(video.videoWidth||640,1280);H=Math.round(W*video.videoHeight/video.videoWidth);view.width=W;view.height=H;$('camBtn').disabled=true;loop();
- }catch(e){$('status').textContent='Camera error: '+e.message+' (needs HTTPS + permission)';}};
+  W=Math.min(video.videoWidth||640,1280);H=Math.round(W*video.videoHeight/video.videoWidth);view.width=W;view.height=H;$('camBtn').disabled=false;$('camBtn').textContent='Stop Camera';loop();
+ }catch(e){$('camBtn').disabled=false;if(camStream)stopCamera();$('status').textContent='Camera error: '+e.message+' (needs HTTPS + permission)';}};
 function buildMask(){mask=new Uint8Array(W*H);const f=TPL().field,p=[[f.x,f.y],[f.x+f.w,f.y],[f.x+f.w,f.y+f.h],[f.x,f.y+f.h]].map(q=>Core.apply(lock.tgtToImg,{x:q[0],y:q[1]}));
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){let inside=false;for(let i=0,j=3;i<4;j=i++){const a=p[i],b=p[j];
     if((a.y>y)!==(b.y>y)&&x<(b.x-a.x)*(y-a.y)/(b.y-a.y)+a.x)inside=!inside;}mask[y*W+x]=inside;}}
-function loop(){const cb=(now)=>{tick(now);video.requestVideoFrameCallback?video.requestVideoFrameCallback(cb):requestAnimationFrame(cb);};
-  video.requestVideoFrameCallback?video.requestVideoFrameCallback(cb):requestAnimationFrame(cb);}
+function loop(){const g=camGen,v=video;const cb=(now)=>{if(g!==camGen||!video)return;tick(now);video.requestVideoFrameCallback?video.requestVideoFrameCallback(cb):requestAnimationFrame(cb);};
+  v.requestVideoFrameCallback?v.requestVideoFrameCallback(cb):requestAnimationFrame(cb);}
 function tick(now){ctx.drawImage(video,0,0,W,H);const img=ctx.getImageData(0,0,W,H);frames++;
   if(now-fpsT>1000){$('fps').textContent=frames;frames=0;fpsT=now;}
   if(now-lastDetect>(lock?1500:300)){lastDetect=now;const nl=Core.lockTarget(det.detect(img),DOC);
