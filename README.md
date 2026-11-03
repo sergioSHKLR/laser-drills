@@ -41,3 +41,9 @@ Viewfinder height slider 20–80% of screen height plus Small/Medium/Large prese
 
 ## Die Hard set (LD-201 to LD-211)
 Eleven illustrated, fan-made training targets from the Die Hard Set 1 (Nakatomi Plaza): Hans (HK P7), Karl (stairwell, behind hard cover), Tony (MP5), Franco (behind the desk), Heinrich (behind a pillar), Eddie (fake guard), Theo, the "Bill Clay" impostor, Hans holding Holly (hostage), the Christmas party (guest no-shoot), and the 11x17 Nakatomi line-up (T1-T6). The characters are GenerateImage raster art, recolored so they pass the laser red-dominance check. Generic faces, no actor likeness. The scoring zones (-0/-1/-3) are faint dashed outlines fitted to the anatomy. Hostages are hatched with a black outline, and hard cover is solid black. Markers use ArUco IDs 101-144. To rebuild: `python3 tools_diehard.py && python3 gen_assets.py`. Drills: dh-hans-mozambique, dh-stairwell, dh-tony, dh-franco, dh-heinrich, dh-eddie, dh-theo, dh-billclay, dh-hans-holly, dh-party, dh-nakatomi-calls, dh-nakatomi-sds, and the dh-course (6 stages). Gallery: targets/index.html#diehard.
+
+## Categories (v9)
+Targets and drills are split into **Self-Defense Training** (bullseye, IDPA, hostage, hard cover, shoot/don't-shoot) and **Fun** (Die Hard set).
+Die Hard art is now full colour. Hard cover is drawn as a real object (stair rail, desk, pillar, file cabinet) rather than a black block, which uses less ink and leaves less toner sheen. It still scores as hard cover.
+Laser-safety note: red dominance in the art is compressed above a soft knee. Skin tones keep some warmth (max r-(g+b)/2 ≈ 38), which is under the detector's red-dominance gate of 40, so frame differencing still sees the laser.
+Roof Finale (LD-209): exactly 2 shots. Hans exposed chest -0, then Eddie head -0. Any hit on Holly is a hostage penalty and the run FAILS.

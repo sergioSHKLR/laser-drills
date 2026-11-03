@@ -8,7 +8,7 @@ let W=640,H=480,state={mode:'idle',shots:[],beep:0,timer:null},marks=[],frames=0
 const ac=new (window.AudioContext||window.webkitAudioContext)();
 function tone(f,ms){const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;o.connect(g);g.connect(ac.destination);g.gain.value=0.4;o.start();o.stop(ac.currentTime+ms/1000);}
 async function init(){[DOC,DRILLS]=await Promise.all([fetch('targets.json').then(r=>r.json()),fetch('drills.json').then(r=>r.json())]);
-  DRILLS.forEach((d,i)=>$('drillSel').add(new Option(d.name,i)));showNotes();buildSliders();
+  [['training','Self-Defense Training'],['fun','Fun']].forEach(([c,l])=>{const g=document.createElement('optgroup');g.label=l;DRILLS.forEach((d,i)=>{if((d.category||'training')===c)g.appendChild(new Option(d.name,i));});if(g.children.length)$('drillSel').appendChild(g);});showNotes();buildSliders();
   if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');}
 let course={idx:0,results:[]};
 const sel=()=>DRILLS[$('drillSel').value];
@@ -66,7 +66,7 @@ function draw(){if(lock){ctx.lineWidth=2;const tp=TPL(),f=tp.field,T=lock.target
 function render(){const s=Core.drillSummary(drill(),state.beep,state.shots);
   $('shots').innerHTML=state.shots.map((x,i)=>`<tr><td>${i+1}</td><td>${s.times[i].toFixed(2)}</td><td>${s.splits[i].toFixed(2)}</td><td>${x.hardcover?'HARD COVER':x.noshoot?(drill().scoring==='idpa'?'NON-THREAT':'NO-SHOOT'):x.ooo?x.zone+' (order)':(x.zone||'miss')}</td><td>${drill().scoring==='idpa'?(x.noshoot?'+5s':'-'+x.pd):x.score}</td></tr>`).join('');
   if(state.mode==='done'&&drill().scoring==='idpa'){const r=Core.idpaSummary(drill(),state.shots,s.total);
-    $('big').textContent=`${drill().name||'Stage'}: raw ${r.raw.toFixed(2)}s + PD ${r.pd} + PE ${r.pe}×3 + HNT ${r.hnt}×5${r.fc!=null&&drill().scenario?` + no-command ${r.fc}×${drill().failCommand}`:''} = ${r.final.toFixed(2)}`+(drill().scenario?` · calls: ${drill().text} · verbal at ${(state.verbal||[]).map(x=>x.toFixed(1)+'s').join(', ')||'none'}`:'');}
+    $('big').textContent=`${drill().name||'Stage'}: raw ${r.raw.toFixed(2)}s + PD ${r.pd} + PE ${r.pe}×3 + HNT ${r.hnt}×5${r.fc!=null&&drill().scenario?` + no-command ${r.fc}×${drill().failCommand}`:''} = ${r.final.toFixed(2)}${r.fail?' · FAIL: hostage hit':''}`+(drill().scenario?` · calls: ${drill().text} · verbal at ${(state.verbal||[]).map(x=>x.toFixed(1)+'s').join(', ')||'none'}`:'');}
   else if(state.mode==='done')$('big').textContent=`${s.score}/${s.maxScore} pts · ${s.total!=null?s.total.toFixed(2)+'s':'—'} ${s.underPar?'✅ under par':'❌ over par/incomplete'}`;}
 function reset(){clearTimeout(state.timer);clearTimeout(state.par);state={mode:'idle',shots:[],beep:0};if(typeof Voice!=='undefined')Voice.resume();marks=[];$('shots').innerHTML='';$('big').textContent='';}
 $('goBtn').onclick=()=>{ac.resume();reset();const d=drill();if(!lock){$('big').textContent='No target lock yet';return;}
@@ -95,7 +95,7 @@ function finish(){clearTimeout(state.timer);clearTimeout(state.par);const was=st
 let lastSay='No result yet.';
 function say(t,keepListening){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=1.05;if(!keepListening)Voice.mute(true);u.onend=u.onerror=()=>setTimeout(()=>Voice.mute(false),500);speechSynthesis.speak(u);}catch(e){}}
 function spokenResult(){const d=drill(),s=Core.drillSummary(d,state.beep,state.shots);
-  if(d.scoring==='idpa'){const r=Core.idpaSummary(d,state.shots,s.total);return `Final ${r.final.toFixed(2)} seconds. Raw ${r.raw.toFixed(2)}, ${r.pd} down`+(r.pe?`, ${r.pe} procedural`:'')+(r.hnt?`, ${r.hnt} non-threat hits`:'')+(d.scenario&&r.fc?`, ${r.fc} missed commands`:'')+'.';}
+  if(d.scoring==='idpa'){const r=Core.idpaSummary(d,state.shots,s.total);return `Final ${r.final.toFixed(2)} seconds. Raw ${r.raw.toFixed(2)}, ${r.pd} down`+(r.pe?`, ${r.pe} procedural`:'')+(r.hnt?`, ${r.hnt} non-threat hits`:'')+(d.scenario&&r.fc?`, ${r.fc} missed commands`:'')+(r.fail?'. Fail, hostage hit':'')+'.';}
   return `${s.score} of ${s.maxScore} points`+(s.total!=null?`, ${s.total.toFixed(2)} seconds`:'')+(s.underPar?', under par.':'.');}
 // ---- commands (voice, big buttons, media keys)
 const CMD={start:()=>{if(state.mode==='wait'||state.mode==='live')return;$('goBtn').onclick();},

@@ -10,7 +10,8 @@
   ],
   "parTime": 5.0,
   "timeout": 15,
-  "notes": "Random delay, beep, 5 shots. Striker pistol: splits include rack time."
+  "notes": "Random delay, beep, 5 shots. Striker pistol: splits include rack time.",
+  "category": "training"
  },
  {
   "id": "single-draw",
@@ -22,7 +23,8 @@
    6.0
   ],
   "parTime": 1.8,
-  "timeout": 6
+  "timeout": 6,
+  "category": "training"
  },
  {
   "id": "dot-sequence",
@@ -42,7 +44,8 @@
   ],
   "parTime": 8.0,
   "timeout": 20,
-  "notes": "Each shot must hit the next dot in order."
+  "notes": "Each shot must hit the next dot in order.",
+  "category": "training"
  },
  {
   "id": "clay-trio",
@@ -56,7 +59,8 @@
   ],
   "parTime": 4.0,
   "timeout": 10,
-  "notes": "Shotgun mode forced on; uses the target's spread."
+  "notes": "Shotgun mode forced on; uses the target's spread.",
+  "category": "training"
  },
  {
   "id": "hostage-head",
@@ -70,7 +74,8 @@
   "parTime": 3.0,
   "timeout": 10,
   "maxPerShot": 5,
-  "notes": "Precision under pressure; hostage hit = -10."
+  "notes": "Precision under pressure; hostage hit = -10.",
+  "category": "training"
  },
  {
   "id": "idpa-course",
@@ -183,7 +188,8 @@
     "timeout": 20,
     "brief": "2 each on T1, T2, T3 in order. Out of order = PE."
    }
-  ]
+  ],
+  "category": "training"
  },
  {
   "id": "idpa-all-calls-letter",
@@ -242,7 +248,8 @@
   ],
   "parTime": 15.0,
   "timeout": 40,
-  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
+  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD.",
+  "category": "training"
  },
  {
   "id": "idpa-all-calls",
@@ -301,7 +308,8 @@
   ],
   "parTime": 15.0,
   "timeout": 40,
-  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
+  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD.",
+  "category": "training"
  },
  {
   "id": "shoot-dont-shoot",
@@ -331,7 +339,8 @@
   ],
   "parTime": 10.0,
   "timeout": 20,
-  "notes": "At the beep 4 targets are called: 'GUN' = threat, shoot it 2x; 'HANDS UP' = compliant: do NOT shoot, give a verbal command ('Drop it!', 'Show me your hands!', 'Police, don't move!') within 3 s. Each hit on a compliant target = +5 s; each compliant target without a command in time = +3 s. Mic must be on. Only command phrases are heard while live."
+  "notes": "At the beep 4 targets are called: 'GUN' = threat, shoot it 2x; 'HANDS UP' = compliant: do NOT shoot, give a verbal command ('Drop it!', 'Show me your hands!', 'Police, don't move!') within 3 s. Each hit on a compliant target = +5 s; each compliant target without a command in time = +3 s. Mic must be on. Only command phrases are heard while live.",
+  "category": "training"
  },
  {
   "id": "shoot-dont-shoot-letter",
@@ -361,7 +370,8 @@
   ],
   "parTime": 10.0,
   "timeout": 20,
-  "notes": "At the beep 4 targets are called: 'GUN' = threat, shoot it 2x; 'HANDS UP' = compliant: do NOT shoot, give a verbal command ('Drop it!', 'Show me your hands!', 'Police, don't move!') within 3 s. Each hit on a compliant target = +5 s; each compliant target without a command in time = +3 s. Mic must be on. Only command phrases are heard while live."
+  "notes": "At the beep 4 targets are called: 'GUN' = threat, shoot it 2x; 'HANDS UP' = compliant: do NOT shoot, give a verbal command ('Drop it!', 'Show me your hands!', 'Police, don't move!') within 3 s. Each hit on a compliant target = +5 s; each compliant target without a command in time = +3 s. Mic must be on. Only command phrases are heard while live.",
+  "category": "training"
  },
  {
   "scoring": "idpa",
@@ -388,7 +398,8 @@
   "randomize": false,
   "parTime": 4.0,
   "timeout": 12,
-  "notes": "Hans draws the P7. 2 chest -0 then 1 head -0. Wrong part order = PE +3 s."
+  "notes": "Hans draws the P7. 2 chest -0 then 1 head -0. Wrong part order = PE +3 s.",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -403,7 +414,8 @@
   "shots": 2,
   "parTime": 3.0,
   "timeout": 10,
-  "notes": "Karl coming up the stairs. 2 on the exposed chest/head; the black rail is hard cover."
+  "notes": "Karl coming up the stairs. 2 on the exposed chest/head; the black rail is hard cover.",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -418,7 +430,8 @@
   "shots": 2,
   "parTime": 2.5,
   "timeout": 10,
-  "notes": "Tony through the door. 2 to the chest -0."
+  "notes": "Tony through the door. 2 to the chest -0.",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -433,7 +446,8 @@
   "shots": 2,
   "parTime": 3.0,
   "timeout": 10,
-  "notes": "Franco behind the desk with an AUG. 2 on exposed upper body; desk = hard cover."
+  "notes": "Franco behind the desk with an AUG. 2 on exposed upper body; desk = hard cover.",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -448,7 +462,8 @@
   "shots": 2,
   "parTime": 3.0,
   "timeout": 10,
-  "notes": "Heinrich half behind a pillar. 2 on the exposed side."
+  "notes": "Heinrich half behind a pillar. 2 on the exposed side.",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -476,7 +491,8 @@
   },
   "parTime": 3.0,
   "timeout": 15,
-  "notes": "Called GUN: 2 to the chest. Called HANDS UP: do not shoot, say \"Drop it!\" / \"Show me your hands!\" within 3 s."
+  "notes": "Called GUN: 2 to the chest. Called HANDS UP: do not shoot, say \"Drop it!\" / \"Show me your hands!\" within 3 s.",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -504,7 +520,8 @@
   },
   "parTime": 3.0,
   "timeout": 15,
-  "notes": "Mostly compliant. HANDS UP: verbal command within 3 s. GUN: 2 to the chest."
+  "notes": "Mostly compliant. HANDS UP: verbal command within 3 s. GUN: 2 to the chest.",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -532,7 +549,8 @@
   },
   "parTime": 4.0,
   "timeout": 15,
-  "notes": "The leader posing as a hostage. HANDS UP: \"Get down!\" within 3 s. GUN: 3 shots (2 chest + head)."
+  "notes": "The leader posing as a hostage. HANDS UP: \"Get down!\" within 3 s. GUN: 3 shots (2 chest + head).",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -541,23 +559,34 @@
    2,
    4
   ],
-  "id": "dh-hans-holly",
-  "name": "Die Hard: Hans holds Holly (head shot)",
-  "target": "dh-hans-holly",
+  "id": "dh-finale",
+  "name": "Die Hard: Roof Finale",
+  "target": "dh-finale",
   "calls": [
    {
     "group": "T1",
-    "label": "Hans head",
-    "say": "Hans, head only",
+    "label": "Hans",
+    "say": "Hans, center mass",
+    "parts": [
+     "body"
+    ]
+   },
+   {
+    "group": "T2",
+    "label": "Eddie",
+    "say": "Eddie, head",
     "parts": [
      "head"
     ]
    }
   ],
   "randomize": false,
-  "parTime": 2.5,
+  "shots": 2,
+  "failOnNoShoot": true,
+  "parTime": 3.0,
   "timeout": 10,
-  "notes": "1 shot to Hans head -0. Any hit on Holly (hatched) = +5 s non-threat."
+  "notes": "Exactly 2 shots: Hans exposed center mass -0, then Eddie head -0. Any hit on Holly = +5 s and stage FAIL.",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -576,7 +605,8 @@
   ],
   "parTime": 3.0,
   "timeout": 10,
-  "notes": "2 on Tony only. The hatched guest is a hostage: +5 s per hit."
+  "notes": "2 on Tony only. The hatched guest is a hostage: +5 s per hit.",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -619,7 +649,8 @@
     "shots": 2
    }
   ],
-  "notes": "Names are spoken in random order: Hans = 1 head shot, others 2 chest. Theo (T5) and Bill Clay (T6) are not called: hits on them still count as wrong target (PE)."
+  "notes": "Names are spoken in random order: Hans = 1 head shot, others 2 chest. Theo (T5) and Bill Clay (T6) are not called: hits on them still count as wrong target (PE).",
+  "category": "fun"
  },
  {
   "scoring": "idpa",
@@ -657,7 +688,8 @@
   },
   "parTime": 10.0,
   "timeout": 15,
-  "notes": "4 crew are called: GUN = 2 shots, HANDS UP = verbal command within 3 s (\"Drop it!\", \"Show me your hands!\"). Hit on compliant = +5 s, late command = +3 s."
+  "notes": "4 crew are called: GUN = 2 shots, HANDS UP = verbal command within 3 s (\"Drop it!\", \"Show me your hands!\"). Hit on compliant = +5 s, late command = +3 s.",
+  "category": "fun"
  },
  {
   "id": "dh-course",
@@ -737,23 +769,27 @@
     "brief": "Mozambique: 2 chest, 1 head."
    },
    {
-    "name": "6. The window: Hans holds Holly",
-    "target": "dh-hans-holly",
-    "shots": 1,
+    "name": "6. Roof finale: Hans, Holly, Eddie",
+    "target": "dh-finale",
+    "shots": 2,
     "order": [
-     "T1"
+     "T1",
+     "T2"
     ],
     "parts": [
+     "body",
      "head"
     ],
+    "failOnNoShoot": true,
     "startDelay": [
      2,
      4
     ],
-    "parTime": 2.5,
+    "parTime": 3.0,
     "timeout": 10,
-    "brief": "1 head shot. Do not hit Holly."
+    "brief": "Hans center mass, then Eddie head. Do not hit Holly."
    }
-  ]
+  ],
+  "category": "fun"
  }
 ]

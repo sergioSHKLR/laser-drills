@@ -61,7 +61,7 @@ Core.idpaSummary=function(stage,shots,rawTime){
   if(stage.order){const got=cnt.filter(s=>s.group&&!s.noshoot);for(let i=0;i<got.length;i++)
     if(stage.order[i]&&(got[i].group!==stage.order[i]||(stage.parts&&stage.parts[i]&&got[i].part!==stage.parts[i]))){pe=1;break;}}
   const raw=rawTime==null?stage.timeout:rawTime;
-  return {raw,pd,pe,hnt,fc,final:raw+pd+3*pe+5*hnt+fcs*fc};};
+  return {raw,pd,pe,hnt,fc,fail:!!(stage.failOnNoShoot&&hnt>0),final:raw+pd+3*pe+5*hnt+fcs*fc};};
 // Voice: app commands (only when NOT live) and verbal scenario commands (only during live scenario drills).
 Core.VOICE={start:['start','standby','stand by','stand-by','begin','shooter ready'],stop:['stop','halt','cease'],reset:['reset','clear'],
   next:['next','next stage','skip'],repeat:['repeat','again','redo'],score:['score','result','results','how did i do']};

@@ -83,7 +83,7 @@ def draw_target(key,t,path):
         im=Image.open(a['src']).convert('RGB')
         if a.get('crop'): im=im.crop(tuple(a['crop']))
         arr=np.asarray(im).astype(int); rd=(arr[...,0]-(arr[...,1]+arr[...,2])/2).max()
-        assert rd<20, f"{a['src']} too red for laser detection ({rd})"
+        assert rd<40, f"{a['src']} too red for laser detection ({rd})"
         x,y=d.P(a['x'],a['y']+a['h']); c.drawImage(ImageReader(im),x,y,a['w']*K,a['h']*K)
     # zones
     for z in t['zones']:
@@ -118,6 +118,8 @@ def draw_target(key,t,path):
             c.setFillColor(white); c.rect(bx-tw/2,by-5,tw,15,stroke=0,fill=1); c.setFillColor(black)
             c.drawCentredString(bx,by,txt)
             continue
+        if z['kind']=='hardcover' and z.get('art'):   # rendered cover object in the art: faint outline only
+            c.setDash(1,3); c.setLineWidth(0.6); d.color(PAL['subtle'],True); c.drawPath(d.path(z),stroke=1,fill=0); c.setDash(); continue
         if z['kind']=='hardcover':
             c.setFillColor(black); c.drawPath(d.path(z),stroke=0,fill=1)
             lx,ly=d.P(*(z.get('label') or zone_center(z))); c.setFillColor(white); c.setFont('Helvetica-Bold',9)
@@ -199,6 +201,6 @@ if __name__=='__main__':
     rows=''.join(li(k,t) for k,t in DOC['targets'].items() if t.get('set')!='diehard')
     dh=''.join(li(k,t) for k,t in DOC['targets'].items() if t.get('set')=='diehard')
     UL="<ul style='list-style:none;display:flex;flex-wrap:wrap;gap:16px;padding:0'>"
-    open('targets/index.html','w').write(f"<!doctype html><meta name=viewport content='width=device-width'><title>Laser Drills targets</title><body style='font:15px system-ui;background:#111;color:#eee'><h2>Printable targets</h2><p>Print at 100% / Actual size. Paper is printed in each sheet footer (US Letter unless marked LANDSCAPE / Tabloid 11x17).</p>{UL}{rows}</ul><h2 id=diehard>Die Hard (Set 1: Nakatomi Plaza)</h2><p>Illustrated characters with faint anatomy-based -0/-1/-3 outlines. Hatched white = hostage, black = hard cover. Fan-made training targets; characters are drawn, not actor likenesses.</p>{UL}{dh}</ul><p><a href='../' style='color:#8ab4f8'>Back to app</a></p>".replace('<a ',"<a style='color:#8ab4f8' "))
+    open('targets/index.html','w').write(f"<!doctype html><meta name=viewport content='width=device-width'><title>Laser Drills targets</title><body style='font:15px system-ui;background:#111;color:#eee'><h1>Printable targets</h1><p>Print at 100% / Actual size. Paper is printed in each sheet footer (US Letter unless marked LANDSCAPE / Tabloid 11x17).</p><h2 id=training>Self-Defense Training</h2><p>Bullseye, IDPA, hostage, hard cover and shoot/don't-shoot sheets.</p>{UL}{rows}</ul><h2 id=fun>Fun</h2><h3 id=diehard>Die Hard (Set 1: Nakatomi Plaza)</h3><p>Full-colour illustrated characters with faint anatomy-based -0/-1/-3 outlines. Hatched = hostage; rendered desk/rail/pillar/cabinet = hard cover. Fan-made training targets; characters are drawn, not actor likenesses.</p>{UL}{dh}</ul><p><a href='../' style='color:#8ab4f8'>Back to app</a></p>".replace('<a ',"<a style='color:#8ab4f8' "))
     import subprocess
     for k in DOC['targets']: subprocess.run(['pdftoppm','-r','50','-png','-singlefile',f'targets/{k}-letter.pdf',f'targets/{k}-letter'],check=True)
