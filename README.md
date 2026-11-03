@@ -89,3 +89,4 @@ All Die Hard characters (Hans, Karl, Tony, Uli, Theo, Eddie, Franco, Heinrich, B
 - v18 template: circle legend swatches; header/footer text auto-fit; marker ID labels removed; generator asserts no text/art bbox intersects any marker+quiet zone (tabloid fields trimmed to clear bottom quiet zones).
 - v19: art sheets are clean (no printed zone outlines, no scan-field outline on art); every target also gets targets/<key>-mask.pdf/.png scoring-map sheet (same markers/geometry, no images), linked in the gallery.
 - v20: Karl tall/athletic in black turtleneck + black suit, dress shoes; Uli olive quilted jacket, ponytail, Fu Manchu mustache.
+- v21: Eddie solo + line-up redrawn to match the Finale (gray three-piece, black pants/shoes, MP5A3 low ready, faceless); zones refit.
