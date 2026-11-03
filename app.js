@@ -75,7 +75,7 @@ $('goBtn').onclick=()=>{ac.resume();reset();const d=drill();if(!lock){$('big').t
   state.mode='wait';$('big').textContent='Stand by…';
   if(d.scenario){state.calls=Core.makeScenario(d.scenario,Math.random);state.verbal=[];$('big').textContent='Stand by…';}
   if(d.calls){state.calls=Core.makeCalls(d.calls,Math.random,d.randomize);$('big').textContent='CALLS: '+state.calls.text;
-    try{speechSynthesis.speak(new SpeechSynthesisUtterance(state.calls.callList.map(k=>k.group.replace('T','Target ')+(k.parts?' Mozambique':'')).join(', ')));}catch(e){}}const delay=(d.startDelay[0]+Math.random()*(d.startDelay[1]-d.startDelay[0]))*1000;
+    try{speechSynthesis.speak(new SpeechSynthesisUtterance(state.calls.callList.map(k=>k.say||(k.group.replace('T','Target ')+(k.parts?' Mozambique':''))).join(', ')));}catch(e){}}const delay=(d.startDelay[0]+Math.random()*(d.startDelay[1]-d.startDelay[0]))*1000;
   state.timer=setTimeout(()=>{if(d.scenario)Voice.verbalMode();else Voice.pause();state.mode='live';state.beep=performance.now();tone(2200,250);
     if(d.scenario){$('big').textContent='GO · '+state.calls.text;setTimeout(()=>say(state.calls.speech,true),250);}$('big').textContent='GO'+(state.calls?' · '+state.calls.text:'');
     state.par=setTimeout(()=>tone(900,300),d.parTime*1000);state.timer=setTimeout(finish,d.timeout*1000);},delay);};

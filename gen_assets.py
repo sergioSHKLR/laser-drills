@@ -77,8 +77,22 @@ def draw_target(key,t,path):
     x,y=d.P(f['x'],f['y']+f['h']); c.rect(x,y,f['w']*K,f['h']*K,stroke=1,fill=0); c.setDash()
     c.setFont('Helvetica',5.5); c.setFillColor(HexColor('#777777'))
     c.drawString(*d.P(f['x']+0.05,f['y']-0.04),'SCAN FIELD - laser hits outside this line are ignored')
+    # raster character art (GenerateImage illustrations, laser-safe recolored by tools_diehard.py)
+    for a in t.get('art',[]):
+        from PIL import Image; from reportlab.lib.utils import ImageReader; import numpy as np
+        im=Image.open(a['src']).convert('RGB')
+        if a.get('crop'): im=im.crop(tuple(a['crop']))
+        arr=np.asarray(im).astype(int); rd=(arr[...,0]-(arr[...,1]+arr[...,2])/2).max()
+        assert rd<20, f"{a['src']} too red for laser detection ({rd})"
+        x,y=d.P(a['x'],a['y']+a['h']); c.drawImage(ImageReader(im),x,y,a['w']*K,a['h']*K)
     # zones
     for z in t['zones']:
+        if z.get('subtle'):
+            c.setDash(2,2); c.setLineWidth(0.6); d.color(PAL['subtle'],True); c.drawPath(d.path(z),stroke=1,fill=0); c.setDash(); continue
+        if z['kind']=='noshoot' and z.get('art'):
+            d.hatch(z,PAL['hatchArt'],gap=0.14,width=0.7); c.setLineJoin(1); c.setLineWidth(1.6); d.color(PAL['noshootInk'],True); c.drawPath(d.path(z),stroke=1,fill=0)
+            cx,cy=zone_center(z); bx,by=d.P(cx,cy); txt='HOSTAGE +5s'; c.setFont('Helvetica-Bold',9); tw=c.stringWidth(txt,'Helvetica-Bold',9)+8
+            c.setFillColor(white); c.rect(bx-tw/2,by-5,tw,15,stroke=0,fill=1); c.setFillColor(black); c.drawCentredString(bx,by,txt); continue
         c.setLineWidth(1.4); d.color(PAL['outline'],True)
         if z['kind']=='decor' and z.get('line'):
             zl=t['zones']; i0=next(i for i,q in enumerate(zl) if q is z)
@@ -117,7 +131,7 @@ def draw_target(key,t,path):
         c.setFillColor(white); c.rect(x-tw/2-2,y-2,tw+4,tx['size']+2,stroke=0,fill=1); c.setFillColor(black); c.drawCentredString(x,y,tx['text'])
     # zone labels (after fills so they stay on top)
     for z in t['zones']:
-        if z['kind']!='score' and not z.get('plain'): continue
+        if (z['kind']!='score' and not z.get('plain')) or z.get('subtle'): continue
         cx,cy=zone_center(z); dark=lum(PAL[z['tier']])<0.3
         if t.get('scoring')=='idpa':
             if 'label' in z: cx,cy=z['label']
@@ -138,7 +152,7 @@ def draw_target(key,t,path):
     c.drawString(*d.P(hx,M+0.55),f"{t['code']}  ·  key '{key}'  ·  markers {t['markerIds'][0]}-{t['markerIds'][-1]}")
     c.drawString(*d.P(hx,M+0.78),f"Recommended distance: {t['distance']}")
     dn=[DRILLS[x]['name'] for x in t['drills'] if x in DRILLS]
-    c.drawString(*d.P(hx,M+1.0),'Pairs with: '+'; '.join(dn)[:95])
+    c.drawString(*d.P(hx,M+1.0),'Pairs with: '+'; '.join(dn)[:(95 if PW>9 else 70)])
     c.setFont('Helvetica-Bold',7); c.drawRightString(*d.P(hx+hw,M+0.3),'LASER DRILLS')
     # footer band: instructions | legend
     fy=PH-M-MS; c.setFont('Helvetica-Bold',8); c.drawString(*d.P(hx,fy+0.12),'HOW TO')
@@ -162,10 +176,12 @@ def draw_target(key,t,path):
     elif any(z['kind']=='noshoot' for z in t['zones']):
         p=[z for z in t['zones'] if z['kind']=='noshoot'][0]['penalty']; items.append((PAL['noshoot'],f'No-shoot (hatched): {p} pts','hatch'))
     items.append(('#FFFFFF','Outside zones: miss, 0 pts',None))
+    if t.get('legend'): items=[(PAL.get(col,col),txt,'hatch' if col=='noshoot' else ('dash' if col=='tier1' else None)) for col,txt in t['legend']]
     c.setFont('Helvetica',7.2)
     for i,(col,txt,kind) in enumerate(items[:6]):
         yy=fy+0.2+i*0.14; x,y=d.P(lx,yy+0.1); c.setFillColor(HexColor(col)); c.setStrokeColor(black); c.setLineWidth(0.5)
         c.rect(x,y,0.22*K,0.11*K,stroke=1,fill=1)
+        if kind=='dash': c.setFillColor(white); c.rect(x,y,0.22*K,0.11*K,stroke=0,fill=1); c.setDash(2,2); c.setStrokeColor(HexColor(PAL['subtle'])); c.rect(x,y,0.22*K,0.11*K,stroke=1,fill=0); c.setDash()
         if kind=='hatch':
             c.setStrokeColor(black)
             for q in range(3): c.line(x+q*5,y,x+q*5+4,y+0.11*K)
@@ -179,7 +195,10 @@ if __name__=='__main__':
     print('\n'.join(check_palette()))
     for key,t in DOC['targets'].items():
         p=f'targets/{key}-letter.pdf'; draw_target(key,t,p); print('wrote',p)
-    rows=''.join(f"<li><a href='{k}-letter.pdf'><img src='{k}-letter.png' width=160><br>{t['code']} {t['name']}</a> — {t['distance']}</li>" for k,t in DOC['targets'].items())
-    open('targets/index.html','w').write(f"<!doctype html><meta name=viewport content='width=device-width'><title>Laser Drills targets</title><body style='font:15px system-ui;background:#111;color:#eee'><h2>Printable targets</h2><p>Print at 100% / Actual size. Paper is printed in each sheet footer (US Letter unless marked LANDSCAPE / Tabloid 11x17).</p><ul style='list-style:none;display:flex;flex-wrap:wrap;gap:16px;padding:0'>{rows}</ul><p><a href='../' style='color:#8ab4f8'>Back to app</a></p>".replace('<a ',"<a style='color:#8ab4f8' "))
+    li=lambda k,t:f"<li><a href='{k}-letter.pdf'><img src='{k}-letter.png' width=160><br>{t['code']} {t['name']}</a> — {t['distance']}</li>"
+    rows=''.join(li(k,t) for k,t in DOC['targets'].items() if t.get('set')!='diehard')
+    dh=''.join(li(k,t) for k,t in DOC['targets'].items() if t.get('set')=='diehard')
+    UL="<ul style='list-style:none;display:flex;flex-wrap:wrap;gap:16px;padding:0'>"
+    open('targets/index.html','w').write(f"<!doctype html><meta name=viewport content='width=device-width'><title>Laser Drills targets</title><body style='font:15px system-ui;background:#111;color:#eee'><h2>Printable targets</h2><p>Print at 100% / Actual size. Paper is printed in each sheet footer (US Letter unless marked LANDSCAPE / Tabloid 11x17).</p>{UL}{rows}</ul><h2 id=diehard>Die Hard (Set 1: Nakatomi Plaza)</h2><p>Illustrated characters with faint anatomy-based -0/-1/-3 outlines. Hatched white = hostage, black = hard cover. Fan-made training targets; characters are drawn, not actor likenesses.</p>{UL}{dh}</ul><p><a href='../' style='color:#8ab4f8'>Back to app</a></p>".replace('<a ',"<a style='color:#8ab4f8' "))
     import subprocess
     for k in DOC['targets']: subprocess.run(['pdftoppm','-r','50','-png','-singlefile',f'targets/{k}-letter.pdf',f'targets/{k}-letter'],check=True)

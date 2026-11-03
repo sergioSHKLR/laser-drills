@@ -74,11 +74,11 @@ Core.isVerbal=function(text){const t=Core.norm(text);return Core.VERBAL.some(w=>
 // Shoot/don't-shoot scenario: pick `count` targets, each THREAT (shoot) or COMPLIANT (verbal command, do not shoot).
 Core.makeScenario=function(sc,rand){const pool=sc.pool.slice();for(let i=pool.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
   const pick=pool.slice(0,sc.count),st=pick.map(()=>rand()<sc.pCompliant?'compliant':'threat');
-  if(!st.includes('threat'))st[0]='threat';if(sc.count>1&&!st.includes('compliant'))st[st.length-1]='compliant';
+  if(!st.includes('threat')&&!sc.allowAllCompliant)st[0]='threat';if(sc.count>1&&!st.includes('compliant'))st[st.length-1]='compliant';
   const order=[],compliant=[],callList=[];pick.forEach((g,i)=>{callList.push({group:g,state:st[i]});if(st[i]==='threat')for(let k=0;k<sc.threatShots;k++)order.push(g);else compliant.push(g);});
   return {order,compliant,callList,shots:order.length,window:sc.window,failCommand:sc.failCommand,
-    text:callList.map(k=>`${k.group} ${k.state==='threat'?'GUN':'HANDS UP'}`).join(' · '),
-    speech:callList.map(k=>`${k.group.replace('T','Target ')}, ${k.state==='threat'?'gun':'hands up'}`).join('. ')};};
+    text:callList.map(k=>`${(sc.names&&sc.names[k.group])||k.group} ${k.state==='threat'?'GUN':'HANDS UP'}`).join(' · '),
+    speech:callList.map(k=>`${(sc.names&&sc.names[k.group])||k.group.replace('T','Target ')}, ${k.state==='threat'?'gun':'hands up'}`).join('. ')};};
 // Random call list: calls=[{group,label,shots|parts}] -> {order,parts,shots,text}
 Core.makeCalls=function(calls,rand,shuffle){const c=calls.slice();if(shuffle!==false)for(let i=c.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[c[i],c[j]]=[c[j],c[i]];}
   const order=[],parts=[];for(const k of c){const p=k.parts||Array(k.shots).fill(null);for(const q of p){order.push(k.group);parts.push(q);}}

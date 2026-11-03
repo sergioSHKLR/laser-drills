@@ -245,186 +245,9 @@
   "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
  },
  {
-  "id": "idpa-all-calls-letter",
-  "name": "IDPA-style random calls (letter landscape)",
-  "target": "idpa-all-letter",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "Regular",
-    "shots": 2
-   },
-   {
-    "group": "T2",
-    "label": "Vertical cover",
-    "shots": 2
-   },
-   {
-    "group": "T3",
-    "label": "Lower cover",
-    "shots": 2
-   },
-   {
-    "group": "T4",
-    "label": "Head only",
-    "shots": 1,
-    "parts": [
-     "head"
-    ]
-   },
-   {
-    "group": "T5",
-    "label": "Mozambique",
-    "parts": [
-     "body",
-     "body",
-     "head"
-    ]
-   },
-   {
-    "group": "T7",
-    "label": "Diagonal cover",
-    "shots": 2
-   },
-   {
-    "group": "T8",
-    "label": "Behind non-threat",
-    "shots": 2
-   }
-  ],
-  "randomize": true,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 15.0,
-  "timeout": 40,
-  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
- },
- {
-  "id": "idpa-all-calls-letter",
-  "name": "IDPA-style random calls (letter landscape)",
-  "target": "idpa-all-letter",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "Regular",
-    "shots": 2
-   },
-   {
-    "group": "T2",
-    "label": "Vertical cover",
-    "shots": 2
-   },
-   {
-    "group": "T3",
-    "label": "Lower cover",
-    "shots": 2
-   },
-   {
-    "group": "T4",
-    "label": "Head only",
-    "shots": 1,
-    "parts": [
-     "head"
-    ]
-   },
-   {
-    "group": "T5",
-    "label": "Mozambique",
-    "parts": [
-     "body",
-     "body",
-     "head"
-    ]
-   },
-   {
-    "group": "T7",
-    "label": "Diagonal cover",
-    "shots": 2
-   },
-   {
-    "group": "T8",
-    "label": "Behind non-threat",
-    "shots": 2
-   }
-  ],
-  "randomize": true,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 15.0,
-  "timeout": 40,
-  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
- },
- {
   "id": "idpa-all-calls",
   "name": "IDPA-style random calls (tabloid 11x17)",
   "target": "idpa-all-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "Regular",
-    "shots": 2
-   },
-   {
-    "group": "T2",
-    "label": "Vertical cover",
-    "shots": 2
-   },
-   {
-    "group": "T3",
-    "label": "Lower cover",
-    "shots": 2
-   },
-   {
-    "group": "T4",
-    "label": "Head only",
-    "shots": 1,
-    "parts": [
-     "head"
-    ]
-   },
-   {
-    "group": "T5",
-    "label": "Mozambique",
-    "parts": [
-     "body",
-     "body",
-     "head"
-    ]
-   },
-   {
-    "group": "T7",
-    "label": "Diagonal cover",
-    "shots": 2
-   },
-   {
-    "group": "T8",
-    "label": "Behind non-threat",
-    "shots": 2
-   }
-  ],
-  "randomize": true,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 15.0,
-  "timeout": 40,
-  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
- },
- {
-  "id": "idpa-all-calls-letter",
-  "name": "IDPA-style random calls (letter landscape)",
-  "target": "idpa-all-letter",
   "scoring": "idpa",
   "maxPerShot": 0,
   "calls": [
@@ -539,5 +362,398 @@
   "parTime": 10.0,
   "timeout": 20,
   "notes": "At the beep 4 targets are called: 'GUN' = threat, shoot it 2x; 'HANDS UP' = compliant: do NOT shoot, give a verbal command ('Drop it!', 'Show me your hands!', 'Police, don't move!') within 3 s. Each hit on a compliant target = +5 s; each compliant target without a command in time = +3 s. Mic must be on. Only command phrases are heard while live."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-hans-mozambique",
+  "name": "Die Hard: Hans Mozambique",
+  "target": "dh-hans",
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Hans",
+    "say": "Hans! Mozambique",
+    "parts": [
+     "body",
+     "body",
+     "head"
+    ]
+   }
+  ],
+  "randomize": false,
+  "parTime": 4.0,
+  "timeout": 12,
+  "notes": "Hans draws the P7. 2 chest -0 then 1 head -0. Wrong part order = PE +3 s."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-stairwell",
+  "name": "Die Hard: Stairwell (Karl)",
+  "target": "dh-karl",
+  "shots": 2,
+  "parTime": 3.0,
+  "timeout": 10,
+  "notes": "Karl coming up the stairs. 2 on the exposed chest/head; the black rail is hard cover."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-tony",
+  "name": "Die Hard: 31st floor (Tony)",
+  "target": "dh-tony",
+  "shots": 2,
+  "parTime": 2.5,
+  "timeout": 10,
+  "notes": "Tony through the door. 2 to the chest -0."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-franco",
+  "name": "Die Hard: Lobby desk (Franco)",
+  "target": "dh-franco",
+  "shots": 2,
+  "parTime": 3.0,
+  "timeout": 10,
+  "notes": "Franco behind the desk with an AUG. 2 on exposed upper body; desk = hard cover."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-heinrich",
+  "name": "Die Hard: Pillar (Heinrich)",
+  "target": "dh-heinrich",
+  "shots": 2,
+  "parTime": 3.0,
+  "timeout": 10,
+  "notes": "Heinrich half behind a pillar. 2 on the exposed side."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-eddie",
+  "name": "Die Hard: The guard (Eddie) shoot/don't-shoot",
+  "target": "dh-eddie",
+  "scenario": {
+   "pool": [
+    "T1"
+   ],
+   "count": 1,
+   "pCompliant": 0.5,
+   "threatShots": 2,
+   "window": 3.0,
+   "failCommand": 3,
+   "allowAllCompliant": true,
+   "names": {
+    "T1": "Guard"
+   }
+  },
+  "parTime": 3.0,
+  "timeout": 15,
+  "notes": "Called GUN: 2 to the chest. Called HANDS UP: do not shoot, say \"Drop it!\" / \"Show me your hands!\" within 3 s."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-theo",
+  "name": "Die Hard: Vault tech (Theo) shoot/don't-shoot",
+  "target": "dh-theo",
+  "scenario": {
+   "pool": [
+    "T1"
+   ],
+   "count": 1,
+   "pCompliant": 0.7,
+   "threatShots": 2,
+   "window": 3.0,
+   "failCommand": 3,
+   "allowAllCompliant": true,
+   "names": {
+    "T1": "Theo"
+   }
+  },
+  "parTime": 3.0,
+  "timeout": 15,
+  "notes": "Mostly compliant. HANDS UP: verbal command within 3 s. GUN: 2 to the chest."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-billclay",
+  "name": "Die Hard: \"Bill Clay\" impostor",
+  "target": "dh-billclay",
+  "scenario": {
+   "pool": [
+    "T1"
+   ],
+   "count": 1,
+   "pCompliant": 0.5,
+   "threatShots": 3,
+   "window": 3.0,
+   "failCommand": 3,
+   "allowAllCompliant": true,
+   "names": {
+    "T1": "Bill Clay"
+   }
+  },
+  "parTime": 4.0,
+  "timeout": 15,
+  "notes": "The leader posing as a hostage. HANDS UP: \"Get down!\" within 3 s. GUN: 3 shots (2 chest + head)."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-hans-holly",
+  "name": "Die Hard: Hans holds Holly (head shot)",
+  "target": "dh-hans-holly",
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Hans head",
+    "say": "Hans, head only",
+    "parts": [
+     "head"
+    ]
+   }
+  ],
+  "randomize": false,
+  "parTime": 2.5,
+  "timeout": 10,
+  "notes": "1 shot to Hans head -0. Any hit on Holly (hatched) = +5 s non-threat."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-party",
+  "name": "Die Hard: Christmas party",
+  "target": "dh-party",
+  "shots": 2,
+  "order": [
+   "T1",
+   "T1"
+  ],
+  "parTime": 3.0,
+  "timeout": 10,
+  "notes": "2 on Tony only. The hatched guest is a hostage: +5 s per hit."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-nakatomi-calls",
+  "name": "Die Hard: Nakatomi random calls (tabloid)",
+  "target": "dh-nakatomi",
+  "randomize": true,
+  "parTime": 12.0,
+  "timeout": 30,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Hans",
+    "say": "Hans, head",
+    "parts": [
+     "head"
+    ]
+   },
+   {
+    "group": "T2",
+    "label": "Karl",
+    "say": "Karl",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "Franco",
+    "say": "Franco",
+    "shots": 2
+   },
+   {
+    "group": "T4",
+    "label": "Eddie",
+    "say": "Eddie",
+    "shots": 2
+   }
+  ],
+  "notes": "Names are spoken in random order: Hans = 1 head shot, others 2 chest. Theo (T5) and Bill Clay (T6) are not called: hits on them still count as wrong target (PE)."
+ },
+ {
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "id": "dh-nakatomi-sds",
+  "name": "Die Hard: Nakatomi shoot/don't-shoot (tabloid)",
+  "target": "dh-nakatomi",
+  "scenario": {
+   "pool": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T5",
+    "T6"
+   ],
+   "count": 4,
+   "pCompliant": 0.4,
+   "threatShots": 2,
+   "window": 3.0,
+   "failCommand": 3,
+   "allowAllCompliant": false,
+   "names": {
+    "T1": "Hans",
+    "T2": "Karl",
+    "T3": "Franco",
+    "T4": "Eddie",
+    "T5": "Theo",
+    "T6": "Bill Clay"
+   }
+  },
+  "parTime": 10.0,
+  "timeout": 15,
+  "notes": "4 crew are called: GUN = 2 shots, HANDS UP = verbal command within 3 s (\"Drop it!\", \"Show me your hands!\"). Hit on compliant = +5 s, late command = +3 s."
+ },
+ {
+  "id": "dh-course",
+  "name": "Die Hard: Nakatomi Plaza story course (6 stages)",
+  "type": "course",
+  "scoring": "idpa",
+  "notes": "Swap sheets between stages. Score = time + PD + PE x3 + hostage hits x5, summed.",
+  "stages": [
+   {
+    "name": "1. Party crashers: Tony",
+    "target": "dh-tony",
+    "shots": 2,
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 2.5,
+    "timeout": 10,
+    "brief": "Tony through the door: 2 chest."
+   },
+   {
+    "name": "2. Vault floor: Heinrich behind pillar",
+    "target": "dh-heinrich",
+    "shots": 2,
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 3.0,
+    "timeout": 10,
+    "brief": "2 on the exposed side."
+   },
+   {
+    "name": "3. Lobby: Franco at the desk",
+    "target": "dh-franco",
+    "shots": 2,
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 3.0,
+    "timeout": 10,
+    "brief": "2 above the desk."
+   },
+   {
+    "name": "4. Stairwell: Karl",
+    "target": "dh-karl",
+    "shots": 2,
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 3.0,
+    "timeout": 10,
+    "brief": "2 above the rail."
+   },
+   {
+    "name": "5. The leader: Hans",
+    "target": "dh-hans",
+    "shots": 3,
+    "order": [
+     "T1",
+     "T1",
+     "T1"
+    ],
+    "parts": [
+     "body",
+     "body",
+     "head"
+    ],
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 4.0,
+    "timeout": 12,
+    "brief": "Mozambique: 2 chest, 1 head."
+   },
+   {
+    "name": "6. The window: Hans holds Holly",
+    "target": "dh-hans-holly",
+    "shots": 1,
+    "order": [
+     "T1"
+    ],
+    "parts": [
+     "head"
+    ],
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 2.5,
+    "timeout": 10,
+    "brief": "1 head shot. Do not hit Holly."
+   }
+  ]
  }
 ]
