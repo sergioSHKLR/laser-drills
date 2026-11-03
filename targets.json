@@ -1,0 +1,4 @@
+{"bullseye":{"name":"Bullseye (letter)","width":8.5,"height":11,
+ "markers":[{"id":1,"x":0.5,"y":0.5,"size":1.4,"corner":0},{"id":2,"x":6.6,"y":0.5,"size":1.4,"corner":1},
+            {"id":3,"x":6.6,"y":9.1,"size":1.4,"corner":2},{"id":4,"x":0.5,"y":9.1,"size":1.4,"corner":3}],
+ "zones":[{"name":"A","cx":4.25,"cy":5.5,"r":1.0,"score":5},{"name":"B","cx":4.25,"cy":5.5,"r":2.0,"score":3},{"name":"C","cx":4.25,"cy":5.5,"r":3.1,"score":1}]}}

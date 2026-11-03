@@ -1,0 +1,4 @@
+test/*.rgba
+test/*.png
+test/frames.json
+__pycache__/
