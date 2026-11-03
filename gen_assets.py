@@ -131,11 +131,6 @@ def draw_target(key,t,path):
         lab=z['name'] if key=='five-dot' else f"{z['name']} {z['score']}"
         if key=='five-dot': c.setFont('Helvetica-Bold',22)
         x,y=d.P(cx,cy); c.drawCentredString(x,y-3,lab)
-    # control zone
-    cz=dict(TPL['control'],shape='rect'); d.color(PAL['control']); c.drawPath(d.path(cz),stroke=0,fill=1)
-    d.hatch(cz,'#3F8463',gap=0.1,width=2)
-    c.setFillColor(white); c.setFont('Helvetica-Bold',10); x,y=d.P(cz['x']+cz['w']/2,cz['y']+cz['h']/2)
-    c.drawCentredString(x,y+3,'START'); c.drawCentredString(x,y-9,'/ STOP')
     # header band
     hx=M+MS+Q; hw=PW-2*hx; c.setFillColor(black)
     c.setFont('Helvetica-Bold',17); c.drawString(*d.P(hx,M+0.3),t['name'])
@@ -149,6 +144,7 @@ def draw_target(key,t,path):
     fy=PH-M-MS; c.setFont('Helvetica-Bold',8); c.drawString(*d.P(hx,fy+0.12),'HOW TO')
     c.setFont('Helvetica',7.2)
     for i,line in enumerate(t['instructions'][:5]): c.drawString(*d.P(hx,fy+0.3+i*0.16),f'{i+1}. {line}')
+    c.setFont('Helvetica-Bold',7); c.drawString(*d.P(hx,M+1.2),'VOICE: "start"/"standby" · "stop" · "reset" · "next" · "repeat" · "score"  (or tap / BT media button)')
     lx=hx+2.75; c.setFont('Helvetica-Bold',8); c.drawString(*d.P(lx,fy+0.12),'SCORING MAP')
     items=[];seen=set()
     for z in sorted([z for z in t['zones'] if z['kind']=='score'],key=lambda z:-z['score']):
@@ -165,7 +161,6 @@ def draw_target(key,t,path):
         if not any(z['kind']=='score' for z in t['zones']): items.append(('#FFFFFF','Do not shoot - any hit is a penalty',None))
     elif any(z['kind']=='noshoot' for z in t['zones']):
         p=[z for z in t['zones'] if z['kind']=='noshoot'][0]['penalty']; items.append((PAL['noshoot'],f'No-shoot (hatched): {p} pts','hatch'))
-    items.append((PAL['control'],'START/STOP control: not scored','ctrl'))
     items.append(('#FFFFFF','Outside zones: miss, 0 pts',None))
     c.setFont('Helvetica',7.2)
     for i,(col,txt,kind) in enumerate(items[:6]):

@@ -2,7 +2,7 @@
 IDPA-style shapes are our own simplified artwork with approximate dimensions - not official IDPA art, logo or text."""
 import json, math
 D=json.load(open('targets.json')); T=D['targets']; PAL=D['template']['palette']
-PAL.update({"kraft":"#A99F8C","kraftLine":"#3B3326","pWhite":"#FFFFFF","p0":"#1F3A5F","backing":"#000000","handInk":"#FFFFFF"})
+PAL.pop('control',None);PAL.pop('controlInk',None);PAL.update({"kraft":"#A99F8C","kraftLine":"#3B3326","pWhite":"#FFFFFF","p0":"#1F3A5F","backing":"#000000","handInk":"#FFFFFF"})
 for k in [k for k in T if k.startswith('idpa-')]: del T[k]
 def sil(cx,top,s,style='kraft',tag='',grp=None,kind='score'):
     X=lambda x:round(cx+x*s,3); Y=lambda y:round(top+y*s,3); P=lambda pts:[[X(a),Y(b)] for a,b in pts]
@@ -40,7 +40,7 @@ def cover(pts,label): return dict(name='HC',kind='hardcover',shape='poly',pts=[[
 base=dict(scoring='idpa',drills=['idpa-course'],distance='3 yd = ~13.5 yd sim (1/4.5 scale)')
 PD=['Scored as points down: -0 / -1 / -3 (+1 s per PD).','Head: -0 circle, rest of head box -1. Miss = 5 PD.']
 def add(key,code,name,ids,zones,ins,**kw): T[key]=dict(code=code,name=name,markerIds=ids,**{**base,**kw},instructions=ins,zones=zones)
-add('idpa-threat','LD-101','IDPA-style Threat',[17,18,19,20],sil(CX,TOP,S),PD+['Classic kraft-style threat, own artwork.','Shoot START/STOP to begin.'])
+add('idpa-threat','LD-101','IDPA-style Threat',[17,18,19,20],sil(CX,TOP,S),PD+['Classic kraft-style threat, own artwork.'])
 add('idpa-hc-left','LD-102','IDPA-style Hard Cover: Left',[21,22,23,24],sil(CX,TOP,S)+[cover([(-10.5,5.5),(-0.6,5.5),(-0.6,31),(-10.5,31)],(-5,20))],
     ['Black = hard cover: hits there do not count.','Only the right half of the threat is exposed.']+PD[:1]+['Hit only in hard cover = miss (5 PD).'])
 add('idpa-hc-lower','LD-103','IDPA-style Hard Cover: Lower',[25,26,27,28],sil(CX,TOP,S)+[cover([(-10.5,17.5),(7.5,17.5),(7.5,31),(-10.5,31)],(-1.5,24.5))],
@@ -74,19 +74,19 @@ def cell(i,name,v,cx,top,s):
     if v=='head': z.append(HC([(-10,7),(10,7),(10,31),(-10,31)]))
     if v=='hcd': z.append(HC([(2.5,7.5),(10,7.5),(10,31),(-3,31)]))
     return z
-def allsheet(key,code,ids,W,H,s,xs,tops,ctrl,lsz,dist):
+def allsheet(key,code,ids,W,H,s,xs,tops,lsz,dist):
     zones=[];texts=[]
     for i,(name,v) in enumerate(VAR):
         cx=xs[i%4]; top=tops[i//4]; zones+=cell(i+1,name,v,cx,top,s)
         texts.append(dict(x=cx,y=round(top-0.07,3),size=lsz,text=f'T{i+1}  {name}'))
     M_=0.4; fy=H-M_-1.2
     T[key]=dict(code=code,name='IDPA-style All Variations',markerIds=ids,scoring='idpa',drills=['idpa-all-calls' if key.endswith('tabloid') else 'idpa-all-calls-letter'],distance=dist,
-      layout=dict(page=dict(w=W,h=H),field=dict(x=0.4,y=1.85,w=round(W-0.8,3),h=round(fy-0.15-1.85,3)),control=ctrl),
+      layout=dict(page=dict(w=W,h=H),field=dict(x=0.4,y=1.85,w=round(W-0.8,3),h=round(fy-0.15-1.85,3))),
       texts=texts,zones=zones,labelSize=lsz+1,
       instructions=['Drill calls targets in random order (spoken + on screen).','Mozambique (T5): 2 body, then 1 head, in order.',
         'T6 and the front figure on T8 are NON-THREATS: +5 s/hit.','Black = hard cover: hits there do not count.','Out of order / wrong Mozambique part = PE +3 s.'])
-allsheet('idpa-all-tabloid','LD-110',[53,54,55,56],17,11,1/9,[2.4,6.3,10.2,14.1],[2.2,5.85],dict(x=15.45,y=4.5,w=1.15,h=1.0),8,'3 yd = ~27 yd sim (1/9 scale)')
-allsheet('idpa-all-letter','LD-111',[57,58,59,60],11,8.5,1/14,[1.65,4.1,6.55,9.0],[2.1,4.48],dict(x=9.8,y=3.55,w=0.75,h=0.8),6,'3 yd = ~42 yd sim (1/14 scale)')
+allsheet('idpa-all-tabloid','LD-110',[53,54,55,56],17,11,1/9,[2.4,6.3,10.2,14.1],[2.2,5.85],8,'3 yd = ~27 yd sim (1/9 scale)')
+allsheet('idpa-all-letter','LD-111',[57,58,59,60],11,8.5,1/14,[1.65,4.1,6.55,9.0],[2.1,4.48],6,'3 yd = ~42 yd sim (1/14 scale)')
 json.dump(D,open('targets.json','w'),indent=1)
 dr=json.load(open('drills.json'))
 for d in dr:
@@ -110,4 +110,10 @@ for tk,lab in (('idpa-all-tabloid','tabloid 11x17'),('idpa-all-letter','letter l
     dr.append({"id":"idpa-all-calls" if tk.endswith('tabloid') else "idpa-all-calls-letter","name":f"IDPA-style random calls ({lab})","target":tk,"scoring":"idpa","maxPerShot":0,
      "calls":CALLS,"randomize":True,"startDelay":[2,4],"parTime":15.0,"timeout":40,
      "notes":"Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."})
+dr=[d for d in dr if not d['id'].startswith('shoot-dont-shoot')]
+for tk,lab,sfx in (('idpa-all-tabloid','tabloid 11x17',''),('idpa-all-letter','letter landscape','-letter')):
+    dr.append({"id":"shoot-dont-shoot"+sfx,"name":f"Shoot / don't-shoot: threat vs compliant ({lab})","target":tk,"scoring":"idpa","maxPerShot":0,
+     "scenario":{"pool":["T1","T2","T3","T4","T5","T7","T8"],"count":4,"pCompliant":0.4,"threatShots":2,"window":3.0,"failCommand":3},
+     "startDelay":[2,4],"parTime":10.0,"timeout":20,
+     "notes":"At the beep 4 targets are called: 'GUN' = threat, shoot it 2x; 'HANDS UP' = compliant: do NOT shoot, give a verbal command ('Drop it!', 'Show me your hands!', 'Police, don't move!') within 3 s. Each hit on a compliant target = +5 s; each compliant target without a command in time = +3 s. Mic must be on. Only command phrases are heard while live."})
 json.dump(dr,open('drills.json','w'),indent=1)

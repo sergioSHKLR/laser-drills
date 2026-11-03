@@ -304,6 +304,65 @@
   "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
  },
  {
+  "id": "idpa-all-calls-letter",
+  "name": "IDPA-style random calls (letter landscape)",
+  "target": "idpa-all-letter",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Regular",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "Vertical cover",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "Lower cover",
+    "shots": 2
+   },
+   {
+    "group": "T4",
+    "label": "Head only",
+    "shots": 1,
+    "parts": [
+     "head"
+    ]
+   },
+   {
+    "group": "T5",
+    "label": "Mozambique",
+    "parts": [
+     "body",
+     "body",
+     "head"
+    ]
+   },
+   {
+    "group": "T7",
+    "label": "Diagonal cover",
+    "shots": 2
+   },
+   {
+    "group": "T8",
+    "label": "Behind non-threat",
+    "shots": 2
+   }
+  ],
+  "randomize": true,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 15.0,
+  "timeout": 40,
+  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
+ },
+ {
   "id": "idpa-all-calls",
   "name": "IDPA-style random calls (tabloid 11x17)",
   "target": "idpa-all-tabloid",
@@ -420,5 +479,65 @@
   "parTime": 15.0,
   "timeout": 40,
   "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
+ },
+ {
+  "id": "shoot-dont-shoot",
+  "name": "Shoot / don't-shoot: threat vs compliant (tabloid 11x17)",
+  "target": "idpa-all-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "scenario": {
+   "pool": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T5",
+    "T7",
+    "T8"
+   ],
+   "count": 4,
+   "pCompliant": 0.4,
+   "threatShots": 2,
+   "window": 3.0,
+   "failCommand": 3
+  },
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 10.0,
+  "timeout": 20,
+  "notes": "At the beep 4 targets are called: 'GUN' = threat, shoot it 2x; 'HANDS UP' = compliant: do NOT shoot, give a verbal command ('Drop it!', 'Show me your hands!', 'Police, don't move!') within 3 s. Each hit on a compliant target = +5 s; each compliant target without a command in time = +3 s. Mic must be on. Only command phrases are heard while live."
+ },
+ {
+  "id": "shoot-dont-shoot-letter",
+  "name": "Shoot / don't-shoot: threat vs compliant (letter landscape)",
+  "target": "idpa-all-letter",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "scenario": {
+   "pool": [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T5",
+    "T7",
+    "T8"
+   ],
+   "count": 4,
+   "pCompliant": 0.4,
+   "threatShots": 2,
+   "window": 3.0,
+   "failCommand": 3
+  },
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 10.0,
+  "timeout": 20,
+  "notes": "At the beep 4 targets are called: 'GUN' = threat, shoot it 2x; 'HANDS UP' = compliant: do NOT shoot, give a verbal command ('Drop it!', 'Show me your hands!', 'Police, don't move!') within 3 s. Each hit on a compliant target = +5 s; each compliant target without a command in time = +3 s. Mic must be on. Only command phrases are heard while live."
  }
 ]

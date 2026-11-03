@@ -32,4 +32,17 @@ for(const key in meta.sets){const set=meta.sets[key],det=new ctx.AR.Detector(),l
  const r2=Core.idpaSummary(Object.assign({},st,c),bad,10);
  const ok=ok1&&r1.pe===0&&r2.pe===1&&r2.final===r1.final+3;if(!ok)fail++;
  console.log('[calls] order',c.order.join(','),'clean',JSON.stringify(r1),'mozambique-swapped',JSON.stringify(r2),ok?'ok':'FAIL');}
+{const P=Core.parseCommand,ex=[['start',"start"],['stand by please','start'],['Standby','start'],['okay stop','stop'],['reset','reset'],['next stage','next'],['repeat that','repeat'],['what is my score','score'],['restart the car',null],['bang',null]];
+ for(const[t,e]of ex){const g=P(t);if(g!==e){fail++;console.log(' voice FAIL',t,g,e);}}
+ const vb=[["Drop it!",true],["show me your hands",true],["Police, don't move!",true],["start",false],["pop pop",false]];
+ for(const[t,e]of vb)if(Core.isVerbal(t)!==e){fail++;console.log(' verbal FAIL',t);}
+ const st=DR.find(d=>d.id==='shoot-dont-shoot'),t=DOC.targets[st.target];let seed=7;const rnd=()=>((seed=seed*16807%2147483647)/2147483647);
+ const c=Core.makeScenario(st.scenario,rnd);const ok1=c.compliant.length>=1&&c.order.length>=2&&c.shots===c.order.length;
+ const pt={T1:[2.4,3.87],T2:[6.6,3.87],T3:[10.2,4.0],T4:[14.1,2.567],T5:[2.4,7.52],T7:[9.9,7.52],T8:[13.49,7.52]};
+ const hit=g=>Core.score(t,{x:pt[g][0],y:pt[g][1]},0,Core.tpl(DOC,t));
+ const good=c.order.map(hit),stg=Object.assign({},st,c);
+ const r1=Core.idpaSummary(Object.assign({},stg,{verbalTimes:c.compliant.map(()=>1.2)}),good,6);
+ const r2=Core.idpaSummary(Object.assign({},stg,{verbalTimes:[]}),good.concat([hit(c.compliant[0])]),6);
+ const ok=ok1&&r1.fc===0&&r1.hnt===0&&r2.fc===c.compliant.length&&r2.hnt===1&&r2.final===r1.final+5+3*c.compliant.length;
+ if(!ok)fail++;console.log('[voice+scenario] calls',c.text,'| clean',JSON.stringify(r1),'| shot compliant + no commands',JSON.stringify(r2),ok?'ok':'FAIL');}
 console.log(fail?`FAIL (${fail})`:'PASS');process.exit(fail?1:0);

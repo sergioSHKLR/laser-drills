@@ -9,7 +9,7 @@ Static PWA. Serve over HTTPS (camera requirement) or http://localhost.
 ## Target template rules
 - US Letter, 0.4in print-safe margin; 1.2in ArUco (js-aruco 5x5) markers in the 4 corners, each target has its own 4 IDs (auto-detected); 0.25in white quiet zone.
 - Scan field x 0.4-8.1in, y 1.85-9.15in (dashed line). Header/footer bands are no-scan: name, code, distance, paired drills, how-to, scoring map.
-- START/STOP control zone (green, hatched) always at bottom-right of the field; shooting it starts/stops the drill.
+- No shoot-to-start zone (it forced a pre-draw and flagged others). Control is by voice, big tap buttons, or a Bluetooth media button.
 - Colors: cool blue-grey tiers (no red/orange), dark tier for top score; no-shoot = white + black hatch; hard cover = solid black; gen_assets.py asserts low red-dominance and grayscale luminance steps.
 
 ## IDPA-style course (approximate, not official art/dimensions)
@@ -28,4 +28,10 @@ Course `idpa-course` now has 8 stages using these.
 `idpa-all-tabloid` (LD-110, markers 53-56, Tabloid 11x17 landscape, 1/9 scale: 3 yd = ~27 yd) and `idpa-all-letter` (LD-111, markers 57-60, Letter landscape, 1/14 scale: 3 yd = ~42 yd).
 T1 Regular, T2 HC vertical, T3 HC lower, T4 Head only, T5 Mozambique, T6 Non-threat, T7 HC diagonal, T8 Threat behind non-threat.
 Drills `idpa-all-calls` / `idpa-all-calls-letter`: targets are shuffled, spoken and shown; Mozambique = body, body, head. Wrong target order or Mozambique part = PE.
-Targets may carry a `layout` {page, field, control} override (Core.tpl).
+Targets may carry a `layout` {page, field} override (Core.tpl).
+
+## Voice control
+Mic toggle (Web Speech API, Chrome Android/ChromeOS). Continuous listening, no wake word, auto-restart. Commands: start / standby, stop, reset, next, repeat, score (results are spoken).
+While a drill is live, recognition is stopped (normal drills) so shots/clicks cannot trigger anything. Fallbacks: big tap buttons; keyboard/BT media keys (play/pause = start/stop, next, previous = repeat; Enter/Space toggle).
+### Shoot / don't-shoot (`shoot-dont-shoot`, `shoot-dont-shoot-letter`)
+At the beep 4 targets of the all-variations sheet are called: GUN = threat (2 shots), HANDS UP = compliant (verbal command within 3 s, e.g. "Drop it!", "Show me your hands!", "Police, don't move!"). During live scenario drills ONLY those phrases are accepted. Hit on compliant = +5 s; missing/late command = +3 s each.

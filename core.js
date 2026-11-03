@@ -41,9 +41,8 @@ Core.outline=function(z,g){g=g||0;const o=[];
   else {z.pts.forEach(q=>o.push({x:q[0],y:q[1]}));o.push({x:z.pts[0][0],y:z.pts[0][1]});}
   return o;};
 // Classify a hit (target inches). expect: zone name (sequence) or group (IDPA order) to enforce.
-// Returns {control} | {hardcover} | {noshoot,score(penalty)} | {zone,score,pd,group} | miss {zone:null,score:0,pd:5}
+// Returns {hardcover} | {noshoot,score(penalty)} | {zone,score,pd,group} | miss {zone:null,score:0,pd:5}
 Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
-  if(tpl&&Core.inZone(Object.assign({shape:'rect'},tpl.control),pt,0))return {control:true,zone:'CTRL',score:0};
   if(tpl){const f=tpl.field;if(!Core.inZone({shape:'rect',x:f.x,y:f.y,w:f.w,h:f.h},pt,0))return {zone:null,score:0,pd:5,outside:true};}
   for(const z of target.zones)if(z.kind==='hardcover'&&Core.inZone(z,pt,0))return {zone:'HC',score:0,pd:5,hardcover:true};
   for(const z of target.zones)if(z.kind==='noshoot'&&Core.inZone(z,pt,spread))return {zone:z.name,score:z.penalty,pd:5,noshoot:true,ntSeconds:z.ntSeconds||5};
@@ -55,13 +54,31 @@ Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
   return {zone:null,score:0,pd:5};};
 // IDPA-style stage result: raw + PD*1s + PE*3s + HNT*5s. Each required hit missing (or on hard cover / non-threat) = 5 PD.
 Core.idpaSummary=function(stage,shots,rawTime){
-  const req=stage.shots,cnt=shots.slice(0,Math.max(req,shots.length));let pd=0,valid=0,hnt=0,pe=0;
-  for(const s of cnt){if(s.noshoot)hnt++;if(s.zone&&!s.noshoot&&!s.hardcover&&s.zone!=='CTRL'){if(valid<req){pd+=s.pd;valid++;}}}
+  const req=stage.shots,comp=stage.compliant||[],cnt=shots.slice(0,Math.max(req,shots.length)).map(s=>s.group&&comp.includes(s.group)?Object.assign({},s,{noshoot:true,compliantHit:true}):s);let pd=0,valid=0,hnt=0,pe=0;
+  const win=stage.window||3,vt=(stage.verbalTimes||[]).filter(t=>t<=win),fc=Math.max(0,comp.length-vt.length),fcs=stage.failCommand||3;
+  for(const s of cnt){if(s.noshoot)hnt++;if(s.zone&&!s.noshoot&&!s.hardcover){if(valid<req){pd+=s.pd;valid++;}}}
   pd+=5*Math.max(0,req-valid);
   if(stage.order){const got=cnt.filter(s=>s.group&&!s.noshoot);for(let i=0;i<got.length;i++)
     if(stage.order[i]&&(got[i].group!==stage.order[i]||(stage.parts&&stage.parts[i]&&got[i].part!==stage.parts[i]))){pe=1;break;}}
   const raw=rawTime==null?stage.timeout:rawTime;
-  return {raw,pd,pe,hnt,final:raw+pd+3*pe+5*hnt};};
+  return {raw,pd,pe,hnt,fc,final:raw+pd+3*pe+5*hnt+fcs*fc};};
+// Voice: app commands (only when NOT live) and verbal scenario commands (only during live scenario drills).
+Core.VOICE={start:['start','standby','stand by','stand-by','begin','shooter ready'],stop:['stop','halt','cease'],reset:['reset','clear'],
+  next:['next','next stage','skip'],repeat:['repeat','again','redo'],score:['score','result','results','how did i do']};
+Core.VERBAL=['drop it','drop the gun','drop the weapon','drop the knife','show me your hands','hands up','let me see your hands','police','dont move','don t move','do not move','freeze','get down','on the ground','stay back','back up'];
+Core.norm=t=>' '+String(t||'').toLowerCase().replace(/[^a-z ]+/g,' ').replace(/\s+/g,' ').trim()+' ';
+Core.parseCommand=function(text){const t=Core.norm(text);let best=null,pos=-1;
+  for(const cmd in Core.VOICE)for(const w of Core.VOICE[cmd]){const i=t.lastIndexOf(' '+w+' ');if(i>pos||(i===pos&&best&&w.length>best.len)){pos=i;best={cmd,len:w.length};}}
+  return pos>=0?best.cmd:null;};
+Core.isVerbal=function(text){const t=Core.norm(text);return Core.VERBAL.some(w=>t.includes(' '+w+' '));};
+// Shoot/don't-shoot scenario: pick `count` targets, each THREAT (shoot) or COMPLIANT (verbal command, do not shoot).
+Core.makeScenario=function(sc,rand){const pool=sc.pool.slice();for(let i=pool.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+  const pick=pool.slice(0,sc.count),st=pick.map(()=>rand()<sc.pCompliant?'compliant':'threat');
+  if(!st.includes('threat'))st[0]='threat';if(sc.count>1&&!st.includes('compliant'))st[st.length-1]='compliant';
+  const order=[],compliant=[],callList=[];pick.forEach((g,i)=>{callList.push({group:g,state:st[i]});if(st[i]==='threat')for(let k=0;k<sc.threatShots;k++)order.push(g);else compliant.push(g);});
+  return {order,compliant,callList,shots:order.length,window:sc.window,failCommand:sc.failCommand,
+    text:callList.map(k=>`${k.group} ${k.state==='threat'?'GUN':'HANDS UP'}`).join(' · '),
+    speech:callList.map(k=>`${k.group.replace('T','Target ')}, ${k.state==='threat'?'gun':'hands up'}`).join('. ')};};
 // Random call list: calls=[{group,label,shots|parts}] -> {order,parts,shots,text}
 Core.makeCalls=function(calls,rand,shuffle){const c=calls.slice();if(shuffle!==false)for(let i=c.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[c[i],c[j]]=[c[j],c[i]];}
   const order=[],parts=[];for(const k of c){const p=k.parts||Array(k.shots).fill(null);for(const q of p){order.push(k.group);parts.push(q);}}

@@ -15,12 +15,6 @@
    "w": 7.7,
    "h": 7.3
   },
-  "control": {
-   "x": 6.85,
-   "y": 8.0,
-   "w": 1.15,
-   "h": 1.0
-  },
   "palette": {
    "tier5": "#34506E",
    "tier3": "#8DA6BC",
@@ -29,8 +23,6 @@
    "outline": "#1E2B38",
    "noshoot": "#FFFFFF",
    "noshootInk": "#111111",
-   "control": "#2F6B4F",
-   "controlInk": "#FFFFFF",
    "fieldEdge": "#9AA5B0",
    "ink": "#111111",
    "kraft": "#A99F8C",
@@ -59,7 +51,7 @@
    "instructions": [
     "Print at 100% on US Letter; keep corners flat.",
     "Phone 1-3 yd away, all 4 corner markers in view.",
-    "Wait for the blue outline, then shoot START/STOP or press Start.",
+    "Wait for the blue outline, then say \"start\" or tap START.",
     "Aim small: center ring is 5 pts."
    ],
    "zones": [
@@ -112,8 +104,7 @@
    "instructions": [
     "Scaled practical silhouette: A=5, C=3, D=1.",
     "Hatched NO-SHOOT hand: -5 per hit.",
-    "Head A box rewards precision, body A for speed.",
-    "Shoot START/STOP (bottom right) to begin."
+    "Head A box rewards precision, body A for speed."
    ],
    "zones": [
     {
@@ -408,8 +399,7 @@
    "instructions": [
     "Hatched figure = HOSTAGE: -10 per hit.",
     "Hostage overlaps the threat: overlap hits count as hostage.",
-    "Head A box and left body are clean shots.",
-    "Shoot START/STOP to begin."
+    "Head A box and left body are clean shots."
    ],
    "zones": [
     {
@@ -597,8 +587,7 @@
    "instructions": [
     "Scored as points down: -0 / -1 / -3 (+1 s per PD).",
     "Head: -0 circle, rest of head box -1. Miss = 5 PD.",
-    "Classic kraft-style threat, own artwork.",
-    "Shoot START/STOP to begin."
+    "Classic kraft-style threat, own artwork."
    ],
    "zones": [
     {
@@ -3254,12 +3243,6 @@
      "y": 1.85,
      "w": 16.2,
      "h": 7.4
-    },
-    "control": {
-     "x": 15.45,
-     "y": 4.5,
-     "w": 1.15,
-     "h": 1.0
     }
    },
    "texts": [
@@ -5522,12 +5505,6 @@
      "y": 1.85,
      "w": 10.2,
      "h": 4.9
-    },
-    "control": {
-     "x": 9.8,
-     "y": 3.55,
-     "w": 0.75,
-     "h": 0.8
     }
    },
    "texts": [

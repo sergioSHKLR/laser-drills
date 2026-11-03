@@ -12,6 +12,8 @@ button.on{background:#c62828;border-color:#e53935}
 .panel{padding:10px}.hidden{display:none}
 label{display:block;margin:8px 0}input[type=range]{width:100%}
 table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #333;padding:4px;text-align:right}
+#cmds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px}#cmds button{font-size:22px;padding:18px 6px;font-weight:700}
+#cmds .go{background:#1b5e20}#cmds .st{background:#7f1d1d}#heard{text-align:center;color:#8ab4f8;font-size:13px;min-height:1em;padding:0 8px}
 #big{font-size:28px;font-weight:700;text-align:center;padding:6px}
 </style></head><body>
 <header>
@@ -23,6 +25,9 @@ table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #333;pad
 <div id="stage"><canvas id="view"></canvas></div>
 <div id="status">Camera off.</div>
 <div id="big"></div>
+<div id="cmds"><button data-cmd="start" class="go">START</button><button data-cmd="stop" class="st">STOP</button><button id="micBtn">🎤 Voice off</button>
+ <button data-cmd="repeat">REPEAT</button><button data-cmd="next">NEXT</button><button data-cmd="score">SCORE</button><button data-cmd="reset">RESET</button></div>
+<div id="heard">Say: start / standby · stop · reset · next · repeat · score — or tap, or a Bluetooth media button (play/pause = start/stop, next, previous = repeat). Voice commands are ignored while a drill is live.</div>
 <div class="panel" id="tab-drill">
  <button id="goBtn">Start drill</button> <button id="freeBtn">Free fire</button> <button id="stopBtn">Stop</button>
  <p id="drillNotes" style="color:#999;font-size:13px"></p>
