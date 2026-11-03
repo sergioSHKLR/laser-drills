@@ -15,11 +15,13 @@ def sil(cx,top,s,style='kraft',tag='',grp=None,kind='score'):
         return z
     outer=[(-3,0),(3,0),(3,6.5),(5,6.5),(9,10.5),(9,26),(6,30),(-6,30),(-9,26),(-9,10.5),(-5,6.5),(-3,6.5)]
     band=[(-4,8.5),(4,8.5),(6.5,11),(6.5,23),(4.5,25.5),(-4.5,25.5),(-6.5,23),(-6.5,11)]
-    return [Z('-3',3,'poly',tier[0],pts=P(outer),label=[X(-7.6),Y(18)]),
+    zs=[Z('-3',3,'poly',tier[0],pts=P(outer),label=[X(-7.6),Y(18)]),
             Z('-1',1,'rect',tier[1],x=X(-3),y=Y(0),w=round(6*s,3),h=round(6.5*s,3),label=[X(2.1),Y(1.1)]),
             Z('-1',1,'poly',tier[1],pts=P(band),label=[X(0),Y(23.3)]),
             Z('-0',0,'circle',tier[2],cx=X(0),cy=Y(3.3),r=round(2*s,3)),
             Z('-0',0,'circle',tier[2],cx=X(0),cy=Y(15),r=round(4*s,3))]
+    for z,pt in zip(zs,['body','head','body','head','body']): z['part']=pt
+    return zs
 def hands(cx,top,s):
     out=[]
     def bar(bx,by,ang,L,w):
@@ -57,6 +59,34 @@ m=[]
 for i,cx in enumerate((1.75,4.25,6.75)): m+=sil(cx,3.2,1/9,tag=f'T{i+1} ',grp=f'T{i+1}')
 add('idpa-multi','LD-108','IDPA-style Multiple Threats',[45,46,47,48],m,
     ['Engage T1, T2, T3 left to right, 2 each.','Out-of-order engagement = PE (+3 s).','Each PD = +1 s. Miss = 5 PD.','1/9 scale: 3 yd = ~27 yd sim.'],distance='3 yd = ~27 yd sim (1/9 scale)')
+
+# ---- all-variations sheet (letter landscape + tabloid landscape) ----
+VAR=[('Regular','plain'),('Hard cover: vertical','hcv'),('Hard cover: lower','hcl'),('Head only','head'),
+     ('Mozambique 2B+1H','plain'),('NON-THREAT','nt'),('Hard cover: diagonal','hcd'),('Behind non-threat','behind')]
+def cell(i,name,v,cx,top,s):
+    g=f'T{i}'; HC=lambda pts:dict(name='HC',kind='hardcover',shape='poly',pts=[[round(cx+a*s,3),round(top+b*s,3)] for a,b in pts])
+    if v=='nt': return sil(cx,top,s,kind='noshoot',tag=f'{g} NT ',grp=g+'NT')+hands(cx,top,s)
+    if v=='behind':  # threat partly hidden behind a non-threat standing in front (NT checked first)
+        return sil(cx-5.5*s,top,s,tag=g+' ',grp=g)+sil(cx+5.5*s,top+1.5*s,s,kind='noshoot',tag=f'{g} NT ',grp=g+'NT')+hands(cx+5.5*s,top+1.5*s,s)
+    z=sil(cx,top,s,tag=g+' ',grp=g)
+    if v=='hcv': z.append(HC([(-10,5.5),(-0.6,5.5),(-0.6,31),(-10,31)]))
+    if v=='hcl': z.append(HC([(-10,17.5),(10,17.5),(10,31),(-10,31)]))
+    if v=='head': z.append(HC([(-10,7),(10,7),(10,31),(-10,31)]))
+    if v=='hcd': z.append(HC([(2.5,7.5),(10,7.5),(10,31),(-3,31)]))
+    return z
+def allsheet(key,code,ids,W,H,s,xs,tops,ctrl,lsz,dist):
+    zones=[];texts=[]
+    for i,(name,v) in enumerate(VAR):
+        cx=xs[i%4]; top=tops[i//4]; zones+=cell(i+1,name,v,cx,top,s)
+        texts.append(dict(x=cx,y=round(top-0.07,3),size=lsz,text=f'T{i+1}  {name}'))
+    M_=0.4; fy=H-M_-1.2
+    T[key]=dict(code=code,name='IDPA-style All Variations',markerIds=ids,scoring='idpa',drills=['idpa-all-calls' if key.endswith('tabloid') else 'idpa-all-calls-letter'],distance=dist,
+      layout=dict(page=dict(w=W,h=H),field=dict(x=0.4,y=1.85,w=round(W-0.8,3),h=round(fy-0.15-1.85,3)),control=ctrl),
+      texts=texts,zones=zones,labelSize=lsz+1,
+      instructions=['Drill calls targets in random order (spoken + on screen).','Mozambique (T5): 2 body, then 1 head, in order.',
+        'T6 and the front figure on T8 are NON-THREATS: +5 s/hit.','Black = hard cover: hits there do not count.','Out of order / wrong Mozambique part = PE +3 s.'])
+allsheet('idpa-all-tabloid','LD-110',[53,54,55,56],17,11,1/9,[2.4,6.3,10.2,14.1],[2.2,5.85],dict(x=15.45,y=4.5,w=1.15,h=1.0),8,'3 yd = ~27 yd sim (1/9 scale)')
+allsheet('idpa-all-letter','LD-111',[57,58,59,60],11,8.5,1/14,[1.65,4.1,6.55,9.0],[2.1,4.48],dict(x=9.8,y=3.55,w=0.75,h=0.8),6,'3 yd = ~42 yd sim (1/14 scale)')
 json.dump(D,open('targets.json','w'),indent=1)
 dr=json.load(open('drills.json'))
 for d in dr:
@@ -72,4 +102,12 @@ for d in dr:
  {"name":"7. Threat + non-threat","target":"idpa-nt-pair","shots":2,"startDelay":[2,4],"parTime":4.0,"timeout":10,"brief":"2 on the RIGHT threat only. Hands = non-threat (+5 s)."},
  {"name":"8. Multiple threats","target":"idpa-multi","shots":6,"order":["T1","T1","T2","T2","T3","T3"],"startDelay":[2,4],"parTime":8.0,"timeout":20,"brief":"2 each on T1, T2, T3 in order. Out of order = PE."}]
         d['name']='IDPA-style familiarization course (8 stages)'
+dr=[d for d in dr if d['id']!='idpa-all-calls']
+CALLS=[{"group":"T1","label":"Regular","shots":2},{"group":"T2","label":"Vertical cover","shots":2},{"group":"T3","label":"Lower cover","shots":2},
+ {"group":"T4","label":"Head only","shots":1,"parts":["head"]},{"group":"T5","label":"Mozambique","parts":["body","body","head"]},
+ {"group":"T7","label":"Diagonal cover","shots":2},{"group":"T8","label":"Behind non-threat","shots":2}]
+for tk,lab in (('idpa-all-tabloid','tabloid 11x17'),('idpa-all-letter','letter landscape')):
+    dr.append({"id":"idpa-all-calls" if tk.endswith('tabloid') else "idpa-all-calls-letter","name":f"IDPA-style random calls ({lab})","target":tk,"scoring":"idpa","maxPerShot":0,
+     "calls":CALLS,"randomize":True,"startDelay":[2,4],"parTime":15.0,"timeout":40,
+     "notes":"Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."})
 json.dump(dr,open('drills.json','w'),indent=1)

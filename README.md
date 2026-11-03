@@ -23,3 +23,9 @@ Classic cardboard shape: head box (-0 circle, rest -1), torso -1 band, -3 outer,
 - idpa-practice LD-106 (37-40) white on black backing; -0 circles dark blue #1F3A5F, not red, because a red zone masks the red laser dot
 - idpa-nt-pair LD-107 (41-44) non-threat + threat - idpa-multi LD-108 (45-48)
 Course `idpa-course` now has 8 stages using these.
+
+### All-variations sheet + random calls
+`idpa-all-tabloid` (LD-110, markers 53-56, Tabloid 11x17 landscape, 1/9 scale: 3 yd = ~27 yd) and `idpa-all-letter` (LD-111, markers 57-60, Letter landscape, 1/14 scale: 3 yd = ~42 yd).
+T1 Regular, T2 HC vertical, T3 HC lower, T4 Head only, T5 Mozambique, T6 Non-threat, T7 HC diagonal, T8 Threat behind non-threat.
+Drills `idpa-all-calls` / `idpa-all-calls-letter`: targets are shuffled, spoken and shown; Mozambique = body, body, head. Wrong target order or Mozambique part = PE.
+Targets may carry a `layout` {page, field, control} override (Core.tpl).

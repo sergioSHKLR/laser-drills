@@ -17,9 +17,9 @@ Core.apply=function(H,p){const w=H[2][0]*p.x+H[2][1]*p.y+H[2][2];
 Core.markerCorners=function(tpl){const m=tpl.margin,s=tpl.marker.size,W=tpl.page.w,H=tpl.page.h;
   return [{x:m,y:m},{x:W-m,y:m},{x:W-m,y:H-m},{x:m,y:H-m}];};
 // markers: js-aruco list; doc: targets.json. Auto-identifies target by its marker IDs.
+Core.tpl=function(doc,t){return t&&t.layout?Object.assign({},doc.template,t.layout):doc.template;};
 Core.lockTarget=function(markers,doc){
-  const dst=Core.markerCorners(doc.template);
-  for(const key in doc.targets){const t=doc.targets[key],src=[];
+  for(const key in doc.targets){const t=doc.targets[key],src=[],dst=Core.markerCorners(Core.tpl(doc,t));
     for(let c=0;c<4;c++){const f=markers.find(k=>k.id===t.markerIds[c]);if(!f)break;src.push(f.corners[c]);}
     if(src.length===4)return {key,target:t,imgToTgt:Core.homography(src,dst),tgtToImg:Core.homography(dst,src),imgPts:src};}
   return null;};
@@ -49,7 +49,7 @@ Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
   for(const z of target.zones)if(z.kind==='noshoot'&&Core.inZone(z,pt,spread))return {zone:z.name,score:z.penalty,pd:5,noshoot:true,ntSeconds:z.ntSeconds||5};
   let best=null;
   for(const z of target.zones){if(z.kind!=='score')continue;if(expectName&&!target.scoring&&z.name!==expectName)continue;
-    if(Core.inZone(z,pt,z.noGrow?0:spread)&&(!best||z.score>best.score))best={zone:z.name,score:z.score,pd:z.pd!=null?z.pd:0,group:z.group};}
+    if(Core.inZone(z,pt,z.noGrow?0:spread)&&(!best||z.score>best.score))best={zone:z.name,score:z.score,pd:z.pd!=null?z.pd:0,group:z.group,part:z.part};}
   if(best)return best;
   if(expectName&&!target.scoring){for(const z of target.zones)if(z.kind==='score'&&Core.inZone(z,pt,spread))return {zone:z.name,score:0,pd:5,outOfOrder:true};}
   return {zone:null,score:0,pd:5};};
@@ -58,9 +58,14 @@ Core.idpaSummary=function(stage,shots,rawTime){
   const req=stage.shots,cnt=shots.slice(0,Math.max(req,shots.length));let pd=0,valid=0,hnt=0,pe=0;
   for(const s of cnt){if(s.noshoot)hnt++;if(s.zone&&!s.noshoot&&!s.hardcover&&s.zone!=='CTRL'){if(valid<req){pd+=s.pd;valid++;}}}
   pd+=5*Math.max(0,req-valid);
-  if(stage.order){const got=cnt.filter(s=>s.group).map(s=>s.group);for(let i=0;i<got.length;i++)if(stage.order[i]&&got[i]!==stage.order[i]){pe=1;break;}}
+  if(stage.order){const got=cnt.filter(s=>s.group&&!s.noshoot);for(let i=0;i<got.length;i++)
+    if(stage.order[i]&&(got[i].group!==stage.order[i]||(stage.parts&&stage.parts[i]&&got[i].part!==stage.parts[i]))){pe=1;break;}}
   const raw=rawTime==null?stage.timeout:rawTime;
   return {raw,pd,pe,hnt,final:raw+pd+3*pe+5*hnt};};
+// Random call list: calls=[{group,label,shots|parts}] -> {order,parts,shots,text}
+Core.makeCalls=function(calls,rand,shuffle){const c=calls.slice();if(shuffle!==false)for(let i=c.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[c[i],c[j]]=[c[j],c[i]];}
+  const order=[],parts=[];for(const k of c){const p=k.parts||Array(k.shots).fill(null);for(const q of p){order.push(k.group);parts.push(q);}}
+  return {order,parts,shots:order.length,callList:c,text:c.map(k=>`${k.group} ${k.label}${k.parts?' ('+k.parts.map(x=>x[0].toUpperCase()).join('-')+')':' x'+k.shots}`).join(' → ')};};
 // Laser detector: frame differencing on a red-dominance score.
 Core.LaserDetector=function(opts){
   this.o=Object.assign({redMin:180,redDom:40,diffMin:60,minPixels:2,maxPixels:4000,refractoryMs:200,bgAlpha:0.15},opts||{});

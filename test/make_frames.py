@@ -16,15 +16,19 @@ CASES={
  'idpa-practice':[(4.25,5.53,'-0'),(1.0,4.0,'MISS')],
  'idpa-nt-pair':[(2.25,4.95,'NT -3'),(6.15,4.95,'T1 -0')],
  'idpa-multi':[(1.75,4.867,'T1 -0'),(4.25,4.867,'T2 -0'),(6.75,3.567,'T3 -0')],
+ 'idpa-all-tabloid':[(2.4,2.2+15/9,'T1 -0'),(6.3-0.5,4.0,'HC'),(14.1,2.2+3.3/9,'T4 -0'),(14.1,4.5,'HC'),(6.3,5.85+15/9,'T6 NT -3'),(14.1+5.5/9,5.85+(1.5+15)/9,'T8 NT -3'),(14.1-5.5/9-0.6,5.85+15/9,'T8 -1'),(16.0,5.0,'CTRL')],
+ 'idpa-all-letter':[(1.65,2.1+15/14,'T1 -0'),(6.55,4.48+15/14,'T7 -0'),(4.1,4.48+3.3/14,'T6 NT -3'),(10.2,3.95,'CTRL')],
  'hostage':[(5.3,6.5,-10),(4.25,2.85,5),(3.8,5.5,5)],
  'clays':[(2.4,3.3,5),(6.0,5.75,2),(3.4,8.25,5),(3.4,7.4,5),(7.4,8.5,'CTRL')],  # 3rd hit only scores via spread
 }
-src=np.float32([[0,0],[850,0],[850,1100],[0,1100]])
-dst=np.float32([[215,30],[445,48],[460,445],[200,435]])
-M=cv2.getPerspectiveTransform(src,dst); meta={'w':W,'h':H,'sets':{}}
+meta={'w':W,'h':H,'sets':{}}
 for key,shots in CASES.items():
+    pg=DOC['targets'][key].get('layout',{}).get('page',DOC['template']['page']); PWp,PHp=int(pg['w']*dpi),int(pg['h']*dpi)
+    src=np.float32([[0,0],[PWp,0],[PWp,PHp],[0,PHp]])
+    dst=np.float32([[215,30],[445,48],[460,445],[200,435]]) if PHp>PWp else np.float32([[25,70],[615,55],[625,420],[15,430]])
+    M=cv2.getPerspectiveTransform(src,dst)
     subprocess.run(['pdftoppm','-r',str(dpi),'-png','-singlefile',f'../targets/{key}-letter.pdf','/tmp/tgt'],check=True)
-    page=cv2.resize(cv2.imread('/tmp/tgt.png'),(850,1100))
+    page=cv2.resize(cv2.imread('/tmp/tgt.png'),(PWp,PHp))
     base=cv2.GaussianBlur(cv2.warpPerspective(page,M,(W,H),borderValue=(90,100,110)),(3,3),0)
     frames=[]
     def save(img):

@@ -184,5 +184,241 @@
     "brief": "2 each on T1, T2, T3 in order. Out of order = PE."
    }
   ]
+ },
+ {
+  "id": "idpa-all-calls-letter",
+  "name": "IDPA-style random calls (letter landscape)",
+  "target": "idpa-all-letter",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Regular",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "Vertical cover",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "Lower cover",
+    "shots": 2
+   },
+   {
+    "group": "T4",
+    "label": "Head only",
+    "shots": 1,
+    "parts": [
+     "head"
+    ]
+   },
+   {
+    "group": "T5",
+    "label": "Mozambique",
+    "parts": [
+     "body",
+     "body",
+     "head"
+    ]
+   },
+   {
+    "group": "T7",
+    "label": "Diagonal cover",
+    "shots": 2
+   },
+   {
+    "group": "T8",
+    "label": "Behind non-threat",
+    "shots": 2
+   }
+  ],
+  "randomize": true,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 15.0,
+  "timeout": 40,
+  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
+ },
+ {
+  "id": "idpa-all-calls-letter",
+  "name": "IDPA-style random calls (letter landscape)",
+  "target": "idpa-all-letter",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Regular",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "Vertical cover",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "Lower cover",
+    "shots": 2
+   },
+   {
+    "group": "T4",
+    "label": "Head only",
+    "shots": 1,
+    "parts": [
+     "head"
+    ]
+   },
+   {
+    "group": "T5",
+    "label": "Mozambique",
+    "parts": [
+     "body",
+     "body",
+     "head"
+    ]
+   },
+   {
+    "group": "T7",
+    "label": "Diagonal cover",
+    "shots": 2
+   },
+   {
+    "group": "T8",
+    "label": "Behind non-threat",
+    "shots": 2
+   }
+  ],
+  "randomize": true,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 15.0,
+  "timeout": 40,
+  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
+ },
+ {
+  "id": "idpa-all-calls",
+  "name": "IDPA-style random calls (tabloid 11x17)",
+  "target": "idpa-all-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Regular",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "Vertical cover",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "Lower cover",
+    "shots": 2
+   },
+   {
+    "group": "T4",
+    "label": "Head only",
+    "shots": 1,
+    "parts": [
+     "head"
+    ]
+   },
+   {
+    "group": "T5",
+    "label": "Mozambique",
+    "parts": [
+     "body",
+     "body",
+     "head"
+    ]
+   },
+   {
+    "group": "T7",
+    "label": "Diagonal cover",
+    "shots": 2
+   },
+   {
+    "group": "T8",
+    "label": "Behind non-threat",
+    "shots": 2
+   }
+  ],
+  "randomize": true,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 15.0,
+  "timeout": 40,
+  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
+ },
+ {
+  "id": "idpa-all-calls-letter",
+  "name": "IDPA-style random calls (letter landscape)",
+  "target": "idpa-all-letter",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Regular",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "Vertical cover",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "Lower cover",
+    "shots": 2
+   },
+   {
+    "group": "T4",
+    "label": "Head only",
+    "shots": 1,
+    "parts": [
+     "head"
+    ]
+   },
+   {
+    "group": "T5",
+    "label": "Mozambique",
+    "parts": [
+     "body",
+     "body",
+     "head"
+    ]
+   },
+   {
+    "group": "T7",
+    "label": "Diagonal cover",
+    "shots": 2
+   },
+   {
+    "group": "T8",
+    "label": "Behind non-threat",
+    "shots": 2
+   }
+  ],
+  "randomize": true,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 15.0,
+  "timeout": 40,
+  "notes": "Targets are called in random order (spoken + shown). Shoot only the called threats with the required shots; T5 Mozambique = 2 body then 1 head. T6 / front of T8 are non-threats (+5 s). Wrong order or Mozambique part = PE +3 s. Each PD = +1 s, miss = 5 PD."
  }
 ]
