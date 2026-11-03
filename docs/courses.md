@@ -122,7 +122,7 @@ Original laser adaptation of a law-enforcement-style qualification: close, fast 
 ### Bill Drill  
 `bm-bill` · badge **Bill Drill** (Lucide `zap`)
 
-6 shots to the body A zone from the draw as fast as you can keep them in. Benchmark par 2.5 s.
+6 shots to the center-mass rings (8 ring or better) from the draw as fast as you can keep them in. Benchmark par 2.5 s.
 
 | # | Stage | Base drill | Distance | Pass |
 |---|---|---|---|---|

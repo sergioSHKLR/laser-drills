@@ -18,7 +18,9 @@ const sel=()=>DRILLS[$('drillSel').value];
 const drill=()=>{const d=sel(),b=d.type==='course'?Object.assign({scoring:'idpa',maxPerShot:0},d.stages[Math.min(course.idx,d.stages.length-1)]):d;
   if(b.scenario)return Object.assign({},b,state.calls||{shots:b.scenario.count*b.scenario.threatShots},{verbalTimes:state.verbal||[]});
   if(b.crowd)return Object.assign({},b,state.calls||{shots:(b.crowd.rounds||3)*(b.crowd.shots||2)});
-  return b.calls?Object.assign({},b,state.calls||{shots:b.calls.reduce((a,k)=>a+(k.parts?k.parts.length:k.shots),0)}):b;};
+  const r=b.calls?Object.assign({},b,state.calls||{shots:b.calls.reduce((a,k)=>a+(k.parts?k.parts.length:k.shots),0)}):b;
+  const tt=lock?lock.target:DOC.targets[r.target];   // target-level max points per shot (e.g. silhouette X/10 rings = 10)
+  return r.maxPerShot==null&&tt&&tt.maxPerShot?Object.assign({},r,{maxPerShot:tt.maxPerShot}):r;};
 const TPL=()=>Core.tpl(DOC,lock?lock.target:null);
 const target=()=>lock?lock.target:DOC.targets[drill().target==='any'?'bullseye':drill().target];
 const spread=()=>($('shotgun').checked||drill().shotgun)?(target().spread||settings.shotgunSpread):0;

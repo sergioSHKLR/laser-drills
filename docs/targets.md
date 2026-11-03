@@ -5,7 +5,7 @@ Generated from `targets/catalog.json` (built by `gen_assets.py`). Every target h
 | Key | Code | Name | Category | Paper | Distance | Features |
 |---|---|---|---|---|---|---|
 | `bullseye` | LD-001 | Bullseye | tactical | letter | 3-7 yd (pistol) |  |
-| `silhouette` | LD-002 | Silhouette + No-Shoot | tactical | letter | 3-7 yd (scaled ~1/3) | no-shoot |
+| `silhouette` | LD-002 | Qualification Silhouette (head box, X/10/9/8 center-mass rings, body 5) | tactical | letter | 3-7 yd (scaled ~1/3) | — |
 | `five-dot` | LD-003 | 5-Dot Sequence | tactical | letter | 3-5 yd |  |
 | `clays` | LD-004 | Shotgun Clays | tactical | letter | 3-5 yd (shotgun cartridge) |  |
 | `hostage` | LD-005 | Hostage | tactical | letter | 3-5 yd | hostage, no-shoot |
@@ -47,3 +47,18 @@ Generated from `targets/catalog.json` (built by `gen_assets.py`). Every target h
 | `dh-party` | LD-210 | Die Hard: Christmas Party | themed | letter | 3 yd = ~30 yd sim (figure ~1/10 scale) | no-shoot |
 | `dh-lobby` | LD-214 | Die Hard: Lobby (Powell arrives) | themed | letter | 3 yd = ~30 yd sim (figure ~1/10 scale) | no-shoot |
 | `dh-nakatomi` | LD-211 | Die Hard: Nakatomi Plaza line-up | themed | tabloid | 3 yd = ~32 yd sim (1/11 scale) | no-shoot |
+
+## Qualification Silhouette (`silhouette`, LD-002)
+Clean vector line art: an oval head with a square head box, and a torso with arms, plus center-mass rings on the chest. Scoring (see `silhouette-mask.pdf`):
+
+| Zone | Points |
+|---|---|
+| X (center oval) | 10 (count Xs by hand for tiebreaks) |
+| 10 ring | 10 |
+| 9 ring | 9 |
+| 8 ring | 8 |
+| Head box | 10 |
+| Rest of head and body | 5 |
+| Outside the silhouette | miss (0) |
+
+The target sets `maxPerShot: 10`, so percentages use 10 points per shot. It's used by the *Draw + 1 shot* and *Bill Drill* drills, the NRA-style "Rapid fire, silhouette" stages, and the Pistol Fundamentals stages. `tools_silhouette.py` rebuilds the spec, and `gen_assets.py` renders it.

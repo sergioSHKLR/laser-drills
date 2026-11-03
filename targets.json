@@ -99,7 +99,7 @@
   },
   "silhouette": {
    "code": "LD-002",
-   "name": "Silhouette + No-Shoot",
+   "name": "Qualification Silhouette",
    "markerIds": [
     5,
     6,
@@ -112,129 +112,357 @@
     "five-shot-par"
    ],
    "instructions": [
-    "Scaled practical silhouette: A=5, C=3, D=1.",
-    "Hatched NO-SHOOT hand: -5 per hit.",
-    "Head A box rewards precision, body A for speed."
+    "Center mass: X/10 ring 10, 9 ring 9, 8 ring 8.",
+    "Head box 10; rest of head and body 5.",
+    "Outside the silhouette: miss.",
+    "X (center oval) scores 10; count Xs for tiebreaks."
    ],
    "zones": [
     {
-     "name": "D",
+     "name": "X",
      "kind": "score",
-     "shape": "poly",
-     "pts": [
-      [
-       2.65,
-       3.95
-      ],
-      [
-       5.85,
-       3.95
-      ],
-      [
-       6.25,
-       4.7
-      ],
-      [
-       6.25,
-       8.9
-      ],
-      [
-       2.25,
-       8.9
-      ],
-      [
-       2.25,
-       4.7
-      ]
-     ],
-     "score": 1,
-     "tier": "tier1"
+     "shape": "ellipse",
+     "cx": 4.256,
+     "cy": 5.861,
+     "rx": 0.233,
+     "ry": 0.311,
+     "score": 10,
+     "tier": "tier5",
+     "subtle": true,
+     "shade": "#163A75",
+     "z": 1,
+     "label": [
+      4.256,
+      5.911
+     ]
     },
     {
-     "name": "D",
+     "name": "10",
      "kind": "score",
      "shape": "circle",
-     "cx": 4.25,
-     "cy": 2.95,
-     "r": 0.8,
-     "score": 1,
-     "tier": "tier1"
+     "cx": 4.256,
+     "cy": 5.861,
+     "r": 0.6,
+     "score": 10,
+     "tier": "tier5",
+     "subtle": true,
+     "label": [
+      4.256,
+      5.391
+     ]
     },
     {
-     "name": "C",
+     "name": "9",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.256,
+     "cy": 5.861,
+     "r": 0.945,
+     "score": 9,
+     "tier": "tier5",
+     "subtle": true,
+     "label": [
+      4.256,
+      5.046
+     ]
+    },
+    {
+     "name": "8",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.256,
+     "cy": 5.861,
+     "r": 1.245,
+     "score": 8,
+     "tier": "tier5",
+     "subtle": true,
+     "label": [
+      4.256,
+      4.746
+     ]
+    },
+    {
+     "name": "HEAD BOX",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.766,
+     "y": 2.504,
+     "w": 0.979,
+     "h": 0.978,
+     "score": 10,
+     "tier": "tier5",
+     "subtle": true
+    },
+    {
+     "name": "HEAD",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 4.267,
+     "cy": 2.993,
+     "rx": 0.745,
+     "ry": 1.023,
+     "score": 5,
+     "tier": "tier1",
+     "subtle": true,
+     "shade": "#AFC4E6",
+     "label": [
+      4.267,
+      2.15
+     ]
+    },
+    {
+     "name": "BODY",
      "kind": "score",
      "shape": "poly",
      "pts": [
       [
-       3.0,
-       4.35
+       3.844,
+       3.938
       ],
       [
-       5.5,
-       4.35
+       3.844,
+       4.194
       ],
       [
-       5.7,
-       4.9
+       2.477,
+       4.794
       ],
       [
-       5.7,
-       7.8
+       1.798,
+       8.908
       ],
       [
-       2.8,
-       7.8
+       2.421,
+       9.03
       ],
       [
-       2.8,
-       4.9
+       2.91,
+       6.829
+      ],
+      [
+       3.099,
+       7.64
+      ],
+      [
+       2.866,
+       8.963
+      ],
+      [
+       5.623,
+       8.963
+      ],
+      [
+       5.412,
+       7.64
+      ],
+      [
+       5.59,
+       6.829
+      ],
+      [
+       6.079,
+       9.03
+      ],
+      [
+       6.702,
+       8.908
+      ],
+      [
+       6.012,
+       4.794
+      ],
+      [
+       4.678,
+       4.194
+      ],
+      [
+       4.678,
+       3.938
       ]
      ],
-     "score": 3,
-     "tier": "tier3"
-    },
-    {
-     "name": "A",
-     "kind": "score",
-     "shape": "rect",
-     "x": 3.85,
-     "y": 2.55,
-     "w": 0.8,
-     "h": 0.65,
      "score": 5,
-     "tier": "tier5"
-    },
-    {
-     "name": "A",
-     "kind": "score",
-     "shape": "rect",
-     "x": 3.55,
-     "y": 4.6,
-     "w": 1.4,
-     "h": 2.2,
-     "score": 5,
-     "tier": "tier5"
-    },
-    {
-     "name": "NS",
-     "kind": "noshoot",
-     "shape": "rect",
-     "x": 5.35,
-     "y": 5.3,
-     "w": 1.3,
-     "h": 2.3,
-     "penalty": -5
+     "tier": "tier1",
+     "subtle": true,
+     "shade": "#AFC4E6",
+     "label": [
+      4.256,
+      8.496
+     ]
     }
    ],
    "meta": {
     "category": "tactical",
     "paper": "letter",
     "people": "single",
-    "features": [
-     "no-shoot"
-    ],
+    "features": [],
     "weapon": "pistol"
-   }
+   },
+   "maxPerShot": 10,
+   "lineart": [
+    {
+     "shape": "ellipse",
+     "cx": 4.267,
+     "cy": 2.993,
+     "rx": 0.745,
+     "ry": 1.023
+    },
+    {
+     "shape": "ellipse",
+     "cx": 4.256,
+     "cy": 5.861,
+     "rx": 0.233,
+     "ry": 0.311
+    },
+    {
+     "shape": "circle",
+     "cx": 4.256,
+     "cy": 5.861,
+     "r": 0.6
+    },
+    {
+     "shape": "circle",
+     "cx": 4.256,
+     "cy": 5.861,
+     "r": 0.945
+    },
+    {
+     "shape": "circle",
+     "cx": 4.256,
+     "cy": 5.861,
+     "r": 1.245
+    },
+    {
+     "shape": "rect",
+     "x": 3.766,
+     "y": 2.504,
+     "w": 0.979,
+     "h": 0.978
+    },
+    {
+     "shape": "poly",
+     "pts": [
+      [
+       3.844,
+       3.938
+      ],
+      [
+       3.844,
+       4.194
+      ],
+      [
+       2.477,
+       4.794
+      ],
+      [
+       1.798,
+       8.908
+      ],
+      [
+       2.421,
+       9.03
+      ],
+      [
+       2.91,
+       6.829
+      ],
+      [
+       3.099,
+       7.64
+      ],
+      [
+       2.866,
+       8.963
+      ],
+      [
+       5.623,
+       8.963
+      ],
+      [
+       5.412,
+       7.64
+      ],
+      [
+       5.59,
+       6.829
+      ],
+      [
+       6.079,
+       9.03
+      ],
+      [
+       6.702,
+       8.908
+      ],
+      [
+       6.012,
+       4.794
+      ],
+      [
+       4.678,
+       4.194
+      ],
+      [
+       4.678,
+       3.938
+      ]
+     ],
+     "open": true
+    },
+    {
+     "shape": "poly",
+     "pts": [
+      [
+       2.477,
+       4.794
+      ],
+      [
+       2.91,
+       6.829
+      ]
+     ],
+     "open": true
+    },
+    {
+     "shape": "poly",
+     "pts": [
+      [
+       6.012,
+       4.794
+      ],
+      [
+       5.59,
+       6.829
+      ]
+     ],
+     "open": true
+    }
+   ],
+   "legend": [
+    [
+     "#163A75",
+     "X (center oval): 10 pts (X = tiebreak)"
+    ],
+    [
+     "#1F4E9A",
+     "10 ring, head box: 10 pts"
+    ],
+    [
+     "#2D5FAE",
+     "9 ring: 9 pts"
+    ],
+    [
+     "#4F7BC0",
+     "8 ring: 8 pts"
+    ],
+    [
+     "#AFC4E6",
+     "Rest of head and body: 5 pts"
+    ],
+    [
+     "#FFFFFF",
+     "Outside silhouette: miss, 0 pts"
+    ]
+   ]
   },
   "five-dot": {
    "code": "LD-003",
@@ -8855,8 +9083,7 @@
      "x": 0.4,
      "y": 1.85,
      "w": 7.7,
-     "h": 7.3,
-     "warm": true
+     "h": 7.3
     }
    ],
    "zones": [
@@ -8864,10 +9091,10 @@
      "name": "PIG1",
      "kind": "score",
      "shape": "ellipse",
-     "cx": 1.659,
-     "cy": 4.379,
-     "rx": 0.558,
-     "ry": 0.275,
+     "cx": 1.72,
+     "cy": 2.692,
+     "rx": 0.76,
+     "ry": 0.319,
      "score": 3,
      "tier": "tier3",
      "art": true,
@@ -8882,10 +9109,10 @@
      "name": "PIG2",
      "kind": "score",
      "shape": "ellipse",
-     "cx": 6.841,
-     "cy": 4.379,
-     "rx": 0.558,
-     "ry": 0.275,
+     "cx": 4.37,
+     "cy": 2.692,
+     "rx": 0.76,
+     "ry": 0.319,
      "score": 3,
      "tier": "tier3",
      "art": true,
@@ -8900,10 +9127,10 @@
      "name": "PIG3",
      "kind": "score",
      "shape": "ellipse",
-     "cx": 4.2,
-     "cy": 4.89,
-     "rx": 0.558,
-     "ry": 0.275,
+     "cx": 7.02,
+     "cy": 2.692,
+     "rx": 0.76,
+     "ry": 0.319,
      "score": 3,
      "tier": "tier3",
      "art": true,
@@ -8918,9 +9145,9 @@
      "name": "BULL1 1",
      "kind": "score",
      "shape": "circle",
-     "cx": 1.94,
-     "cy": 5.938,
-     "r": 0.78,
+     "cx": 3.25,
+     "cy": 3.85,
+     "r": 0.55,
      "score": 1,
      "tier": "tier1",
      "art": true,
@@ -8935,9 +9162,9 @@
      "name": "BULL1 3",
      "kind": "score",
      "shape": "circle",
-     "cx": 1.94,
-     "cy": 5.938,
-     "r": 0.52,
+     "cx": 3.25,
+     "cy": 3.85,
+     "r": 0.352,
      "score": 3,
      "tier": "tier1",
      "art": true,
@@ -8952,9 +9179,9 @@
      "name": "BULL1 5",
      "kind": "score",
      "shape": "circle",
-     "cx": 1.94,
-     "cy": 5.938,
-     "r": 0.26,
+     "cx": 3.25,
+     "cy": 3.85,
+     "r": 0.176,
      "score": 5,
      "tier": "tier1",
      "art": true,
@@ -8969,9 +9196,9 @@
      "name": "BULL2 1",
      "kind": "score",
      "shape": "circle",
-     "cx": 6.56,
-     "cy": 5.938,
-     "r": 0.78,
+     "cx": 5.25,
+     "cy": 3.85,
+     "r": 0.55,
      "score": 1,
      "tier": "tier1",
      "art": true,
@@ -8986,9 +9213,9 @@
      "name": "BULL2 3",
      "kind": "score",
      "shape": "circle",
-     "cx": 6.56,
-     "cy": 5.938,
-     "r": 0.52,
+     "cx": 5.25,
+     "cy": 3.85,
+     "r": 0.352,
      "score": 3,
      "tier": "tier1",
      "art": true,
@@ -9003,9 +9230,9 @@
      "name": "BULL2 5",
      "kind": "score",
      "shape": "circle",
-     "cx": 6.56,
-     "cy": 5.938,
-     "r": 0.26,
+     "cx": 5.25,
+     "cy": 3.85,
+     "r": 0.176,
      "score": 5,
      "tier": "tier1",
      "art": true,
@@ -9017,20 +9244,174 @@
      "group": "B2"
     },
     {
+     "name": "BULL3 1",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 2.0,
+     "cy": 5.15,
+     "r": 0.62,
+     "score": 1,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B3"
+     ],
+     "group": "B3"
+    },
+    {
+     "name": "BULL3 3",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 2.0,
+     "cy": 5.15,
+     "r": 0.397,
+     "score": 3,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B3"
+     ],
+     "group": "B3"
+    },
+    {
+     "name": "BULL3 5",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 2.0,
+     "cy": 5.15,
+     "r": 0.198,
+     "score": 5,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B3"
+     ],
+     "group": "B3"
+    },
+    {
+     "name": "BULL4 1",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.25,
+     "cy": 5.15,
+     "r": 0.62,
+     "score": 1,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B4"
+     ],
+     "group": "B4"
+    },
+    {
+     "name": "BULL4 3",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.25,
+     "cy": 5.15,
+     "r": 0.397,
+     "score": 3,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B4"
+     ],
+     "group": "B4"
+    },
+    {
+     "name": "BULL4 5",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.25,
+     "cy": 5.15,
+     "r": 0.198,
+     "score": 5,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B4"
+     ],
+     "group": "B4"
+    },
+    {
+     "name": "BULL5 1",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 6.5,
+     "cy": 5.15,
+     "r": 0.62,
+     "score": 1,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B5"
+     ],
+     "group": "B5"
+    },
+    {
+     "name": "BULL5 3",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 6.5,
+     "cy": 5.15,
+     "r": 0.397,
+     "score": 3,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B5"
+     ],
+     "group": "B5"
+    },
+    {
+     "name": "BULL5 5",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 6.5,
+     "cy": 5.15,
+     "r": 0.198,
+     "score": 5,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B5"
+     ],
+     "group": "B5"
+    },
+    {
      "name": "DUCK1",
      "kind": "score",
      "shape": "ellipse",
-     "cx": 1.324,
-     "cy": 7.475,
-     "rx": 0.5,
-     "ry": 0.28,
+     "cx": 1.2,
+     "cy": 6.105,
+     "rx": 0.504,
+     "ry": 0.278,
      "score": 2,
      "tier": "tier1",
      "art": true,
      "subtle": true,
      "tags": [
       "duck",
-      "D1"
+      "D1",
+      "small"
      ],
      "group": "D1"
     },
@@ -9038,17 +9419,18 @@
      "name": "DUCK2",
      "kind": "score",
      "shape": "ellipse",
-     "cx": 2.787,
-     "cy": 7.475,
-     "rx": 0.5,
-     "ry": 0.28,
+     "cx": 3.15,
+     "cy": 6.105,
+     "rx": 0.504,
+     "ry": 0.278,
      "score": 2,
      "tier": "tier1",
      "art": true,
      "subtle": true,
      "tags": [
       "duck",
-      "D2"
+      "D2",
+      "small"
      ],
      "group": "D2"
     },
@@ -9056,17 +9438,18 @@
      "name": "DUCK3",
      "kind": "score",
      "shape": "ellipse",
-     "cx": 4.25,
-     "cy": 7.475,
-     "rx": 0.5,
-     "ry": 0.28,
+     "cx": 5.1,
+     "cy": 6.105,
+     "rx": 0.504,
+     "ry": 0.278,
      "score": 2,
      "tier": "tier1",
      "art": true,
      "subtle": true,
      "tags": [
       "duck",
-      "D3"
+      "D3",
+      "small"
      ],
      "group": "D3"
     },
@@ -9074,17 +9457,18 @@
      "name": "DUCK4",
      "kind": "score",
      "shape": "ellipse",
-     "cx": 5.713,
-     "cy": 7.475,
-     "rx": 0.5,
-     "ry": 0.28,
+     "cx": 7.05,
+     "cy": 6.105,
+     "rx": 0.504,
+     "ry": 0.278,
      "score": 2,
      "tier": "tier1",
      "art": true,
      "subtle": true,
      "tags": [
       "duck",
-      "D4"
+      "D4",
+      "small"
      ],
      "group": "D4"
     },
@@ -9092,25 +9476,91 @@
      "name": "DUCK5",
      "kind": "score",
      "shape": "ellipse",
-     "cx": 7.176,
-     "cy": 7.475,
-     "rx": 0.5,
-     "ry": 0.28,
+     "cx": 1.6,
+     "cy": 7.994,
+     "rx": 0.672,
+     "ry": 0.37,
      "score": 2,
      "tier": "tier1",
      "art": true,
      "subtle": true,
      "tags": [
       "duck",
-      "D5"
+      "D5",
+      "big"
      ],
      "group": "D5"
+    },
+    {
+     "name": "DUCK6",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 4.25,
+     "cy": 7.994,
+     "rx": 0.672,
+     "ry": 0.37,
+     "score": 2,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "duck",
+      "D6",
+      "big"
+     ],
+     "group": "D6"
+    },
+    {
+     "name": "DUCK7",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 6.9,
+     "cy": 7.994,
+     "rx": 0.672,
+     "ry": 0.37,
+     "score": 2,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "duck",
+      "D7",
+      "big"
+     ],
+     "group": "D7"
     }
    ],
+   "legend": [
+    [
+     "#F4C9DC",
+     "Flying pig (P1-P3): 3 pts"
+    ],
+    [
+     "#00A3B4",
+     "Bullseye center (teal): 5 pts"
+    ],
+    [
+     "#FFFFFF",
+     "Bullseye white ring: 3 pts"
+    ],
+    [
+     "#1F4E9A",
+     "Bullseye navy ring: 1 pt"
+    ],
+    [
+     "#FFF0AF",
+     "Duck (D1-D4 rail, D5-D7 posts): 2 pts"
+    ],
+    [
+     "#FFFFFF",
+     "Background: miss, 0 pts"
+    ]
+   ],
    "instructions": [
-    "Free fire: duck 2, pig 3, bullseye 5/3/1.",
-    "Called mode: the app calls \"duck 3\", \"all pigs\"...",
-    "Wrong item = -2. Red is decor only.",
+    "Free fire: pig 3, duck 2, bullseye 5/3/1.",
+    "Pigs P1-3 left to right; bullseyes B1-B5 top row first.",
+    "Ducks D1-D4 on the rail, D5-D7 on posts.",
+    "Called mode: \"duck 3\", \"all pigs\"... wrong item -2.",
     "Mic on. Say \"start\" or tap."
    ],
    "drills": [

@@ -62,7 +62,7 @@ BASE=dict(TPL)
 MASKCOL={0:'#1F3A5F',-1:'#4F6F94',-3:'#9DB3C9',5:'#1F3A5F',4:'#34506E',3:'#6F8BA8',2:'#9DB3C9',1:'#C9D6E2'}
 RULECOL={'hit':'#1F4E9A','nohit':'#FFFFFF','cover':'#000000','twohit':'#2E8B57','conditional':'#7B4FA0','headonly':'#00A3B4','penalty':'#8C8C8C'}
 RULETXT=[('hit','Hit: scores (shade = value; labels show pts)'),('nohit','No-hit / no-shoot (hatched): penalty'),('cover','Hard cover: blocks, no hit'),('twohit','Two-hit: counts on 2nd hit'),('conditional','Conditional: only after required hits elsewhere'),('headonly','Head-only / e-vest: only this counts'),('penalty','Penalty / backstop (bystander)')]
-HITSHADE={0:'#1F4E9A',5:'#1F4E9A',4:'#2D5FAE',-1:'#4F7BC0',3:'#4F7BC0',2:'#7FA0D3',-3:'#7FA0D3',1:'#AFC4E6'}
+HITSHADE={10:'#1F4E9A',9:'#2D5FAE',8:'#4F7BC0',0:'#1F4E9A',5:'#1F4E9A',4:'#2D5FAE',-1:'#4F7BC0',3:'#4F7BC0',2:'#7FA0D3',-3:'#7FA0D3',1:'#AFC4E6'}
 for _k,_v in list(RULECOL.items())+list(HITSHADE.items()):
     _r,_g,_b=[int(_v[i:i+2],16) for i in (1,3,5)]; assert _r-(_g+_b)/2<20, f'mask colour {_v} too red'
 def rule_of(z):
@@ -83,7 +83,7 @@ def draw_mask(d,t):
         k=z['kind']
         if k=='decor': continue
         c.setLineWidth(0.8); c.setStrokeColor(black)
-        ru=rule_of(z); col=HITSHADE.get(z.get('score'),RULECOL['hit']) if ru=='hit' else RULECOL[ru]
+        ru=rule_of(z); col=z.get('shade') or (HITSHADE.get(z.get('score'),RULECOL['hit']) if ru=='hit' else RULECOL[ru])
         d.color(col); c.drawPath(d.path(z),stroke=1,fill=1)
         if k=='noshoot': d.hatch(z,PAL['noshootInk'],gap=0.1,width=0.8); c.drawPath(d.path(z),stroke=1,fill=0)
     seen=set(); placed=[]
@@ -107,7 +107,7 @@ def draw_mask(d,t):
             if any(abs(cx-px)<0.45 and abs(cy-py)<0.13 for px,py in placed): cy+=0.14
             else: break
         placed.append((cx,cy))
-        dark=(k=='hardcover') or (rule_of(z)!='nohit' and lum(HITSHADE.get(z.get('score'),RULECOL[rule_of(z)]) if rule_of(z)=='hit' else RULECOL[rule_of(z)])<0.3)
+        dark=(k=='hardcover') or (rule_of(z)!='nohit' and lum(z.get('shade') or (HITSHADE.get(z.get('score'),RULECOL[rule_of(z)]) if rule_of(z)=='hit' else RULECOL[rule_of(z)]))<0.3)
         sz=6 if (z.get('rx',z.get('r',1))<0.35) else 7
         c.setFont('Helvetica-Bold',sz); tw=c.stringWidth(lab,'Helvetica-Bold',sz); x,y=d.P(cx,cy)
         if k=='noshoot': c.setFillColor(white); c.rect(x-tw/2-1,y-2.5,tw+2,sz+1.5,stroke=0,fill=1); dark=False
@@ -145,7 +145,7 @@ def draw_target(key,t,path,maskmode=False):
                     px,py=d.P(x+j*s,y+(i+1)*s); c.rect(px,py,s*K+0.4,s*K+0.4,stroke=0,fill=1)
     # scan field edge
     f=TPL['field']
-    if not t.get('art') or maskmode:
+    if not (t.get('art') or t.get('lineart')) or maskmode:
      c.setDash(3,3); d.color(PAL['fieldEdge'],True); c.setLineWidth(0.6)
      x,y=d.P(f['x'],f['y']+f['h']); c.rect(x,y,f['w']*K,f['h']*K,stroke=1,fill=0); c.setDash()
      c.setFont('Helvetica',5.5); c.setFillColor(HexColor('#777777'))
@@ -158,6 +158,17 @@ def draw_target(key,t,path,maskmode=False):
         arr=np.asarray(im).astype(int); rd=(arr[...,0]-(arr[...,1]+arr[...,2])/2).max()
         assert rd<40 or a.get('warm'), f"{a['src']} too red for laser detection ({rd})"
         artbox.append((a['x'],a['y'],a['x']+a['w'],a['y']+a['h'],a['src'])); x,y=d.P(a['x'],a['y']+a['h']); c.drawImage(ImageReader(im),x,y,a['w']*K,a['h']*K)
+    # vector line art (clean qualification silhouettes): black strokes only, no fills
+    for a in ([] if maskmode else t.get('lineart',[])):
+        c.setLineWidth(a.get('lw',1.1)); c.setStrokeColor(black); c.setLineJoin(1)
+        if a['shape']=='poly' and a.get('open'):
+            p=c.beginPath(); p.moveTo(*d.P(*a['pts'][0]))
+            for q in a['pts'][1:]: p.lineTo(*d.P(*q))
+            c.drawPath(p,stroke=1,fill=0)
+        else: c.drawPath(d.path(a),stroke=1,fill=0)
+        xs=[q[0] for q in a['pts']] if 'pts' in a else [a.get('cx',a.get('x',0))-a.get('rx',a.get('r',0)),a.get('cx',a.get('x',0))+a.get('rx',a.get('r',a.get('w',0)))]
+        ys=[q[1] for q in a['pts']] if 'pts' in a else [a.get('cy',a.get('y',0))-a.get('ry',a.get('r',0)),a.get('cy',a.get('y',0))+a.get('ry',a.get('r',a.get('h',0)))]
+        artbox.append((min(xs),min(ys),max(xs),max(ys),'lineart'))
     # zones
     if maskmode: draw_mask(d,t)
     for z in ([] if maskmode else t['zones']):

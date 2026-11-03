@@ -48,7 +48,7 @@
    {
     "name": "Rapid fire, silhouette",
     "drill": "five-shot-par",
-    "brief": "5 shots to the body A zone.",
+    "brief": "5 shots to the center-mass rings (8 ring or better).",
     "dist": "7 yd / 3.5 yd laser",
     "set": {
      "shots": 5,
@@ -135,7 +135,7 @@
    {
     "name": "Rapid fire, silhouette",
     "drill": "five-shot-par",
-    "brief": "5 shots to the body A zone.",
+    "brief": "5 shots to the center-mass rings (8 ring or better).",
     "dist": "7 yd / 3.5 yd laser",
     "set": {
      "shots": 5,
@@ -222,7 +222,7 @@
    {
     "name": "Rapid fire, silhouette",
     "drill": "five-shot-par",
-    "brief": "5 shots to the body A zone.",
+    "brief": "5 shots to the center-mass rings (8 ring or better).",
     "dist": "7 yd / 3.5 yd laser",
     "set": {
      "shots": 5,
@@ -309,7 +309,7 @@
    {
     "name": "Rapid fire, silhouette",
     "drill": "five-shot-par",
-    "brief": "5 shots to the body A zone.",
+    "brief": "5 shots to the center-mass rings (8 ring or better).",
     "dist": "7 yd / 3.5 yd laser",
     "set": {
      "shots": 5,
@@ -396,7 +396,7 @@
    {
     "name": "Rapid fire, silhouette",
     "drill": "five-shot-par",
-    "brief": "5 shots to the body A zone.",
+    "brief": "5 shots to the center-mass rings (8 ring or better).",
     "dist": "7 yd / 3.5 yd laser",
     "set": {
      "shots": 5,
@@ -817,12 +817,12 @@
   "name": "Bill Drill",
   "badge": "Bill Drill",
   "icon": "zap",
-  "notes": "6 shots to the body A zone from the draw as fast as you can keep them in. Benchmark par 2.5 s.",
+  "notes": "6 shots to the center-mass rings (8 ring or better) from the draw as fast as you can keep them in. Benchmark par 2.5 s.",
   "stages": [
    {
     "name": "Bill Drill",
     "drill": "single-draw",
-    "brief": "Draw, 6 shots to body A.",
+    "brief": "Draw, 6 shots to the center-mass rings.",
     "dist": "7 yd / 3.5 yd laser",
     "set": {
      "shots": 6,

@@ -55,39 +55,34 @@ def put_text(can,F,txt,cx,cy,hin,col=(255,255,255),th=None):
 
 # ---------------------------------------------------------------- Carnival Shoot
 def carnival():
-    F=LETTER; A='/cursor/stores/store-3672b900-d5c8-4311-a0e7-7fbd1aa29536/grok-bot/agents/e444fe30-cded-4aff-8bbf-d24560138655/assets/c0c9b7c638d03d6c0419caaf65b9349168236eebdaaef7e06f503095bf0eac85.jpg'
-    import os; bgp='art/src2/booth.jpg'
-    if not os.path.exists(bgp): import shutil; shutil.copy(A,bgp)
-    bg=cv2.resize(cv2.imread(bgp),(int(F['w']*DPI),int(F['h']*DPI)),interpolation=cv2.INTER_AREA); can=bg.copy()
-    X=lambda f:F['x']+f*F['w']; Y=lambda f:F['y']+f*F['h']; zones=[]
-    # SHOOT sign (navy board, cream letters)
-    sx0,sy0,sx1,sy1=X(.36),Y(.19),X(.64),Y(.27)
-    cv2.rectangle(can,(int((sx0-F['x'])*DPI),int((sy0-F['y'])*DPI)),(int((sx1-F['x'])*DPI),int((sy1-F['y'])*DPI)),(70,40,20),-1)
-    put_text(can,F,'SHOOT',(sx0+sx1)/2,(sy0+sy1)/2,0.42,(225,240,250))
-    pig=tint(sprite('art/src2/pig.jpg'),(190,210,245)); duck=tint(sprite('art/src2/duck.jpg'),(255,240,175),0.25)
-    # flying pigs
-    for i,(fx,fy,fl) in enumerate([(.17,.33,False),(.83,.33,True),(.5,.40,False)]):
-        x0,y0,x1,y1=paste(can,pig,X(fx),Y(fy),1.55,F,flip=fl)
-        zones.append(dict(name=f'PIG{i+1}',kind='score',shape='ellipse',cx=round((x0+x1)/2+(0.05 if fl else -0.05),3),cy=round((y0+y1)/2+0.12,3),rx=round((x1-x0)*0.36,3),ry=round((y1-y0)*0.3,3),score=3,tier='tier3',art=True,subtle=True,tags=['pig','P'+str(i+1)],group='P'+str(i+1)))
-    # bullseyes (navy/blue/yellow)
-    for i,fx in enumerate([.2,.8]):
-        cx,cy=X(fx),Y(.56)
-        for r,col,sc in [(0.78,(95,60,25),1),(0.52,(200,140,60),3),(0.26,(170,240,250),5)]:
-            cv2.circle(can,(int((cx-F['x'])*DPI),int((cy-F['y'])*DPI)),int(r*DPI),col,-1); cv2.circle(can,(int((cx-F['x'])*DPI),int((cy-F['y'])*DPI)),int(r*DPI),(30,20,10),3)
-            zones.append(dict(name=f'BULL{i+1} {sc}',kind='score',shape='circle',cx=round(cx,3),cy=round(cy,3),r=r,score=sc,tier='tier1',art=True,subtle=True,tags=['bull','B'+str(i+1)],group='B'+str(i+1)))
-    # duck rail
-    ry=Y(.80); cv2.rectangle(can,(int((X(.04)-F['x'])*DPI),int((ry+0.38-F['y'])*DPI)),(int((X(.96)-F['x'])*DPI),int((ry+0.5-F['y'])*DPI)),(40,40,40),-1)
-    for i in range(5):
-        fx=.12+i*.19; x0,y0,x1,y1=paste(can,duck,X(fx),ry,1.2,F,flip=(i%2==1))
-        zones.append(dict(name=f'DUCK{i+1}',kind='score',shape='ellipse',cx=round(X(fx),3),cy=round(y0+(y1-y0)*0.33,3),rx=0.5,ry=0.28,score=2,tier='tier1',art=True,subtle=True,tags=['duck','D'+str(i+1)],group='D'+str(i+1)))
-    can=np.where(np.repeat(np.any([zone_mask(z,F,can.shape) for z in zones],axis=0)[...,None],3,2),safe(can),can)
+    """Carnival booth on plain white: 3 winged pigs / 2+3 bullseyes (navy-white-teal) / 4 small ducks on a dark rail / 3 big ducks on posts."""
+    F=LETTER; can=canvas(F); zones=[]
+    Pp=lambda x,y:(int((x-F['x'])*DPI),int((y-F['y'])*DPI))
+    pig=tint(sprite('art/src2/pig.jpg'),(250,208,226),0.5); duck=tint(sprite('art/src2/duck.jpg'),(250,240,182),0.45)
+    for i,cx in enumerate([1.6,4.25,6.9]):   # winged pigs, all flying right
+        x0,y0,x1,y1=paste(can,pig,cx,2.55,2.0,F)
+        zones.append(dict(name=f'PIG{i+1}',kind='score',shape='ellipse',cx=round((x0+x1)/2+0.12,3),cy=round(y0+(y1-y0)*0.62,3),rx=round((x1-x0)*0.38,3),ry=round((y1-y0)*0.27,3),score=3,tier='tier3',art=True,subtle=True,tags=['pig','P'+str(i+1)],group='P'+str(i+1)))
+    for i,(cx,cy,r) in enumerate([(3.25,3.85,0.55),(5.25,3.85,0.55),(2.0,5.15,0.62),(4.25,5.15,0.62),(6.5,5.15,0.62)]):
+        for f,col,sc in [(1,(154,78,31),1),(0.64,(255,255,255),3),(0.32,(180,163,0),5)]:
+            cv2.circle(can,Pp(cx,cy),int(r*f*DPI),col,-1,cv2.LINE_AA)
+            zones.append(dict(name=f'BULL{i+1} {sc}',kind='score',shape='circle',cx=cx,cy=cy,r=round(r*f,3),score=sc,tier='tier1',art=True,subtle=True,tags=['bull','B'+str(i+1)],group='B'+str(i+1)))
+        cv2.circle(can,Pp(cx,cy),int(r*DPI),(40,30,20),3,cv2.LINE_AA)
+    n=0
+    for cx in [1.2,3.15,5.1,7.05]:   # small ducks on the rail
+        n+=1; x0,y0,x1,y1=paste(can,duck,cx,6.32,1.2,F)
+        zones.append(dict(name=f'DUCK{n}',kind='score',shape='ellipse',cx=round(cx,3),cy=round(y0+(y1-y0)*0.33,3),rx=round((x1-x0)*0.42,3),ry=round((y1-y0)*0.22,3),score=2,tier='tier1',art=True,subtle=True,tags=['duck','D'+str(n),'small'],group='D'+str(n)))
+    cv2.rectangle(can,Pp(0.55,6.88),Pp(7.95,7.02),(60,55,55),-1)
+    for cx in [1.6,4.25,6.9]:   # big ducks on posts, facing right
+        n+=1; x0,y0,x1,y1=paste(can,duck,cx,8.28,1.6,F,flip=True)
+        zones.append(dict(name=f'DUCK{n}',kind='score',shape='ellipse',cx=round(cx,3),cy=round(y0+(y1-y0)*0.33,3),rx=round((x1-x0)*0.42,3),ry=round((y1-y0)*0.22,3),score=2,tier='tier1',art=True,subtle=True,tags=['duck','D'+str(n),'big'],group='D'+str(n)))
     check_zones('carnival',can,zones,F)
     cv2.imwrite('art/carnival.png',can)
-    calls=[dict(say=f'duck {i}',tags=[f'D{i}']) for i in range(1,6)]+[dict(say=f'pig {i}',tags=[f'P{i}']) for i in range(1,4)]+[dict(say=f'bullseye {i}',tags=[f'B{i}']) for i in (1,2)]+[dict(say='all pigs',tags=['pig'],n=3),dict(say='any duck',tags=['duck']),dict(say='two ducks',tags=['duck'],n=2)]
-    t=dict(code='LD-401',name='Carnival Shoot',markerIds=[300,301,302,303],distance='3-5 yd',set='games',art=[dict(src='art/carnival.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'],warm=True)],zones=zones,
-        instructions=['Free fire: duck 2, pig 3, bullseye 5/3/1.','Called mode: the app calls "duck 3", "all pigs"...','Wrong item = -2. Red is decor only.','Mic on. Say "start" or tap.'])
-    D=[dict(id='carnival-free',name='Carnival Shoot: free fire (60 s)',category='fun',target='carnival',shots=20,startDelay=[2,3],parTime=30,timeout=60,notes='Shoot anything: duck 2, pig 3, bullseye 5/3/1.'),
-       dict(id='carnival-calls',name='Carnival Shoot: called shots',category='fun',target='carnival',shots=40,startDelay=[2,3],parTime=60,timeout=120,game=dict(type='calls',calls=calls,rounds=8,wrong=-2),notes='The app calls an item ("duck 3", "all pigs"); hit it to get the next call. Wrong item -2.')]
+    calls=[dict(say=f'duck {i}',tags=[f'D{i}']) for i in range(1,8)]+[dict(say=f'pig {i}',tags=[f'P{i}']) for i in range(1,4)]+[dict(say=f'bullseye {i}',tags=[f'B{i}']) for i in range(1,6)]+[dict(say='all pigs',tags=['pig'],n=3),dict(say='any duck',tags=['duck']),dict(say='two ducks',tags=['duck'],n=2),dict(say='small duck',tags=['small']),dict(say='big duck',tags=['big'])]
+    t=dict(code='LD-401',name='Carnival Shoot',markerIds=[300,301,302,303],distance='3-5 yd',set='games',art=[dict(src='art/carnival.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'])],zones=zones,
+        legend=[['#F4C9DC','Flying pig (P1-P3): 3 pts'],['#00A3B4','Bullseye center (teal): 5 pts'],['#FFFFFF','Bullseye white ring: 3 pts'],['#1F4E9A','Bullseye navy ring: 1 pt'],['#FFF0AF','Duck (D1-D4 rail, D5-D7 posts): 2 pts'],['#FFFFFF','Background: miss, 0 pts']],
+        instructions=['Free fire: pig 3, duck 2, bullseye 5/3/1.','Pigs P1-3 left to right; bullseyes B1-B5 top row first.','Ducks D1-D4 on the rail, D5-D7 on posts.','Called mode: "duck 3", "all pigs"... wrong item -2.','Mic on. Say "start" or tap.'])
+    D=[dict(id='carnival-free',name='Carnival Shoot: free fire (60 s)',category='fun',target='carnival',shots=20,startDelay=[2,3],parTime=30,timeout=60,notes='Shoot anything: pig 3, duck 2, bullseye 5/3/1.'),
+       dict(id='carnival-calls',name='Carnival Shoot: called shots',category='fun',target='carnival',shots=40,startDelay=[2,3],parTime=60,timeout=120,game=dict(type='calls',calls=calls,rounds=8,wrong=-2),notes='The app calls an item ("duck 3", "bullseye 5", "all pigs", "small duck"); hit it to get the next call. Wrong item -2.')]
     upsert('carnival',t,D)
 GAMES=dict(carnival=carnival)
 

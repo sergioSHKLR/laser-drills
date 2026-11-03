@@ -16,7 +16,7 @@ for i,(n,pct,k,ic) in enumerate(ranks):
      "stages":[
       st("Slow fire, bullseye","five-shot-par","5 shots, precision, no time pressure.","5 yd real / 2.5 yd laser",B(5,round(20*k,1),40),{"minPct":pct}),
       st("Timed fire, bullseye","five-shot-par","5 shots inside the par.","5 yd / 2.5 yd laser",B(5,round(10*k,1),25),{"minPct":pct-5,"maxTime":round(10*k,1)}),
-      st("Rapid fire, silhouette","five-shot-par","5 shots to the body A zone.","7 yd / 3.5 yd laser",dict(B(5,round(6*k,1),20),target="silhouette"),{"minPct":pct-10,"maxTime":round(6*k,1)}),
+      st("Rapid fire, silhouette","five-shot-par","5 shots to the center-mass rings (8 ring or better).","7 yd / 3.5 yd laser",dict(B(5,round(6*k,1),20),target="silhouette"),{"minPct":pct-10,"maxTime":round(6*k,1)}),
       st("Dot sequence","dot-sequence","Dots 1→5 in order.","3 yd / 1.5 yd laser",B(5,round(12*k,1),30),{"minPct":pct,"maxTime":round(12*k,1)})]})
     prev=cid
 # --- Basic Pistol-style fundamentals
@@ -51,8 +51,8 @@ C+= [
    st("5 yd: 4 rounds","five-shot-par","Draw, 4 shots.","5 yd / 2.5 yd laser",dict(B(4,4.0,12),target="silhouette"),{"minPct":80,"maxTime":4.0}),
    st("7 yd: 6 rounds","five-shot-par","Draw, 6 shots.","7 yd / 3.5 yd laser",dict(B(6,6.0,15),target="silhouette"),{"minPct":80,"maxTime":6.0}),
    st("15 yd: 5 rounds","five-shot-par","Draw, 5 shots, slower.","15 yd / 7.5 yd laser",dict(B(5,10.0,20),target="silhouette"),{"minPct":80,"maxTime":10.0})]},
- {"id":"bm-bill","group":"bm","name":"Bill Drill","badge":"Bill Drill","icon":"zap","notes":"6 shots to the body A zone from the draw as fast as you can keep them in. Benchmark par 2.5 s.",
-  "stages":[st("Bill Drill","single-draw","Draw, 6 shots to body A.","7 yd / 3.5 yd laser",B(6,2.5,10),{"minPct":80,"maxTime":2.5})]},
+ {"id":"bm-bill","group":"bm","name":"Bill Drill","badge":"Bill Drill","icon":"zap","notes":"6 shots to the center-mass rings (8 ring or better) from the draw as fast as you can keep them in. Benchmark par 2.5 s.",
+  "stages":[st("Bill Drill","single-draw","Draw, 6 shots to the center-mass rings.","7 yd / 3.5 yd laser",B(6,2.5,10),{"minPct":80,"maxTime":2.5})]},
  {"id":"bm-elprez","group":"bm","name":"El Presidente (laser)","badge":"El Presidente","icon":"users","notes":"Original laser adaptation: turn from facing uprange, 2 each on three threats, simulated reload (rack/reset), 2 each again. Uses the 3-threat sheet.",
   "stages":[st("El Prez","idpa-course:idpa-multi","Start facing away. Turn, draw, 2-2-2, reset, 2-2-2.","3 yd laser (≈27 yd sim)",dict(shots=12,parTime=10.0,timeout=25),{"maxFinal":16.0})]},
  {"id":"bm-dot","group":"bm","name":"Dot Torture (laser)","badge":"Dot Torture","icon":"circle-dot","notes":"Original precision drill on the 5-dot sheet: repeated slow and fast sequences. Every shot must hit its dot in order.",

@@ -948,121 +948,6 @@
   "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
  },
  {
-  "id": "carnival-free",
-  "name": "Carnival Shoot: free fire (60 s)",
-  "category": "fun",
-  "target": "carnival",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "notes": "Shoot anything: duck 2, pig 3, bullseye 5/3/1."
- },
- {
-  "id": "carnival-calls",
-  "name": "Carnival Shoot: called shots",
-  "category": "fun",
-  "target": "carnival",
-  "shots": 40,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 60,
-  "timeout": 120,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "duck 1",
-     "tags": [
-      "D1"
-     ]
-    },
-    {
-     "say": "duck 2",
-     "tags": [
-      "D2"
-     ]
-    },
-    {
-     "say": "duck 3",
-     "tags": [
-      "D3"
-     ]
-    },
-    {
-     "say": "duck 4",
-     "tags": [
-      "D4"
-     ]
-    },
-    {
-     "say": "duck 5",
-     "tags": [
-      "D5"
-     ]
-    },
-    {
-     "say": "pig 1",
-     "tags": [
-      "P1"
-     ]
-    },
-    {
-     "say": "pig 2",
-     "tags": [
-      "P2"
-     ]
-    },
-    {
-     "say": "pig 3",
-     "tags": [
-      "P3"
-     ]
-    },
-    {
-     "say": "bullseye 1",
-     "tags": [
-      "B1"
-     ]
-    },
-    {
-     "say": "bullseye 2",
-     "tags": [
-      "B2"
-     ]
-    },
-    {
-     "say": "all pigs",
-     "tags": [
-      "pig"
-     ],
-     "n": 3
-    },
-    {
-     "say": "any duck",
-     "tags": [
-      "duck"
-     ]
-    },
-    {
-     "say": "two ducks",
-     "tags": [
-      "duck"
-     ],
-     "n": 2
-    }
-   ],
-   "rounds": 8,
-   "wrong": -2
-  },
-  "notes": "The app calls an item (\"duck 3\", \"all pigs\"); hit it to get the next call. Wrong item -2."
- },
- {
   "id": "battle-classic",
   "name": "Sink-the-Ship: sink the fleet",
   "category": "fun",
@@ -2911,5 +2796,162 @@
    }
   ],
   "notes": "Random start position. Kneel, 2 to every threat in the called order. Bystanders above = +10 s."
+ },
+ {
+  "id": "carnival-free",
+  "name": "Carnival Shoot: free fire (60 s)",
+  "category": "fun",
+  "target": "carnival",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "notes": "Shoot anything: pig 3, duck 2, bullseye 5/3/1."
+ },
+ {
+  "id": "carnival-calls",
+  "name": "Carnival Shoot: called shots",
+  "category": "fun",
+  "target": "carnival",
+  "shots": 40,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 60,
+  "timeout": 120,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "duck 1",
+     "tags": [
+      "D1"
+     ]
+    },
+    {
+     "say": "duck 2",
+     "tags": [
+      "D2"
+     ]
+    },
+    {
+     "say": "duck 3",
+     "tags": [
+      "D3"
+     ]
+    },
+    {
+     "say": "duck 4",
+     "tags": [
+      "D4"
+     ]
+    },
+    {
+     "say": "duck 5",
+     "tags": [
+      "D5"
+     ]
+    },
+    {
+     "say": "duck 6",
+     "tags": [
+      "D6"
+     ]
+    },
+    {
+     "say": "duck 7",
+     "tags": [
+      "D7"
+     ]
+    },
+    {
+     "say": "pig 1",
+     "tags": [
+      "P1"
+     ]
+    },
+    {
+     "say": "pig 2",
+     "tags": [
+      "P2"
+     ]
+    },
+    {
+     "say": "pig 3",
+     "tags": [
+      "P3"
+     ]
+    },
+    {
+     "say": "bullseye 1",
+     "tags": [
+      "B1"
+     ]
+    },
+    {
+     "say": "bullseye 2",
+     "tags": [
+      "B2"
+     ]
+    },
+    {
+     "say": "bullseye 3",
+     "tags": [
+      "B3"
+     ]
+    },
+    {
+     "say": "bullseye 4",
+     "tags": [
+      "B4"
+     ]
+    },
+    {
+     "say": "bullseye 5",
+     "tags": [
+      "B5"
+     ]
+    },
+    {
+     "say": "all pigs",
+     "tags": [
+      "pig"
+     ],
+     "n": 3
+    },
+    {
+     "say": "any duck",
+     "tags": [
+      "duck"
+     ]
+    },
+    {
+     "say": "two ducks",
+     "tags": [
+      "duck"
+     ],
+     "n": 2
+    },
+    {
+     "say": "small duck",
+     "tags": [
+      "small"
+     ]
+    },
+    {
+     "say": "big duck",
+     "tags": [
+      "big"
+     ]
+    }
+   ],
+   "rounds": 8,
+   "wrong": -2
+  },
+  "notes": "The app calls an item (\"duck 3\", \"bullseye 5\", \"all pigs\", \"small duck\"); hit it to get the next call. Wrong item -2."
  }
 ]
