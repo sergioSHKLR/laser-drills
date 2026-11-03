@@ -13,7 +13,7 @@ def whiten(im):   # generated sources with a faint textured backdrop: everything
     n,lab,st,_=cv2.connectedComponentsWithStats(m); keep=np.isin(lab,[i for i in range(1,n) if st[i][4]>4000])
     cs,_=cv2.findContours(keep.astype(np.uint8),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE); f=np.zeros_like(m); cv2.drawContours(f,cs,-1,1,-1)
     f=cv2.dilate(f,np.ones((3,3),np.uint8)); out=im.copy(); out[f==0]=255; return out
-WHITEN={'eddie','finale','hans','karl','tony','powell','uli'}
+WHITEN={'eddie','finale','hans','karl','tony','powell','uli','theo','franco','heinrich','billclay','partyguest'}
 def load(k,size=(768,1024)):
     im=cv2.resize(cv2.imread(SRC+k+'.jpg'),size,interpolation=cv2.INTER_AREA); return whiten(im) if k in WHITEN else im
 def mask(img,xmax=None,xmin=None):

@@ -79,3 +79,6 @@ Red cap: art red dominance is hard-capped at 36 (detector gate 40), so lipstick 
 A desktop, mouse-driven editor. Pick a target. Wheel zooms; drag empty space (or use the middle button) to pan. Circle/Rect: click-drag. Polygon: click points, then double-click or Enter. Drag zones or their handles to move or resize; Delete removes a zone; right-click or the side panel sets the rule.
 Rules: Hit (points, IDPA -0/-1/-3); No-hit (penalty, seconds); Requires N shots (counts on the Nth hit); Sequence (counts only after N hits in the chosen zones, e.g. Mozambique); Hard cover; Bystander.
 Save keeps the set in this browser's localStorage, and the app uses it there. Export/Import JSON. "Copy phone link" makes a link that loads the set into the app on the phone. Reset restores the default.
+
+## v15 – Faceless Die Hard art
+All Die Hard characters (Hans, Karl, Tony, Uli, Theo, Eddie, Franco, Heinrich, Bill Clay, Powell, party guest, bystanders, roof finale) were regenerated as faceless figures: smooth, blank faces with hair, skin tone and facial hair kept. Reference stills guided the outfits only. Zones were re-checked against the new art.
