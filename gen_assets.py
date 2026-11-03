@@ -59,6 +59,40 @@ def zone_center(z):
     if z['shape']=='rect': return z['x']+z['w']/2,z['y']+z['h']/2
     xs=[p[0] for p in z['pts']]; ys=[p[1] for p in z['pts']]; return sum(xs)/len(xs),sum(ys)/len(ys)
 BASE=dict(TPL)
+MASKCOL={0:'#1F3A5F',-1:'#4F6F94',-3:'#9DB3C9',5:'#1F3A5F',4:'#34506E',3:'#6F8BA8',2:'#9DB3C9',1:'#C9D6E2'}
+def draw_mask(d,t):
+    """Scoring map only: zones filled by type/value, no images. Drawn back-to-front (first listed = on top)."""
+    c=d.c; zs=t['zones']
+    RK={'bystander':0,'score':1,'hardcover':2,'noshoot':3}
+    for z in sorted(zs,key=lambda z:(RK.get(z['kind'],0),z.get('z',0),z.get('score',0))):
+        k=z['kind']
+        if k=='decor': continue
+        c.setLineWidth(0.8); c.setStrokeColor(black)
+        if k=='score': col=MASKCOL.get(z.get('score'),PAL.get(z.get('tier'),'#8DA6BC'))
+        elif k=='noshoot': col='#FFFFFF'
+        elif k=='hardcover': col='#000000'
+        elif k=='bystander': col='#DDDDDD'
+        else: col='#EEEEEE'
+        d.color(col); c.drawPath(d.path(z),stroke=1,fill=1)
+        if k=='noshoot': d.hatch(z,PAL['noshootInk'],gap=0.1,width=0.8); c.drawPath(d.path(z),stroke=1,fill=0)
+    seen=set()
+    for z in zs:
+        k=z['kind']
+        if k=='decor': continue
+        if k=='score': lab=f"{z['name']} {z['score']:+d}" if t.get('scoring')!='idpa' else z['name']
+        elif k=='noshoot': lab=f"NO-SHOOT {z.get('penalty','')}".strip()+(' FRIENDLY' if z.get('friendly') else '')
+        elif k=='hardcover': lab='HARD COVER'
+        elif k=='bystander': lab='BYSTANDER'
+        else: lab=z.get('name',k)
+        cx,cy=z.get('label') or zone_center(z)
+        if not z.get('label') and z['shape']=='circle' and z['r']>0.6: cy=cy-z['r']+0.15
+        if (lab,round(cx,1),round(cy,1)) in seen: continue
+        seen.add((lab,round(cx,1),round(cy,1)))
+        dark=(k=='hardcover') or (k=='score' and lum(MASKCOL.get(z.get('score'),'#8DA6BC'))<0.3)
+        sz=6 if (z.get('rx',z.get('r',1))<0.35) else 7
+        c.setFont('Helvetica-Bold',sz); tw=c.stringWidth(lab,'Helvetica-Bold',sz); x,y=d.P(cx,cy)
+        if k=='noshoot': c.setFillColor(white); c.rect(x-tw/2-1,y-2.5,tw+2,sz+1.5,stroke=0,fill=1); dark=False
+        c.setFillColor(white if dark else black); c.drawCentredString(x,y-2,lab)
 def keepouts():   # marker + quiet zone rects (inches, y down)
     return [(x-Q,y-Q,x+MS+Q,y+MS+Q) for x,y in marker_pos()]
 class Rec:
@@ -79,7 +113,7 @@ def fitfont(c,txt,font,size,maxw,minsize=4.8):
     while size>minsize and c.stringWidth(txt,font,size)>maxw*K: size-=0.2
     while c.stringWidth(txt,font,size)>maxw*K and len(txt)>4: txt=txt[:-2].rstrip()+'…'
     c.setFont(font,size); return txt
-def draw_target(key,t,path):
+def draw_target(key,t,path,maskmode=False):
     global PW,PH
     TPL.clear(); TPL.update(BASE); TPL.update(t.get('layout',{})); PW,PH=TPL['page']['w'],TPL['page']['h']
     d=Pdf(path); c=d.c; c.setPageSize((PW*K,PH*K)); rec=Rec(c); rec.install(); artbox=[]
@@ -91,12 +125,14 @@ def draw_target(key,t,path):
                 if not bits[i][j]:
                     px,py=d.P(x+j*s,y+(i+1)*s); c.rect(px,py,s*K+0.4,s*K+0.4,stroke=0,fill=1)
     # scan field edge
-    f=TPL['field']; c.setDash(3,3); d.color(PAL['fieldEdge'],True); c.setLineWidth(0.6)
-    x,y=d.P(f['x'],f['y']+f['h']); c.rect(x,y,f['w']*K,f['h']*K,stroke=1,fill=0); c.setDash()
-    c.setFont('Helvetica',5.5); c.setFillColor(HexColor('#777777'))
-    c.drawString(*d.P(max(f['x']+0.05,M+MS+Q+0.03),f['y']-0.04),'SCAN FIELD - laser hits outside this line are ignored')
+    f=TPL['field']
+    if not t.get('art') or maskmode:
+     c.setDash(3,3); d.color(PAL['fieldEdge'],True); c.setLineWidth(0.6)
+     x,y=d.P(f['x'],f['y']+f['h']); c.rect(x,y,f['w']*K,f['h']*K,stroke=1,fill=0); c.setDash()
+     c.setFont('Helvetica',5.5); c.setFillColor(HexColor('#777777'))
+     c.drawString(*d.P(max(f['x']+0.05,M+MS+Q+0.03),f['y']-0.04),'SCAN FIELD - laser hits outside this line are ignored')
     # raster character art (GenerateImage illustrations, laser-safe recolored by tools_diehard.py)
-    for a in t.get('art',[]):
+    for a in ([] if maskmode else t.get('art',[])):
         from PIL import Image; from reportlab.lib.utils import ImageReader; import numpy as np
         im=Image.open(a['src']).convert('RGB')
         if a.get('crop'): im=im.crop(tuple(a['crop']))
@@ -104,9 +140,9 @@ def draw_target(key,t,path):
         assert rd<40 or a.get('warm'), f"{a['src']} too red for laser detection ({rd})"
         artbox.append((a['x'],a['y'],a['x']+a['w'],a['y']+a['h'],a['src'])); x,y=d.P(a['x'],a['y']+a['h']); c.drawImage(ImageReader(im),x,y,a['w']*K,a['h']*K)
     # zones
-    for z in t['zones']:
-        if z.get('subtle'):
-            c.setDash(2,2); c.setLineWidth(0.6); d.color(PAL['subtle'],True); c.drawPath(d.path(z),stroke=1,fill=0); c.setDash(); continue
+    if maskmode: draw_mask(d,t)
+    for z in ([] if maskmode else t['zones']):
+        if z.get('subtle'): continue   # art sheets: clean illustration, zones live in targets.json + the -mask sheet
         if z['kind'] in ('bystander',) or (z['kind'] in ('noshoot','score') and z.get('art')): continue   # unmarked on the art: shooter must discriminate
         c.setLineWidth(1.4); d.color(PAL['outline'],True)
         if z['kind']=='decor' and z.get('line'):
@@ -134,7 +170,7 @@ def draw_target(key,t,path):
             c.drawCentredString(bx,by,txt)
             continue
         if z['kind']=='hardcover' and z.get('art'):   # rendered cover object in the art: faint outline only
-            c.setDash(1,3); c.setLineWidth(0.6); d.color(PAL['subtle'],True); c.drawPath(d.path(z),stroke=1,fill=0); c.setDash(); continue
+            continue
         if z['kind']=='hardcover':
             c.setFillColor(black); c.drawPath(d.path(z),stroke=0,fill=1)
             lx,ly=d.P(*(z.get('label') or zone_center(z))); c.setFillColor(white); c.setFont('Helvetica-Bold',9)
@@ -143,11 +179,11 @@ def draw_target(key,t,path):
         if z.get('dashed'):
             c.setDash(5,3); c.drawPath(d.path(z),stroke=1,fill=1); c.setDash()
         else: c.drawPath(d.path(z),stroke=1,fill=1)
-    for tx in t.get('texts',[]):
+    for tx in ([] if maskmode else t.get('texts',[])):
         c.setFont('Helvetica-Bold',tx['size']); tw=c.stringWidth(tx['text'],'Helvetica-Bold',tx['size']); x,y=d.P(tx['x'],tx['y'])
         c.setFillColor(white); c.rect(x-tw/2-2,y-2,tw+4,tx['size']+2,stroke=0,fill=1); c.setFillColor(black); c.drawCentredString(x,y,tx['text'])
     # zone labels (after fills so they stay on top)
-    for z in t['zones']:
+    for z in ([] if maskmode else t['zones']):
         if (z['kind']!='score' and not z.get('plain')) or z.get('subtle'): continue
         cx,cy=zone_center(z); dark=lum(PAL[z['tier']])<0.3
         if t.get('scoring')=='idpa':
@@ -164,7 +200,7 @@ def draw_target(key,t,path):
         x,y=d.P(cx,cy); c.drawCentredString(x,y-3,lab)
     # header band
     hx=M+MS+Q+0.03; hw=PW-2*hx; c.setFillColor(black)
-    c.drawString(*d.P(hx,M+0.3),fitfont(c,t['name'],'Helvetica-Bold',17,hw-1.0))
+    c.drawString(*d.P(hx,M+0.3),fitfont(c,t['name']+(' - SCORING MASK' if maskmode else ''),'Helvetica-Bold',17,hw-1.0))
     c.drawString(*d.P(hx,M+0.55),fitfont(c,f"{t['code']}  ·  key '{key}'  ·  markers {t['markerIds'][0]}-{t['markerIds'][-1]}",'Helvetica',8.5,hw))
     c.drawString(*d.P(hx,M+0.78),fitfont(c,f"Recommended distance: {t['distance']}",'Helvetica',8.5,hw))
     dn=[DRILLS[x]['name'] for x in t['drills'] if x in DRILLS]
@@ -216,10 +252,11 @@ if __name__=='__main__':
     print('\n'.join(check_palette()))
     for key,t in DOC['targets'].items():
         p=f'targets/{key}-letter.pdf'; draw_target(key,t,p); print('wrote',p)
-    li=lambda k,t:f"<li><a href='{k}-letter.pdf'><img src='{k}-letter.png' width=160><br>{t['code']} {t['name']}</a> — {t['distance']}</li>"
+        draw_target(key,t,f'targets/{key}-mask.pdf',maskmode=True)
+    li=lambda k,t:f"<li><a href='{k}-letter.pdf'><img src='{k}-letter.png' width=160><br>{t['code']} {t['name']}</a> — {t['distance']} · <a href='{k}-mask.pdf'>scoring mask</a> (<a href='{k}-mask.png'>png</a>)</li>"
     rows=''.join(li(k,t) for k,t in DOC['targets'].items() if t.get('set')!='diehard')
     dh=''.join(li(k,t) for k,t in DOC['targets'].items() if t.get('set')=='diehard')
     UL="<ul style='list-style:none;display:flex;flex-wrap:wrap;gap:16px;padding:0'>"
     open('targets/index.html','w').write(f"<!doctype html><meta name=viewport content='width=device-width'><title>Laser Drills targets</title><body style='font:15px system-ui;background:#111;color:#eee'><h1>Printable targets</h1><p>Print at 100% / Actual size. Paper is printed in each sheet footer (US Letter unless marked LANDSCAPE / Tabloid 11x17).</p><h2 id=training>Self-Defense Training</h2><p>Bullseye, IDPA, hostage, hard cover and shoot/don't-shoot sheets.</p>{UL}{rows}</ul><h2 id=fun>Fun</h2><h3 id=diehard>Die Hard (Set 1: Nakatomi Plaza)</h3><p>Full-colour illustrated characters with faint anatomy-based -0/-1/-3 outlines. Hatched = hostage; rendered desk/rail/pillar/cabinet = hard cover. Fan-made training targets; characters are drawn, not actor likenesses.</p>{UL}{dh}</ul><p><a href='../' style='color:#8ab4f8'>Back to app</a></p>".replace('<a ',"<a style='color:#8ab4f8' "))
     import subprocess
-    for k in DOC['targets']: subprocess.run(['pdftoppm','-r','50','-png','-singlefile',f'targets/{k}-letter.pdf',f'targets/{k}-letter'],check=True)
+    for k in DOC['targets']: subprocess.run(['pdftoppm','-r','50','-png','-singlefile',f'targets/{k}-letter.pdf',f'targets/{k}-letter'],check=True); subprocess.run(['pdftoppm','-r','50','-png','-singlefile',f'targets/{k}-mask.pdf',f'targets/{k}-mask'],check=True)
