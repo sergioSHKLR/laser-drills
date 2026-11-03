@@ -204,5 +204,14 @@ Core.gameShot=function(s,T,res){if(s.done)return {pts:0,msg:'game over',say:''};
     s.score+=pts;s.summary=`${s.score} points, ${s.i} of ${s.queue.length} calls in ${s.shots} shots`;}
   s.text=s.done?s.summary:(g.type==='battle'||g.type==='poker'?s.summary:'CALL: '+s.queue[s.i].say);
   return {pts,msg,say};};
+// ---- First Responders (optional, Self-Defense): after the string, responders arrive and issue commands.
+Core.FR_CMDS=['Police! Drop the weapon!','Show me your hands!','Get on the ground!','Police! Don\'t move!','Hands where I can see them!','Put it down, now!'];
+Core.FR_COMPLY=/\b(ok(ay)?|complying|comply|don'?t shoot|i'?m (the )?victim|yes sir|i'?m down|dropping it|dropped|i'?m unarmed|hands up)\b/i;
+Core.frPlan=function(rnd){rnd=rnd||Math.random;const pool=Core.FR_CMDS.slice(),n=2+Math.floor(rnd()*2),out=[];let t=1+rnd()*2.5;
+  for(let i=0;i<n&&pool.length;i++){const k=i===0?Math.floor(rnd()*2):Math.floor(rnd()*pool.length);out.push({at:+t.toFixed(2),say:pool.splice(k,1)[0]});t+=1.6+rnd()*2;}
+  return {cmds:out,end:+(t+1.5).toFixed(2)};};
+// fr: {first:sec of 1st command (null=never issued), shots:[sec], comply:sec|null}; times relative to string end
+Core.frScore=function(fr){const late=(fr.shots||[]).filter(t=>fr.first!=null&&t>=fr.first).length,c=fr.comply!=null&&fr.first!=null&&fr.comply>=fr.first?+(fr.comply-fr.first).toFixed(2):null;
+  const penalty=late*20+(c==null?5:0);return {late,comply:c,penalty,fail:late>0,text:late?`FIRST RESPONDERS: ${late} shot(s) after "${fr.cmd1||'command'}" · +${late*20}s · FAIL`:c!=null?`FIRST RESPONDERS: complied in ${c.toFixed(2)}s`:'FIRST RESPONDERS: no compliance +5s'};};
 if(typeof module!=='undefined')module.exports=Core;else root.Core=Core;
 })(this);

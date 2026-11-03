@@ -59,7 +59,7 @@ document.querySelectorAll('#dseg button').forEach(b=>b.onclick=()=>{UI.dc=b.data
 UI.onDrill=()=>{if(!DRILLS)return;const c=sel(),d=drill();$('dName').textContent=c.type==='course'?`${c.name} · ${d.name}`:c.name;const b=blind();$('saeBadge').textContent=b?'Score at end':'Live';$('saeBadge').className='badge'+(b?'':' live');
   $('shootH').textContent='Shoot';if(UI.view==='drills')UI.drawDrills();};
 // ---- shoot state (START/STOP swap, lock pill)
-setInterval(()=>{const busy=['wait','live','free'].includes(state.mode);$('goBtn').classList.toggle('hidden',busy);$('freeBtn').classList.toggle('hidden',busy);$('stopBtn').classList.toggle('hidden',!busy);
+setInterval(()=>{const busy=['wait','live','free','fr'].includes(state.mode);$('goBtn').classList.toggle('hidden',busy);$('freeBtn').classList.toggle('hidden',busy);$('stopBtn').classList.toggle('hidden',!busy);
   const l=lock?`● Locked ${lock.target.code}`:'No target locked';if($('drLock').textContent!==l){$('drLock').textContent=l;$('drLock').className='pill'+(lock?' ok':'');}
   $('status').className='pill'+(lock?' ok':'');},200);
 // ---- results history
@@ -68,6 +68,7 @@ UI.record=()=>{try{const c=sel(),d=drill(),s=Core.drillSummary(d,state.beep,stat
     time:s.total!=null?+s.total.toFixed(2):null,score:s.score,max:s.maxScore,blind:blind()};
   if(d.scoring==='idpa'){const x=Core.idpaSummary(d,state.shots,s.total);Object.assign(r,{final:+x.final.toFixed(2),raw:+x.raw.toFixed(2),pd:x.pd,pe:x.pe,hnt:x.hnt,fail:x.fail});}
   if(d.game&&state.game)r.game=state.game.summary||'';
+  if(state.fr&&state.fr.res){const f=state.fr.res;r.fr=f.fail?'FAIL':f.comply!=null?'OK':'NC';r.frLate=f.late;r.frComply=f.comply;if(r.final!=null)r.final=+(r.final+f.penalty).toFixed(2);else r.frPen=f.penalty;if(f.fail)r.fail=true;}
   const h=hist();h.push(r);while(h.length>1000)h.shift();localStorage.setItem(HK,JSON.stringify(h));}catch(e){console.warn(e);}};
 const val=r=>r.final!=null?r.final:r.time;const fmt=r=>r.final!=null?r.final.toFixed(2)+' s':r.game!=null?(r.score+' pts'):r.time!=null?`${r.score}/${r.max} · ${r.time.toFixed(2)}s`:`${r.score}/${r.max}`;
 UI.drawResults=()=>{document.querySelectorAll('#rseg button').forEach(b=>b.classList.toggle('on',+b.dataset.r===UI.rr));
@@ -76,9 +77,9 @@ UI.drawResults=()=>{document.querySelectorAll('#rseg button').forEach(b=>b.class
   const name=L[0].drill,same=hist().filter(r=>r.drill===name&&val(r)!=null&&!r.game),best=same.length?same.reduce((a,r)=>val(r)<val(a)?r:a):null;
   let svg='';const pts=same.slice(-20).map(val);if(pts.length>1){const mx=Math.max(...pts),mn=Math.min(...pts),w=340,hh=70;svg=`<svg viewBox="0 0 ${w} ${hh+10}" style="width:100%;height:80px"><polyline fill=none stroke="#8ab4f8" stroke-width=3 points="${pts.map((v,i)=>`${(i/(pts.length-1)*w).toFixed(1)},${(5+(mx===mn?hh/2:(v-mn)/(mx-mn)*hh)).toFixed(1)}`).join(' ')}"/></svg><div class=muted>Last ${pts.length} runs · lower is better (higher on chart = slower)</div>`;}
   $('rbody').innerHTML=`<div class=card><div class=muted>${esc(name)} · ${same.length} timed run${same.length===1?'':'s'}</div><div class=big2>${best?'Best '+esc(fmt(best)):'—'}</div>${svg}</div>`+
-   L.map(r=>`<div class=drow style="min-height:64px"><div class=t><b>${esc(r.drill)}</b><span>${new Date(r.ts).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}${r.pd!=null?` · PD ${r.pd} · PE ${r.pe} · HNT ${r.hnt}`:''}${r.fail?' · FAIL':''}${r.game?' · '+esc(r.game):''}</span></div><b style="font-size:17px;flex:none">${esc(fmt(r))}</b></div>`).join('');};
+   L.map(r=>`<div class=drow style="min-height:64px"><div class=t><b>${esc(r.drill)}</b><span>${new Date(r.ts).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}${r.pd!=null?` · PD ${r.pd} · PE ${r.pe} · HNT ${r.hnt}`:''}${r.fr?` · 🚨 FR ${r.fr==='OK'?'comply '+r.frComply.toFixed(2)+'s':r.fr==='FAIL'?r.frLate+' late shot(s)':'no comply'}`:''}${r.fail?' · FAIL':''}${r.game?' · '+esc(r.game):''}</span></div><b style="font-size:17px;flex:none">${esc(fmt(r))}</b></div>`).join('');};
 document.querySelectorAll('#rseg button').forEach(b=>b.onclick=()=>{UI.rr=+b.dataset.r;UI.drawResults();});
-$('csvBtn').onclick=()=>{const h=hist(),K=['ts','drill','cat','shots','time','score','max','final','raw','pd','pe','hnt','fail','game','blind'];
+$('csvBtn').onclick=()=>{const h=hist(),K=['ts','drill','cat','shots','time','score','max','final','raw','pd','pe','hnt','fail','game','blind','fr','frLate','frComply','frPen'];
   const q=v=>v==null?'':/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':String(v);
   const csv=[['date',...K.slice(1)].join(',')].concat(h.map(r=>[new Date(r.ts).toISOString(),...K.slice(1).map(k=>q(r[k]))].join(','))).join('\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='laser-drills-history.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};

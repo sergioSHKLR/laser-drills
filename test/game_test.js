@@ -11,4 +11,9 @@ const s=C.gameStart({type:'calls',calls:[{say:'engage white',tags:['white'],forb
 // headOnly vest
 const T3={zones:[{name:'V head',kind:'score',shape:'circle',cx:1,cy:1,r:0.3,score:0,group:'V',headOnly:true},{name:'V body',kind:'score',shape:'rect',x:0,y:1.5,w:2,h:3,score:-3,group:'V'}]};
 assert(C.score(T3,{x:1,y:3}).vestStrike);assert.equal(C.score(T3,{x:1,y:1}).zone,'V head');
+// First Responders
+{const p=C.frPlan(()=>0.5);assert(p.cmds.length>=2&&p.cmds[0].at>=1&&p.end>p.cmds.at(-1).at);
+ let r=C.frScore({first:2,shots:[1.5],comply:3.2});assert.equal(r.late,0);assert.equal(r.comply,1.2);assert.equal(r.penalty,0);assert(!r.fail);
+ r=C.frScore({first:2,shots:[2.5,4],comply:null});assert.equal(r.late,2);assert.equal(r.penalty,45);assert(r.fail);
+ assert(C.FR_COMPLY.test("okay don't shoot"));assert(!C.FR_COMPLY.test('drop the weapon'));}
 console.log('GAME PASS');
