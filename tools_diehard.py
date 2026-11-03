@@ -160,7 +160,7 @@ cast=[('hans','T1'),('karl','T2'),('uli','T3'),('franco','T4'),('eddie','T5'),('
 STEP=262; boxes={k:bbox(PLAIN.get(k,IMG[k])) for k,_ in cast}
 cxs=[i*STEP for i in range(len(cast))]; L0=min(c-(384-boxes[k][0]) for c,(k,_) in zip(cxs,cast)); R0=max(c+(boxes[k][2]-384) for c,(k,_) in zip(cxs,cast))
 yt=min(b[1] for b in boxes.values()); yb=max(b[3] for b in boxes.values()); NW=R0-L0; NH=yb-yt
-FN=(0.4,2.15,16.2,7.1); S3,X3,Y3=fit(NW,NH,FN,0.05)
+FN=(0.4,2.12,16.2,7.0); S3,X3,Y3=fit(NW,NH,FN,0.05)
 z=[];tx=[]; can=np.full((NH,NW,3),255,np.uint8)
 for i,(k,g) in enumerate(cast):
     src=PLAIN.get(k,IMG[k]); m=np.zeros(src.shape[:2],np.uint8); cv2.fillPoly(m,[np.array(mask(src),np.int32)],1)
@@ -175,7 +175,7 @@ for i,(k,g) in enumerate(cast):
     z+=zz
     tx.append(dict(text=('POWELL (FRIENDLY)' if k=='powell' else f'{g} {k.upper().replace("BILLCLAY","BILL CLAY")}'),x=round(x+384*S3,3),y=2.05,size=10))
 cv2.imwrite(OUT+'dh-nakatomi.png',can); art=[dict(src='art/dh-nakatomi.png',x=round(X3,3),y=round(Y3,3),w=round(NW*S3,3),h=round(NH*S3,3))]
-sheet('dh-nakatomi','LD-211',141,'Die Hard: Nakatomi Plaza line-up',['dh-nakatomi-calls','dh-nakatomi-sds'],['Seven crew T1-T7 + Sgt. Powell (FRIENDLY, +10 s).','Overlaps: the front person takes the hit.','Calls: 2 chest; "head" = 1 head. HANDS UP = verbal.','Mic on. Print Tabloid 11x17 at 100%.'],z,art,LEG_T[:3]+[FF],dist=f'3 yd = ~{round(3*70/(NH*S3*0.95))} yd sim (1/{round(70/(NH*S3*0.95))} scale)',layout={'page':{'w':17,'h':11},'field':{'x':0.4,'y':1.85,'w':16.2,'h':7.4}})
+sheet('dh-nakatomi','LD-211',141,'Die Hard: Nakatomi Plaza line-up',['dh-nakatomi-calls','dh-nakatomi-sds'],['Seven crew T1-T7 + Sgt. Powell (FRIENDLY, +10 s).','Overlaps: the front person takes the hit.','Calls: 2 chest; "head" = 1 head. HANDS UP = verbal.','Mic on. Print Tabloid 11x17 at 100%.'],z,art,LEG_T[:3]+[FF],dist=f'3 yd = ~{round(3*70/(NH*S3*0.95))} yd sim (1/{round(70/(NH*S3*0.95))} scale)',layout={'page':{'w':17,'h':11},'field':{'x':0.4,'y':1.85,'w':16.2,'h':7.3}})
 T['dh-nakatomi']['texts']=tx
 json.dump(DOC,open('targets.json','w'),indent=1)
 # drills

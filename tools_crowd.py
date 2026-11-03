@@ -76,8 +76,8 @@ def build(key,code,mid,page,field,rows,bys_h,name,paper_note,SPREAD=1.0):
 DOC=json.load(open('targets.json')); T=DOC['targets']; F=DOC['template']['field']
 fl=dict(x=0.4,y=1.95,w=7.7,h=7.1)
 T['crowd']=build('crowd','LD-301',145,None,dict(F,**fl),[(6,1.9,2.2),(5,2.6,4.6),(4,3.3,7.05)],1.3,'Crowd Hunt (Letter)','Mic on for spoken calls. Say "start" or tap.')
-ft=dict(x=0.4,y=1.95,w=16.2,h=7.25)
-T['crowd-tabloid']=build('crowd-tabloid','LD-302',149,{'w':17,'h':11},ft,[(6,2.0,2.3),(5,2.7,4.75),(4,3.35,7.2)],1.4,'Crowd Hunt (Tabloid)','Print Tabloid 11x17 at 100%. Say "start" or tap.',SPREAD=2.3)
+ft=dict(x=0.4,y=1.95,w=16.2,h=7.15)
+T['crowd-tabloid']=build('crowd-tabloid','LD-302',149,{'w':17,'h':11},ft,[(6,2.0,2.3),(5,2.7,4.75),(4,3.35,7.05)],1.4,'Crowd Hunt (Tabloid)','Print Tabloid 11x17 at 100%. Say "start" or tap.',SPREAD=2.3)
 for k in ('crowd','crowd-tabloid'): T[k]['drills']=[f'crowd-l{i}' for i in (1,2,3)]
 json.dump(DOC,open('targets.json','w'),indent=1)
 D=json.load(open('drills.json')); D=[d for d in D if not d['id'].startswith('crowd-')]

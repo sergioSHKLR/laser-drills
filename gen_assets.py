@@ -59,10 +59,30 @@ def zone_center(z):
     if z['shape']=='rect': return z['x']+z['w']/2,z['y']+z['h']/2
     xs=[p[0] for p in z['pts']]; ys=[p[1] for p in z['pts']]; return sum(xs)/len(xs),sum(ys)/len(ys)
 BASE=dict(TPL)
+def keepouts():   # marker + quiet zone rects (inches, y down)
+    return [(x-Q,y-Q,x+MS+Q,y+MS+Q) for x,y in marker_pos()]
+class Rec:
+    """Wrap canvas text calls: record every text bbox (inches) so we can assert none hits a marker quiet zone."""
+    def __init__(s,c): s.c=c; s.boxes=[]
+    def _add(s,x,y,txt,align):
+        f,sz=s.c._fontname,s.c._fontsize; w=s.c.stringWidth(txt,f,sz)
+        x0={'l':x,'c':x-w/2,'r':x-w}[align]
+        s.boxes.append(((x0/K),PH-(y+sz*0.8)/K,(x0+w)/K,PH-(y-sz*0.22)/K,txt))
+    def install(s):
+        c=s.c; o=(c.drawString,c.drawCentredString,c.drawRightString)
+        c.drawString=lambda x,y,t,*a,**k:(s._add(x,y,t,'l'),o[0](x,y,t,*a,**k))
+        c.drawCentredString=lambda x,y,t,*a,**k:(s._add(x,y,t,'c'),o[1](x,y,t,*a,**k))
+        c.drawRightString=lambda x,y,t,*a,**k:(s._add(x,y,t,'r'),o[2](x,y,t,*a,**k))
+def hit(a,b): return a[0]<b[2] and b[0]<a[2] and a[1]<b[3] and b[1]<a[3]
+def fitfont(c,txt,font,size,maxw,minsize=4.8):
+    """Shrink font (then ellipsize) so txt fits maxw inches."""
+    while size>minsize and c.stringWidth(txt,font,size)>maxw*K: size-=0.2
+    while c.stringWidth(txt,font,size)>maxw*K and len(txt)>4: txt=txt[:-2].rstrip()+'…'
+    c.setFont(font,size); return txt
 def draw_target(key,t,path):
     global PW,PH
     TPL.clear(); TPL.update(BASE); TPL.update(t.get('layout',{})); PW,PH=TPL['page']['w'],TPL['page']['h']
-    d=Pdf(path); c=d.c; c.setPageSize((PW*K,PH*K))
+    d=Pdf(path); c=d.c; c.setPageSize((PW*K,PH*K)); rec=Rec(c); rec.install(); artbox=[]
     # markers
     for (x,y),mid in zip(marker_pos(),t['markerIds']):
         bits=marker_bits(mid); s=MS/7; c.setFillColor(black)
@@ -70,13 +90,11 @@ def draw_target(key,t,path):
             for j in range(7):
                 if not bits[i][j]:
                     px,py=d.P(x+j*s,y+(i+1)*s); c.rect(px,py,s*K+0.4,s*K+0.4,stroke=0,fill=1)
-        c.setFont('Helvetica',5.5); c.setFillColor(HexColor('#777777'))
-        lx,ly=d.P(x,y+MS+0.12) if y<PH/2 else d.P(x,y-0.05); c.drawString(lx,ly,f'ID {mid}')
     # scan field edge
     f=TPL['field']; c.setDash(3,3); d.color(PAL['fieldEdge'],True); c.setLineWidth(0.6)
     x,y=d.P(f['x'],f['y']+f['h']); c.rect(x,y,f['w']*K,f['h']*K,stroke=1,fill=0); c.setDash()
     c.setFont('Helvetica',5.5); c.setFillColor(HexColor('#777777'))
-    c.drawString(*d.P(f['x']+0.05,f['y']-0.04),'SCAN FIELD - laser hits outside this line are ignored')
+    c.drawString(*d.P(max(f['x']+0.05,M+MS+Q+0.03),f['y']-0.04),'SCAN FIELD - laser hits outside this line are ignored')
     # raster character art (GenerateImage illustrations, laser-safe recolored by tools_diehard.py)
     for a in t.get('art',[]):
         from PIL import Image; from reportlab.lib.utils import ImageReader; import numpy as np
@@ -84,7 +102,7 @@ def draw_target(key,t,path):
         if a.get('crop'): im=im.crop(tuple(a['crop']))
         arr=np.asarray(im).astype(int); rd=(arr[...,0]-(arr[...,1]+arr[...,2])/2).max()
         assert rd<40 or a.get('warm'), f"{a['src']} too red for laser detection ({rd})"
-        x,y=d.P(a['x'],a['y']+a['h']); c.drawImage(ImageReader(im),x,y,a['w']*K,a['h']*K)
+        artbox.append((a['x'],a['y'],a['x']+a['w'],a['y']+a['h'],a['src'])); x,y=d.P(a['x'],a['y']+a['h']); c.drawImage(ImageReader(im),x,y,a['w']*K,a['h']*K)
     # zones
     for z in t['zones']:
         if z.get('subtle'):
@@ -145,19 +163,18 @@ def draw_target(key,t,path):
         if key=='five-dot': c.setFont('Helvetica-Bold',22)
         x,y=d.P(cx,cy); c.drawCentredString(x,y-3,lab)
     # header band
-    hx=M+MS+Q; hw=PW-2*hx; c.setFillColor(black)
-    c.setFont('Helvetica-Bold',17); c.drawString(*d.P(hx,M+0.3),t['name'])
-    c.setFont('Helvetica',8.5)
-    c.drawString(*d.P(hx,M+0.55),f"{t['code']}  ·  key '{key}'  ·  markers {t['markerIds'][0]}-{t['markerIds'][-1]}")
-    c.drawString(*d.P(hx,M+0.78),f"Recommended distance: {t['distance']}")
+    hx=M+MS+Q+0.03; hw=PW-2*hx; c.setFillColor(black)
+    c.drawString(*d.P(hx,M+0.3),fitfont(c,t['name'],'Helvetica-Bold',17,hw-1.0))
+    c.drawString(*d.P(hx,M+0.55),fitfont(c,f"{t['code']}  ·  key '{key}'  ·  markers {t['markerIds'][0]}-{t['markerIds'][-1]}",'Helvetica',8.5,hw))
+    c.drawString(*d.P(hx,M+0.78),fitfont(c,f"Recommended distance: {t['distance']}",'Helvetica',8.5,hw))
     dn=[DRILLS[x]['name'] for x in t['drills'] if x in DRILLS]
-    c.drawString(*d.P(hx,M+1.0),'Pairs with: '+(lambda s,n:s if len(s)<=n else s[:n-1].rsplit(';',1)[0]+'…')('; '.join(dn),(95 if PW>9 else 62)))
-    c.setFont('Helvetica-Bold',7); c.drawRightString(*d.P(hx+hw,M+0.3),'LASER DRILLS')
+    c.drawString(*d.P(hx,M+1.0),fitfont(c,'Pairs with: '+'; '.join(dn),'Helvetica',8.5,hw))
+    c.setFont('Helvetica-Bold',7); c.drawRightString(*d.P(hx+hw-0.03,M+0.3),'LASER DRILLS')
     # footer band: instructions | legend
     fy=PH-M-MS; c.setFont('Helvetica-Bold',8); c.drawString(*d.P(hx,fy+0.12),'HOW TO')
     c.setFont('Helvetica',7.2)
-    for i,line in enumerate(t['instructions'][:5]): c.drawString(*d.P(hx,fy+0.3+i*0.16),f'{i+1}. {line}')
-    c.setFont('Helvetica-Bold',7); c.drawString(*d.P(hx,M+1.2),'VOICE: "start"/"standby" · "stop" · "reset" · "next" · "repeat" · "score"  (or tap / BT media button)')
+    for i,line in enumerate(t['instructions'][:5]): c.drawString(*d.P(hx,fy+0.3+i*0.16),fitfont(c,f'{i+1}. {line}','Helvetica',7.2,2.65))
+    vt='VOICE: "start"/"standby" · "stop" · "reset" · "next" · "repeat" · "score"  (or tap / BT media button)'; c.drawString(*d.P(hx,M+1.2),fitfont(c,vt,'Helvetica-Bold',7,hw))
     lx=hx+2.75; c.setFont('Helvetica-Bold',8); c.drawString(*d.P(lx,fy+0.12),'SCORING MAP')
     items=[];seen=set()
     for z in sorted([z for z in t['zones'] if z['kind']=='score'],key=lambda z:-z['score']):
@@ -179,15 +196,20 @@ def draw_target(key,t,path):
     c.setFont('Helvetica',7.2)
     for i,(col,txt,kind) in enumerate(items[:6]):
         yy=fy+0.2+i*0.14; x,y=d.P(lx,yy+0.1); c.setFillColor(HexColor(col)); c.setStrokeColor(black); c.setLineWidth(0.5)
-        c.rect(x,y,0.22*K,0.11*K,stroke=1,fill=1)
-        if kind=='dash': c.setFillColor(white); c.rect(x,y,0.22*K,0.11*K,stroke=0,fill=1); c.setDash(2,2); c.setStrokeColor(HexColor(PAL['subtle'])); c.rect(x,y,0.22*K,0.11*K,stroke=1,fill=0); c.setDash()
+        r=0.055*K; cx,cy=x+0.11*K,y+0.055*K
+        if kind=='dash': c.setFillColor(white); c.circle(cx,cy,r,stroke=0,fill=1); c.setDash(1.5,1.5); c.setStrokeColor(HexColor(PAL['subtle'])); c.circle(cx,cy,r,stroke=1,fill=0); c.setDash()
+        else: c.circle(cx,cy,r,stroke=1,fill=1)
         if kind=='hatch':
-            c.setStrokeColor(black)
-            for q in range(3): c.line(x+q*5,y,x+q*5+4,y+0.11*K)
-        c.setFillColor(black); c.drawString(x+0.3*K,y+1,txt)
+            c.saveState(); p=c.beginPath(); p.circle(cx,cy,r); c.clipPath(p,stroke=0,fill=0); c.setStrokeColor(black)
+            for q in range(-2,4): c.line(cx-r+q*3,cy-r,cx-r+q*3+2*r,cy+r)
+            c.restoreState(); c.circle(cx,cy,r,stroke=1,fill=0)
+        c.setFillColor(black); c.drawString(x+0.3*K,y+1,fitfont(c,txt,'Helvetica',7.2,PW-M-MS-Q-0.05-(lx+0.3)))
     PAPER={(8.5,11):'US Letter portrait',(11,8.5):'US Letter LANDSCAPE',(17,11):'Tabloid 11x17 LANDSCAPE'}[(PW,PH)]
-    c.setFont('Helvetica',6); c.setFillColor(HexColor('#555555'))
-    c.drawCentredString(*d.P(PW/2,PH-M-0.02),f'Print at 100% (Actual size), {PAPER}. Keep the white quiet zone around each corner marker clear. Know your target and what is beyond it. Dry fire only: verify unloaded.')
+    c.setFillColor(HexColor('#555555'))
+    ft=f'Print at 100% (Actual size), {PAPER}. Keep the white quiet zone around each corner marker clear. Know your target and what is beyond it. Dry fire only: verify unloaded.'
+    c.drawCentredString(*d.P(PW/2,PH-M-0.02),fitfont(c,ft,'Helvetica',6,hw,4.0))
+    bad=[(b[4],k) for b in rec.boxes+artbox for k in keepouts() if hit(b,k)]
+    assert not bad, f'{key}: text/art overlaps marker quiet zone: {bad[:3]}'
     c.showPage(); c.save()
 if __name__=='__main__':
     os.makedirs('targets',exist_ok=True)
