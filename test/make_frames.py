@@ -48,6 +48,8 @@ CASES={
  'ct-tabloid':S('ct-tabloid','IRGC1 HEAD','HAMAS2 BODY','VEST1 HEAD','CIV3 NS'),
  'fof':S('fof','YELLOW1 HEAD','WHITE2 BODY','BLUE2 HEAD')+[(*Z('fof','SANDBAGS',0),'HC')],
  'fof-tabloid':S('fof-tabloid','WHITE1 HEAD','YELLOW3 BODY')+[(*Z('fof-tabloid','TRENCH',0),'HC')],
+ 'ankle':S('ankle','T1 -0#0','T2 -0#0','BYSTANDER 2','T3 -0#0')+[(*Z('ankle','HC RACK'),'HC'),(1.0,9.0,'MISS')],
+ 'ankle-tabloid':S('ankle-tabloid','T1 -0#1','T4 -0#0','BYSTANDER 5')+[(*Z('ankle-tabloid','HC DOOR'),'HC')],
  'clays':[(2.45,3.55,5),(5.85,5.15,5),(5.85,6.45,2),(2.95+1.15,7.55-0.3,3),(7.6,2.5,0)],  # 1-2 dome 5; 4th orange rim via spread 3
 }
 meta={'w':W,'h':H,'sets':{}}

@@ -17,7 +17,7 @@ UI.cam=on=>{const p=$('homeCam');p.textContent=on?'● Camera on':'● Camera of
 UI.sheet=html=>{$('sheet').innerHTML='<div class=grab></div>'+html;$('sheet').classList.remove('hidden');$('scrim').classList.remove('hidden');};
 UI.close=()=>{$('sheet').classList.add('hidden');$('scrim').classList.add('hidden');};$('scrim').onclick=UI.close;
 // ---- gallery (data from targets/catalog.json, built by gen_assets.py)
-const GF=[['category','Category',[['themed','Themed'],['tactical','Tactical'],['fun','Fun']]],['paper','Paper',[['letter','Letter'],['tabloid','Tabloid 17x11']]],
+const GF=[['category','Category',[['themed','Themed'],['tactical','Tactical'],['fun','Fun'],['self-defense','Self-Defense']]],['paper','Paper',[['letter','Letter'],['tabloid','Tabloid 17x11']]],
  ['people','People',[['single','Single'],['multi','Multi'],['none','No people']]],
  ['features','Features',[['hostage','Hostage'],['no-shoot','No-shoot'],['hard cover','Hard cover'],['backstop','Backstop'],['two-hit','Two-hit'],['conditional','Conditional'],['head-only','Head-only']]],
  ['weapon','Weapon',[['pistol','Pistol'],['shotgun','Shotgun']]]];

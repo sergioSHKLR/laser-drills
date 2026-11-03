@@ -125,7 +125,7 @@ const CMD={start:()=>{if(state.mode==='wait'||state.mode==='live')return;$('goBt
   next:()=>{reset();const c=sel();if(c.type==='course'&&course.idx<c.stages.length-1){course.idx++;showNotes();say('Next: '+drill().name);}else say('No next stage');},
   repeat:()=>{const c=sel();if(state.mode==='wait'||state.mode==='live')return;if(c.type==='course'&&course.results.length&&course.idx>0){course.idx--;course.results.pop();showNotes();}$('goBtn').onclick();},
   score:()=>say(lastSay)};
-function command(cmd,src){if(!CMD[cmd])return;$('heard').textContent=`${src}: ${cmd}`;CMD[cmd]();}
+function command(cmd,src){if(!CMD[cmd])return;if(cmd==='start'&&!/^voice/.test(src)&&state.mode!=='live'&&state.mode!=='wait'&&(sel()||{}).voiceStart){$('heard').textContent=src+': start ignored';$('status').textContent='Voice-start drill: turn the mic on and say "start" ('+((sel().startPos&&sel().startPos!=='any')?sel().startPos:'random')+' start).';return;}$('heard').textContent=`${src}: ${cmd}`;CMD[cmd]();}
 document.querySelectorAll('[data-cmd]').forEach(b=>b.onclick=()=>{ac.resume();command(b.dataset.cmd,'tap');});
 document.addEventListener('keydown',e=>{if(e.target&&/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;if((e.key===' '||e.key==='Enter')&&(/^(A|SUMMARY)$/.test(e.target.tagName)||(window.UI&&UI.view!=='shoot')))return;
   const k=e.key,m={MediaPlayPause:'toggle',MediaPlay:'start',MediaStop:'stop',MediaPause:'stop',MediaTrackNext:'next',MediaTrackPrevious:'repeat',Enter:'toggle',' ':'toggle',Escape:'stop'};

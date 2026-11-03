@@ -2611,5 +2611,305 @@
    "wrong": -2
   },
   "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
+ },
+ {
+  "id": "ankle-standing",
+  "name": "Ankle Draw L1: Standing",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "standing",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 4.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "shots": 2
+   }
+  ],
+  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 4.0s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-seated",
+  "name": "Ankle Draw L2: Seated",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "seated",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.5,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T2",
+    "label": "rack",
+    "say": "Threat 2, rack",
+    "shots": 2
+   }
+  ],
+  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.5s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-walking",
+  "name": "Ankle Draw L3: Walking",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "walking",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T3",
+    "label": "door",
+    "say": "Threat 3, door",
+    "shots": 2
+   }
+  ],
+  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.0s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-any",
+  "name": "Ankle Draw L4: Random start",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 5.2,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "parts": [
+     "head"
+    ]
+   }
+  ],
+  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, the app calls one threat: 1 head shot. Par 2.5s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-all",
+  "name": "Ankle Draw: all threats",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 5.5,
+  "timeout": 20,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "rack",
+    "say": "Threat 2, rack",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "door",
+    "say": "Threat 3, door",
+    "shots": 2
+   }
+  ],
+  "notes": "Random start position. Kneel, 2 to every threat in the called order. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-standing-tab",
+  "name": "Ankle Draw L1: Standing (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "standing",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 4.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "shots": 2
+   }
+  ],
+  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 4.0s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-seated-tab",
+  "name": "Ankle Draw L2: Seated (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "seated",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.5,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T2",
+    "label": "rack",
+    "say": "Threat 2, rack",
+    "shots": 2
+   }
+  ],
+  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.5s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-walking-tab",
+  "name": "Ankle Draw L3: Walking (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "walking",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T3",
+    "label": "door",
+    "say": "Threat 3, door",
+    "shots": 2
+   }
+  ],
+  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.0s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-any-tab",
+  "name": "Ankle Draw L4: Random start (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 7.8,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "parts": [
+     "head"
+    ]
+   }
+  ],
+  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, the app calls one threat: 1 head shot. Par 2.5s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-all-tab",
+  "name": "Ankle Draw: all threats (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 7.5,
+  "timeout": 20,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "rack",
+    "say": "Threat 2, rack",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "door",
+    "say": "Threat 3, door",
+    "shots": 2
+   },
+   {
+    "group": "T4",
+    "label": "counter",
+    "say": "Threat 4, counter",
+    "shots": 2
+   },
+   {
+    "group": "T5",
+    "label": "door",
+    "say": "Threat 5, door",
+    "shots": 2
+   }
+  ],
+  "notes": "Random start position. Kneel, 2 to every threat in the called order. Bystanders above = +10 s."
  }
 ]

@@ -240,7 +240,7 @@ def draw_target(key,t,path,maskmode=False):
         tz={z['name'].split(' ')[-1]:z['tier'] for z in t['zones'] if z['kind'] in('score','noshoot') and 'tier' in z}
         items=[]
         if any(z['kind']=='score' for z in t['zones']):
-            items=[(PAL[tz['-0']],'Zone -0 (circles): 0 points down',None),(PAL[tz['-1']],'Zone -1 (head box, band): +1 s',None),(PAL[tz['-3']],'Zone -3 (outer): +3 s',None)]
+            items=[(PAL[tz[k]],l,None) for k,l in (('-0','Zone -0 (circles): 0 points down'),('-1','Zone -1 (head box, band): +1 s'),('-3','Zone -3 (outer): +3 s')) if k in tz]
         if any(z['kind']=='hardcover' for z in t['zones']): items.append(('#000000','Hard cover: no hit (miss = 5 PD)',None))
         if any(z['kind']=='noshoot' for z in t['zones']): items.append((PAL['kraft'],'Non-threat (open hands): +5 s per hit',None))
         if not any(z['kind']=='score' for z in t['zones']): items.append(('#FFFFFF','Do not shoot - any hit is a penalty',None))
