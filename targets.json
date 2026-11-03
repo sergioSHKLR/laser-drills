@@ -12944,6 +12944,857 @@
     "weapon": "pistol"
    }
   },
+  "ct": {
+   "code": "LD-503",
+   "name": "Counter-Terror",
+   "markerIds": [
+    320,
+    321,
+    322,
+    323
+   ],
+   "distance": "5-7 yd",
+   "art": [
+    {
+     "src": "art/ct.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 7.7,
+     "h": 7.3,
+     "warm": true
+    }
+   ],
+   "zones": [
+    {
+     "name": "HAMAS1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "HAMAS1",
+     "shape": "ellipse",
+     "cx": 1.285,
+     "cy": 2.664,
+     "rx": 0.171,
+     "ry": 0.192,
+     "tags": [
+      "hamas",
+      "headband",
+      "camo",
+      "ak",
+      "HAMAS1",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HAMAS1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "hamas",
+      "headband",
+      "camo",
+      "ak",
+      "HAMAS1",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 0.864,
+     "y": 2.888,
+     "w": 0.854,
+     "h": 1.152,
+     "group": "HAMAS1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "CIV1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "CIV1",
+     "tags": [
+      "civilian",
+      "CIV1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 2.698,
+     "y": 2.985,
+     "w": 1.102,
+     "h": 2.548
+    },
+    {
+     "name": "IRGC1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "IRGC1",
+     "shape": "ellipse",
+     "cx": 5.146,
+     "cy": 2.664,
+     "rx": 0.168,
+     "ry": 0.192,
+     "tags": [
+      "irgc",
+      "uniform",
+      "cap",
+      "IRGC1",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "IRGC1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "irgc",
+      "uniform",
+      "cap",
+      "IRGC1",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 4.684,
+     "y": 2.888,
+     "w": 0.91,
+     "h": 1.152,
+     "group": "IRGC1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "CIV2 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "CIV2",
+     "tags": [
+      "civilian",
+      "CIV2"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 6.665,
+     "y": 2.985,
+     "w": 1.022,
+     "h": 2.548
+    },
+    {
+     "name": "HEZB1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "HEZB1",
+     "shape": "ellipse",
+     "cx": 1.546,
+     "cy": 6.243,
+     "rx": 0.174,
+     "ry": 0.198,
+     "tags": [
+      "hezbollah",
+      "olive",
+      "rpg",
+      "HEZB1",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HEZB1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "hezbollah",
+      "olive",
+      "rpg",
+      "HEZB1",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 1.111,
+     "y": 6.474,
+     "w": 0.87,
+     "h": 0.99,
+     "group": "HEZB1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "VEST1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "VEST1",
+     "shape": "ellipse",
+     "cx": 3.337,
+     "cy": 5.979,
+     "rx": 0.17,
+     "ry": 0.198,
+     "tags": [
+      "vest",
+      "VEST1"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "headOnly": true
+    },
+    {
+     "name": "VEST1 VEST",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "vest-body"
+     ],
+     "shape": "rect",
+     "x": 2.853,
+     "y": 6.177,
+     "w": 1.101,
+     "h": 1.419,
+     "group": "VEST1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "CIV3 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "CIV3",
+     "tags": [
+      "civilian",
+      "CIV3"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 4.639,
+     "y": 6.123,
+     "w": 1.377,
+     "h": 2.842
+    },
+    {
+     "name": "HOUTHI1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "HOUTHI1",
+     "shape": "ellipse",
+     "cx": 7.235,
+     "cy": 5.979,
+     "rx": 0.176,
+     "ry": 0.198,
+     "tags": [
+      "houthi",
+      "thobe",
+      "jambiya",
+      "keffiyeh",
+      "HOUTHI1",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HOUTHI1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "houthi",
+      "thobe",
+      "jambiya",
+      "keffiyeh",
+      "HOUTHI1",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 6.823,
+     "y": 6.21,
+     "w": 0.764,
+     "h": 1.188,
+     "group": "HOUTHI1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    }
+   ],
+   "instructions": [
+    "Head -0, body -1. Militants are told apart by kit only.",
+    "Civilians are NO-SHOOT: -20.",
+    "Vest wearer: head shot only. Any body hit = VEST STRIKE (+5 s, -5).",
+    "Mic on. Say \"start\" or tap."
+   ],
+   "drills": [
+    "ct-kit",
+    "ct-vest",
+    "ct-clear"
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "head-only",
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
+  },
+  "ct-tabloid": {
+   "code": "LD-504",
+   "name": "Counter-Terror (Tabloid)",
+   "markerIds": [
+    324,
+    325,
+    326,
+    327
+   ],
+   "distance": "5-7 yd",
+   "art": [
+    {
+     "src": "art/ct-tabloid.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 16.2,
+     "h": 7.3,
+     "warm": true
+    }
+   ],
+   "zones": [
+    {
+     "name": "HAMAS1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "HAMAS1",
+     "shape": "ellipse",
+     "cx": 1.333,
+     "cy": 2.664,
+     "rx": 0.171,
+     "ry": 0.192,
+     "tags": [
+      "hamas",
+      "headband",
+      "camo",
+      "ak",
+      "HAMAS1",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HAMAS1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "hamas",
+      "headband",
+      "camo",
+      "ak",
+      "HAMAS1",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 0.912,
+     "y": 2.888,
+     "w": 0.854,
+     "h": 1.152,
+     "group": "HAMAS1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "CIV1 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "CIV1",
+     "tags": [
+      "civilian",
+      "CIV1"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 2.927,
+     "y": 2.985,
+     "w": 1.102,
+     "h": 2.548
+    },
+    {
+     "name": "IRGC1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "IRGC1",
+     "shape": "ellipse",
+     "cx": 5.556,
+     "cy": 2.664,
+     "rx": 0.168,
+     "ry": 0.192,
+     "tags": [
+      "irgc",
+      "uniform",
+      "cap",
+      "IRGC1",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "IRGC1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "irgc",
+      "uniform",
+      "cap",
+      "IRGC1",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 5.094,
+     "y": 2.888,
+     "w": 0.91,
+     "h": 1.152,
+     "group": "IRGC1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "CIV2 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "CIV2",
+     "tags": [
+      "civilian",
+      "CIV2"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 7.179,
+     "y": 2.985,
+     "w": 1.022,
+     "h": 2.548
+    },
+    {
+     "name": "HOUTHI1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "HOUTHI1",
+     "shape": "ellipse",
+     "cx": 9.739,
+     "cy": 2.664,
+     "rx": 0.171,
+     "ry": 0.192,
+     "tags": [
+      "houthi",
+      "thobe",
+      "jambiya",
+      "keffiyeh",
+      "HOUTHI1",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HOUTHI1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "houthi",
+      "thobe",
+      "jambiya",
+      "keffiyeh",
+      "HOUTHI1",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 9.397,
+     "y": 2.888,
+     "w": 0.741,
+     "h": 1.152,
+     "group": "HOUTHI1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "CIV3 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "CIV3",
+     "tags": [
+      "civilian",
+      "CIV3"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 11.447,
+     "y": 2.985,
+     "w": 1.235,
+     "h": 2.548
+    },
+    {
+     "name": "HEZB1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "HEZB1",
+     "shape": "ellipse",
+     "cx": 14.353,
+     "cy": 2.92,
+     "rx": 0.169,
+     "ry": 0.192,
+     "tags": [
+      "hezbollah",
+      "olive",
+      "rpg",
+      "HEZB1",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HEZB1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "hezbollah",
+      "olive",
+      "rpg",
+      "HEZB1",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 13.932,
+     "y": 3.144,
+     "w": 0.844,
+     "h": 0.96,
+     "group": "HEZB1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HEZB2 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "HEZB2",
+     "shape": "ellipse",
+     "cx": 1.679,
+     "cy": 6.243,
+     "rx": 0.174,
+     "ry": 0.198,
+     "tags": [
+      "hezbollah",
+      "olive",
+      "rpg",
+      "HEZB2",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HEZB2 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "hezbollah",
+      "olive",
+      "rpg",
+      "HEZB2",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 1.244,
+     "y": 6.474,
+     "w": 0.87,
+     "h": 0.99,
+     "group": "HEZB2",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "CIV4 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "CIV4",
+     "tags": [
+      "civilian",
+      "CIV4"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 3.07,
+     "y": 6.123,
+     "w": 1.14,
+     "h": 2.842
+    },
+    {
+     "name": "VEST1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "VEST1",
+     "shape": "ellipse",
+     "cx": 5.842,
+     "cy": 5.979,
+     "rx": 0.17,
+     "ry": 0.198,
+     "tags": [
+      "vest",
+      "VEST1"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true,
+     "headOnly": true
+    },
+    {
+     "name": "VEST1 VEST",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "vest-body"
+     ],
+     "shape": "rect",
+     "x": 5.358,
+     "y": 6.177,
+     "w": 1.101,
+     "h": 1.419,
+     "group": "VEST1",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "CIV5 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "CIV5",
+     "tags": [
+      "civilian",
+      "CIV5"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 7.561,
+     "y": 6.123,
+     "w": 1.229,
+     "h": 2.842
+    },
+    {
+     "name": "HAMAS2 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "HAMAS2",
+     "shape": "ellipse",
+     "cx": 10.485,
+     "cy": 5.979,
+     "rx": 0.176,
+     "ry": 0.198,
+     "tags": [
+      "hamas",
+      "headband",
+      "camo",
+      "ak",
+      "HAMAS2",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HAMAS2 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "hamas",
+      "headband",
+      "camo",
+      "ak",
+      "HAMAS2",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 10.037,
+     "y": 6.21,
+     "w": 0.881,
+     "h": 1.188,
+     "group": "HAMAS2",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "CIV6 NS",
+     "kind": "noshoot",
+     "penalty": -10,
+     "group": "CIV6",
+     "tags": [
+      "civilian",
+      "CIV6"
+     ],
+     "art": true,
+     "subtle": true,
+     "shape": "rect",
+     "x": 12.023,
+     "y": 6.123,
+     "w": 1.377,
+     "h": 2.842
+    },
+    {
+     "name": "HOUTHI2 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "HOUTHI2",
+     "shape": "ellipse",
+     "cx": 15.363,
+     "cy": 5.979,
+     "rx": 0.176,
+     "ry": 0.198,
+     "tags": [
+      "houthi",
+      "thobe",
+      "jambiya",
+      "keffiyeh",
+      "HOUTHI2",
+      "militant"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "HOUTHI2 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "tags": [
+      "houthi",
+      "thobe",
+      "jambiya",
+      "keffiyeh",
+      "HOUTHI2",
+      "militant"
+     ],
+     "shape": "rect",
+     "x": 14.951,
+     "y": 6.21,
+     "w": 0.764,
+     "h": 1.188,
+     "group": "HOUTHI2",
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    }
+   ],
+   "instructions": [
+    "Head -0, body -1. Militants are told apart by kit only.",
+    "Civilians are NO-SHOOT: -20.",
+    "Vest wearer: head shot only. Any body hit = VEST STRIKE (+5 s, -5).",
+    "Mic on. Say \"start\" or tap."
+   ],
+   "layout": {
+    "page": {
+     "w": 17,
+     "h": 11
+    },
+    "field": {
+     "x": 0.4,
+     "y": 1.85,
+     "w": 16.2,
+     "h": 7.3
+    }
+   },
+   "drills": [
+    "ct-kit-tab",
+    "ct-vest-tab",
+    "ct-clear-tab"
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "tabloid",
+    "people": "multi",
+    "features": [
+     "head-only",
+     "no-shoot"
+    ],
+    "weapon": "pistol"
+   }
+  },
   "idpa-threat": {
    "code": "LD-101",
    "name": "IDPA-style Threat",

@@ -198,6 +198,62 @@ GAMES['maritime-tabloid']=lambda:maritime('maritime-tabloid',TAB,(316,317,318,31
     ('ferry',.12,.15,3.0,False),('sail',.33,.12,1.4,False),('yacht',.55,.15,2.8,True),('fishing',.83,.16,2.6,True),
     ('gofast',.15,.48,3.2,False),('speedboat',.43,.47,3.2,True),('semisub',.72,.48,3.6,False),('jetski',.95,.47,1.2,True),
     ('kayaks',.13,.83,2.6,False),('gofast',.42,.83,3.2,True),('jetski',.62,.82,1.5,False),('speedboat',.83,.83,3.0,False)])
+
+# ---------------------------------------------------------------- Counter-Terror (market street; militants by kit; civilians no-shoot; vest = head-only)
+FIG=dict(  # head ellipse (fx,fy,frx,fry), torso rect (fx0,fy0,fx1,fy1) in cropped-sprite fractions
+    hamas=dict(head=(.47,.07,.13,.06),torso=(.15,.14,.8,.5),tags=['hamas','headband','camo','ak'],say='green headband'),
+    hezb=dict(head=(.6,.15,.12,.06),torso=(.3,.22,.9,.52),tags=['hezbollah','olive','rpg'],say='olive with R P G'),
+    irgc=dict(head=(.52,.07,.12,.06),torso=(.2,.14,.85,.5),tags=['irgc','uniform','cap'],say='uniform and cap'),
+    houthi=dict(head=(.45,.07,.15,.06),torso=(.15,.14,.8,.5),tags=['houthi','thobe','jambiya','keffiyeh'],say='thobe and dagger'),
+    vest=dict(head=(.45,.07,.13,.06),torso=(.08,.13,.92,.56),tags=['vest'],say='vest!'),
+    civ1=dict(civ=True,tags=['civilian']),civ2=dict(civ=True,tags=['civilian']),civ3=dict(civ=True,tags=['civilian']))
+def market(F):
+    bg=cv2.resize(cv2.imread('art/src3/market.jpg'),(int(F['w']*DPI),int(F['h']*DPI)),interpolation=cv2.INTER_AREA)
+    bg=cv2.addWeighted(bg,0.55,np.full_like(bg,255),0.45,0)
+    # accent bunting along the top edge (red / butter-yellow / green) - decor only, above every zone
+    W=bg.shape[1]; cols=[(40,40,200),(175,240,255),(80,150,40)]; n=int(W/40)
+    cv2.line(bg,(0,12),(W,12),(60,60,60),2)
+    for i in range(n): x=i*40; cv2.fillPoly(bg,[np.array([(x+3,12),(x+37,12),(x+20,52)],np.int32)],cols[i%3])
+    return bg
+def ct(key='ct',F=LETTER,mk=(320,321,322,323),code='LD-503',place=None,lay=None):
+    can=market(F); zones=[]; cnt={}; vis=[]
+    for nm,fx,fy,h,fl in place:
+        sp=sprite(f'art/src3/{nm}.jpg'); w=h*sp.shape[1]/sp.shape[0]
+        x0,y0,x1,y1=paste(can,sp,F['x']+fx*F['w'],F['y']+fy*F['h'],w,F,flip=fl); W,H=x1-x0,y1-y0
+        V=FIG[nm]; base=nm.rstrip('0123456789'); cnt[base]=cnt.get(base,0)+1; n=f'{base.upper()}{cnt[base]}'
+        X=lambda a:x0+((1-a) if fl else a)*W
+        if V.get('civ'):
+            zones.append(dict(name=n+' NS',kind='noshoot',penalty=-10,group=n,tags=V['tags']+[n],art=True,subtle=True,shape='rect',x=round(x0+.04*W,3),y=round(y0+.01*H,3),w=round(.92*W,3),h=round(.98*H,3)))
+            continue
+        hx,hy,rx,ry=V['head']; a,b,c,d=V['torso']
+        if fl: a,c=1-c,1-a
+        head=dict(name=n+' HEAD',kind='score',score=0,tier='tier5',z=2,group=n,shape='ellipse',cx=round(X(hx),3),cy=round(y0+hy*H,3),rx=round(rx*W,3),ry=round(ry*H,3),tags=V['tags']+[n,'militant'],art=True,subtle=True,noGrow=True)
+        body=dict(shape='rect',x=round(x0+a*W,3),y=round(y0+b*H,3),w=round((c-a)*W,3),h=round((d-b)*H,3),group=n,art=True,subtle=True,noGrow=True)
+        if base=='vest':
+            head['headOnly']=True; head['tags']=['vest',n]
+            zones+= [head,dict(name=n+' VEST',kind='score',score=-1,tier='tier3',z=1,tags=['vest-body'],**body)]
+        else: zones+=[head,dict(name=n+' BODY',kind='score',score=-1,tier='tier3',z=1,tags=V['tags']+[n,'militant'],**body)]
+    m=np.any([zone_mask(z,F,can.shape) for z in zones],axis=0)
+    b,g,r=[c.astype(np.float32) for c in cv2.split(can)]; r2=np.minimum(r,(g+b)/2+28)  # cut red (skin -> neutral tan), no lime cast
+    cs=cv2.merge([b,g,r2]).astype(np.uint8); can=np.where(np.repeat(m[...,None],3,2),cs,can)
+    check_zones(key,can,zones,F); cv2.imwrite(f'art/{key}.png',can)
+    present=[k for k in FIG if not FIG[k].get('civ') and any(z['group'].startswith(k.upper()) for z in zones)]
+    calls=[dict(say=FIG[k]['say'],tags=[FIG[k]['tags'][0]]) for k in present]
+    allm=[dict(say='all militants',tags=['militant'],n=sum(1 for z in zones if z['name'].endswith('BODY')))]
+    sfx='-tab' if lay else ''; nmx=' (Tabloid)' if lay else ''
+    G=lambda c,r:dict(type='calls',calls=c,rounds=r,noShoot=-20,vest=-5,wrong=-2)
+    t=dict(code=code,name='Counter-Terror'+nmx,markerIds=list(mk),distance='5-7 yd',art=[dict(src=f'art/{key}.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'],warm=True)],zones=zones,
+        instructions=['Head -0, body -1. Militants are told apart by kit only.','Civilians are NO-SHOOT: -20.','Vest wearer: head shot only. Any body hit = VEST STRIKE (+5 s, -5).','Mic on. Say "start" or tap.'])
+    if lay: t['layout']=lay
+    D=[dict(id='ct-kit'+sfx,name='Counter-Terror: call by kit'+nmx,category='training',target=key,shots=20,startDelay=[2,3],parTime=30,timeout=60,game=G(calls,6),notes='The app calls a kit ("green headband", "thobe and dagger", "vest!"). Civilians -20.'),
+       dict(id='ct-vest'+sfx,name='Counter-Terror: vest!'+nmx,category='training',target=key,shots=10,startDelay=[2,5],parTime=10,timeout=30,game=G([dict(say='vest!',tags=['vest'])],3),notes='Head-only on the vest wearer. Body hit = vest strike.'),
+       dict(id='ct-clear'+sfx,name='Counter-Terror: clear the street'+nmx,category='training',target=key,shots=30,startDelay=[2,3],parTime=30,timeout=60,game=G(allm+[dict(say='vest!',tags=['vest'])],2),notes='Every militant, then the vest wearer (head only).')]
+    upsert(key,t,D)
+GAMES['ct']=lambda:ct(place=[('hamas',.12,.3,3.2,False),('civ1',.37,.33,2.6,False),('irgc',.62,.3,3.2,True),('civ2',.88,.33,2.6,False),
+    ('hezb',.13,.76,3.3,False),('vest',.39,.76,3.3,False),('civ3',.64,.78,2.9,True),('houthi',.88,.76,3.3,True)])
+GAMES['ct-tabloid']=lambda:ct('ct-tabloid',TAB,(324,325,326,327),'LD-504',lay=TABLAY,place=[
+    ('hamas',.06,.3,3.2,False),('civ1',.19,.33,2.6,False),('irgc',.32,.3,3.2,True),('civ2',.45,.33,2.6,False),('houthi',.58,.3,3.2,False),('civ3',.72,.33,2.6,False),('hezb',.87,.3,3.2,True),
+    ('hezb',.07,.76,3.3,False),('civ2',.2,.78,2.9,True),('vest',.34,.76,3.3,False),('civ1',.48,.78,2.9,True),('hamas',.62,.76,3.3,True),('civ3',.76,.78,2.9,False),('houthi',.92,.76,3.3,True)])
 if __name__=='__main__':
     for k in (sys.argv[1:] or list(GAMES)): GAMES[k]()
     save(); print('ok games')
