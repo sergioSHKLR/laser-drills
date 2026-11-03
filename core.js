@@ -68,6 +68,7 @@ Core.applyRules=function(target,res,history){if(!res||!res.zone)return res;const
 // Zone overrides from the Zone Editor (localStorage 'ld-zones') applied over targets.json
 Core.applyOverrides=function(doc,ov){for(const k in ov||{})if(doc.targets[k]&&ov[k]&&ov[k].zones)doc.targets[k].zones=ov[k].zones;return doc;};
 // IDPA-style stage result: raw + PD*1s + PE*3s + HNT*5s. Each required hit missing (or on hard cover / non-threat) = 5 PD.
+Core.scoreAtEnd=function(d,pref){const c=(d&&d.category)||'training';return pref&&pref[c]!=null?!!pref[c]:c==='training';};
 Core.idpaSummary=function(stage,shots,rawTime){
   const req=stage.shots,comp=stage.compliant||[],cnt=shots.slice(0,Math.max(req,shots.length)).map(s=>s.group&&comp.includes(s.group)?Object.assign({},s,{noshoot:true,compliantHit:true}):s);let pd=0,valid=0,hnt=0,pe=0,bys=0,ff=0;
   const win=stage.window||3,vt=(stage.verbalTimes||[]).filter(t=>t<=win),fc=Math.max(0,comp.length-vt.length),fcs=stage.failCommand||3;

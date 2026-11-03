@@ -10,7 +10,7 @@ function tone(f,ms){const o=ac.createOscillator(),g=ac.createGain();o.frequency.
 async function init(){[DOC,DRILLS]=await Promise.all([fetch('targets.json').then(r=>r.json()),fetch('drills.json').then(r=>r.json())]);
   try{const m=location.hash.match(/zones=([^&]+)/);if(m){const o=JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1])))));const cur=JSON.parse(localStorage.getItem('ld-zones')||'{}');Object.assign(cur,o);localStorage.setItem('ld-zones',JSON.stringify(cur));history.replaceState(null,'',location.pathname);alert('Custom zones loaded for: '+Object.keys(o).join(', '));}}catch(e){alert('Bad zones link');}
   Core.applyOverrides(DOC,JSON.parse(localStorage.getItem('ld-zones')||'{}'));
-  [['training','Self-Defense Training'],['fun','Fun']].forEach(([c,l])=>{const g=document.createElement('optgroup');g.label=l;DRILLS.forEach((d,i)=>{if((d.category||'training')===c)g.appendChild(new Option(d.name,i));});if(g.children.length)$('drillSel').appendChild(g);});showNotes();buildSliders();
+  [['training','Self-Defense Training'],['fun','Fun']].forEach(([c,l])=>{const g=document.createElement('optgroup');g.label=l;DRILLS.forEach((d,i)=>{if((d.category||'training')===c)g.appendChild(new Option(d.name,i));});if(g.children.length)$('drillSel').appendChild(g);});showNotes();buildSliders();syncSae();
   if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js');}
 let course={idx:0,results:[]};
 const sel=()=>DRILLS[$('drillSel').value];
@@ -24,7 +24,15 @@ const spread=()=>($('shotgun').checked||drill().shotgun)?(target().spread||setti
 function showNotes(){const c=sel(),d=drill();let t=`${d.shots} shots · par ${d.parTime}s · random start ${d.startDelay[0]}–${d.startDelay[1]}s. ${d.notes||''}`;
   if(c.type==='course')t=`${c.notes}\nNOW: ${d.name} [target ${DOC.targets[d.target].code} ${DOC.targets[d.target].name}] ${d.brief} (${d.shots} shots, par ${d.parTime}s)`+(course.results.length?'\nDone: '+course.results.map(r=>`${r.name}: ${r.final.toFixed(2)}`).join(' | '):'');
   $('drillNotes').textContent=t;$('drillNotes').style.whiteSpace='pre-line';}
-$('drillSel').onchange=()=>{course={idx:0,results:[]};showNotes();lock=null;};
+const SAE=JSON.parse(localStorage.getItem('ld.sae')||'{}');let TICK=localStorage.getItem('ld.tick')!=='0';
+function blind(){return Core.scoreAtEnd(drill(),SAE);}
+function live(){return state.mode==='live'||state.mode==='free';}
+function hidden(){return blind()&&live();}
+function syncSae(){$('saeChk').checked=blind();$('tickChk').checked=TICK;}
+$('saeChk').onchange=e=>{SAE[drill().category||'training']=e.target.checked;localStorage.setItem('ld.sae',JSON.stringify(SAE));};
+$('tickChk').onchange=e=>{TICK=e.target.checked;localStorage.setItem('ld.tick',TICK?'1':'0');};
+function shotTone(bad){if(hidden()){if(TICK)tone(1000,20);}else tone(bad?300:1600,bad?200:40);}
+$('drillSel').onchange=()=>{syncSae();course={idx:0,results:[]};showNotes();lock=null;};
 function buildSliders(){const s=$('sliders');s.innerHTML='';for(const k in RANGES){const[a,b,st]=RANGES[k];
   const l=document.createElement('label');l.innerHTML=`${k}: <b>${settings[k]}</b><input type=range min=${a} max=${b} step=${st} value=${settings[k]}>`;
   l.querySelector('input').oninput=e=>{settings[k]=+e.target.value;l.querySelector('b').textContent=settings[k];Object.assign(laser.o,settings);localStorage.setItem('ld-settings',JSON.stringify(settings));};s.appendChild(l);}}
@@ -62,17 +70,17 @@ function tick(now){ctx.drawImage(video,0,0,W,H);const img=ctx.getImageData(0,0,W
 function onHit(h,now){const T=target(),d=drill();
   if(d.game&&state.mode==='live'&&state.game&&lock){const p=Core.apply(lock.imgToTgt,h),sc=Core.score(T,p,spread(),TPL()),r=Core.gameShot(state.game,T,sc);
     marks.push({x:h.x,y:h.y,t:now});state.shots.push(Object.assign({},sc,{t:now,p,score:r.pts,zone:r.msg,noshoot:false,bystander:false,hardcover:false}));
-    tone(r.pts<0?300:1600,r.pts<0?200:40);render();$('big').textContent=state.game.text;if(r.say)say(r.say,true);if(state.game.done)setTimeout(finish,1500);return;}
+    shotTone(r.pts<0);if(!hidden()){render();$('big').textContent=state.game.text;if(r.say)say(r.say,true);}else $('big').textContent='Shots: '+state.shots.length;if(state.game.done)setTimeout(finish,1500);return;}
   const exp=state.mode==='live'&&d.sequence?d.sequence[state.shots.length]:null;
   const p=lock?Core.apply(lock.imgToTgt,h):null,sc=p?Core.applyRules(T,Core.score(T,p,spread(),TPL(),exp),state.shots):{zone:null,score:0};
   marks.push({x:h.x,y:h.y,t:now});if(marks.length>30)marks.shift();
-  if(state.mode==='free'||state.mode==='live'){state.shots.push(Object.assign({},sc,{t:now,p,ooo:sc.outOfOrder}));tone(sc.noshoot||sc.bystander?300:1600,sc.noshoot||sc.bystander?200:40);render();
+  if(state.mode==='free'||state.mode==='live'){state.shots.push(Object.assign({},sc,{t:now,p,ooo:sc.outOfOrder}));shotTone(sc.noshoot||sc.bystander);if(hidden())$('big').textContent='Shots: '+state.shots.length;else render();
     if(state.mode==='live'&&state.shots.length>=d.shots&&(!d.compliant||(state.verbal||[]).length>=d.compliant.length))finish();}}
 function poly(pts,col,dash){ctx.strokeStyle=col;ctx.setLineDash(dash||[]);ctx.beginPath();pts.forEach((q,i)=>{const r=Core.apply(lock.tgtToImg,q);i?ctx.lineTo(r.x,r.y):ctx.moveTo(r.x,r.y);});ctx.stroke();ctx.setLineDash([]);}
 function draw(){if(lock){ctx.lineWidth=2;const tp=TPL(),f=tp.field,T=lock.target,g=spread();
    poly(Core.outline({shape:'rect',x:f.x,y:f.y,w:f.w,h:f.h}),'#29b6f6',[6,4]);
    for(const z of T.zones)if(z.kind!=='decor')poly(Core.outline(z,z.noGrow?0:g),z.kind==='noshoot'||z.kind==='bystander'?'rgba(255,255,255,.9)':'rgba(255,235,59,.75)');}
-  for(const m of marks){ctx.fillStyle='#00e676';ctx.beginPath();ctx.arc(m.x,m.y,5,0,7);ctx.fill();}}
+  if(!hidden())for(const m of marks){ctx.fillStyle='#00e676';ctx.beginPath();ctx.arc(m.x,m.y,5,0,7);ctx.fill();}}
 function render(){const s=Core.drillSummary(drill(),state.beep,state.shots);
   $('shots').innerHTML=state.shots.map((x,i)=>`<tr><td>${i+1}</td><td>${s.times[i].toFixed(2)}</td><td>${s.splits[i].toFixed(2)}</td><td>${x.bystander?'BYSTANDER +10s':x.hardcover?'HARD COVER':x.noshoot?(drill().scoring==='idpa'?'NON-THREAT':'NO-SHOOT'):x.pending?x.zone+' ('+x.rule+')':x.ooo?x.zone+' (order)':(x.zone||'miss')}</td><td>${drill().scoring==='idpa'?(x.noshoot?'+5s':'-'+x.pd):x.score}</td></tr>`).join('');
   if(state.mode==='done'&&drill().scoring==='idpa'){const r=Core.idpaSummary(drill(),state.shots,s.total);
@@ -96,7 +104,7 @@ $('goBtn').onclick=()=>{ac.resume();reset();const d=drill();if(!lock){$('big').t
 $('freeBtn').onclick=()=>{ac.resume();reset();state.mode='free';state.beep=performance.now();$('big').textContent='Free fire';};
 $('stopBtn').onclick=()=>{Voice.resume();if(state.mode==='idle'&&sel().type==='course'){course={idx:0,results:[]};showNotes();}if(state.mode==='live'||state.mode==='free')finish();else reset();};
 function onVerbal(txt,now){if(state.mode!=='live'||!drill().scenario)return;const t=(now-state.beep)/1000;state.verbal.push(t);tone(1200,60);
-  $('heard').textContent=`verbal @${t.toFixed(2)}s: "${txt.trim()}"`;state.shots.push({t:now,zone:'VERBAL',verbal:true});render();state.shots.pop();
+  $('heard').textContent=`verbal @${t.toFixed(2)}s: "${txt.trim()}"`;if(!hidden()){state.shots.push({t:now,zone:'VERBAL',verbal:true});render();state.shots.pop();}
   const d=drill();if(state.shots.length>=d.shots&&state.verbal.length>=d.compliant.length)finish();}
 function finish(){clearTimeout(state.timer);clearTimeout(state.par);const was=state.mode;state.mode='done';render();
   lastSay=spokenResult();if(was==='live'||was==='free')setTimeout(()=>{say(lastSay);Voice.resume();},400);else Voice.resume();
