@@ -2,12 +2,14 @@
 const $=id=>document.getElementById(id),cv=$('cv'),cx=cv.getContext('2d');
 let DOC,ORIG,key,zones=[],img=new Image(),page,sel=-1,tool='sel',view={s:60,ox:20,oy:20},drag=null,polyPts=null,mouse={x:0,y:0};
 const OV=()=>JSON.parse(localStorage.getItem('ld-zones')||'{}');
-const RULES={hit:'Hit (points / -0 -1 -3)',nohit:'No-hit / no-shoot (penalty)',requires:'Requires N shots',sequence:'Sequence (after N hits elsewhere)',cover:'Hard cover',bystander:'Bystander (backstop)'};
-const ruleOf=z=>z.rule||(z.kind==='noshoot'?'nohit':z.kind==='hardcover'?'cover':z.kind==='bystander'?'bystander':z.after?'sequence':z.needs>1?'requires':'hit');
+const RULES={hit:'Hit (points / -0 -1 -3)',nohit:'No-hit / no-shoot (penalty)',requires:'Requires N shots',sequence:'Sequence (after N hits elsewhere)',cover:'Hard cover',headonly:'Head-only / e-vest',bystander:'Penalty / backstop (bystander)'};
+// Same rule colours as the printed -mask sheets and the blank mask template (gen_assets.py RULECOL)
+const RULECOL={hit:'#1F4E9A',nohit:'#FFFFFF',cover:'#000000',requires:'#2E8B57',sequence:'#7B4FA0',headonly:'#00A3B4',bystander:'#8C8C8C'};
+const ruleOf=z=>z.rule||(z.kind==='noshoot'?'nohit':z.kind==='hardcover'?'cover':z.kind==='bystander'?'bystander':z.headOnly?'headonly':z.after?'sequence':z.needs>1?'requires':'hit');
 function setRule(z,r){z.rule=r;z.kind={nohit:'noshoot',cover:'hardcover',bystander:'bystander'}[r]||'score';
   if(z.kind==='score'){if(z.score==null)z.score=5;if(z.pd==null)z.pd=0;}else{delete z.sil;}
   if(r==='nohit'&&z.penalty==null)z.penalty=-10;if(r==='requires'&&!(z.needs>1))z.needs=2;if(r!=='requires')delete z.needs;
-  if(r==='sequence'){z.after=z.after||[];z.afterN=z.afterN||2;}else{delete z.after;delete z.afterN;}}
+  if(r==='sequence'){z.after=z.after||[];z.afterN=z.afterN||2;}else{delete z.after;delete z.afterN;}if(r==='headonly')z.headOnly=true;else delete z.headOnly;}
 fetch('targets.json').then(r=>r.json()).then(d=>{ORIG=JSON.parse(JSON.stringify(d));DOC=d;
   for(const k in d.targets)$('tsel').add(new Option(`${d.targets[k].code||''} ${d.targets[k].name}`,k));
   const h=new URLSearchParams(location.search).get('t');if(h&&d.targets[h])$('tsel').value=h;load();});
@@ -18,7 +20,7 @@ function fit(){size();view.s=Math.min((cv.width-40)/page.w,(cv.height-40)/page.h
 function size(){cv.width=$('wrap').clientWidth;cv.height=$('wrap').clientHeight;}addEventListener('resize',()=>{size();redraw();});
 const T=(x,y)=>[view.ox+x*view.s,view.oy+y*view.s],I=(px,py)=>({x:(px-view.ox)/view.s,y:(py-view.oy)/view.s});
 const msg=t=>$('msg').textContent=t;
-function color(z){return {score:'#ffd600',noshoot:'#ff40ff',hardcover:'#888',bystander:'#ff9800',decor:'#555'}[z.kind]||'#fff';}
+function color(z){if(z.kind==='decor')return '#555';const c=RULECOL[ruleOf(z)]||'#fff';return c==='#000000'?'#bbbbbb':c==='#1F4E9A'?'#5b8def':c;} // brightened on the dark canvas
 function handles(z){if(z.shape==='circle')return[{x:z.cx,y:z.cy,h:'c'},{x:z.cx+z.r,y:z.cy,h:'r'}];
   if(z.shape==='ellipse')return[{x:z.cx,y:z.cy,h:'c'},{x:z.cx+z.rx,y:z.cy,h:'rx'},{x:z.cx,y:z.cy+z.ry,h:'ry'}];
   if(z.shape==='rect')return[[0,0],[1,0],[1,1],[0,1]].map(([a,b],i)=>({x:z.x+a*z.w,y:z.y+b*z.h,h:'k'+i}));

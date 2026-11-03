@@ -134,12 +134,12 @@ cE=dict(head=(290,55,40,48),sh=(195,420,120),belt=(195,400,340),chest=(290,232),
 z=[hostage('finale','HOLLY',X4,Y4-fy0*S4,S4,crop=fx0,pts=HOLLY)]
 zE=zones_for('finale','T2',X4,Y4-fy0*S4,S4,crop=fx0,img=FIN,xmax=470,c=cE)
 zE[3].update(rx=round(18*S4,3),ry=round(22*S4,3))   # tight Eddie head -0
-HANS=[(680,30),(720,15),(750,30),(752,100),(800,125),(832,190),(835,250),(805,270),(800,690),(765,700),(740,560),(722,400),(728,300),(770,280),(786,235),(745,215),(705,150),(690,110),(678,70)]
+HANS=[(728,40),(760,15),(795,25),(802,95),(845,120),(860,180),(862,255),(840,265),(840,390),(845,690),(800,705),(770,560),(745,690),(705,690),(718,420),(728,300),(770,280),(786,235),(760,205),(735,150),(728,100)]
 G1=dict(kind='score',tier='tier1',group='T1',subtle=True)
 zH=[dict(G1,name='T1 -3',shape='poly',pts=[TH(*p) for p in HANS],score=-3,pd=3,part='body'),
- dict(G1,name='T1 -1',shape='ellipse',cx=TH(714,62)[0],cy=TH(714,62)[1],rx=round(32*S4,3),ry=round(44*S4,3),score=-1,pd=1,part='head'),
- dict(G1,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(775,240),(832,200),(805,390),(760,390)]],score=-1,pd=1,part='body'),
- dict(G1,name='T1 -0',shape='ellipse',cx=TH(803,258)[0],cy=TH(803,258)[1],rx=round(17*S4,3),ry=round(36*S4,3),score=0,pd=0,part='body')]
+ dict(G1,name='T1 -1',shape='ellipse',cx=TH(760,62)[0],cy=TH(760,62)[1],rx=round(32*S4,3),ry=round(44*S4,3),score=-1,pd=1,part='head'),
+ dict(G1,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(770,240),(800,150),(850,170),(840,390),(745,390)]],score=-1,pd=1,part='body'),
+ dict(G1,name='T1 -0',shape='ellipse',cx=TH(800,250)[0],cy=TH(800,250)[1],rx=round(28*S4,3),ry=round(40*S4,3),score=0,pd=0,part='body')]
 z+=zE+zH
 sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans shields behind Holly; Eddie (MP5A3 at low ready) covers him.','Exactly 2: Hans exposed side-chest -0, then Eddie head -0.','Holly = HOSTAGE: any hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=round(Y4,3),w=round((fx1-fx0)*S4,3),h=round((fy1-fy0)*S4,3),crop=[fx0,fy0,fx1,fy1])],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
 # 2-up sheets (left person | right person), each cropped to its own content, scaled to fill the field

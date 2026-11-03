@@ -60,6 +60,21 @@ def zone_center(z):
     xs=[p[0] for p in z['pts']]; ys=[p[1] for p in z['pts']]; return sum(xs)/len(xs),sum(ys)/len(ys)
 BASE=dict(TPL)
 MASKCOL={0:'#1F3A5F',-1:'#4F6F94',-3:'#9DB3C9',5:'#1F3A5F',4:'#34506E',3:'#6F8BA8',2:'#9DB3C9',1:'#C9D6E2'}
+RULECOL={'hit':'#1F4E9A','nohit':'#FFFFFF','cover':'#000000','twohit':'#2E8B57','conditional':'#7B4FA0','headonly':'#00A3B4','penalty':'#8C8C8C'}
+RULETXT=[('hit','Hit: scores (shade = value; labels show pts)'),('nohit','No-hit / no-shoot (hatched): penalty'),('cover','Hard cover: blocks, no hit'),('twohit','Two-hit: counts on 2nd hit'),('conditional','Conditional: only after required hits elsewhere'),('headonly','Head-only / e-vest: only this counts'),('penalty','Penalty / backstop (bystander)')]
+HITSHADE={0:'#1F4E9A',5:'#1F4E9A',4:'#2D5FAE',-1:'#4F7BC0',3:'#4F7BC0',2:'#7FA0D3',-3:'#7FA0D3',1:'#AFC4E6'}
+for _k,_v in list(RULECOL.items())+list(HITSHADE.items()):
+    _r,_g,_b=[int(_v[i:i+2],16) for i in (1,3,5)]; assert _r-(_g+_b)/2<20, f'mask colour {_v} too red'
+def rule_of(z):
+    if z.get('rule'): return z['rule']
+    k=z['kind']
+    if k=='noshoot': return 'nohit'
+    if k=='hardcover': return 'cover'
+    if k=='bystander': return 'penalty'
+    if z.get('headOnly'): return 'headonly'
+    if z.get('after'): return 'conditional'
+    if z.get('needs',1)>1: return 'twohit'
+    return 'hit'
 def draw_mask(d,t):
     """Scoring map only: zones filled by type/value, no images. Drawn back-to-front (first listed = on top)."""
     c=d.c; zs=t['zones']
@@ -68,11 +83,7 @@ def draw_mask(d,t):
         k=z['kind']
         if k=='decor': continue
         c.setLineWidth(0.8); c.setStrokeColor(black)
-        if k=='score': col=MASKCOL.get(z.get('score'),PAL.get(z.get('tier'),'#8DA6BC'))
-        elif k=='noshoot': col='#FFFFFF'
-        elif k=='hardcover': col='#000000'
-        elif k=='bystander': col='#DDDDDD'
-        else: col='#EEEEEE'
+        ru=rule_of(z); col=HITSHADE.get(z.get('score'),RULECOL['hit']) if ru=='hit' else RULECOL[ru]
         d.color(col); c.drawPath(d.path(z),stroke=1,fill=1)
         if k=='noshoot': d.hatch(z,PAL['noshootInk'],gap=0.1,width=0.8); c.drawPath(d.path(z),stroke=1,fill=0)
     seen=set()
@@ -88,7 +99,7 @@ def draw_mask(d,t):
         if not z.get('label') and z['shape']=='circle' and z['r']>0.6: cy=cy-z['r']+0.15
         if (lab,round(cx,1),round(cy,1)) in seen: continue
         seen.add((lab,round(cx,1),round(cy,1)))
-        dark=(k=='hardcover') or (k=='score' and lum(MASKCOL.get(z.get('score'),'#8DA6BC'))<0.3)
+        dark=(k=='hardcover') or (rule_of(z)!='nohit' and lum(HITSHADE.get(z.get('score'),RULECOL[rule_of(z)]) if rule_of(z)=='hit' else RULECOL[rule_of(z)])<0.3)
         sz=6 if (z.get('rx',z.get('r',1))<0.35) else 7
         c.setFont('Helvetica-Bold',sz); tw=c.stringWidth(lab,'Helvetica-Bold',sz); x,y=d.P(cx,cy)
         if k=='noshoot': c.setFillColor(white); c.rect(x-tw/2-1,y-2.5,tw+2,sz+1.5,stroke=0,fill=1); dark=False
@@ -229,9 +240,10 @@ def draw_target(key,t,path,maskmode=False):
         p=[z for z in t['zones'] if z['kind']=='noshoot'][0]['penalty']; items.append((PAL['noshoot'],f'No-shoot (hatched): {p} pts','hatch'))
     items.append(('#FFFFFF','Outside zones: miss, 0 pts',None))
     if t.get('legend'): items=[(PAL.get(col,col),txt,'hatch' if col=='noshoot' else ('dash' if col=='tier1' else None)) for col,txt in t['legend']]
-    c.setFont('Helvetica',7.2)
-    for i,(col,txt,kind) in enumerate(items[:6]):
-        yy=fy+0.2+i*0.14; x,y=d.P(lx,yy+0.1); c.setFillColor(HexColor(col)); c.setStrokeColor(black); c.setLineWidth(0.5)
+    if maskmode: items=[(RULECOL[r],txt,'hatch' if r=='nohit' else None) for r,txt in RULETXT]
+    c.setFont('Helvetica',6.6 if maskmode else 7.2)
+    for i,(col,txt,kind) in enumerate(items[:7 if maskmode else 6]):
+        yy=fy+0.2+i*(0.12 if maskmode else 0.14); x,y=d.P(lx,yy+0.1); c.setFillColor(HexColor(col)); c.setStrokeColor(black); c.setLineWidth(0.5)
         r=0.055*K; cx,cy=x+0.11*K,y+0.055*K
         if kind=='dash': c.setFillColor(white); c.circle(cx,cy,r,stroke=0,fill=1); c.setDash(1.5,1.5); c.setStrokeColor(HexColor(PAL['subtle'])); c.circle(cx,cy,r,stroke=1,fill=0); c.setDash()
         else: c.circle(cx,cy,r,stroke=1,fill=1)
@@ -260,3 +272,13 @@ if __name__=='__main__':
     open('targets/index.html','w').write(f"<!doctype html><meta name=viewport content='width=device-width'><title>Laser Drills targets</title><body style='font:15px system-ui;background:#111;color:#eee'><h1>Printable targets</h1><p>Print at 100% / Actual size. Paper is printed in each sheet footer (US Letter unless marked LANDSCAPE / Tabloid 11x17).</p><h2 id=training>Self-Defense Training</h2><p>Bullseye, IDPA, hostage, hard cover and shoot/don't-shoot sheets.</p>{UL}{rows}</ul><h2 id=fun>Fun</h2><h3 id=diehard>Die Hard (Set 1: Nakatomi Plaza)</h3><p>Full-colour illustrated characters with faint anatomy-based -0/-1/-3 outlines. Hatched = hostage; rendered desk/rail/pillar/cabinet = hard cover. Fan-made training targets; characters are drawn, not actor likenesses.</p>{UL}{dh}</ul><p><a href='../' style='color:#8ab4f8'>Back to app</a></p>".replace('<a ',"<a style='color:#8ab4f8' "))
     import subprocess
     for k in DOC['targets']: subprocess.run(['pdftoppm','-r','50','-png','-singlefile',f'targets/{k}-letter.pdf',f'targets/{k}-letter'],check=True); subprocess.run(['pdftoppm','-r','50','-png','-singlefile',f'targets/{k}-mask.pdf',f'targets/{k}-mask'],check=True)
+    # blank mask template (letter portrait + tabloid landscape): markers, quiet zones, scan field, rule colour legend
+    for suf,lay in (('letter',{}),('tabloid',{'page':{'w':17,'h':11},'field':{'x':0.4,'y':1.85,'w':16.2,'h':7.3}})):
+        tt=dict(name='Blank template',code='LD-MT',markerIds=[200,201,202,203],distance='any',drills=[],zones=[],layout=lay,
+                instructions=['Draw zones inside the dashed scan field only.','Fill each zone with its rule colour (legend).','Keep markers + white quiet zones clear.','Same colours as every -mask sheet and the Zone Editor.'])
+        p=f'targets/mask-template-{suf}'; draw_target('mask-template',tt,p+'.pdf',maskmode=True)
+        subprocess.run(['pdftoppm','-r','100','-png','-singlefile',p+'.pdf',p],check=True)
+        subprocess.run(['pdftocairo','-svg',p+'.pdf',p+'.svg'],check=True)
+    h=open('targets/index.html').read()
+    h=h.replace("<h2 id=training>","<p><b>Blank scoring mask template</b> (rule-colour legend): Letter <a style='color:#8ab4f8' href='mask-template-letter.pdf'>PDF</a> · <a style='color:#8ab4f8' href='mask-template-letter.png'>PNG</a> · <a style='color:#8ab4f8' href='mask-template-letter.svg'>SVG</a> | Tabloid 11x17 landscape <a style='color:#8ab4f8' href='mask-template-tabloid.pdf'>PDF</a> · <a style='color:#8ab4f8' href='mask-template-tabloid.png'>PNG</a> · <a style='color:#8ab4f8' href='mask-template-tabloid.svg'>SVG</a></p><h2 id=training>",1)
+    open('targets/index.html','w').write(h)
