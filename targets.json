@@ -13795,6 +13795,1112 @@
     "weapon": "pistol"
    }
   },
+  "fof": {
+   "code": "LD-505",
+   "name": "Friend or Foe",
+   "markerIds": [
+    328,
+    329,
+    330,
+    331
+   ],
+   "distance": "5-10 yd",
+   "art": [
+    {
+     "src": "art/fof.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 7.7,
+     "h": 7.3
+    }
+   ],
+   "zones": [
+    {
+     "name": "BLUE1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "BLUE1",
+     "shape": "ellipse",
+     "cx": 2.691,
+     "cy": 3.298,
+     "rx": 0.091,
+     "ry": 0.112,
+     "tags": [
+      "blue",
+      "BLUE1",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "BLUE1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "BLUE1",
+     "shape": "rect",
+     "x": 2.483,
+     "y": 3.41,
+     "w": 0.454,
+     "h": 0.512,
+     "tags": [
+      "blue",
+      "BLUE1",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "WHITE1",
+     "shape": "ellipse",
+     "cx": 5.774,
+     "cy": 3.33,
+     "rx": 0.149,
+     "ry": 0.128,
+     "tags": [
+      "white",
+      "WHITE1",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "WHITE1",
+     "shape": "rect",
+     "x": 5.508,
+     "y": 3.458,
+     "w": 0.553,
+     "h": 0.512,
+     "tags": [
+      "white",
+      "WHITE1",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 4,
+     "group": "YELLOW1",
+     "shape": "ellipse",
+     "cx": 1.226,
+     "cy": 3.562,
+     "rx": 0.244,
+     "ry": 0.208,
+     "tags": [
+      "yellow",
+      "YELLOW1",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 3,
+     "group": "YELLOW1",
+     "shape": "rect",
+     "x": 0.668,
+     "y": 3.796,
+     "w": 1.013,
+     "h": 0.858,
+     "tags": [
+      "yellow",
+      "YELLOW1",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE2 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 4,
+     "group": "WHITE2",
+     "shape": "ellipse",
+     "cx": 4.026,
+     "cy": 3.562,
+     "rx": 0.242,
+     "ry": 0.208,
+     "tags": [
+      "white",
+      "WHITE2",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE2 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 3,
+     "group": "WHITE2",
+     "shape": "rect",
+     "x": 3.559,
+     "y": 3.77,
+     "w": 0.898,
+     "h": 0.832,
+     "tags": [
+      "white",
+      "WHITE2",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "BLUE2 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 4,
+     "group": "BLUE2",
+     "shape": "ellipse",
+     "cx": 7.131,
+     "cy": 3.51,
+     "rx": 0.148,
+     "ry": 0.182,
+     "tags": [
+      "blue",
+      "BLUE2",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "BLUE2 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 3,
+     "group": "BLUE2",
+     "shape": "rect",
+     "x": 6.73,
+     "y": 3.692,
+     "w": 0.738,
+     "h": 0.832,
+     "tags": [
+      "blue",
+      "BLUE2",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW2 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 6,
+     "group": "YELLOW2",
+     "shape": "ellipse",
+     "cx": 2.655,
+     "cy": 5.926,
+     "rx": 0.326,
+     "ry": 0.261,
+     "tags": [
+      "yellow",
+      "YELLOW2",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW2 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 5,
+     "group": "YELLOW2",
+     "shape": "rect",
+     "x": 1.852,
+     "y": 6.216,
+     "w": 1.681,
+     "h": 0.692,
+     "tags": [
+      "yellow",
+      "YELLOW2",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE3 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 6,
+     "group": "WHITE3",
+     "shape": "ellipse",
+     "cx": 6.353,
+     "cy": 6.145,
+     "rx": 0.332,
+     "ry": 0.261,
+     "tags": [
+      "white",
+      "WHITE3",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE3 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 5,
+     "group": "WHITE3",
+     "shape": "rect",
+     "x": 5.766,
+     "y": 6.464,
+     "w": 1.38,
+     "h": 0.914,
+     "tags": [
+      "white",
+      "WHITE3",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "SANDBAGS",
+     "kind": "hardcover",
+     "shape": "poly",
+     "pts": [
+      [
+       0.4,
+       5.281
+      ],
+      [
+       1.94,
+       5.135
+      ],
+      [
+       4.25,
+       5.062
+      ],
+      [
+       6.56,
+       5.135
+      ],
+      [
+       8.1,
+       5.5
+      ],
+      [
+       8.1,
+       6.376
+      ],
+      [
+       0.4,
+       6.084
+      ]
+     ],
+     "art": true,
+     "subtle": true
+    },
+    {
+     "name": "TRENCH",
+     "kind": "hardcover",
+     "shape": "poly",
+     "pts": [
+      [
+       0.4,
+       6.741
+      ],
+      [
+       4.25,
+       7.106
+      ],
+      [
+       8.1,
+       7.763
+      ],
+      [
+       8.1,
+       9.15
+      ],
+      [
+       0.4,
+       9.15
+      ]
+     ],
+     "art": true,
+     "subtle": true
+    }
+   ],
+   "instructions": [
+    "Same camo on both sides: read the TAPE bands (yellow, blue, white).",
+    "Each round the app names the friendly side and the tape to engage.",
+    "Hitting a friendly = FRATRICIDE -25. Head -0, body -1.",
+    "Sandbags / trench are hard cover (no score). Mic on, say \"start\"."
+   ],
+   "drills": [
+    "fof-sides",
+    "fof-tape"
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "letter",
+    "people": "multi",
+    "features": [
+     "hard cover"
+    ],
+    "weapon": "pistol"
+   }
+  },
+  "fof-tabloid": {
+   "code": "LD-506",
+   "name": "Friend or Foe (Tabloid)",
+   "markerIds": [
+    332,
+    333,
+    334,
+    335
+   ],
+   "distance": "5-10 yd",
+   "art": [
+    {
+     "src": "art/fof-tabloid.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 16.2,
+     "h": 7.3
+    }
+   ],
+   "zones": [
+    {
+     "name": "BLUE1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "BLUE1",
+     "shape": "ellipse",
+     "cx": 3.135,
+     "cy": 3.298,
+     "rx": 0.091,
+     "ry": 0.112,
+     "tags": [
+      "blue",
+      "BLUE1",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "BLUE1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "BLUE1",
+     "shape": "rect",
+     "x": 2.927,
+     "y": 3.41,
+     "w": 0.454,
+     "h": 0.512,
+     "tags": [
+      "blue",
+      "BLUE1",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "WHITE1",
+     "shape": "ellipse",
+     "cx": 6.532,
+     "cy": 3.33,
+     "rx": 0.149,
+     "ry": 0.128,
+     "tags": [
+      "white",
+      "WHITE1",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "WHITE1",
+     "shape": "rect",
+     "x": 6.266,
+     "y": 3.458,
+     "w": 0.553,
+     "h": 0.512,
+     "tags": [
+      "white",
+      "WHITE1",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW1 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "YELLOW1",
+     "shape": "ellipse",
+     "cx": 9.741,
+     "cy": 3.33,
+     "rx": 0.15,
+     "ry": 0.128,
+     "tags": [
+      "yellow",
+      "YELLOW1",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW1 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "YELLOW1",
+     "shape": "rect",
+     "x": 9.462,
+     "y": 3.474,
+     "w": 0.623,
+     "h": 0.528,
+     "tags": [
+      "yellow",
+      "YELLOW1",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE2 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 2,
+     "group": "WHITE2",
+     "shape": "ellipse",
+     "cx": 12.864,
+     "cy": 3.48,
+     "rx": 0.172,
+     "ry": 0.135,
+     "tags": [
+      "white",
+      "WHITE2",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE2 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 1,
+     "group": "WHITE2",
+     "shape": "rect",
+     "x": 12.455,
+     "y": 3.645,
+     "w": 0.714,
+     "h": 0.57,
+     "tags": [
+      "white",
+      "WHITE2",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW2 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 4,
+     "group": "YELLOW2",
+     "shape": "ellipse",
+     "cx": 1.359,
+     "cy": 3.562,
+     "rx": 0.244,
+     "ry": 0.208,
+     "tags": [
+      "yellow",
+      "YELLOW2",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW2 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 3,
+     "group": "YELLOW2",
+     "shape": "rect",
+     "x": 0.801,
+     "y": 3.796,
+     "w": 1.013,
+     "h": 0.858,
+     "tags": [
+      "yellow",
+      "YELLOW2",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE3 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 4,
+     "group": "WHITE3",
+     "shape": "ellipse",
+     "cx": 4.55,
+     "cy": 3.562,
+     "rx": 0.242,
+     "ry": 0.208,
+     "tags": [
+      "white",
+      "WHITE3",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE3 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 3,
+     "group": "WHITE3",
+     "shape": "rect",
+     "x": 4.083,
+     "y": 3.77,
+     "w": 0.898,
+     "h": 0.832,
+     "tags": [
+      "white",
+      "WHITE3",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "BLUE2 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 4,
+     "group": "BLUE2",
+     "shape": "ellipse",
+     "cx": 8.046,
+     "cy": 3.51,
+     "rx": 0.148,
+     "ry": 0.182,
+     "tags": [
+      "blue",
+      "BLUE2",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "BLUE2 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 3,
+     "group": "BLUE2",
+     "shape": "rect",
+     "x": 7.645,
+     "y": 3.692,
+     "w": 0.738,
+     "h": 0.832,
+     "tags": [
+      "blue",
+      "BLUE2",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE4 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 4,
+     "group": "WHITE4",
+     "shape": "ellipse",
+     "cx": 11.478,
+     "cy": 3.562,
+     "rx": 0.242,
+     "ry": 0.208,
+     "tags": [
+      "white",
+      "WHITE4",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE4 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 3,
+     "group": "WHITE4",
+     "shape": "rect",
+     "x": 11.047,
+     "y": 3.77,
+     "w": 0.898,
+     "h": 0.832,
+     "tags": [
+      "white",
+      "WHITE4",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW3 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 4,
+     "group": "YELLOW3",
+     "shape": "ellipse",
+     "cx": 14.831,
+     "cy": 3.562,
+     "rx": 0.244,
+     "ry": 0.208,
+     "tags": [
+      "yellow",
+      "YELLOW3",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW3 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 3,
+     "group": "YELLOW3",
+     "shape": "rect",
+     "x": 14.377,
+     "y": 3.796,
+     "w": 1.013,
+     "h": 0.858,
+     "tags": [
+      "yellow",
+      "YELLOW3",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW4 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 6,
+     "group": "YELLOW4",
+     "shape": "ellipse",
+     "cx": 2.844,
+     "cy": 5.926,
+     "rx": 0.326,
+     "ry": 0.261,
+     "tags": [
+      "yellow",
+      "YELLOW4",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "YELLOW4 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 5,
+     "group": "YELLOW4",
+     "shape": "rect",
+     "x": 2.041,
+     "y": 6.216,
+     "w": 1.681,
+     "h": 0.597,
+     "tags": [
+      "yellow",
+      "YELLOW4",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE5 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 6,
+     "group": "WHITE5",
+     "shape": "ellipse",
+     "cx": 6.888,
+     "cy": 6.072,
+     "rx": 0.332,
+     "ry": 0.261,
+     "tags": [
+      "white",
+      "WHITE5",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE5 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 5,
+     "group": "WHITE5",
+     "shape": "rect",
+     "x": 6.301,
+     "y": 6.391,
+     "w": 1.38,
+     "h": 0.597,
+     "tags": [
+      "white",
+      "WHITE5",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "BLUE3 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 6,
+     "group": "BLUE3",
+     "shape": "ellipse",
+     "cx": 10.083,
+     "cy": 6.025,
+     "rx": 0.17,
+     "ry": 0.21,
+     "tags": [
+      "blue",
+      "BLUE3",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "BLUE3 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 5,
+     "group": "BLUE3",
+     "shape": "rect",
+     "x": 9.694,
+     "y": 6.235,
+     "w": 0.852,
+     "h": 0.96,
+     "tags": [
+      "blue",
+      "BLUE3",
+      "soldier",
+      "allied"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE6 HEAD",
+     "kind": "score",
+     "score": 0,
+     "tier": "tier5",
+     "z": 6,
+     "group": "WHITE6",
+     "shape": "ellipse",
+     "cx": 13.676,
+     "cy": 6.291,
+     "rx": 0.332,
+     "ry": 0.261,
+     "tags": [
+      "white",
+      "WHITE6",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "WHITE6 BODY",
+     "kind": "score",
+     "score": -1,
+     "tier": "tier3",
+     "z": 5,
+     "group": "WHITE6",
+     "shape": "rect",
+     "x": 12.884,
+     "y": 6.61,
+     "w": 1.38,
+     "h": 0.913,
+     "tags": [
+      "white",
+      "WHITE6",
+      "soldier",
+      "opfor"
+     ],
+     "art": true,
+     "subtle": true,
+     "noGrow": true
+    },
+    {
+     "name": "SANDBAGS",
+     "kind": "hardcover",
+     "shape": "poly",
+     "pts": [
+      [
+       0.4,
+       5.281
+      ],
+      [
+       3.64,
+       5.135
+      ],
+      [
+       8.5,
+       5.062
+      ],
+      [
+       13.36,
+       5.135
+      ],
+      [
+       16.6,
+       5.5
+      ],
+      [
+       16.6,
+       6.376
+      ],
+      [
+       0.4,
+       6.084
+      ]
+     ],
+     "art": true,
+     "subtle": true
+    },
+    {
+     "name": "TRENCH",
+     "kind": "hardcover",
+     "shape": "poly",
+     "pts": [
+      [
+       0.4,
+       6.741
+      ],
+      [
+       8.5,
+       7.106
+      ],
+      [
+       16.6,
+       7.763
+      ],
+      [
+       16.6,
+       9.15
+      ],
+      [
+       0.4,
+       9.15
+      ]
+     ],
+     "art": true,
+     "subtle": true
+    }
+   ],
+   "instructions": [
+    "Same camo on both sides: read the TAPE bands (yellow, blue, white).",
+    "Each round the app names the friendly side and the tape to engage.",
+    "Hitting a friendly = FRATRICIDE -25. Head -0, body -1.",
+    "Sandbags / trench are hard cover (no score). Mic on, say \"start\"."
+   ],
+   "layout": {
+    "page": {
+     "w": 17,
+     "h": 11
+    },
+    "field": {
+     "x": 0.4,
+     "y": 1.85,
+     "w": 16.2,
+     "h": 7.3
+    }
+   },
+   "drills": [
+    "fof-sides-tab",
+    "fof-tape-tab"
+   ],
+   "meta": {
+    "category": "tactical",
+    "paper": "tabloid",
+    "people": "multi",
+    "features": [
+     "hard cover"
+    ],
+    "weapon": "pistol"
+   }
+  },
   "idpa-threat": {
    "code": "LD-101",
    "name": "IDPA-style Threat",

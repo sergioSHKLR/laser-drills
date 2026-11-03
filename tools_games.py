@@ -254,6 +254,60 @@ GAMES['ct']=lambda:ct(place=[('hamas',.12,.3,3.2,False),('civ1',.37,.33,2.6,Fals
 GAMES['ct-tabloid']=lambda:ct('ct-tabloid',TAB,(324,325,326,327),'LD-504',lay=TABLAY,place=[
     ('hamas',.06,.3,3.2,False),('civ1',.19,.33,2.6,False),('irgc',.32,.3,3.2,True),('civ2',.45,.33,2.6,False),('houthi',.58,.3,3.2,False),('civ3',.72,.33,2.6,False),('hezb',.87,.3,3.2,True),
     ('hezb',.07,.76,3.3,False),('civ2',.2,.78,2.9,True),('vest',.34,.76,3.3,False),('civ1',.48,.78,2.9,True),('hamas',.62,.76,3.3,True),('civ3',.76,.78,2.9,False),('houthi',.92,.76,3.3,True)])
+
+# ---------------------------------------------------------------- Friend or Foe (same camo; tape bands yellow / blue vs white; partial cover)
+SOL=dict(  # head ellipse + torso rect in cropped-sprite fractions; side tag = tape colour
+    y1=dict(head=(.4,.1,.14,.08),torso=(.08,.19,.66,.52),tape='yellow'),
+    y2=dict(head=(.57,.14,.13,.09),torso=(.25,.24,.92,.62),tape='yellow'),
+    w1=dict(head=(.37,.1,.14,.08),torso=(.1,.18,.62,.5),tape='white'),
+    w2=dict(head=(.37,.14,.13,.09),torso=(.06,.25,.6,.63),tape='white'),
+    b1=dict(head=(.47,.08,.14,.07),torso=(.15,.15,.85,.47),tape='blue'))
+def fof(key='fof',F=LETTER,mk=(328,329,330,331),code='LD-505',rows=None,lay=None):
+    Wp,Hp=int(F['w']*DPI),int(F['h']*DPI); bg=cv2.resize(cv2.imread('art/src3/fofbg.jpg'),(Wp,Hp),interpolation=cv2.INTER_AREA)
+    bg=cv2.addWeighted(bg,0.8,np.full_like(bg,255),0.2,0); can=bg.copy(); zones=[]; cnt={}
+    def poly(pts): m=np.zeros((Hp,Wp),np.uint8); cv2.fillPoly(m,[np.array([(int(x*Wp),int(y*Hp)) for x,y in pts],np.int32)],1); return m>0
+    sand=[(.03,.47),(.2,.45),(.5,.44),(.8,.45),(.98,.5),(.98,.62),(.03,.57)]; trench=[(0,.67),(.5,.72),(1,.81),(1,1),(0,1)]
+    def top(pts,x):   # cover top edge y-fraction at x-fraction (piecewise linear over first points up to the right end)
+        edge=[p for p in pts if p[1]<=min(q[1] for q in pts)+0.15][:5]; edge.sort()
+        return float(np.interp(x,[p[0] for p in edge],[p[1] for p in edge]))
+    for ri,(cover,figs) in enumerate(rows):
+        for nm,fx,fy,h,fl in figs:
+            sp=safe(sprite(f'art/src3/{nm}.jpg')); w=h*sp.shape[1]/sp.shape[0]
+            x0,y0,x1,y1=paste(can,sp,F['x']+fx*F['w'],F['y']+fy*F['h']-h/2,w,F,flip=fl); W,H=x1-x0,y1-y0
+            V=SOL[nm]; side=V['tape']; cnt[side]=cnt.get(side,0)+1; n=f'{side.upper()}{cnt[side]}'
+            hx,hy,rx,ry=V['head']; a,b,c,d=V['torso']
+            if fl: a,c,hx=1-c,1-a,1-hx
+            yb=y0+d*H
+            if cover: yb=min(yb,F['y']+top(cover,((x0+x1)/2-F['x'])/F['w'])*F['h']-0.03)
+            tg=[side,n,'soldier']+(['allied'] if side in('yellow','blue') else ['opfor'])
+            zones.append(dict(name=n+' HEAD',kind='score',score=0,tier='tier5',z=2*ri+2,group=n,shape='ellipse',cx=round(x0+hx*W,3),cy=round(y0+hy*H,3),rx=round(rx*W,3),ry=round(ry*H,3),tags=tg,art=True,subtle=True,noGrow=True))
+            if yb>y0+b*H+0.1: zones.append(dict(name=n+' BODY',kind='score',score=-1,tier='tier3',z=2*ri+1,group=n,shape='rect',x=round(x0+a*W,3),y=round(y0+b*H,3),w=round((c-a)*W,3),h=round(yb-(y0+b*H),3),tags=tg,art=True,subtle=True,noGrow=True))
+        if cover: m=poly(cover); can[m]=bg[m]
+    for nmc,pts in (('SANDBAGS',SAND),('TRENCH',TR)):
+        zones.append(dict(name=nmc,kind='hardcover',shape='poly',pts=[[round(F['x']+x*F['w'],3),round(F['y']+y*F['h'],3)] for x,y in pts],art=True,subtle=True))
+    m=np.any([zone_mask(z,F,can.shape) for z in zones if z['kind']=='score'],axis=0)
+    can=np.where(np.repeat(m[...,None],3,2),safe(can),can)
+    check_zones(key,can,[z for z in zones if z['kind']=='score'],F); cv2.imwrite(f'art/{key}.png',can)
+    sides=sorted({z['tags'][0] for z in zones if z['kind']=='score'})
+    A=[s for s in sides if s!='white']
+    calls=[dict(say='friendlies '+' and '.join(A)+'. Engage white tape',tags=['white'],forbid=A),
+           dict(say='friendlies white. Engage '+' and '.join(A)+' tape',tags=A,forbid=['white'])]+\
+          [dict(say=f'engage {s} tape only',tags=[s],forbid=[o for o in sides if o!=s]) for s in sides]
+    sfx='-tab' if lay else ''; nmx=' (Tabloid)' if lay else ''
+    G=lambda c,r:dict(type='calls',calls=c,rounds=r,fratricide=-25,wrong=-2)
+    t=dict(code=code,name='Friend or Foe'+nmx,markerIds=list(mk),distance='5-10 yd',art=[dict(src=f'art/{key}.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'])],zones=zones,
+        instructions=['Same camo on both sides: read the TAPE bands (yellow, blue, white).','Each round the app names the friendly side and the tape to engage.','Hitting a friendly = FRATRICIDE -25. Head -0, body -1.','Sandbags / trench are hard cover (no score). Mic on, say "start".'])
+    if lay: t['layout']=lay
+    D=[dict(id='fof-sides'+sfx,name='Friend or Foe: sides'+nmx,category='training',target=key,shots=30,startDelay=[2,3],parTime=30,timeout=60,game=G(calls[:2],4),notes='The app assigns the friendly side each round. Fratricide -25.'),
+       dict(id='fof-tape'+sfx,name='Friend or Foe: single tape'+nmx,category='training',target=key,shots=30,startDelay=[2,4],parTime=20,timeout=45,game=G(calls[2:],5),notes='Engage one tape colour only; all others are friendly. Fratricide -25.')]
+    upsert(key,t,D)
+SAND=[(0,.47),(.2,.45),(.5,.44),(.8,.45),(1,.5),(1,.62),(0,.58)]; TR=[(0,.67),(.5,.72),(1,.81),(1,1),(0,1)]
+GAMES['fof']=lambda:fof(rows=[(None,[('b1',.3,.4,1.6,False),('w1',.68,.4,1.6,True)]),
+    (SAND,[('y1',.13,.555,2.6,False),('w1',.5,.555,2.6,False),('b1',.87,.555,2.6,True)]),
+    (TR,[('y2',.27,.9,2.9,False),('w2',.73,.93,2.9,True)])])
+GAMES['fof-tabloid']=lambda:fof('fof-tabloid',TAB,(332,333,334,335),'LD-506',lay=TABLAY,rows=[(None,[('b1',.17,.4,1.6,False),('w1',.37,.4,1.6,True),('y1',.57,.4,1.6,True),('w2',.78,.4,1.5,False)]),
+    (SAND,[('y1',.07,.555,2.6,False),('w1',.27,.555,2.6,False),('b1',.47,.555,2.6,True),('w1',.67,.555,2.6,True),('y1',.88,.555,2.6,True)]),
+    (TR,[('y2',.14,.9,2.9,False),('w2',.38,.92,2.9,True),('b1',.6,.95,3.0,False),('w2',.84,.95,2.9,False)])])
 if __name__=='__main__':
     for k in (sys.argv[1:] or list(GAMES)): GAMES[k]()
     save(); print('ok games')

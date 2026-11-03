@@ -2423,5 +2423,193 @@
    "wrong": -2
   },
   "notes": "Every militant, then the vest wearer (head only)."
+ },
+ {
+  "id": "fof-sides",
+  "name": "Friend or Foe: sides",
+  "category": "training",
+  "target": "fof",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "friendlies blue and yellow. Engage white tape",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "friendlies white. Engage blue and yellow tape",
+     "tags": [
+      "blue",
+      "yellow"
+     ],
+     "forbid": [
+      "white"
+     ]
+    }
+   ],
+   "rounds": 4,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "The app assigns the friendly side each round. Fratricide -25."
+ },
+ {
+  "id": "fof-tape",
+  "name": "Friend or Foe: single tape",
+  "category": "training",
+  "target": "fof",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "engage blue tape only",
+     "tags": [
+      "blue"
+     ],
+     "forbid": [
+      "white",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage white tape only",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage yellow tape only",
+     "tags": [
+      "yellow"
+     ],
+     "forbid": [
+      "blue",
+      "white"
+     ]
+    }
+   ],
+   "rounds": 5,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
+ },
+ {
+  "id": "fof-sides-tab",
+  "name": "Friend or Foe: sides (Tabloid)",
+  "category": "training",
+  "target": "fof-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "friendlies blue and yellow. Engage white tape",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "friendlies white. Engage blue and yellow tape",
+     "tags": [
+      "blue",
+      "yellow"
+     ],
+     "forbid": [
+      "white"
+     ]
+    }
+   ],
+   "rounds": 4,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "The app assigns the friendly side each round. Fratricide -25."
+ },
+ {
+  "id": "fof-tape-tab",
+  "name": "Friend or Foe: single tape (Tabloid)",
+  "category": "training",
+  "target": "fof-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "engage blue tape only",
+     "tags": [
+      "blue"
+     ],
+     "forbid": [
+      "white",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage white tape only",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage yellow tape only",
+     "tags": [
+      "yellow"
+     ],
+     "forbid": [
+      "blue",
+      "white"
+     ]
+    }
+   ],
+   "rounds": 5,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
  }
 ]

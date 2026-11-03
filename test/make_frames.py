@@ -46,6 +46,8 @@ CASES={
  'maritime-tabloid':S('maritime-tabloid','GOFAST2 ENGINE','SEMISUB1 HULL','JETSKI1 NS','FERRY1 NS'),
  'ct':S('ct','HAMAS1 HEAD','HEZB1 BODY','HOUTHI1 HEAD','VEST1 HEAD','VEST1 VEST','CIV1 NS'),
  'ct-tabloid':S('ct-tabloid','IRGC1 HEAD','HAMAS2 BODY','VEST1 HEAD','CIV3 NS'),
+ 'fof':S('fof','YELLOW1 HEAD','WHITE2 BODY','BLUE2 HEAD')+[(*Z('fof','SANDBAGS',0),'HC')],
+ 'fof-tabloid':S('fof-tabloid','WHITE1 HEAD','YELLOW3 BODY')+[(*Z('fof-tabloid','TRENCH',0),'HC')],
  'clays':[(2.45,3.55,5),(5.85,5.15,5),(5.85,6.45,2),(2.95+1.15,7.55-0.3,3),(7.6,2.5,0)],  # 1-2 dome 5; 4th orange rim via spread 3
 }
 meta={'w':W,'h':H,'sets':{}}
