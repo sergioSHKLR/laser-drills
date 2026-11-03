@@ -67,3 +67,10 @@ Red cap: art red dominance is hard-capped at 36 (detector gate 40), so lipstick 
   - L2: two attributes. Skin tone is always paired with clothing or gear.
   - L3: three attributes, or a relative position ("left of the person in the …").
 - Penalties: wrong person +5 s, bystander +10 s (BACKSTOP FAILURE).
+
+## v13
+- Die Hard art regenerated (generic faces): Hans (P7, double-breasted), Karl (lean, long blond, MP5A3), Tony (single-stock MP5A3), new Uli-type henchman (AUG, threat) and Powell-type LAPD sergeant (FRIENDLY: hit = +10 s and stage FAIL). New sheets: dh-uli, dh-powell, dh-lobby; Nakatomi line-up now 7 threats + Powell.
+- Roof Finale: Hans holds Holly at gunpoint (hand on her shoulder), partly exposed; Eddie beside.
+- All die-hard sheets scaled to fill the scan field (clear of margins/marker quiet zones); tabloids spread to fill.
+- Clays: lifelike bright-orange clays with a black dome. Synthetic tests: laser dot detected 40/40 on the black dome but only ~9-29/40 on bright orange, so the dome is the 5-pt zone and orange body scores 3. Real-laser behaviour on orange is untested.
+- Rotated ellipse zones supported.

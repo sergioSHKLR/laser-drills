@@ -83,13 +83,13 @@ def draw_target(key,t,path):
         im=Image.open(a['src']).convert('RGB')
         if a.get('crop'): im=im.crop(tuple(a['crop']))
         arr=np.asarray(im).astype(int); rd=(arr[...,0]-(arr[...,1]+arr[...,2])/2).max()
-        assert rd<40, f"{a['src']} too red for laser detection ({rd})"
+        assert rd<40 or a.get('warm'), f"{a['src']} too red for laser detection ({rd})"
         x,y=d.P(a['x'],a['y']+a['h']); c.drawImage(ImageReader(im),x,y,a['w']*K,a['h']*K)
     # zones
     for z in t['zones']:
         if z.get('subtle'):
             c.setDash(2,2); c.setLineWidth(0.6); d.color(PAL['subtle'],True); c.drawPath(d.path(z),stroke=1,fill=0); c.setDash(); continue
-        if z['kind'] in ('bystander',) or (z['kind']=='noshoot' and z.get('art')): continue   # unmarked on the art: shooter must discriminate
+        if z['kind'] in ('bystander',) or (z['kind'] in ('noshoot','score') and z.get('art')): continue   # unmarked on the art: shooter must discriminate
         c.setLineWidth(1.4); d.color(PAL['outline'],True)
         if z['kind']=='decor' and z.get('line'):
             zl=t['zones']; i0=next(i for i,q in enumerate(zl) if q is z)

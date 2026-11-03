@@ -89,7 +89,7 @@ def allsheet(key,code,ids,W,H,s,xs,tops,lsz,dist):
       texts=texts,zones=zones,labelSize=lsz+1,
       instructions=['Drill calls targets in random order (spoken + on screen).','Mozambique (T5): 2 body, then 1 head, in order.',
         'T6 and the front figure on T8 are NON-THREATS: +5 s/hit.','Black = hard cover: hits there do not count.','Out of order / wrong Mozambique part = PE +3 s.'])
-allsheet('idpa-all-tabloid','LD-110',[53,54,55,56],17,11,1/9,[4.1,6.8,9.5,12.6],[2.2,5.85],8,'3 yd = ~27 yd sim (1/9 scale)')
+allsheet('idpa-all-tabloid','LD-110',[53,54,55,56],17,11,1/9,[2.5,6.25,10.0,13.75],[2.2,5.85],8,'3 yd = ~27 yd sim (1/9 scale)')
 allsheet('idpa-all-letter','LD-111',[57,58,59,60],11,8.5,1/14,[2.75,4.5,6.25,8.25],[2.1,4.48],6,'3 yd = ~42 yd sim (1/14 scale)')
 json.dump(D,open('targets.json','w'),indent=1)
 dr=json.load(open('drills.json'))

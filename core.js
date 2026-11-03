@@ -26,7 +26,7 @@ Core.lockTarget=function(markers,doc){
 Core.inZone=function(z,p,g){g=g||0;
   switch(z.shape){
    case 'circle':return Math.hypot(p.x-z.cx,p.y-z.cy)<=z.r+g;
-   case 'ellipse':{const dx=(p.x-z.cx)/(z.rx+g),dy=(p.y-z.cy)/(z.ry+g);return dx*dx+dy*dy<=1;}
+   case 'ellipse':{let ex=p.x-z.cx,ey=p.y-z.cy;if(z.rot){const t=z.rot*Math.PI/180,c=Math.cos(t),s=Math.sin(t);[ex,ey]=[ex*c-ey*s,ex*s+ey*c];}const dx=ex/(z.rx+g),dy=ey/(z.ry+g);return dx*dx+dy*dy<=1;}
    case 'rect':return p.x>=z.x-g&&p.x<=z.x+z.w+g&&p.y>=z.y-g&&p.y<=z.y+z.h+g;
    case 'poly':{let ins=false;const q=z.pts;for(let i=0,j=q.length-1;i<q.length;j=i++){
       if((q[i][1]>p.y)!==(q[j][1]>p.y)&&p.x<(q[j][0]-q[i][0])*(p.y-q[i][1])/(q[j][1]-q[i][1])+q[i][0])ins=!ins;}
@@ -36,7 +36,7 @@ Core.inZone=function(z,p,g){g=g||0;
      return false;}}
   return false;};
 Core.outline=function(z,g){g=g||0;const o=[];
-  if(z.shape==='circle'||z.shape==='ellipse'){const rx=(z.r||z.rx)+g,ry=(z.r||z.ry)+g;for(let a=0;a<=48;a++)o.push({x:z.cx+rx*Math.cos(a/24*Math.PI),y:z.cy+ry*Math.sin(a/24*Math.PI)});}
+  if(z.shape==='circle'||z.shape==='ellipse'){const rx=(z.r||z.rx)+g,ry=(z.r||z.ry)+g;for(let a=0;a<=48;a++){const t=-(z.rot||0)*Math.PI/180,u=rx*Math.cos(a/24*Math.PI),v=ry*Math.sin(a/24*Math.PI);o.push({x:z.cx+u*Math.cos(t)-v*Math.sin(t),y:z.cy+u*Math.sin(t)+v*Math.cos(t)});}}
   else if(z.shape==='rect')[[z.x-g,z.y-g],[z.x+z.w+g,z.y-g],[z.x+z.w+g,z.y+z.h+g],[z.x-g,z.y+z.h+g],[z.x-g,z.y-g]].forEach(q=>o.push({x:q[0],y:q[1]}));
   else {z.pts.forEach(q=>o.push({x:q[0],y:q[1]}));o.push({x:z.pts[0][0],y:z.pts[0][1]});}
   return o;};
@@ -45,10 +45,10 @@ Core.outline=function(z,g){g=g||0;const o=[];
 Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
   if(tpl){const f=tpl.field;if(!Core.inZone({shape:'rect',x:f.x,y:f.y,w:f.w,h:f.h},pt,0))return {zone:null,score:0,pd:5,outside:true};}
   for(const z of target.zones)if(z.kind==='hardcover'&&Core.inZone(z,pt,0))return {zone:'HC',score:0,pd:5,hardcover:true};
-  for(const z of target.zones)if(z.kind==='noshoot'&&Core.inZone(z,pt,spread))return {zone:z.name,score:z.penalty,pd:5,noshoot:true,ntSeconds:z.ntSeconds||5};
   let best=null,topZ=null;
-  // overlapping people: the front one (highest z among silhouettes containing the point) owns the hit
-  for(const z of target.zones)if(z.kind==='score'&&z.sil&&z.z!=null&&Core.inZone(z,pt,0)&&(topZ===null||z.z>topZ))topZ=z.z;
+  // overlapping people: the front one (highest z among silhouettes containing the point; no-shoot/friendly people included) owns the hit
+  for(const z of target.zones)if((z.kind==='score'&&z.sil||z.kind==='noshoot')&&z.z!=null&&Core.inZone(z,pt,0)&&(topZ===null||z.z>topZ))topZ=z.z;
+  for(const z of target.zones)if(z.kind==='noshoot'&&!(topZ!==null&&z.z!=null&&z.z!==topZ)&&Core.inZone(z,pt,z.z!=null?0:spread))return {zone:z.name,score:z.penalty,pd:5,noshoot:true,friendly:!!z.friendly,ntSeconds:z.ntSeconds||5};
   for(const z of target.zones){if(z.kind!=='score')continue;if(topZ!==null&&z.z!=null&&z.z!==topZ)continue;if(expectName&&!target.scoring&&z.name!==expectName)continue;
     if(Core.inZone(z,pt,z.noGrow?0:spread)&&(!best||z.score>best.score))best={zone:z.name,score:z.score,pd:z.pd!=null?z.pd:0,group:z.group,part:z.part};}
   if(best)return best;
@@ -58,15 +58,15 @@ Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
   return {zone:null,score:0,pd:5};};
 // IDPA-style stage result: raw + PD*1s + PE*3s + HNT*5s. Each required hit missing (or on hard cover / non-threat) = 5 PD.
 Core.idpaSummary=function(stage,shots,rawTime){
-  const req=stage.shots,comp=stage.compliant||[],cnt=shots.slice(0,Math.max(req,shots.length)).map(s=>s.group&&comp.includes(s.group)?Object.assign({},s,{noshoot:true,compliantHit:true}):s);let pd=0,valid=0,hnt=0,pe=0,bys=0;
+  const req=stage.shots,comp=stage.compliant||[],cnt=shots.slice(0,Math.max(req,shots.length)).map(s=>s.group&&comp.includes(s.group)?Object.assign({},s,{noshoot:true,compliantHit:true}):s);let pd=0,valid=0,hnt=0,pe=0,bys=0,ff=0;
   const win=stage.window||3,vt=(stage.verbalTimes||[]).filter(t=>t<=win),fc=Math.max(0,comp.length-vt.length),fcs=stage.failCommand||3;
-  for(const s of cnt){if(s.bystander){bys++;continue;}if(s.noshoot)hnt++;if(s.zone&&!s.noshoot&&!s.hardcover){if(valid<req){pd+=s.pd;valid++;}}}
+  for(const s of cnt){if(s.bystander){bys++;continue;}if(s.noshoot&&s.friendly&&!s.compliantHit)ff++;else if(s.noshoot)hnt++;if(s.zone&&!s.noshoot&&!s.hardcover){if(valid<req){pd+=s.pd;valid++;}}}
   pd+=5*Math.max(0,req-valid);
   if(stage.order){const got=cnt.filter(s=>s.group&&!s.noshoot);for(let i=0;i<got.length;i++)
     if(stage.order[i]&&(got[i].group!==stage.order[i]||(stage.parts&&stage.parts[i]&&got[i].part!==stage.parts[i]))){pe=1;break;}}
   let wp=0;if(stage.crowd&&stage.order){const got=cnt.filter(s=>s.group&&!s.noshoot);for(let i=0;i<got.length;i++)if(stage.order[i]&&got[i].group!==stage.order[i])wp++;pe=0;}
   const raw=rawTime==null?stage.timeout:rawTime;
-  return {raw,pd,pe,hnt,fc,bys,wp,backstop:bys>0,fail:!!(stage.failOnNoShoot&&hnt>0),final:raw+pd+3*pe+5*hnt+fcs*fc+10*bys+(stage.wrongPenalty||5)*wp};};
+  return {raw,pd,pe,hnt,ff,fc,bys,wp,backstop:bys>0,fail:!!((stage.failOnNoShoot&&hnt>0)||(stage.failOnFriendly&&ff>0)),final:raw+pd+3*pe+5*hnt+10*ff+fcs*fc+10*bys+(stage.wrongPenalty||5)*wp};};
 // Voice: app commands (only when NOT live) and verbal scenario commands (only during live scenario drills).
 Core.VOICE={start:['start','standby','stand by','stand-by','begin','shooter ready'],stop:['stop','halt','cease'],reset:['reset','clear'],
   next:['next','next stage','skip'],repeat:['repeat','again','redo'],score:['score','result','results','how did i do']};

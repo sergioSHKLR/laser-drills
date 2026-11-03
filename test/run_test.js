@@ -25,7 +25,7 @@ for(const key in meta.sets){const set=meta.sets[key],det=new ctx.AR.Detector(),l
  const sc=q=>Core.score(t,q,0,Core.tpl(DOC,t));const m=c.callList.findIndex(k=>k.group==='T5');
  const ok1=c.shots===14&&new Set(c.order).size===7&&c.order.filter(g=>g==='T5').length===3;
  // shoot every call correctly at T-centre points; Mozambique body,body,head
- const pt={T1:[4.1,3.87],T2:[7.1,3.87],T3:[9.5,3.4],T4:[12.6,2.567],T5b:[4.1,7.52],T5h:[4.1,6.217],T7:[9.2,7.52],T8:[11.99,7.52]};
+ const pt={T1:[2.5,3.87],T2:[6.25,3.87],T3:[10.0,3.4],T4:[13.75,2.567],T5b:[2.5,7.52],T5h:[2.5,6.217],T7:[10.0,7.52],T8:[13.15,7.52]};
  const shots=c.order.map((g,i)=>sc(g==='T5'?(c.parts[i]==='head'?{x:pt.T5h[0],y:pt.T5h[1]}:{x:pt.T5b[0],y:pt.T5b[1]}):{x:pt[g][0],y:pt[g][1]}));
  const r1=Core.idpaSummary(Object.assign({},st,c),shots,10);
  const bad=shots.slice();const i5=c.order.indexOf('T5');[bad[i5],bad[i5+2]]=[bad[i5+2],bad[i5]];// head first
@@ -38,7 +38,7 @@ for(const key in meta.sets){const set=meta.sets[key],det=new ctx.AR.Detector(),l
  for(const[t,e]of vb)if(Core.isVerbal(t)!==e){fail++;console.log(' verbal FAIL',t);}
  const st=DR.find(d=>d.id==='shoot-dont-shoot'),t=DOC.targets[st.target];let seed=7;const rnd=()=>((seed=seed*16807%2147483647)/2147483647);
  const c=Core.makeScenario(st.scenario,rnd);const ok1=c.compliant.length>=1&&c.order.length>=2&&c.shots===c.order.length;
- const pt={T1:[4.1,3.87],T2:[7.1,3.87],T3:[9.5,4.0],T4:[12.6,2.567],T5:[4.1,7.52],T7:[9.2,7.52],T8:[11.99,7.52]};
+ const pt={T1:[2.5,3.87],T2:[6.25,3.87],T3:[10.0,4.0],T4:[13.75,2.567],T5:[2.5,7.52],T7:[10.0,7.52],T8:[13.15,7.52]};
  const hit=g=>Core.score(t,{x:pt[g][0],y:pt[g][1]},0,Core.tpl(DOC,t));
  const good=c.order.map(hit),stg=Object.assign({},st,c);
  const r1=Core.idpaSummary(Object.assign({},stg,{verbalTimes:c.compliant.map(()=>1.2)}),good,6);
@@ -57,4 +57,11 @@ if(bad)throw new Error('crowd calls bad '+bad);console.log('[crowd] 1800 call se
   for(let x=0.4;x<16.6;x+=0.04)for(let y=1.8;y<9.3;y+=0.04){const ins=S.filter(z=>C.inZone(z,{x,y},0));if(ins.length<2)continue;n++;
    const top=ins.reduce((a,b)=>b.z>a.z?b:a),r=C.score(t,{x,y});if(r.group!==top.group)bad++;}}
  console.log(`[overlap] ${n} overlap points, ${bad} wrong owner`);if(bad||!n)fail++;}
+{// friendly fire: Powell hit = +10 s and FAIL when failOnFriendly
+ const t=DOC.targets['dh-lobby'],z=t.zones.find(z=>z.name==='POWELL FRIENDLY');const xs=z.pts.map(p=>p[0]),ys=z.pts.map(p=>p[1]);
+ let q=null;for(let y=Math.min(...ys)+0.5;y<Math.max(...ys)&&!q;y+=0.1)for(let x=Math.min(...xs);x<Math.max(...xs);x+=0.1)if(Core.inZone(z,{x,y},0)){q={x,y};break;}
+ const h=Core.score(t,q,0,Core.tpl(DOC,t)),st={shots:2,failOnFriendly:true};
+ const c=Core.score(t,{x:DOC.targets['dh-lobby'].zones.find(z=>z.name==='T1 -0').cx,y:DOC.targets['dh-lobby'].zones.filter(z=>z.name==='T1 -0')[1].cy},0,Core.tpl(DOC,t));
+ const r=Core.idpaSummary(Object.assign({},st,{failOnFriendly:true}),[c,c,h],3);const ok=h.friendly&&r.ff===1&&r.final>=13&&r.fail;
+ if(!ok)fail++;console.log('[friendly]',JSON.stringify(h),JSON.stringify(r),ok?'ok':'FAIL');}
 console.log(fail?`FAIL (${fail})`:'PASS');process.exit(fail?1:0);
