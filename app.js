@@ -35,7 +35,7 @@ $('camBtn').onclick=async()=>{ac.resume();try{
   // Lock exposure low if supported: laser pops more on a darker image.
   try{const adv={};if(caps.exposureMode&&caps.exposureMode.includes('manual'))adv.exposureMode='manual';
     if(caps.focusMode&&caps.focusMode.includes('continuous'))adv.focusMode='continuous';await tr.applyConstraints({advanced:[adv]});}catch(e){}
-  H=Math.round(W*video.videoHeight/video.videoWidth);view.width=W;view.height=H;$('camBtn').disabled=true;loop();
+  W=Math.min(video.videoWidth||640,1280);H=Math.round(W*video.videoHeight/video.videoWidth);view.width=W;view.height=H;$('camBtn').disabled=true;loop();
  }catch(e){$('status').textContent='Camera error: '+e.message+' (needs HTTPS + permission)';}};
 function buildMask(){mask=new Uint8Array(W*H);const f=TPL().field,p=[[f.x,f.y],[f.x+f.w,f.y],[f.x+f.w,f.y+f.h],[f.x,f.y+f.h]].map(q=>Core.apply(lock.tgtToImg,{x:q[0],y:q[1]}));
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){let inside=false;for(let i=0,j=3;i<4;j=i++){const a=p[i],b=p[j];
@@ -133,3 +133,15 @@ const Voice={on:false,paused:false,verbal:false,muted:false,rec:null,
   ui(){const b=$('micBtn');if(!b)return;b.classList.toggle('on',this.on);b.textContent=!this.on?'🎤 Voice off':this.paused?'🎤 paused (live)':this.verbal?'🎤 verbal only':'🎤 listening';}};
 Voice.init();$('micBtn').onclick=()=>{ac.resume();Voice.toggle();};
 init();
+
+// Viewfinder display settings (display only; detection always uses the full-res canvas buffer).
+const VF={get(){try{return Object.assign({h:45,hide:false,min:false},JSON.parse(localStorage.getItem('ld.vf')||'{}'))}catch(e){return{h:45,hide:false,min:false}}},
+ set(p){const v=Object.assign(VF.get(),p);localStorage.setItem('ld.vf',JSON.stringify(v));VF.apply();},
+ apply(){const v=VF.get();document.documentElement.style.setProperty('--vf',v.h);$('vfRange').value=v.h;$('vfVal').textContent=v.h;$('vfHide').checked=v.hide;$('vfMin').checked=v.min;
+  document.body.classList.toggle('vfmin',v.min||(v.hide&&state.mode==='live'));}};
+$('vfBtn').onclick=()=>$('vfset').classList.toggle('hidden');
+$('vfRange').oninput=e=>VF.set({h:+e.target.value});
+document.querySelectorAll('[data-vf]').forEach(b=>b.onclick=()=>VF.set({h:+b.dataset.vf}));
+$('vfHide').onchange=e=>VF.set({hide:e.target.checked});$('vfMin').onchange=e=>VF.set({min:e.target.checked});
+{let lm;setInterval(()=>{if(state.mode!==lm){lm=state.mode;VF.apply();}},150);}
+VF.apply();

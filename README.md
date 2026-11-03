@@ -35,3 +35,6 @@ Mic toggle (Web Speech API, Chrome Android/ChromeOS). Continuous listening, no w
 While a drill is live, recognition is stopped (normal drills) so shots/clicks cannot trigger anything. Fallbacks: big tap buttons; keyboard/BT media keys (play/pause = start/stop, next, previous = repeat; Enter/Space toggle).
 ### Shoot / don't-shoot (`shoot-dont-shoot`, `shoot-dont-shoot-letter`)
 At the beep 4 targets of the all-variations sheet are called: GUN = threat (2 shots), HANDS UP = compliant (verbal command within 3 s, e.g. "Drop it!", "Show me your hands!", "Police, don't move!"). During live scenario drills ONLY those phrases are accepted. Hit on compliant = +5 s; missing/late command = +3 s each.
+
+## Viewfinder settings (⚙ View)
+Viewfinder height slider 20–80% of screen height plus Small/Medium/Large presets, "Minimize viewfinder during drill" and "Minimize now"; saved in localStorage (`ld.vf`). Controls and score bar never scroll off: the page is a 100dvh flex layout (side-by-side in phone landscape) and the viewfinder shrinks first. Display size never affects detection: frames are processed on the full-resolution canvas buffer (camera width, capped at 1280).

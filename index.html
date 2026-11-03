@@ -3,15 +3,28 @@
 <meta name="theme-color" content="#111"><link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png"><title>Laser Drills</title>
 <style>
-body{margin:0;background:#111;color:#eee;font:15px system-ui,sans-serif}
+*{box-sizing:border-box}html,body{height:100%;max-width:100vw;overflow-x:hidden}body{margin:0;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;background:#111;color:#eee;font:15px system-ui,sans-serif}
 header{display:flex;gap:6px;padding:8px;flex-wrap:wrap;align-items:center}
 button,select{background:#2a2a2a;color:#eee;border:1px solid #444;border-radius:8px;padding:9px 12px;font-size:15px}
 button.on{background:#c62828;border-color:#e53935}
-#stage{position:relative;width:100%}#stage canvas{width:100%;display:block}
+#stage{position:relative;width:100%;flex:0 0 auto;height:calc(var(--vf,45) * 1dvh);flex-shrink:1;min-height:60px;background:#000;transition:height .2s}
+#stage canvas{width:100%;height:100%;display:block;object-fit:contain}
+#dock{flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#bar{flex:0 0 auto;background:#111;border-bottom:1px solid #333}
+body.vfmin #stage{height:56px;flex-shrink:0}
+#cmds button{padding:12px 4px!important;font-size:19px!important}
+#vfset{flex:0 0 auto;padding:8px 10px;background:#1a1a1a;border-bottom:1px solid #333}#vfset button{padding:6px 10px}
+@media (orientation:landscape) and (max-height:600px){
+ body{display:grid;grid-template-columns:minmax(0,calc(var(--vf,45)*1.2vw)) 1fr;grid-template-rows:auto auto 1fr}
+ header{grid-column:1/3;padding:4px}header button,header select{padding:5px 8px;font-size:13px}
+ #vfset{position:fixed;top:44px;right:8px;z-index:5;width:min(420px,60vw);border:1px solid #444;border-radius:8px}
+ #stage{height:auto;grid-row:2/4;min-height:0}body.vfmin #stage{height:auto;width:56px}
+ body.vfmin{grid-template-columns:56px 1fr}#bar{grid-row:2;grid-column:2}#dock{grid-row:3;grid-column:2}
+ #cmds{grid-template-columns:repeat(4,1fr)}#cmds button{padding:8px 2px!important;font-size:16px!important}#big{font-size:22px}}
 #status{padding:6px 10px;font-size:13px;color:#aaa}
 .panel{padding:10px}.hidden{display:none}
 label{display:block;margin:8px 0}input[type=range]{width:100%}
-table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #333;padding:4px;text-align:right}
+table{border-collapse:collapse;width:100%;table-layout:fixed}select{max-width:100%}td,th{border-bottom:1px solid #333;padding:4px;text-align:right}
 #cmds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px}#cmds button{font-size:22px;padding:18px 6px;font-weight:700}
 #cmds .go{background:#1b5e20}#cmds .st{background:#7f1d1d}#heard{text-align:center;color:#8ab4f8;font-size:13px;min-height:1em;padding:0 8px}
 #big{font-size:28px;font-weight:700;text-align:center;padding:6px}
@@ -20,14 +33,21 @@ table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #333;pad
  <button id="camBtn">Start camera</button>
  <button data-tab="drill" class="on">Drill</button><button data-tab="cal">Calibrate</button>
  <select id="drillSel"></select>
- <label style="margin:0"><input type="checkbox" id="shotgun"> Shotgun mode</label> <a href="targets/" style="color:#8ab4f8">Print targets</a>
+ <label style="margin:0"><input type="checkbox" id="shotgun"> Shotgun mode</label> <button id="vfBtn">⚙ View</button> <a href="targets/" style="color:#8ab4f8">Print targets</a>
 </header>
+<div id="vfset" class="hidden">Viewfinder height: <b id="vfVal"></b>%
+ <input type="range" id="vfRange" min="20" max="80" step="1">
+ <button data-vf="25">Small</button> <button data-vf="45">Medium</button> <button data-vf="70">Large</button>
+ <label><input type="checkbox" id="vfHide"> Minimize viewfinder during drill (detection keeps running)</label>
+ <label><input type="checkbox" id="vfMin"> Minimize viewfinder now</label></div>
 <div id="stage"><canvas id="view"></canvas></div>
-<div id="status">Camera off.</div>
+<div id="bar"><div id="status">Camera off.</div>
 <div id="big"></div>
 <div id="cmds"><button data-cmd="start" class="go">START</button><button data-cmd="stop" class="st">STOP</button><button id="micBtn">🎤 Voice off</button>
  <button data-cmd="repeat">REPEAT</button><button data-cmd="next">NEXT</button><button data-cmd="score">SCORE</button><button data-cmd="reset">RESET</button></div>
-<div id="heard">Say: start / standby · stop · reset · next · repeat · score — or tap, or a Bluetooth media button (play/pause = start/stop, next, previous = repeat). Voice commands are ignored while a drill is live.</div>
+<div id="heard">Say: start · stop · reset · next · repeat · score (or tap / BT media button)</div></div>
+<div id="dock">
+
 <div class="panel" id="tab-drill">
  <button id="goBtn">Start drill</button> <button id="freeBtn">Free fire</button> <button id="stopBtn">Stop</button>
  <p id="drillNotes" style="color:#999;font-size:13px"></p>
@@ -40,6 +60,7 @@ table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #333;pad
  <label><input type="checkbox" id="showMask" checked> Show detection pixels</label>
  <button id="resetBtn">Reset defaults</button>
  <p>Live candidate pixels: <b id="cnt">0</b> · Camera fps: <b id="fps">0</b></p>
+</div>
 </div>
 <script src="vendor/cv.js"></script><script src="vendor/aruco.js"></script><script src="core.js"></script><script src="app.js"></script>
 </body></html>
