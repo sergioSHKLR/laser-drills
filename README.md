@@ -85,3 +85,4 @@ All Die Hard characters (Hans, Karl, Tony, Uli, Theo, Eddie, Franco, Heinrich, B
 
 ### v16
 - dh-finale redone: Hans shields behind Holly (only head + side-chest exposed, small -0), Eddie with MP5, wavy brown hair, gray three-piece; Holly rust suede suit (auto-desaturated toward brown for detector safety). Zones refit.
+- v16b: finale - Holly hands up palms out, Eddie MP5A3 at low ready, gray jacket/vest with black pants/shoes. Karl rebuilt big/muscular; Uli jacket green; Powell all-black uniform, fur collar, white chevrons. Zones refit.

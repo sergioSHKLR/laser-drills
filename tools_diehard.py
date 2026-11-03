@@ -25,15 +25,15 @@ def mask(img,xmax=None,xmin=None):
     return cv2.approxPolyDP(c,3.0,True)[:,0,:].tolist()
 # hand-fit on the 768x1024 images: head (cx,cy,rx,ry) | shoulders (xl,xr,y) | belt (xl,xr,y) | chest -0 centre
 C={'hans':dict(head=(378,92,48,62),sh=(250,545,190),belt=(265,500,520),chest=(395,320),rc=50),
- 'karl':dict(head=(382,75,38,58),sh=(245,550,180),belt=(290,470,400),chest=(385,270),rc=50),
+ 'karl':dict(head=(370,45,42,58),sh=(190,560,170),belt=(275,480,405),chest=(370,270),rc=55),
  'tony':dict(head=(382,72,42,55),sh=(235,545,175),belt=(290,480,440),chest=(385,330),rc=52),
  'franco':dict(head=(362,70,44,58),sh=(205,535,150),belt=(270,520,420),chest=(380,255),rc=60),
  'heinrich':dict(head=(363,78,40,58),sh=(240,515,150),belt=(315,500,410),chest=(395,300),rc=48),
  'eddie':dict(head=(375,82,44,56),sh=(262,505,180),belt=(290,470,440),chest=(375,330),rc=48),
  'theo':dict(head=(382,72,42,55),sh=(285,495,170),belt=(290,470,410),chest=(385,270),rc=48),
  'billclay':dict(head=(383,95,44,60),sh=(245,530,165),belt=(300,470,415),chest=(385,270),rc=50),
- 'uli':dict(head=(378,57,44,50),sh=(215,535,160),belt=(290,470,410),chest=(385,250),rc=50),
- 'powell':dict(head=(378,88,48,60),sh=(210,570,165),belt=(265,500,440),chest=(380,300),rc=58)}
+ 'uli':dict(head=(366,58,46,62),sh=(180,550,148),belt=(230,500,505),chest=(366,272),rc=52),
+ 'powell':dict(head=(366,62,50,66),sh=(218,522,165),belt=(218,516,455),chest=(366,295),rc=58)}
 IMG={k:safe(load(k)) for k in list(C)+['partyguest']}
 # cover objects: (src, crop box in source px, placement box in figure px) -> composited in front of the figure
 COV={'karl':('cv-rail',(40,170,1250,560),(110,500,660,1024)),
@@ -129,19 +129,19 @@ one('dh-billclay','LD-208',129,'Die Hard: "Bill Clay" impostor','billclay',['dh-
 FIN=safe(load('finale',(1024,768))); cv2.imwrite(OUT+'dh-finale.png',FIN)
 fx0,fy0,fx1,fy1=bbox(FIN); S4,X4,Y4=fit(fx1-fx0,fy1-fy0)
 TH=lambda x,y:[round(X4+(x-fx0)*S4,3),round(Y4+(y-fy0)*S4,3)]
-HOLLY=[(600,95),(640,70),(690,85),(705,140),(700,185),(738,200),(742,300),(738,410),(720,420),(715,530),(690,535),(688,700),(690,728),(655,728),(645,560),(632,728),(605,728),(598,560),(582,530),(580,420),(558,410),(555,300),(565,200),(595,185),(588,140)]
-cE=dict(head=(287,58,40,48),sh=(200,440,115),belt=(215,380,370),chest=(295,240),rc=40)
+HOLLY=[(600,95),(640,70),(690,85),(705,140),(715,185),(745,215),(760,160),(795,170),(785,235),(770,280),(730,300),(722,410),(715,530),(690,535),(688,700),(690,728),(655,728),(645,560),(632,728),(605,728),(598,560),(582,530),(575,410),(580,300),(545,295),(525,240),(512,165),(535,155),(560,225),(595,185),(588,140)]
+cE=dict(head=(290,55,40,48),sh=(195,420,120),belt=(195,400,340),chest=(290,232),rc=40)
 z=[hostage('finale','HOLLY',X4,Y4-fy0*S4,S4,crop=fx0,pts=HOLLY)]
 zE=zones_for('finale','T2',X4,Y4-fy0*S4,S4,crop=fx0,img=FIN,xmax=470,c=cE)
 zE[3].update(rx=round(18*S4,3),ry=round(22*S4,3))   # tight Eddie head -0
-HANS=[(680,30),(720,15),(750,30),(752,100),(790,120),(825,180),(830,260),(800,300),(800,690),(760,700),(740,560),(740,400),(742,190),(705,150),(690,110),(678,70)]
+HANS=[(680,30),(720,15),(750,30),(752,100),(800,125),(832,190),(835,250),(805,270),(800,690),(765,700),(740,560),(722,400),(728,300),(770,280),(786,235),(745,215),(705,150),(690,110),(678,70)]
 G1=dict(kind='score',tier='tier1',group='T1',subtle=True)
 zH=[dict(G1,name='T1 -3',shape='poly',pts=[TH(*p) for p in HANS],score=-3,pd=3,part='body'),
  dict(G1,name='T1 -1',shape='ellipse',cx=TH(714,62)[0],cy=TH(714,62)[1],rx=round(32*S4,3),ry=round(44*S4,3),score=-1,pd=1,part='head'),
- dict(G1,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(742,110),(825,180),(805,390),(742,390)]],score=-1,pd=1,part='body'),
- dict(G1,name='T1 -0',shape='ellipse',cx=TH(774,232)[0],cy=TH(774,232)[1],rx=round(20*S4,3),ry=round(36*S4,3),score=0,pd=0,part='body')]
+ dict(G1,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(775,240),(832,200),(805,390),(760,390)]],score=-1,pd=1,part='body'),
+ dict(G1,name='T1 -0',shape='ellipse',cx=TH(803,258)[0],cy=TH(803,258)[1],rx=round(17*S4,3),ry=round(36*S4,3),score=0,pd=0,part='body')]
 z+=zE+zH
-sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans shields behind Holly; Eddie (MP5) covers him.','Exactly 2: Hans exposed side-chest -0, then Eddie head -0.','Holly = HOSTAGE: any hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=round(Y4,3),w=round((fx1-fx0)*S4,3),h=round((fy1-fy0)*S4,3),crop=[fx0,fy0,fx1,fy1])],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
+sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans shields behind Holly; Eddie (MP5A3 at low ready) covers him.','Exactly 2: Hans exposed side-chest -0, then Eddie head -0.','Holly = HOSTAGE: any hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=round(Y4,3),w=round((fx1-fx0)*S4,3),h=round((fy1-fy0)*S4,3),crop=[fx0,fy0,fx1,fy1])],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
 # 2-up sheets (left person | right person), each cropped to its own content, scaled to fill the field
 def twoup(L,R):
     bl=[bbox(L[0]),bbox(R[0])]; y0=min(b[1] for b in bl); y1=max(b[3] for b in bl); wl=bl[0][2]-bl[0][0]; wr=bl[1][2]-bl[1][0]
