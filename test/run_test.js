@@ -47,8 +47,8 @@ for(const key in meta.sets){const set=meta.sets[key],det=new ctx.AR.Detector(),l
  if(!ok)fail++;console.log('[voice+scenario] calls',c.text,'| clean',JSON.stringify(r1),'| shot compliant + no commands',JSON.stringify(r2),ok?'ok':'FAIL');}
 {const r=Core.idpaSummary({shots:2},[{zone:'T1 -0',pd:0,group:'T1'},{zone:'BYSTANDER 1',bystander:true,pd:5}],3);
  console.log('[backstop]',JSON.stringify(r));if(!(r.bys===1&&r.backstop&&r.final===18)){console.log('FAIL backstop');fail++;}}
-console.log(fail?`FAIL (${fail})`:'PASS');process.exit(fail?1:0);
 {const C=require('../core.js'),J=require('../targets.json').targets;let bad=0;
 for(const k of ['crowd','crowd-tabloid'])for(const L of [1,2,3])for(let i=0;i<300;i++){const c=C.crowdCalls(J[k],{level:L,rounds:3,wrongPenalty:5},Math.random);
- if(c.callList.length!==3||c.shots!==6||c.callList.some(x=>!J[k].people.find(p=>p.id===x.group)))bad++;}
+ if(c.callList.length!==3||c.shots!==6||c.callList.some(x=>!J[k].people.find(p=>p.group===x.group)))bad++;}
 if(bad)throw new Error('crowd calls bad '+bad);console.log('[crowd] 1800 call sets OK');}
+console.log(fail?`FAIL (${fail})`:'PASS');process.exit(fail?1:0);
