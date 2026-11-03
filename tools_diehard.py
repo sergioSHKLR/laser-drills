@@ -25,7 +25,7 @@ def mask(img,xmax=None,xmin=None):
     return cv2.approxPolyDP(c,3.0,True)[:,0,:].tolist()
 # hand-fit on the 768x1024 images: head (cx,cy,rx,ry) | shoulders (xl,xr,y) | belt (xl,xr,y) | chest -0 centre
 C={'hans':dict(head=(378,92,48,62),sh=(250,545,190),belt=(265,500,520),chest=(395,320),rc=50),
- 'karl':dict(head=(370,45,42,58),sh=(190,560,170),belt=(275,480,405),chest=(370,270),rc=55),
+ 'karl':dict(head=(370,48,40,56),sh=(220,550,175),belt=(285,480,420),chest=(370,275),rc=52),
  'tony':dict(head=(382,72,42,55),sh=(235,545,175),belt=(290,480,440),chest=(385,330),rc=52),
  'franco':dict(head=(362,70,44,58),sh=(205,535,150),belt=(270,520,420),chest=(380,255),rc=60),
  'heinrich':dict(head=(363,78,40,58),sh=(240,515,150),belt=(315,500,410),chest=(395,300),rc=48),
