@@ -10253,6 +10253,2074 @@
     "weapon": "pistol"
    }
   },
+  "cards": {
+   "code": "LD-403",
+   "name": "Card Shoot",
+   "markerIds": [
+    308,
+    309,
+    310,
+    311
+   ],
+   "distance": "3-5 yd",
+   "set": "games",
+   "art": [
+    {
+     "src": "art/cards.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 7.7,
+     "h": 7.3
+    }
+   ],
+   "zones": [
+    {
+     "name": "AS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.553,
+     "y": 1.902,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "AS",
+      "spades",
+      "aces"
+     ]
+    },
+    {
+     "name": "2S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.515,
+     "y": 1.902,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "2S",
+      "spades",
+      "twos"
+     ]
+    },
+    {
+     "name": "3S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.478,
+     "y": 1.902,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "3S",
+      "spades",
+      "threes"
+     ]
+    },
+    {
+     "name": "4S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.44,
+     "y": 1.902,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "4S",
+      "spades",
+      "fours"
+     ]
+    },
+    {
+     "name": "5S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.403,
+     "y": 1.902,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "5S",
+      "spades",
+      "fives"
+     ]
+    },
+    {
+     "name": "6S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.365,
+     "y": 1.902,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "6S",
+      "spades",
+      "sixs"
+     ]
+    },
+    {
+     "name": "7S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.328,
+     "y": 1.902,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "7S",
+      "spades",
+      "sevens"
+     ]
+    },
+    {
+     "name": "8S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.29,
+     "y": 1.902,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "8S",
+      "spades",
+      "eights"
+     ]
+    },
+    {
+     "name": "9S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.553,
+     "y": 2.945,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "9S",
+      "spades",
+      "nines"
+     ]
+    },
+    {
+     "name": "TS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.515,
+     "y": 2.945,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "TS",
+      "spades",
+      "tens"
+     ]
+    },
+    {
+     "name": "JS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.478,
+     "y": 2.945,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "JS",
+      "spades",
+      "jacks"
+     ]
+    },
+    {
+     "name": "QS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.44,
+     "y": 2.945,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "QS",
+      "spades",
+      "queens"
+     ]
+    },
+    {
+     "name": "KS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.403,
+     "y": 2.945,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "KS",
+      "spades",
+      "kings"
+     ]
+    },
+    {
+     "name": "AH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.365,
+     "y": 2.945,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "AH",
+      "hearts",
+      "aces"
+     ]
+    },
+    {
+     "name": "2H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.328,
+     "y": 2.945,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "2H",
+      "hearts",
+      "twos"
+     ]
+    },
+    {
+     "name": "3H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.29,
+     "y": 2.945,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "3H",
+      "hearts",
+      "threes"
+     ]
+    },
+    {
+     "name": "4H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.553,
+     "y": 3.988,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "4H",
+      "hearts",
+      "fours"
+     ]
+    },
+    {
+     "name": "5H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.515,
+     "y": 3.988,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "5H",
+      "hearts",
+      "fives"
+     ]
+    },
+    {
+     "name": "6H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.478,
+     "y": 3.988,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "6H",
+      "hearts",
+      "sixs"
+     ]
+    },
+    {
+     "name": "7H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.44,
+     "y": 3.988,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "7H",
+      "hearts",
+      "sevens"
+     ]
+    },
+    {
+     "name": "8H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.403,
+     "y": 3.988,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "8H",
+      "hearts",
+      "eights"
+     ]
+    },
+    {
+     "name": "9H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.365,
+     "y": 3.988,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "9H",
+      "hearts",
+      "nines"
+     ]
+    },
+    {
+     "name": "TH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.328,
+     "y": 3.988,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "TH",
+      "hearts",
+      "tens"
+     ]
+    },
+    {
+     "name": "JH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.29,
+     "y": 3.988,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "JH",
+      "hearts",
+      "jacks"
+     ]
+    },
+    {
+     "name": "QH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.553,
+     "y": 5.031,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "QH",
+      "hearts",
+      "queens"
+     ]
+    },
+    {
+     "name": "KH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.515,
+     "y": 5.031,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "KH",
+      "hearts",
+      "kings"
+     ]
+    },
+    {
+     "name": "AD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.478,
+     "y": 5.031,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "AD",
+      "diamonds",
+      "aces"
+     ]
+    },
+    {
+     "name": "2D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.44,
+     "y": 5.031,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "2D",
+      "diamonds",
+      "twos"
+     ]
+    },
+    {
+     "name": "3D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.403,
+     "y": 5.031,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "3D",
+      "diamonds",
+      "threes"
+     ]
+    },
+    {
+     "name": "4D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.365,
+     "y": 5.031,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "4D",
+      "diamonds",
+      "fours"
+     ]
+    },
+    {
+     "name": "5D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.328,
+     "y": 5.031,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "5D",
+      "diamonds",
+      "fives"
+     ]
+    },
+    {
+     "name": "6D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.29,
+     "y": 5.031,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "6D",
+      "diamonds",
+      "sixs"
+     ]
+    },
+    {
+     "name": "7D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.553,
+     "y": 6.074,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "7D",
+      "diamonds",
+      "sevens"
+     ]
+    },
+    {
+     "name": "8D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.515,
+     "y": 6.074,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "8D",
+      "diamonds",
+      "eights"
+     ]
+    },
+    {
+     "name": "9D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.478,
+     "y": 6.074,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "9D",
+      "diamonds",
+      "nines"
+     ]
+    },
+    {
+     "name": "TD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.44,
+     "y": 6.074,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "TD",
+      "diamonds",
+      "tens"
+     ]
+    },
+    {
+     "name": "JD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.403,
+     "y": 6.074,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "JD",
+      "diamonds",
+      "jacks"
+     ]
+    },
+    {
+     "name": "QD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.365,
+     "y": 6.074,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "QD",
+      "diamonds",
+      "queens"
+     ]
+    },
+    {
+     "name": "KD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.328,
+     "y": 6.074,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "KD",
+      "diamonds",
+      "kings"
+     ]
+    },
+    {
+     "name": "AC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.29,
+     "y": 6.074,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "AC",
+      "clubs",
+      "aces"
+     ]
+    },
+    {
+     "name": "2C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.553,
+     "y": 7.116,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "2C",
+      "clubs",
+      "twos"
+     ]
+    },
+    {
+     "name": "3C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.515,
+     "y": 7.116,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "3C",
+      "clubs",
+      "threes"
+     ]
+    },
+    {
+     "name": "4C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.478,
+     "y": 7.116,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "4C",
+      "clubs",
+      "fours"
+     ]
+    },
+    {
+     "name": "5C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.44,
+     "y": 7.116,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "5C",
+      "clubs",
+      "fives"
+     ]
+    },
+    {
+     "name": "6C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.403,
+     "y": 7.116,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "6C",
+      "clubs",
+      "sixs"
+     ]
+    },
+    {
+     "name": "7C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.365,
+     "y": 7.116,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "7C",
+      "clubs",
+      "sevens"
+     ]
+    },
+    {
+     "name": "8C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.328,
+     "y": 7.116,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "8C",
+      "clubs",
+      "eights"
+     ]
+    },
+    {
+     "name": "9C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.29,
+     "y": 7.116,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "9C",
+      "clubs",
+      "nines"
+     ]
+    },
+    {
+     "name": "TC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.478,
+     "y": 8.159,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "TC",
+      "clubs",
+      "tens"
+     ]
+    },
+    {
+     "name": "JC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.44,
+     "y": 8.159,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "JC",
+      "clubs",
+      "jacks"
+     ]
+    },
+    {
+     "name": "QC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.403,
+     "y": 8.159,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "QC",
+      "clubs",
+      "queens"
+     ]
+    },
+    {
+     "name": "KC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.365,
+     "y": 8.159,
+     "w": 0.657,
+     "h": 0.939,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "KC",
+      "clubs",
+      "kings"
+     ]
+    }
+   ],
+   "instructions": [
+    "4-colour deck: spades black, hearts plum, diamonds blue, clubs green.",
+    "Poker: shoot 5 cards, the app scores your best hand.",
+    "Call-out: the app calls \"queen of hearts\", \"any club\"...",
+    "Wrong card -2."
+   ],
+   "drills": [
+    "cards-poker",
+    "cards-callout"
+   ],
+   "meta": {
+    "category": "fun",
+    "paper": "letter",
+    "people": "none",
+    "features": [],
+    "weapon": "pistol"
+   }
+  },
+  "cards-tabloid": {
+   "code": "LD-404",
+   "name": "Card Shoot (Tabloid)",
+   "markerIds": [
+    336,
+    337,
+    338,
+    339
+   ],
+   "distance": "3-5 yd",
+   "set": "games",
+   "art": [
+    {
+     "src": "art/cards-tabloid.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 16.2,
+     "h": 7.3
+    }
+   ],
+   "zones": [
+    {
+     "name": "AS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.462,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "AS",
+      "spades",
+      "aces"
+     ]
+    },
+    {
+     "name": "2S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.708,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "2S",
+      "spades",
+      "twos"
+     ]
+    },
+    {
+     "name": "3S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.955,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "3S",
+      "spades",
+      "threes"
+     ]
+    },
+    {
+     "name": "4S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.201,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "4S",
+      "spades",
+      "fours"
+     ]
+    },
+    {
+     "name": "5S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.447,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "5S",
+      "spades",
+      "fives"
+     ]
+    },
+    {
+     "name": "6S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.693,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "6S",
+      "spades",
+      "sixs"
+     ]
+    },
+    {
+     "name": "7S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.939,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "7S",
+      "spades",
+      "sevens"
+     ]
+    },
+    {
+     "name": "8S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 9.185,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "8S",
+      "spades",
+      "eights"
+     ]
+    },
+    {
+     "name": "9S",
+     "kind": "score",
+     "shape": "rect",
+     "x": 10.432,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "9S",
+      "spades",
+      "nines"
+     ]
+    },
+    {
+     "name": "TS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 11.678,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "TS",
+      "spades",
+      "tens"
+     ]
+    },
+    {
+     "name": "JS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 12.924,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "JS",
+      "spades",
+      "jacks"
+     ]
+    },
+    {
+     "name": "QS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 14.17,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "QS",
+      "spades",
+      "queens"
+     ]
+    },
+    {
+     "name": "KS",
+     "kind": "score",
+     "shape": "rect",
+     "x": 15.416,
+     "y": 1.961,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "KS",
+      "spades",
+      "kings"
+     ]
+    },
+    {
+     "name": "AH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.462,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "AH",
+      "hearts",
+      "aces"
+     ]
+    },
+    {
+     "name": "2H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.708,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "2H",
+      "hearts",
+      "twos"
+     ]
+    },
+    {
+     "name": "3H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.955,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "3H",
+      "hearts",
+      "threes"
+     ]
+    },
+    {
+     "name": "4H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.201,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "4H",
+      "hearts",
+      "fours"
+     ]
+    },
+    {
+     "name": "5H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.447,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "5H",
+      "hearts",
+      "fives"
+     ]
+    },
+    {
+     "name": "6H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.693,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "6H",
+      "hearts",
+      "sixs"
+     ]
+    },
+    {
+     "name": "7H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.939,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "7H",
+      "hearts",
+      "sevens"
+     ]
+    },
+    {
+     "name": "8H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 9.185,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "8H",
+      "hearts",
+      "eights"
+     ]
+    },
+    {
+     "name": "9H",
+     "kind": "score",
+     "shape": "rect",
+     "x": 10.432,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "9H",
+      "hearts",
+      "nines"
+     ]
+    },
+    {
+     "name": "TH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 11.678,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "TH",
+      "hearts",
+      "tens"
+     ]
+    },
+    {
+     "name": "JH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 12.924,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "JH",
+      "hearts",
+      "jacks"
+     ]
+    },
+    {
+     "name": "QH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 14.17,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "QH",
+      "hearts",
+      "queens"
+     ]
+    },
+    {
+     "name": "KH",
+     "kind": "score",
+     "shape": "rect",
+     "x": 15.416,
+     "y": 3.786,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "KH",
+      "hearts",
+      "kings"
+     ]
+    },
+    {
+     "name": "AD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.462,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "AD",
+      "diamonds",
+      "aces"
+     ]
+    },
+    {
+     "name": "2D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.708,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "2D",
+      "diamonds",
+      "twos"
+     ]
+    },
+    {
+     "name": "3D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.955,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "3D",
+      "diamonds",
+      "threes"
+     ]
+    },
+    {
+     "name": "4D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.201,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "4D",
+      "diamonds",
+      "fours"
+     ]
+    },
+    {
+     "name": "5D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.447,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "5D",
+      "diamonds",
+      "fives"
+     ]
+    },
+    {
+     "name": "6D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.693,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "6D",
+      "diamonds",
+      "sixs"
+     ]
+    },
+    {
+     "name": "7D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.939,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "7D",
+      "diamonds",
+      "sevens"
+     ]
+    },
+    {
+     "name": "8D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 9.185,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "8D",
+      "diamonds",
+      "eights"
+     ]
+    },
+    {
+     "name": "9D",
+     "kind": "score",
+     "shape": "rect",
+     "x": 10.432,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "9D",
+      "diamonds",
+      "nines"
+     ]
+    },
+    {
+     "name": "TD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 11.678,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "TD",
+      "diamonds",
+      "tens"
+     ]
+    },
+    {
+     "name": "JD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 12.924,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "JD",
+      "diamonds",
+      "jacks"
+     ]
+    },
+    {
+     "name": "QD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 14.17,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "QD",
+      "diamonds",
+      "queens"
+     ]
+    },
+    {
+     "name": "KD",
+     "kind": "score",
+     "shape": "rect",
+     "x": 15.416,
+     "y": 5.611,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "KD",
+      "diamonds",
+      "kings"
+     ]
+    },
+    {
+     "name": "AC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 0.462,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "AC",
+      "clubs",
+      "aces"
+     ]
+    },
+    {
+     "name": "2C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.708,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "2C",
+      "clubs",
+      "twos"
+     ]
+    },
+    {
+     "name": "3C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.955,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "3C",
+      "clubs",
+      "threes"
+     ]
+    },
+    {
+     "name": "4C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.201,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "4C",
+      "clubs",
+      "fours"
+     ]
+    },
+    {
+     "name": "5C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.447,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "5C",
+      "clubs",
+      "fives"
+     ]
+    },
+    {
+     "name": "6C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.693,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "6C",
+      "clubs",
+      "sixs"
+     ]
+    },
+    {
+     "name": "7C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.939,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "7C",
+      "clubs",
+      "sevens"
+     ]
+    },
+    {
+     "name": "8C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 9.185,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "8C",
+      "clubs",
+      "eights"
+     ]
+    },
+    {
+     "name": "9C",
+     "kind": "score",
+     "shape": "rect",
+     "x": 10.432,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "9C",
+      "clubs",
+      "nines"
+     ]
+    },
+    {
+     "name": "TC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 11.678,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "TC",
+      "clubs",
+      "tens"
+     ]
+    },
+    {
+     "name": "JC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 12.924,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "JC",
+      "clubs",
+      "jacks"
+     ]
+    },
+    {
+     "name": "QC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 14.17,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "QC",
+      "clubs",
+      "queens"
+     ]
+    },
+    {
+     "name": "KC",
+     "kind": "score",
+     "shape": "rect",
+     "x": 15.416,
+     "y": 7.436,
+     "w": 1.122,
+     "h": 1.602,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "KC",
+      "clubs",
+      "kings"
+     ]
+    }
+   ],
+   "instructions": [
+    "4-colour deck: spades black, hearts plum, diamonds blue, clubs green.",
+    "Poker: shoot 5 cards, the app scores your best hand.",
+    "Call-out: the app calls \"queen of hearts\", \"any club\"...",
+    "Wrong card -2."
+   ],
+   "layout": {
+    "page": {
+     "w": 17,
+     "h": 11
+    },
+    "field": {
+     "x": 0.4,
+     "y": 1.85,
+     "w": 16.2,
+     "h": 7.3
+    }
+   },
+   "drills": [
+    "cards-poker-tab",
+    "cards-callout-tab"
+   ],
+   "meta": {
+    "category": "fun",
+    "paper": "tabloid",
+    "people": "none",
+    "features": [],
+    "weapon": "pistol"
+   }
+  },
   "idpa-threat": {
    "code": "LD-101",
    "name": "IDPA-style Threat",

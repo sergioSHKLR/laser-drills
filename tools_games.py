@@ -114,6 +114,33 @@ def battle(key='battle',F=LETTER,mk=(304,305,306,307),code='LD-402',n=8):
        dict(id='battle-timed',name='Sink-the-Ship: timed (3 min)',category='fun',target=key,shots=64,startDelay=[1,2],parTime=180,timeout=180,game=dict(type='battle',rows=n,cols=n,ships=ships),notes='Sink as much as you can in 3 minutes.')]
     upsert(key,t,D)
 GAMES['battle']=battle
+
+# ---------------------------------------------------------------- Card game (52-card 4-colour deck; poker + call-out)
+SUITS=[('S','\u2660','spades',(25,25,25)),('H','\u2665','hearts',(105,45,110)),('D','\u2666','diamonds',(31,78,154)),('C','\u2663','clubs',(25,105,55))]
+RANKS=[('A','ace'),('2','two'),('3','three'),('4','four'),('5','five'),('6','six'),('7','seven'),('8','eight'),('9','nine'),('T','ten'),('J','jack'),('Q','queen'),('K','king')]
+def cards(key='cards',F=LETTER,mk=(308,309,310,311),code='LD-403',grid=(8,7),lay=None):
+    im=pil(F,(236,240,236)); d=ImageDraw.Draw(im); P=lambda x,y:((x-F['x'])*DPI,(y-F['y'])*DPI); zones=[]
+    cols,rows=grid; cw,ch=F['w']/cols,F['h']/rows; w=min(cw*0.9,ch*0.9*0.7); h=w/0.7; i=0
+    deck=[(r,s) for s in SUITS for r in RANKS]
+    for k,(r,s) in enumerate(deck):
+        row,col=divmod(k,cols); left=len(deck)-row*cols; off=(cols-min(cols,left))*cw/2
+        cx=F['x']+off+(col+.5)*cw; cy=F['y']+(row+.5)*ch; x0,y0=cx-w/2,cy-h/2
+        d.rounded_rectangle([P(x0,y0),P(x0+w,y0+h)],radius=0.07*DPI,fill=(255,255,255),outline=(90,90,90),width=3)
+        rl='10' if r[0]=='T' else r[0]
+        d.text(P(x0+0.06,y0+0.04),rl,font=font(w*0.27*DPI),fill=s[3]); d.text(P(x0+0.06,y0+0.04+w*0.3),s[1],font=font(w*0.22*DPI,False),fill=s[3])
+        ctext(d,P(cx+w*0.08,cy+h*0.08),s[1],font(w*0.62*DPI,False),s[3])
+        c=r[0]+s[0]; zones.append(dict(name=c,kind='score',shape='rect',x=round(x0,3),y=round(y0,3),w=round(w,3),h=round(h,3),score=1,tier='tier1',subtle=True,art=True,noGrow=True,tags=[c,s[2],r[1]+'s']))
+    can=tocv(im); check_zones(key,can,zones,F); cv2.imwrite(f'art/{key}.png',can)
+    calls=[dict(say=f'{rn} of {sw}',tags=[r+sc]) for r,rn in RANKS for sc,_,sw,_ in SUITS]+[dict(say=f'any {sw[:-1]}',tags=[sw]) for _,_,sw,_ in SUITS]+[dict(say=f'any {rn}',tags=[rn+'s']) for _,rn in RANKS[::3]]
+    t=dict(code=code,name='Card Shoot'+(' (Tabloid)' if lay else ''),markerIds=list(mk),distance='3-5 yd',set='games',art=[dict(src=f'art/{key}.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'])],zones=zones,
+        instructions=['4-colour deck: spades black, hearts plum, diamonds blue, clubs green.','Poker: shoot 5 cards, the app scores your best hand.','Call-out: the app calls "queen of hearts", "any club"...','Wrong card -2.'])
+    if lay: t['layout']=lay
+    sfx='' if not lay else '-tab'
+    D=[dict(id='cards-poker'+sfx,name='Card Shoot: poker hand'+(' (Tabloid)' if lay else ''),category='fun',target=key,shots=5,startDelay=[1,2],parTime=30,timeout=120,game=dict(type='poker'),notes='Shoot five different cards; score = hand rank x10 (royal flush 90).'),
+       dict(id='cards-callout'+sfx,name='Card Shoot: call-out'+(' (Tabloid)' if lay else ''),category='fun',target=key,shots=40,startDelay=[1,2],parTime=60,timeout=180,game=dict(type='calls',calls=calls,rounds=8,wrong=-2),notes='Hit the called card ("queen of hearts", "any club").')]
+    upsert(key,t,D)
+GAMES['cards']=cards
+GAMES['cards-tabloid']=lambda:cards('cards-tabloid',TAB,(336,337,338,339),'LD-404',(13,4),TABLAY)
 if __name__=='__main__':
     for k in (sys.argv[1:] or list(GAMES)): GAMES[k]()
     save(); print('ok games')

@@ -1143,5 +1143,813 @@
    ]
   },
   "notes": "Sink as much as you can in 3 minutes."
+ },
+ {
+  "id": "cards-poker",
+  "name": "Card Shoot: poker hand",
+  "category": "fun",
+  "target": "cards",
+  "shots": 5,
+  "startDelay": [
+   1,
+   2
+  ],
+  "parTime": 30,
+  "timeout": 120,
+  "game": {
+   "type": "poker"
+  },
+  "notes": "Shoot five different cards; score = hand rank x10 (royal flush 90)."
+ },
+ {
+  "id": "cards-callout",
+  "name": "Card Shoot: call-out",
+  "category": "fun",
+  "target": "cards",
+  "shots": 40,
+  "startDelay": [
+   1,
+   2
+  ],
+  "parTime": 60,
+  "timeout": 180,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "ace of spades",
+     "tags": [
+      "AS"
+     ]
+    },
+    {
+     "say": "ace of hearts",
+     "tags": [
+      "AH"
+     ]
+    },
+    {
+     "say": "ace of diamonds",
+     "tags": [
+      "AD"
+     ]
+    },
+    {
+     "say": "ace of clubs",
+     "tags": [
+      "AC"
+     ]
+    },
+    {
+     "say": "two of spades",
+     "tags": [
+      "2S"
+     ]
+    },
+    {
+     "say": "two of hearts",
+     "tags": [
+      "2H"
+     ]
+    },
+    {
+     "say": "two of diamonds",
+     "tags": [
+      "2D"
+     ]
+    },
+    {
+     "say": "two of clubs",
+     "tags": [
+      "2C"
+     ]
+    },
+    {
+     "say": "three of spades",
+     "tags": [
+      "3S"
+     ]
+    },
+    {
+     "say": "three of hearts",
+     "tags": [
+      "3H"
+     ]
+    },
+    {
+     "say": "three of diamonds",
+     "tags": [
+      "3D"
+     ]
+    },
+    {
+     "say": "three of clubs",
+     "tags": [
+      "3C"
+     ]
+    },
+    {
+     "say": "four of spades",
+     "tags": [
+      "4S"
+     ]
+    },
+    {
+     "say": "four of hearts",
+     "tags": [
+      "4H"
+     ]
+    },
+    {
+     "say": "four of diamonds",
+     "tags": [
+      "4D"
+     ]
+    },
+    {
+     "say": "four of clubs",
+     "tags": [
+      "4C"
+     ]
+    },
+    {
+     "say": "five of spades",
+     "tags": [
+      "5S"
+     ]
+    },
+    {
+     "say": "five of hearts",
+     "tags": [
+      "5H"
+     ]
+    },
+    {
+     "say": "five of diamonds",
+     "tags": [
+      "5D"
+     ]
+    },
+    {
+     "say": "five of clubs",
+     "tags": [
+      "5C"
+     ]
+    },
+    {
+     "say": "six of spades",
+     "tags": [
+      "6S"
+     ]
+    },
+    {
+     "say": "six of hearts",
+     "tags": [
+      "6H"
+     ]
+    },
+    {
+     "say": "six of diamonds",
+     "tags": [
+      "6D"
+     ]
+    },
+    {
+     "say": "six of clubs",
+     "tags": [
+      "6C"
+     ]
+    },
+    {
+     "say": "seven of spades",
+     "tags": [
+      "7S"
+     ]
+    },
+    {
+     "say": "seven of hearts",
+     "tags": [
+      "7H"
+     ]
+    },
+    {
+     "say": "seven of diamonds",
+     "tags": [
+      "7D"
+     ]
+    },
+    {
+     "say": "seven of clubs",
+     "tags": [
+      "7C"
+     ]
+    },
+    {
+     "say": "eight of spades",
+     "tags": [
+      "8S"
+     ]
+    },
+    {
+     "say": "eight of hearts",
+     "tags": [
+      "8H"
+     ]
+    },
+    {
+     "say": "eight of diamonds",
+     "tags": [
+      "8D"
+     ]
+    },
+    {
+     "say": "eight of clubs",
+     "tags": [
+      "8C"
+     ]
+    },
+    {
+     "say": "nine of spades",
+     "tags": [
+      "9S"
+     ]
+    },
+    {
+     "say": "nine of hearts",
+     "tags": [
+      "9H"
+     ]
+    },
+    {
+     "say": "nine of diamonds",
+     "tags": [
+      "9D"
+     ]
+    },
+    {
+     "say": "nine of clubs",
+     "tags": [
+      "9C"
+     ]
+    },
+    {
+     "say": "ten of spades",
+     "tags": [
+      "TS"
+     ]
+    },
+    {
+     "say": "ten of hearts",
+     "tags": [
+      "TH"
+     ]
+    },
+    {
+     "say": "ten of diamonds",
+     "tags": [
+      "TD"
+     ]
+    },
+    {
+     "say": "ten of clubs",
+     "tags": [
+      "TC"
+     ]
+    },
+    {
+     "say": "jack of spades",
+     "tags": [
+      "JS"
+     ]
+    },
+    {
+     "say": "jack of hearts",
+     "tags": [
+      "JH"
+     ]
+    },
+    {
+     "say": "jack of diamonds",
+     "tags": [
+      "JD"
+     ]
+    },
+    {
+     "say": "jack of clubs",
+     "tags": [
+      "JC"
+     ]
+    },
+    {
+     "say": "queen of spades",
+     "tags": [
+      "QS"
+     ]
+    },
+    {
+     "say": "queen of hearts",
+     "tags": [
+      "QH"
+     ]
+    },
+    {
+     "say": "queen of diamonds",
+     "tags": [
+      "QD"
+     ]
+    },
+    {
+     "say": "queen of clubs",
+     "tags": [
+      "QC"
+     ]
+    },
+    {
+     "say": "king of spades",
+     "tags": [
+      "KS"
+     ]
+    },
+    {
+     "say": "king of hearts",
+     "tags": [
+      "KH"
+     ]
+    },
+    {
+     "say": "king of diamonds",
+     "tags": [
+      "KD"
+     ]
+    },
+    {
+     "say": "king of clubs",
+     "tags": [
+      "KC"
+     ]
+    },
+    {
+     "say": "any spade",
+     "tags": [
+      "spades"
+     ]
+    },
+    {
+     "say": "any heart",
+     "tags": [
+      "hearts"
+     ]
+    },
+    {
+     "say": "any diamond",
+     "tags": [
+      "diamonds"
+     ]
+    },
+    {
+     "say": "any club",
+     "tags": [
+      "clubs"
+     ]
+    },
+    {
+     "say": "any ace",
+     "tags": [
+      "aces"
+     ]
+    },
+    {
+     "say": "any four",
+     "tags": [
+      "fours"
+     ]
+    },
+    {
+     "say": "any seven",
+     "tags": [
+      "sevens"
+     ]
+    },
+    {
+     "say": "any ten",
+     "tags": [
+      "tens"
+     ]
+    },
+    {
+     "say": "any king",
+     "tags": [
+      "kings"
+     ]
+    }
+   ],
+   "rounds": 8,
+   "wrong": -2
+  },
+  "notes": "Hit the called card (\"queen of hearts\", \"any club\")."
+ },
+ {
+  "id": "cards-poker-tab",
+  "name": "Card Shoot: poker hand (Tabloid)",
+  "category": "fun",
+  "target": "cards-tabloid",
+  "shots": 5,
+  "startDelay": [
+   1,
+   2
+  ],
+  "parTime": 30,
+  "timeout": 120,
+  "game": {
+   "type": "poker"
+  },
+  "notes": "Shoot five different cards; score = hand rank x10 (royal flush 90)."
+ },
+ {
+  "id": "cards-callout-tab",
+  "name": "Card Shoot: call-out (Tabloid)",
+  "category": "fun",
+  "target": "cards-tabloid",
+  "shots": 40,
+  "startDelay": [
+   1,
+   2
+  ],
+  "parTime": 60,
+  "timeout": 180,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "ace of spades",
+     "tags": [
+      "AS"
+     ]
+    },
+    {
+     "say": "ace of hearts",
+     "tags": [
+      "AH"
+     ]
+    },
+    {
+     "say": "ace of diamonds",
+     "tags": [
+      "AD"
+     ]
+    },
+    {
+     "say": "ace of clubs",
+     "tags": [
+      "AC"
+     ]
+    },
+    {
+     "say": "two of spades",
+     "tags": [
+      "2S"
+     ]
+    },
+    {
+     "say": "two of hearts",
+     "tags": [
+      "2H"
+     ]
+    },
+    {
+     "say": "two of diamonds",
+     "tags": [
+      "2D"
+     ]
+    },
+    {
+     "say": "two of clubs",
+     "tags": [
+      "2C"
+     ]
+    },
+    {
+     "say": "three of spades",
+     "tags": [
+      "3S"
+     ]
+    },
+    {
+     "say": "three of hearts",
+     "tags": [
+      "3H"
+     ]
+    },
+    {
+     "say": "three of diamonds",
+     "tags": [
+      "3D"
+     ]
+    },
+    {
+     "say": "three of clubs",
+     "tags": [
+      "3C"
+     ]
+    },
+    {
+     "say": "four of spades",
+     "tags": [
+      "4S"
+     ]
+    },
+    {
+     "say": "four of hearts",
+     "tags": [
+      "4H"
+     ]
+    },
+    {
+     "say": "four of diamonds",
+     "tags": [
+      "4D"
+     ]
+    },
+    {
+     "say": "four of clubs",
+     "tags": [
+      "4C"
+     ]
+    },
+    {
+     "say": "five of spades",
+     "tags": [
+      "5S"
+     ]
+    },
+    {
+     "say": "five of hearts",
+     "tags": [
+      "5H"
+     ]
+    },
+    {
+     "say": "five of diamonds",
+     "tags": [
+      "5D"
+     ]
+    },
+    {
+     "say": "five of clubs",
+     "tags": [
+      "5C"
+     ]
+    },
+    {
+     "say": "six of spades",
+     "tags": [
+      "6S"
+     ]
+    },
+    {
+     "say": "six of hearts",
+     "tags": [
+      "6H"
+     ]
+    },
+    {
+     "say": "six of diamonds",
+     "tags": [
+      "6D"
+     ]
+    },
+    {
+     "say": "six of clubs",
+     "tags": [
+      "6C"
+     ]
+    },
+    {
+     "say": "seven of spades",
+     "tags": [
+      "7S"
+     ]
+    },
+    {
+     "say": "seven of hearts",
+     "tags": [
+      "7H"
+     ]
+    },
+    {
+     "say": "seven of diamonds",
+     "tags": [
+      "7D"
+     ]
+    },
+    {
+     "say": "seven of clubs",
+     "tags": [
+      "7C"
+     ]
+    },
+    {
+     "say": "eight of spades",
+     "tags": [
+      "8S"
+     ]
+    },
+    {
+     "say": "eight of hearts",
+     "tags": [
+      "8H"
+     ]
+    },
+    {
+     "say": "eight of diamonds",
+     "tags": [
+      "8D"
+     ]
+    },
+    {
+     "say": "eight of clubs",
+     "tags": [
+      "8C"
+     ]
+    },
+    {
+     "say": "nine of spades",
+     "tags": [
+      "9S"
+     ]
+    },
+    {
+     "say": "nine of hearts",
+     "tags": [
+      "9H"
+     ]
+    },
+    {
+     "say": "nine of diamonds",
+     "tags": [
+      "9D"
+     ]
+    },
+    {
+     "say": "nine of clubs",
+     "tags": [
+      "9C"
+     ]
+    },
+    {
+     "say": "ten of spades",
+     "tags": [
+      "TS"
+     ]
+    },
+    {
+     "say": "ten of hearts",
+     "tags": [
+      "TH"
+     ]
+    },
+    {
+     "say": "ten of diamonds",
+     "tags": [
+      "TD"
+     ]
+    },
+    {
+     "say": "ten of clubs",
+     "tags": [
+      "TC"
+     ]
+    },
+    {
+     "say": "jack of spades",
+     "tags": [
+      "JS"
+     ]
+    },
+    {
+     "say": "jack of hearts",
+     "tags": [
+      "JH"
+     ]
+    },
+    {
+     "say": "jack of diamonds",
+     "tags": [
+      "JD"
+     ]
+    },
+    {
+     "say": "jack of clubs",
+     "tags": [
+      "JC"
+     ]
+    },
+    {
+     "say": "queen of spades",
+     "tags": [
+      "QS"
+     ]
+    },
+    {
+     "say": "queen of hearts",
+     "tags": [
+      "QH"
+     ]
+    },
+    {
+     "say": "queen of diamonds",
+     "tags": [
+      "QD"
+     ]
+    },
+    {
+     "say": "queen of clubs",
+     "tags": [
+      "QC"
+     ]
+    },
+    {
+     "say": "king of spades",
+     "tags": [
+      "KS"
+     ]
+    },
+    {
+     "say": "king of hearts",
+     "tags": [
+      "KH"
+     ]
+    },
+    {
+     "say": "king of diamonds",
+     "tags": [
+      "KD"
+     ]
+    },
+    {
+     "say": "king of clubs",
+     "tags": [
+      "KC"
+     ]
+    },
+    {
+     "say": "any spade",
+     "tags": [
+      "spades"
+     ]
+    },
+    {
+     "say": "any heart",
+     "tags": [
+      "hearts"
+     ]
+    },
+    {
+     "say": "any diamond",
+     "tags": [
+      "diamonds"
+     ]
+    },
+    {
+     "say": "any club",
+     "tags": [
+      "clubs"
+     ]
+    },
+    {
+     "say": "any ace",
+     "tags": [
+      "aces"
+     ]
+    },
+    {
+     "say": "any four",
+     "tags": [
+      "fours"
+     ]
+    },
+    {
+     "say": "any seven",
+     "tags": [
+      "sevens"
+     ]
+    },
+    {
+     "say": "any ten",
+     "tags": [
+      "tens"
+     ]
+    },
+    {
+     "say": "any king",
+     "tags": [
+      "kings"
+     ]
+    }
+   ],
+   "rounds": 8,
+   "wrong": -2
+  },
+  "notes": "Hit the called card (\"queen of hearts\", \"any club\")."
  }
 ]
