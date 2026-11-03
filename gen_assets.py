@@ -151,7 +151,7 @@ def draw_target(key,t,path):
     c.drawString(*d.P(hx,M+0.55),f"{t['code']}  ·  key '{key}'  ·  markers {t['markerIds'][0]}-{t['markerIds'][-1]}")
     c.drawString(*d.P(hx,M+0.78),f"Recommended distance: {t['distance']}")
     dn=[DRILLS[x]['name'] for x in t['drills'] if x in DRILLS]
-    c.drawString(*d.P(hx,M+1.0),'Pairs with: '+'; '.join(dn)[:(95 if PW>9 else 70)])
+    c.drawString(*d.P(hx,M+1.0),'Pairs with: '+(lambda s,n:s if len(s)<=n else s[:n-1].rsplit(';',1)[0]+'…')('; '.join(dn),(95 if PW>9 else 62)))
     c.setFont('Helvetica-Bold',7); c.drawRightString(*d.P(hx+hw,M+0.3),'LASER DRILLS')
     # footer band: instructions | legend
     fy=PH-M-MS; c.setFont('Helvetica-Bold',8); c.drawString(*d.P(hx,fy+0.12),'HOW TO')

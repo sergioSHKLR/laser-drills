@@ -14,6 +14,7 @@ let course={idx:0,results:[]};
 const sel=()=>DRILLS[$('drillSel').value];
 const drill=()=>{const d=sel(),b=d.type==='course'?Object.assign({scoring:'idpa',maxPerShot:0},d.stages[Math.min(course.idx,d.stages.length-1)]):d;
   if(b.scenario)return Object.assign({},b,state.calls||{shots:b.scenario.count*b.scenario.threatShots},{verbalTimes:state.verbal||[]});
+  if(b.crowd)return Object.assign({},b,state.calls||{shots:(b.crowd.rounds||3)*(b.crowd.shots||2)});
   return b.calls?Object.assign({},b,state.calls||{shots:b.calls.reduce((a,k)=>a+(k.parts?k.parts.length:k.shots),0)}):b;};
 const TPL=()=>Core.tpl(DOC,lock?lock.target:null);
 const target=()=>lock?lock.target:DOC.targets[drill().target==='any'?'bullseye':drill().target];
@@ -51,7 +52,7 @@ function tick(now){ctx.drawImage(video,0,0,W,H);const img=ctx.getImageData(0,0,W
   if($('showMask').checked&&!$('tab-cal').classList.contains('hidden')&&laser.lastCount){const o=laser.o,d=img.data;
     for(let i=0;i<W*H;i++){const r=d[i*4],s=r-(d[i*4+1]+d[i*4+2])/2;if(r>=o.redMin&&s>=o.redDom){d[i*4]=255;d[i*4+1]=0;d[i*4+2]=255;}}ctx.putImageData(img,0,0);}
   if(hit)onHit(hit,now);draw();
-  const d=drill();$('status').textContent=lock?(`Locked: ${lock.target.name} (${lock.target.code})`+(d.target!=='any'&&d.target!==lock.key?` ⚠ drill expects '${d.target}'`:'')):'Looking for 4 corner markers…';}
+  const d=drill();$('status').textContent=lock?(`Locked: ${lock.target.name} (${lock.target.code})`+(d.target!=='any'&&d.target!==lock.key&&!(d.targets||[]).includes(lock.key)?` ⚠ drill expects '${d.target}'`:'')):'Looking for 4 corner markers…';}
 function onHit(h,now){const T=target(),d=drill();
   const exp=state.mode==='live'&&d.sequence?d.sequence[state.shots.length]:null;
   const p=lock?Core.apply(lock.imgToTgt,h):null,sc=p?Core.score(T,p,spread(),TPL(),exp):{zone:null,score:0};
@@ -66,14 +67,16 @@ function draw(){if(lock){ctx.lineWidth=2;const tp=TPL(),f=tp.field,T=lock.target
 function render(){const s=Core.drillSummary(drill(),state.beep,state.shots);
   $('shots').innerHTML=state.shots.map((x,i)=>`<tr><td>${i+1}</td><td>${s.times[i].toFixed(2)}</td><td>${s.splits[i].toFixed(2)}</td><td>${x.bystander?'BYSTANDER +10s':x.hardcover?'HARD COVER':x.noshoot?(drill().scoring==='idpa'?'NON-THREAT':'NO-SHOOT'):x.ooo?x.zone+' (order)':(x.zone||'miss')}</td><td>${drill().scoring==='idpa'?(x.noshoot?'+5s':'-'+x.pd):x.score}</td></tr>`).join('');
   if(state.mode==='done'&&drill().scoring==='idpa'){const r=Core.idpaSummary(drill(),state.shots,s.total);
-    $('big').textContent=`${drill().name||'Stage'}: raw ${r.raw.toFixed(2)}s + PD ${r.pd} + PE ${r.pe}×3 + HNT ${r.hnt}×5${r.fc!=null&&drill().scenario?` + no-command ${r.fc}×${drill().failCommand}`:''} = ${r.final.toFixed(2)}${r.bys?` + BYSTANDER ${r.bys}×10 · BACKSTOP FAILURE`:''}${r.fail?' · FAIL: hostage hit':''}`+(drill().scenario?` · calls: ${drill().text} · verbal at ${(state.verbal||[]).map(x=>x.toFixed(1)+'s').join(', ')||'none'}`:'');}
+    $('big').textContent=`${drill().name||'Stage'}: raw ${r.raw.toFixed(2)}s + PD ${r.pd} + PE ${r.pe}×3 + HNT ${r.hnt}×5${r.fc!=null&&drill().scenario?` + no-command ${r.fc}×${drill().failCommand}`:''} = ${r.final.toFixed(2)}${r.wp?` + WRONG PERSON ${r.wp}×${drill().crowd.wrongPenalty||5}`:''}${r.bys?` + BYSTANDER ${r.bys}×10 · BACKSTOP FAILURE`:''}${r.fail?' · FAIL: hostage hit':''}`+(drill().scenario?` · calls: ${drill().text} · verbal at ${(state.verbal||[]).map(x=>x.toFixed(1)+'s').join(', ')||'none'}`:'');}
   else if(state.mode==='done')$('big').textContent=`${s.score}/${s.maxScore} pts · ${s.total!=null?s.total.toFixed(2)+'s':'—'} ${s.underPar?'✅ under par':'❌ over par/incomplete'}`;}
 function reset(){clearTimeout(state.timer);clearTimeout(state.par);state={mode:'idle',shots:[],beep:0};if(typeof Voice!=='undefined')Voice.resume();marks=[];$('shots').innerHTML='';$('big').textContent='';}
 $('goBtn').onclick=()=>{ac.resume();reset();const d=drill();if(!lock){$('big').textContent='No target lock yet';return;}
-  if(d.target!=='any'&&lock.key!==d.target){$('big').textContent=`Put up target ${DOC.targets[d.target].code} (${DOC.targets[d.target].name})`;return;}
+  if(d.target!=='any'&&lock.key!==d.target&&!(d.targets||[]).includes(lock.key)){$('big').textContent=`Put up target ${DOC.targets[d.target].code} (${DOC.targets[d.target].name})`;return;}
   if(sel().type==='course'&&course.idx>=sel().stages.length){course={idx:0,results:[]};showNotes();}
   state.mode='wait';$('big').textContent='Stand by…';
   if(d.scenario){state.calls=Core.makeScenario(d.scenario,Math.random);state.verbal=[];$('big').textContent='Stand by…';}
+  if(d.crowd){state.calls=Core.crowdCalls(lock.target,d.crowd,Math.random);$('big').textContent='BOLO: '+state.calls.text;
+    say(state.calls.callList.map((k,i)=>'Call '+(i+1)+'. '+k.say).join('. '),true);}
   if(d.calls){state.calls=Core.makeCalls(d.calls,Math.random,d.randomize);$('big').textContent='CALLS: '+state.calls.text;
     try{speechSynthesis.speak(new SpeechSynthesisUtterance(state.calls.callList.map(k=>k.say||(k.group.replace('T','Target ')+(k.parts?' Mozambique':''))).join(', ')));}catch(e){}}const delay=(d.startDelay[0]+Math.random()*(d.startDelay[1]-d.startDelay[0]))*1000;
   state.timer=setTimeout(()=>{if(d.scenario)Voice.verbalMode();else Voice.pause();state.mode='live';state.beep=performance.now();tone(2200,250);
@@ -95,7 +98,7 @@ function finish(){clearTimeout(state.timer);clearTimeout(state.par);const was=st
 let lastSay='No result yet.';
 function say(t,keepListening){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=1.05;if(!keepListening)Voice.mute(true);u.onend=u.onerror=()=>setTimeout(()=>Voice.mute(false),500);speechSynthesis.speak(u);}catch(e){}}
 function spokenResult(){const d=drill(),s=Core.drillSummary(d,state.beep,state.shots);
-  if(d.scoring==='idpa'){const r=Core.idpaSummary(d,state.shots,s.total);return `Final ${r.final.toFixed(2)} seconds. Raw ${r.raw.toFixed(2)}, ${r.pd} down`+(r.pe?`, ${r.pe} procedural`:'')+(r.hnt?`, ${r.hnt} non-threat hits`:'')+(d.scenario&&r.fc?`, ${r.fc} missed commands`:'')+(r.bys?`. Backstop failure, ${r.bys} bystander hit${r.bys>1?'s':''}, plus ${10*r.bys} seconds`:'')+(r.fail?'. Fail, hostage hit':'')+'.';}
+  if(d.scoring==='idpa'){const r=Core.idpaSummary(d,state.shots,s.total);return `Final ${r.final.toFixed(2)} seconds. Raw ${r.raw.toFixed(2)}, ${r.pd} down`+(r.pe?`, ${r.pe} procedural`:'')+(r.hnt?`, ${r.hnt} non-threat hits`:'')+(d.scenario&&r.fc?`, ${r.fc} missed commands`:'')+(r.wp?`. ${r.wp} wrong person hit${r.wp>1?'s':''}`:'')+(r.bys?`. Backstop failure, ${r.bys} bystander hit${r.bys>1?'s':''}, plus ${10*r.bys} seconds`:'')+(r.fail?'. Fail, hostage hit':'')+'.';}
   return `${s.score} of ${s.maxScore} points`+(s.total!=null?`, ${s.total.toFixed(2)} seconds`:'')+(s.underPar?', under par.':'.');}
 // ---- commands (voice, big buttons, media keys)
 const CMD={start:()=>{if(state.mode==='wait'||state.mode==='live')return;$('goBtn').onclick();},

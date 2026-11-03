@@ -62,8 +62,9 @@ Core.idpaSummary=function(stage,shots,rawTime){
   pd+=5*Math.max(0,req-valid);
   if(stage.order){const got=cnt.filter(s=>s.group&&!s.noshoot);for(let i=0;i<got.length;i++)
     if(stage.order[i]&&(got[i].group!==stage.order[i]||(stage.parts&&stage.parts[i]&&got[i].part!==stage.parts[i]))){pe=1;break;}}
+  let wp=0;if(stage.crowd&&stage.order){const got=cnt.filter(s=>s.group&&!s.noshoot);for(let i=0;i<got.length;i++)if(stage.order[i]&&got[i].group!==stage.order[i])wp++;pe=0;}
   const raw=rawTime==null?stage.timeout:rawTime;
-  return {raw,pd,pe,hnt,fc,bys,backstop:bys>0,fail:!!(stage.failOnNoShoot&&hnt>0),final:raw+pd+3*pe+5*hnt+fcs*fc+10*bys};};
+  return {raw,pd,pe,hnt,fc,bys,wp,backstop:bys>0,fail:!!(stage.failOnNoShoot&&hnt>0),final:raw+pd+3*pe+5*hnt+fcs*fc+10*bys+(stage.wrongPenalty||5)*wp};};
 // Voice: app commands (only when NOT live) and verbal scenario commands (only during live scenario drills).
 Core.VOICE={start:['start','standby','stand by','stand-by','begin','shooter ready'],stop:['stop','halt','cease'],reset:['reset','clear'],
   next:['next','next stage','skip'],repeat:['repeat','again','redo'],score:['score','result','results','how did i do']};
@@ -85,6 +86,41 @@ Core.makeScenario=function(sc,rand){const pool=sc.pool.slice();for(let i=pool.le
 Core.makeCalls=function(calls,rand,shuffle){const c=calls.slice();if(shuffle!==false)for(let i=c.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[c[i],c[j]]=[c[j],c[i]];}
   const order=[],parts=[];for(const k of c){const p=k.parts||Array(k.shots).fill(null);for(const q of p){order.push(k.group);parts.push(q);}}
   return {order,parts,shots:order.length,callList:c,text:c.map(k=>`${k.group} ${k.label}${k.parts?' ('+k.parts.map(x=>x[0].toUpperCase()).join('-')+')':' x'+k.shots}`).join(' → ')};};
+
+// Crowd Hunt: BOLO-style descriptions that resolve to exactly ONE person (target.people[]).
+Core.crowdAtoms=function(p){const a=[];
+  a.push({k:'shirt',t:`${p.shirt} shirt`,f:q=>q.shirt===p.shirt});
+  a.push(p.jacket?{k:'jacket',t:`${p.jacket} jacket`,f:q=>q.jacket===p.jacket}:{k:'jacket',t:'no jacket',f:q=>!q.jacket});
+  a.push(p.hat?{k:'hat',t:p.hat,f:q=>q.hat===p.hat}:{k:'hat',t:'no hat',f:q=>!q.hat});
+  a.push(p.backpack?{k:'bag',t:`${p.backpack} backpack`,f:q=>q.backpack===p.backpack}:{k:'bag',t:'no backpack',f:q=>!q.backpack});
+  a.push(p.glasses?{k:'glasses',t:'glasses',f:q=>q.glasses}:{k:'glasses',t:'no glasses',f:q=>!q.glasses});
+  a.push({k:'held',t:p.held==='gun'?'holding a gun':`holding ${/^[aeiou]/.test(p.held)?'an':'a'} ${p.held}`,f:q=>q.held===p.held});
+  a.push({k:'skin',t:`${p.skin}-skinned`,f:q=>q.skin===p.skin,skin:true});
+  a.push({k:'sex',t:p.sex,f:q=>q.sex===p.sex,sex:true});return a;};
+Core.crowdPhrase=function(p,atoms){const sk=atoms.find(a=>a.skin),sx=atoms.find(a=>a.sex),rest=atoms.filter(a=>!a.skin&&!a.sex&&!a.rel),rel=atoms.find(a=>a.rel);
+  const head=[sk&&sk.t,sx?sx.t:'person'].filter(Boolean).join(' ');return [head[0].toUpperCase()+head.slice(1)].concat(rest.map(a=>a.t)).join(', ')+(rel?', '+rel.t:'');};
+Core.crowdDescribe=function(people,p,level,rand){const n=(xs,f)=>xs.filter(f).length,one=f=>n(people,f)===1;
+  const A=Core.crowdAtoms(p),plain=A.filter(a=>!a.skin&&!a.sex),shuf=x=>{x=x.slice();for(let i=x.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x;};
+  const all=(as)=>q=>as.every(a=>a.f(q));
+  if(level===1){for(const a of shuf(plain))if(one(a.f))return [a];return null;}
+  if(level===2){let pool=shuf(A.filter(a=>!a.sex));if(rand()<0.6)pool=pool.sort((a,b)=>(b.skin?1:0)-(a.skin?1:0));  // skin allowed, only combined with clothing/gear
+    for(let i=0;i<pool.length;i++)for(let j=i+1;j<pool.length;j++){const c=[pool[i],pool[j]];if(c.every(a=>a.skin)||c.filter(a=>!a.skin).length===0)continue;
+      if(one(all(c))&&!c.some(a=>one(a.f)))return rand()<0.5?c.concat([A.find(a=>a.sex)]):c;}
+    return null;}
+  // level 3: three atoms (none/no pair unique alone) or two atoms + relative position to a uniquely described anchor
+  let pool=shuf(A.filter(a=>!a.sex));if(rand()<0.6)pool=pool.sort((a,b)=>(b.skin?1:0)-(a.skin?1:0));
+  if(rand()<0.5){for(let i=0;i<pool.length;i++)for(let j=i+1;j<pool.length;j++)for(let k=j+1;k<pool.length;k++){const c=[pool[i],pool[j],pool[k]];
+    if(c.filter(a=>!a.skin).length<2)continue;if(one(all(c))&&![[0,1],[0,2],[1,2]].some(([x,y])=>one(all([c[x],c[y]]))))return c;}}
+  for(const anc of shuf(people.filter(q=>q!==p))){const ua=shuf(Core.crowdAtoms(anc).filter(a=>!a.skin&&!a.sex)).find(a=>one(a.f));if(!ua)continue;
+    const side=p.x<anc.x?'left':'right',rf=q=>side==='left'?q.x<anc.x:q.x>anc.x;
+    for(let i=0;i<pool.length;i++)for(let j=i+1;j<pool.length;j++){const c=[pool[i],pool[j]];if(c.every(a=>a.skin))continue;const f=all(c);
+      if(n(people,f)>1&&n(people,q=>f(q)&&rf(q))===1)return c.concat([{rel:true,t:`${side} of the person ${/^(holding|no )/.test(ua.t)?(ua.t.startsWith('no ')?'with '+ua.t:ua.t):(ua.t==='glasses'?'with glasses':'in the '+ua.t)}`}]);}}
+  return null;};
+Core.crowdCalls=function(target,cfg,rand){const people=target.people,calls=[],used=new Set();let guard=0;
+  while(calls.length<(cfg.rounds||3)&&guard++<200){const p=people[Math.floor(rand()*people.length)];if(used.has(p.group))continue;
+    const d=Core.crowdDescribe(people,p,cfg.level||1,rand);if(!d)continue;used.add(p.group);const say=Core.crowdPhrase(p,d);
+    calls.push({group:p.group,label:say,say,shots:cfg.shots||2});}
+  const r=Core.makeCalls(calls,rand,false);r.wrongPenalty=cfg.wrongPenalty||5;r.text=calls.map((c,i)=>`${i+1}) ${c.say}`).join('  ');return r;};
 // Laser detector: frame differencing on a red-dominance score.
 Core.LaserDetector=function(opts){
   this.o=Object.assign({redMin:180,redDom:40,diffMin:60,minPixels:2,maxPixels:4000,refractoryMs:200,bgAlpha:0.15},opts||{});

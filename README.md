@@ -52,3 +52,12 @@ Roof Finale (LD-209): exactly 2 shots. Hans exposed chest -0, then Eddie head -0
 Hostages and non-threats are no longer marked on the art (no hatch, outline or tag). They are drawn in normal colour holding a phone, drink, wallet or keys, so you have to see the gun. Their no-shoot zones still exist in targets.json, and the legend stays in the footer.
 Single-threat Die Hard sheets have faded, smaller **bystanders** behind the threat (office workers, party guests). Any shot that misses the threat and lands on a bystander adds +10 s and is flagged **BACKSTOP FAILURE**. The flag is shown and spoken in the results. Threat zones in front of a bystander take priority, and hard cover blocks the shot. Know your target and what is beyond it.
 Red cap: art red dominance is hard-capped at 36 (detector gate 40), so lipstick and nails are slightly muted.
+
+## v11 — Crowd Hunt (Training)
+- New sheets: **LD-301 Crowd Hunt (Letter)** `crowd` and **LD-302 Crowd Hunt (Tabloid 11x17)** `crowd-tabloid`. Both have 15 full-colour people in far, mid and near rows, plus faded background bystanders.
+- Each person's attributes are stored in `targets.json` → `people[]`: skin tone (light-, medium- or dark-skinned), shirt, jacket, headwear, backpack, glasses, held object, and armed. Three people are armed, one of each skin tone.
+- Drills: **Crowd Hunt L1/L2/L3**. Each run has 3 random calls. The app shows and speaks each call, and every call is checked to match exactly one person.
+  - L1: one attribute.
+  - L2: two attributes. Skin tone is always paired with clothing or gear.
+  - L3: three attributes, or a relative position ("left of the person in the …").
+- Penalties: wrong person +5 s, bystander +10 s (BACKSTOP FAILURE).
