@@ -8780,6 +8780,286 @@
     }
    }
   },
+  "carnival": {
+   "code": "LD-301",
+   "name": "Carnival Shoot",
+   "markerIds": [
+    300,
+    301,
+    302,
+    303
+   ],
+   "distance": "3-5 yd",
+   "set": "games",
+   "art": [
+    {
+     "src": "art/carnival.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 7.7,
+     "h": 7.3,
+     "warm": true
+    }
+   ],
+   "zones": [
+    {
+     "name": "PIG1",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 1.659,
+     "cy": 4.379,
+     "rx": 0.558,
+     "ry": 0.275,
+     "score": 3,
+     "tier": "tier3",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "pig",
+      "P1"
+     ],
+     "group": "P1"
+    },
+    {
+     "name": "PIG2",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 6.841,
+     "cy": 4.379,
+     "rx": 0.558,
+     "ry": 0.275,
+     "score": 3,
+     "tier": "tier3",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "pig",
+      "P2"
+     ],
+     "group": "P2"
+    },
+    {
+     "name": "PIG3",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 4.2,
+     "cy": 4.89,
+     "rx": 0.558,
+     "ry": 0.275,
+     "score": 3,
+     "tier": "tier3",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "pig",
+      "P3"
+     ],
+     "group": "P3"
+    },
+    {
+     "name": "BULL1 1",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 1.94,
+     "cy": 5.938,
+     "r": 0.78,
+     "score": 1,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B1"
+     ],
+     "group": "B1"
+    },
+    {
+     "name": "BULL1 3",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 1.94,
+     "cy": 5.938,
+     "r": 0.52,
+     "score": 3,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B1"
+     ],
+     "group": "B1"
+    },
+    {
+     "name": "BULL1 5",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 1.94,
+     "cy": 5.938,
+     "r": 0.26,
+     "score": 5,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B1"
+     ],
+     "group": "B1"
+    },
+    {
+     "name": "BULL2 1",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 6.56,
+     "cy": 5.938,
+     "r": 0.78,
+     "score": 1,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B2"
+     ],
+     "group": "B2"
+    },
+    {
+     "name": "BULL2 3",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 6.56,
+     "cy": 5.938,
+     "r": 0.52,
+     "score": 3,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B2"
+     ],
+     "group": "B2"
+    },
+    {
+     "name": "BULL2 5",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 6.56,
+     "cy": 5.938,
+     "r": 0.26,
+     "score": 5,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "bull",
+      "B2"
+     ],
+     "group": "B2"
+    },
+    {
+     "name": "DUCK1",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 1.324,
+     "cy": 7.475,
+     "rx": 0.5,
+     "ry": 0.28,
+     "score": 2,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "duck",
+      "D1"
+     ],
+     "group": "D1"
+    },
+    {
+     "name": "DUCK2",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 2.787,
+     "cy": 7.475,
+     "rx": 0.5,
+     "ry": 0.28,
+     "score": 2,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "duck",
+      "D2"
+     ],
+     "group": "D2"
+    },
+    {
+     "name": "DUCK3",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 4.25,
+     "cy": 7.475,
+     "rx": 0.5,
+     "ry": 0.28,
+     "score": 2,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "duck",
+      "D3"
+     ],
+     "group": "D3"
+    },
+    {
+     "name": "DUCK4",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 5.713,
+     "cy": 7.475,
+     "rx": 0.5,
+     "ry": 0.28,
+     "score": 2,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "duck",
+      "D4"
+     ],
+     "group": "D4"
+    },
+    {
+     "name": "DUCK5",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 7.176,
+     "cy": 7.475,
+     "rx": 0.5,
+     "ry": 0.28,
+     "score": 2,
+     "tier": "tier1",
+     "art": true,
+     "subtle": true,
+     "tags": [
+      "duck",
+      "D5"
+     ],
+     "group": "D5"
+    }
+   ],
+   "instructions": [
+    "Free fire: duck 2, pig 3, bullseye 5/3/1.",
+    "Called mode: the app calls \"duck 3\", \"all pigs\"...",
+    "Wrong item = -2. Red is decor only.",
+    "Mic on. Say \"start\" or tap."
+   ],
+   "drills": [
+    "carnival-free",
+    "carnival-calls"
+   ]
+  },
   "idpa-threat": {
    "code": "LD-101",
    "name": "IDPA-style Threat",

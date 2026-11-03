@@ -56,6 +56,9 @@ function tick(now){ctx.drawImage(video,0,0,W,H);const img=ctx.getImageData(0,0,W
   if(hit)onHit(hit,now);draw();
   const d=drill();$('status').textContent=lock?(`Locked: ${lock.target.name} (${lock.target.code})`+(d.target!=='any'&&d.target!==lock.key&&!(d.targets||[]).includes(lock.key)?` ⚠ drill expects '${d.target}'`:'')):'Looking for 4 corner markers…';}
 function onHit(h,now){const T=target(),d=drill();
+  if(d.game&&state.mode==='live'&&state.game&&lock){const p=Core.apply(lock.imgToTgt,h),sc=Core.score(T,p,spread(),TPL()),r=Core.gameShot(state.game,T,sc);
+    marks.push({x:h.x,y:h.y,t:now});state.shots.push(Object.assign({},sc,{t:now,p,score:r.pts,zone:r.msg,noshoot:false,bystander:false,hardcover:false}));
+    tone(r.pts<0?300:1600,r.pts<0?200:40);render();$('big').textContent=state.game.text;if(r.say)say(r.say,true);if(state.game.done)setTimeout(finish,1500);return;}
   const exp=state.mode==='live'&&d.sequence?d.sequence[state.shots.length]:null;
   const p=lock?Core.apply(lock.imgToTgt,h):null,sc=p?Core.applyRules(T,Core.score(T,p,spread(),TPL(),exp),state.shots):{zone:null,score:0};
   marks.push({x:h.x,y:h.y,t:now});if(marks.length>30)marks.shift();
@@ -70,6 +73,7 @@ function render(){const s=Core.drillSummary(drill(),state.beep,state.shots);
   $('shots').innerHTML=state.shots.map((x,i)=>`<tr><td>${i+1}</td><td>${s.times[i].toFixed(2)}</td><td>${s.splits[i].toFixed(2)}</td><td>${x.bystander?'BYSTANDER +10s':x.hardcover?'HARD COVER':x.noshoot?(drill().scoring==='idpa'?'NON-THREAT':'NO-SHOOT'):x.pending?x.zone+' ('+x.rule+')':x.ooo?x.zone+' (order)':(x.zone||'miss')}</td><td>${drill().scoring==='idpa'?(x.noshoot?'+5s':'-'+x.pd):x.score}</td></tr>`).join('');
   if(state.mode==='done'&&drill().scoring==='idpa'){const r=Core.idpaSummary(drill(),state.shots,s.total);
     $('big').textContent=`${drill().name||'Stage'}: raw ${r.raw.toFixed(2)}s + PD ${r.pd} + PE ${r.pe}×3 + HNT ${r.hnt}×5${r.fc!=null&&drill().scenario?` + no-command ${r.fc}×${drill().failCommand}`:''} = ${r.final.toFixed(2)}${r.wp?` + WRONG PERSON ${r.wp}×${drill().crowd.wrongPenalty||5}`:''}${r.ff?` + FRIENDLY FIRE ${r.ff}×10`:''}${r.bys?` + BYSTANDER ${r.bys}×10 · BACKSTOP FAILURE`:''}${r.fail?(r.ff?' · FAIL: friendly fire':' · FAIL: hostage hit'):''}`+(drill().scenario?` · calls: ${drill().text} · verbal at ${(state.verbal||[]).map(x=>x.toFixed(1)+'s').join(', ')||'none'}`:'');}
+  else if(state.mode==='done'&&drill().game&&state.game)$('big').textContent='RESULT: '+(state.game.summary||'no shots');
   else if(state.mode==='done')$('big').textContent=`${s.score}/${s.maxScore} pts · ${s.total!=null?s.total.toFixed(2)+'s':'—'} ${s.underPar?'✅ under par':'❌ over par/incomplete'}`;}
 function reset(){clearTimeout(state.timer);clearTimeout(state.par);state={mode:'idle',shots:[],beep:0};if(typeof Voice!=='undefined')Voice.resume();marks=[];$('shots').innerHTML='';$('big').textContent='';}
 $('goBtn').onclick=()=>{ac.resume();reset();const d=drill();if(!lock){$('big').textContent='No target lock yet';return;}
@@ -79,10 +83,11 @@ $('goBtn').onclick=()=>{ac.resume();reset();const d=drill();if(!lock){$('big').t
   if(d.scenario){state.calls=Core.makeScenario(d.scenario,Math.random);state.verbal=[];$('big').textContent='Stand by…';}
   if(d.crowd){state.calls=Core.crowdCalls(lock.target,d.crowd,Math.random);$('big').textContent='BOLO: '+state.calls.text;
     say(state.calls.callList.map((k,i)=>'Call '+(i+1)+'. '+k.say).join('. '),true);}
+  if(d.game){state.game=Core.gameStart(d.game,lock.target,Math.random);$('big').textContent=state.game.text;say(state.game.say,true);}
   if(d.calls){state.calls=Core.makeCalls(d.calls,Math.random,d.randomize);$('big').textContent='CALLS: '+state.calls.text;
     try{speechSynthesis.speak(new SpeechSynthesisUtterance(state.calls.callList.map(k=>k.say||(k.group.replace('T','Target ')+(k.parts?' Mozambique':''))).join(', ')));}catch(e){}}const delay=(d.startDelay[0]+Math.random()*(d.startDelay[1]-d.startDelay[0]))*1000;
   state.timer=setTimeout(()=>{if(d.scenario)Voice.verbalMode();else Voice.pause();state.mode='live';state.beep=performance.now();tone(2200,250);
-    if(d.scenario){$('big').textContent='GO · '+state.calls.text;setTimeout(()=>say(state.calls.speech,true),250);}$('big').textContent='GO'+(state.calls?' · '+state.calls.text:'');
+    if(d.scenario){$('big').textContent='GO · '+state.calls.text;setTimeout(()=>say(state.calls.speech,true),250);}$('big').textContent='GO'+(state.calls?' · '+state.calls.text:'')+(state.game?' · '+state.game.text:'');
     state.par=setTimeout(()=>tone(900,300),d.parTime*1000);state.timer=setTimeout(finish,d.timeout*1000);},delay);};
 $('freeBtn').onclick=()=>{ac.resume();reset();state.mode='free';state.beep=performance.now();$('big').textContent='Free fire';};
 $('stopBtn').onclick=()=>{Voice.resume();if(state.mode==='idle'&&sel().type==='course'){course={idx:0,results:[]};showNotes();}if(state.mode==='live'||state.mode==='free')finish();else reset();};
@@ -100,6 +105,7 @@ function finish(){clearTimeout(state.timer);clearTimeout(state.par);const was=st
 let lastSay='No result yet.';
 function say(t,keepListening){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.rate=1.05;if(!keepListening)Voice.mute(true);u.onend=u.onerror=()=>setTimeout(()=>Voice.mute(false),500);speechSynthesis.speak(u);}catch(e){}}
 function spokenResult(){const d=drill(),s=Core.drillSummary(d,state.beep,state.shots);
+  if(d.game&&state.game)return state.game.summary||'No shots';
   if(d.scoring==='idpa'){const r=Core.idpaSummary(d,state.shots,s.total);return `Final ${r.final.toFixed(2)} seconds. Raw ${r.raw.toFixed(2)}, ${r.pd} down`+(r.pe?`, ${r.pe} procedural`:'')+(r.hnt?`, ${r.hnt} non-threat hits`:'')+(d.scenario&&r.fc?`, ${r.fc} missed commands`:'')+(r.wp?`. ${r.wp} wrong person hit${r.wp>1?'s':''}`:'')+(r.ff?`. Friendly fire, ${r.ff} hit${r.ff>1?'s':''} on the officer, plus ${10*r.ff} seconds`:'')+(r.bys?`. Backstop failure, ${r.bys} bystander hit${r.bys>1?'s':''}, plus ${10*r.bys} seconds`:'')+(r.fail?'. Fail, hostage hit':'')+'.';}
   return `${s.score} of ${s.maxScore} points`+(s.total!=null?`, ${s.total.toFixed(2)} seconds`:'')+(s.underPar?', under par.':'.');}
 // ---- commands (voice, big buttons, media keys)

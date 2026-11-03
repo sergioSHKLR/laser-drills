@@ -51,7 +51,10 @@ Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
   for(const z of target.zones)if(z.kind==='noshoot'&&!(topZ!==null&&z.z!=null&&z.z!==topZ)&&Core.inZone(z,pt,z.z!=null?0:spread))return {zone:z.name,score:z.penalty,pd:5,noshoot:true,friendly:!!z.friendly,ntSeconds:z.ntSeconds||5};
   for(const z of target.zones){if(z.kind!=='score')continue;if(topZ!==null&&z.z!=null&&z.z!==topZ)continue;if(expectName&&!target.scoring&&z.name!==expectName)continue;
     if(Core.inZone(z,pt,z.noGrow?0:spread)&&(!best||z.score>best.score))best={zone:z.name,score:z.score,pd:z.pd!=null?z.pd:0,group:z.group,part:z.part};}
-  if(best)return best;
+  if(best){const bz=target.zones.find(q=>q.name===best.zone&&q.kind==='score');
+    // e-vest / head-only: a person with a headOnly zone only counts head hits; any other hit on them = vest strike (+5 s, no score)
+    if(best.group&&!(bz&&bz.headOnly)&&target.zones.some(q=>q.headOnly&&q.group===best.group))return {zone:best.zone,score:0,pd:5,noshoot:true,vestStrike:true,ntSeconds:5,group:best.group};
+    return best;}
   // backstop: bystanders sit BEHIND threats, so only shots that miss every scoring zone land on them
   for(const z of target.zones)if(z.kind==='bystander'&&Core.inZone(z,pt,0))return {zone:z.name,score:z.penalty||-10,pd:5,bystander:true,backstop:true};
   if(expectName&&!target.scoring){for(const z of target.zones)if(z.kind==='score'&&Core.inZone(z,pt,spread))return {zone:z.name,score:0,pd:5,outOfOrder:true};}
@@ -155,5 +158,50 @@ Core.drillSummary=function(drill,beepT,shots){
   const total=times.length?times[times.length-1]:null,score=shots.reduce((a,s)=>a+s.score,0);
   return {times,splits,total,score,maxScore:drill.shots*(drill.maxPerShot||5),par:drill.parTime,underPar:total!==null&&total<=drill.parTime&&shots.length===drill.shots};
 };
+// ---- Games (drill.game): callouts, battleship, poker. gameStart -> state; gameShot(state,target,res) -> {pts,msg,say}
+Core.shuffle=(a,rand)=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+Core.zoneTags=function(T,name){const z=name&&T.zones.find(q=>q.name===name);return z?[z.name,z.group].concat(z.tags||[]).filter(Boolean):[];};
+Core.placeFleet=function(rows,cols,ships,rand){const used=new Set(),fleet=[];
+  for(const sh of ships){for(let k=0;k<500;k++){const h=rand()<0.5,r=Math.floor(rand()*(h?rows:rows-sh.len+1)),c=Math.floor(rand()*(h?cols-sh.len+1:cols));
+      const cells=[];for(let i=0;i<sh.len;i++)cells.push(String.fromCharCode(65+(h?r:r+i))+((h?c+i:c)+1));
+      if(cells.some(x=>used.has(x)))continue;cells.forEach(x=>used.add(x));fleet.push({name:sh.name,cells,hit:[]});break;}}
+  return fleet;};
+const RK='23456789TJQKA';
+Core.cardParse=c=>{c=String(c).toUpperCase().replace('10','T');return {r:RK.indexOf(c[0])+2,s:c[1]};};
+Core.HANDS=['High card','One pair','Two pair','Three of a kind','Straight','Flush','Full house','Four of a kind','Straight flush','Royal flush'];
+Core.pokerRank=function(cards){const p=cards.map(Core.cardParse),rs=p.map(x=>x.r).sort((a,b)=>b-a),cnt={};rs.forEach(r=>cnt[r]=(cnt[r]||0)+1);
+  const c=Object.values(cnt).sort((a,b)=>b-a),fl=p.length===5&&p.every(x=>x.s===p[0].s),u=[...new Set(rs)];
+  let st=u.length===5&&(u[0]-u[4]===4||(u[0]===14&&u[1]===5));
+  let r=st&&fl?(rs[0]===14&&rs[4]===10?9:8):c[0]===4?7:c[0]===3&&c[1]===2?6:fl?5:st?4:c[0]===3?3:c[0]===2&&c[1]===2?2:c[0]===2?1:0;
+  return {rank:r,name:Core.HANDS[r]};};
+Core.gameStart=function(g,T,rand){const s={g,score:0,shots:0,done:false,log:[]};
+  if(g.type==='battle'){s.fleet=Core.placeFleet(g.rows,g.cols,g.ships,rand);s.shot=new Set();s.say=`${g.ships.length} ships hidden. Fire at will.`;}
+  else if(g.type==='poker'){s.cards=[];s.say='Shoot five cards.';}
+  else {let q=Core.shuffle(g.calls,rand);if(g.rounds)while(q.length<g.rounds)q=q.concat(Core.shuffle(g.calls,rand));s.queue=q.slice(0,g.rounds||q.length);s.i=0;s.need=s.queue[0].n||1;s.say=s.queue[0].say;}
+  s.text=s.say;return s;};
+Core.gameShot=function(s,T,res){if(s.done)return {pts:0,msg:'game over',say:''};s.shots++;const g=s.g,tags=Core.zoneTags(T,res&&res.zone);let pts=0,msg,say;
+  if(g.type==='battle'){const cell=tags.find(t=>/^[A-Z]\d+$/.test(t));
+    if(!cell){msg='off grid';say='Off grid';}
+    else if(s.shot.has(cell)){msg=cell+' again';say='Already fired at '+cell;}
+    else{s.shot.add(cell);const sh=s.fleet.find(f=>f.cells.includes(cell));
+      if(!sh){msg=cell+' miss';say='Miss';}
+      else{sh.hit.push(cell);if(sh.hit.length===sh.cells.length){msg=cell+' SUNK '+sh.name;say='Hit. You sunk my '+sh.name;}else{msg=cell+' HIT';say='Hit';}
+        if(s.fleet.every(f=>f.hit.length===f.cells.length)){s.done=true;say+=`. Fleet destroyed in ${s.shots} shots`;}}}
+    s.score=-s.shots;pts=0;s.summary=s.done?`Fleet sunk in ${s.shots} shots`:`${s.fleet.filter(f=>f.hit.length===f.cells.length).length} of ${s.fleet.length} ships sunk, ${s.shots} shots`;}
+  else if(g.type==='poker'){const card=tags.find(t=>/^(10|[2-9TJQKA])[SHDC]$/.test(t));
+    if(!card){msg='miss';say='Miss';}else if(s.cards.includes(card)){msg=card+' again';say='Already have it';}
+    else{s.cards.push(card);msg=card;say=card;if(s.cards.length===5){const r=Core.pokerRank(s.cards);s.done=true;pts=r.rank*10;s.hand=r;say=r.name;msg+=' → '+r.name;}}
+    s.score=s.hand?s.hand.rank*10:0;s.summary=s.hand?`${s.hand.name}: ${s.cards.join(' ')}`:`${s.cards.length} cards: ${s.cards.join(' ')}`;}
+  else{const cur=s.queue[s.i],base=r=>r>0?r:({0:5,'-1':3,'-3':1}[r]||1);
+    if(res&&res.vestStrike){pts=g.vest||-5;msg='VEST STRIKE';say='Vest strike';}
+    else if(res&&(res.noshoot||res.bystander)){pts=g.noShoot||-10;msg='NO-SHOOT';say='No shoot!';}
+    else if(cur.forbid&&tags.some(t=>cur.forbid.includes(t))){pts=g.fratricide||-25;msg='FRIENDLY FIRE';say='Friendly fire!';}
+    else if(tags.some(t=>cur.tags.includes(t))){pts=base(res.score);msg='HIT '+(res.zone||'');s.need--;say='Hit';}
+    else if(res&&res.zone){pts=g.wrong||-2;msg='WRONG '+res.zone;say='Wrong target';}
+    else{msg='miss';say='Miss';}
+    if(s.need<=0){s.i++;if(s.i>=s.queue.length){s.done=true;say+='. Done';}else{s.need=s.queue[s.i].n||1;say+='. Next: '+s.queue[s.i].say;}}
+    s.score+=pts;s.summary=`${s.score} points, ${s.i} of ${s.queue.length} calls in ${s.shots} shots`;}
+  s.text=s.done?s.summary:(g.type==='battle'||g.type==='poker'?s.summary:'CALL: '+s.queue[s.i].say);
+  return {pts,msg,say};};
 if(typeof module!=='undefined')module.exports=Core;else root.Core=Core;
 })(this);

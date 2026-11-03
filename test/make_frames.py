@@ -38,6 +38,7 @@ CASES={
  'dh-uli':S('dh-uli','T1 -0#1','BYSTANDER 2'),
  'dh-powell':S('dh-powell','POWELL FRIENDLY'),
  'dh-lobby':S('dh-lobby','T1 -0#1','POWELL FRIENDLY'),
+ 'carnival':[(1.66,4.38,3),(1.94,5.94,5),(1.94,6.34,3),(1.32,7.47,2),(4.25,3.3,0)],
  'clays':[(2.45,3.55,5),(5.85,5.15,5),(5.85,6.45,2),(2.95+1.15,7.55-0.3,3),(7.6,2.5,0)],  # 1-2 dome 5; 4th orange rim via spread 3
 }
 meta={'w':W,'h':H,'sets':{}}
