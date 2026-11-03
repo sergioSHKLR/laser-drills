@@ -231,5 +231,22 @@ Core.fwStats=function(runs){const v=r=>r.final!=null?r.final:r.time,t=runs.filte
   const best=t.length?t.reduce((a,r)=>v(r)<v(a)?r:a):null,avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null;
   const h=Math.floor(vals.length/2),trend=vals.length>=4?(vals.slice(h).reduce((a,b)=>a+b,0)/(vals.length-h))-(vals.slice(0,h).reduce((a,b)=>a+b,0)/h):null;
   return {runs:runs.length,timed:t.length,best,avg,trend,fails:runs.filter(r=>r.fail).length,series:vals.slice(-20)};};
+
+// ---- Courses (courses.json): ordered stages built on drills.json, pass thresholds, progress derived from history per firearm
+Core.stageDrill=function(drills,cid,i,stg){const ref=String(stg.drill).split(':');let b=drills.find(d=>d.id===ref[0]);if(!b)return null;
+  if(b.type==='course'){const s=b.stages.find(x=>x.target===ref[1])||b.stages[0];b=Object.assign({scoring:'idpa',maxPerShot:0,category:'training'},s,{notes:s.brief});}
+  const d=JSON.parse(JSON.stringify(b));Object.assign(d,stg.set||{});
+  return Object.assign(d,{id:'__cs',hidden:true,category:'training',name:stg.name,notes:`${stg.brief} Distance: ${stg.dist}. Pass: ${Core.passText(stg.pass)}`,courseId:cid,stage:i});};
+Core.passText=function(p){p=p||{};const t=[];if(p.minPct!=null)t.push(`≥${p.minPct}% score`);if(p.maxTime!=null)t.push(`≤${p.maxTime}s`);if(p.maxFinal!=null)t.push(`final ≤${p.maxFinal}s`);if(p.noFail)t.push('no fail');return t.length?t.join(', '):'complete the string';};
+Core.stagePass=function(p,r,need){p=p||{};if(!r)return false;if(need&&r.shots<need)return false;
+  if(p.minPct!=null){if(!r.max||r.score==null||r.score/r.max*100<p.minPct)return false;}
+  if(p.maxTime!=null&&(r.time==null||r.time>p.maxTime))return false;
+  if(p.maxFinal!=null&&(r.final==null||r.final>p.maxFinal))return false;
+  if(p.noFail&&r.fail)return false;return true;};
+Core.courseProgress=function(courses,runs,fw){const out={};for(const c of courses){const st=c.stages.map(()=>({runs:0,passed:false,best:null}));
+    for(const r of runs||[]){if(r.course!==c.id||(fw&&r.fw!==fw))continue;const s=st[r.stage];if(!s)continue;s.runs++;if(r.pass){s.passed=true;s.ts=Math.max(s.ts||0,r.ts);}
+      const v=r.final!=null?r.final:r.time;if(v!=null&&(s.best==null||v<s.best))s.best=v;}
+    const n=st.filter(s=>s.passed).length,done=n===c.stages.length;out[c.id]={stages:st,passed:n,total:c.stages.length,done,earned:done?Math.max(...st.map(s=>s.ts||0)):null};}
+  for(const c of courses){const o=out[c.id];o.locked=!!(c.requires&&out[c.requires]&&!out[c.requires].done);}return out;};
 if(typeof module!=='undefined')module.exports=Core;else root.Core=Core;
 })(this);

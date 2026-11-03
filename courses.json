@@ -1,0 +1,1169 @@
+[
+ {
+  "id": "qual-pro-marksman",
+  "group": "qual",
+  "name": "Qualification: Pro-Marksman",
+  "badge": "Pro-Marksman",
+  "icon": "🥉",
+  "requires": null,
+  "notes": "Rank 1 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 60% or better. Repeat stages as often as you like; your best run counts.",
+  "stages": [
+   {
+    "name": "Slow fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots, precision, no time pressure.",
+    "dist": "5 yd real / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 25.0,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 60
+    }
+   },
+   {
+    "name": "Timed fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots inside the par.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 12.5,
+     "timeout": 25,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 55,
+     "maxTime": 12.5
+    }
+   },
+   {
+    "name": "Rapid fire, silhouette",
+    "drill": "five-shot-par",
+    "brief": "5 shots to the body A zone.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 7.5,
+     "timeout": 20,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "silhouette"
+    },
+    "pass": {
+     "minPct": 50,
+     "maxTime": 7.5
+    }
+   },
+   {
+    "name": "Dot sequence",
+    "drill": "dot-sequence",
+    "brief": "Dots 1→5 in order.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 15.0,
+     "timeout": 30,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 60,
+     "maxTime": 15.0
+    }
+   }
+  ]
+ },
+ {
+  "id": "qual-marksman",
+  "group": "qual",
+  "name": "Qualification: Marksman",
+  "badge": "Marksman",
+  "icon": "🎖️",
+  "requires": "qual-pro-marksman",
+  "notes": "Rank 2 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 70% or better. Repeat stages as often as you like; your best run counts.",
+  "stages": [
+   {
+    "name": "Slow fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots, precision, no time pressure.",
+    "dist": "5 yd real / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 20.0,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 70
+    }
+   },
+   {
+    "name": "Timed fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots inside the par.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 10.0,
+     "timeout": 25,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 65,
+     "maxTime": 10.0
+    }
+   },
+   {
+    "name": "Rapid fire, silhouette",
+    "drill": "five-shot-par",
+    "brief": "5 shots to the body A zone.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 6.0,
+     "timeout": 20,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "silhouette"
+    },
+    "pass": {
+     "minPct": 60,
+     "maxTime": 6.0
+    }
+   },
+   {
+    "name": "Dot sequence",
+    "drill": "dot-sequence",
+    "brief": "Dots 1→5 in order.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 12.0,
+     "timeout": 30,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 70,
+     "maxTime": 12.0
+    }
+   }
+  ]
+ },
+ {
+  "id": "qual-sharpshooter",
+  "group": "qual",
+  "name": "Qualification: Sharpshooter",
+  "badge": "Sharpshooter",
+  "icon": "🏅",
+  "requires": "qual-marksman",
+  "notes": "Rank 3 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 78% or better. Repeat stages as often as you like; your best run counts.",
+  "stages": [
+   {
+    "name": "Slow fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots, precision, no time pressure.",
+    "dist": "5 yd real / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 17.0,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 78
+    }
+   },
+   {
+    "name": "Timed fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots inside the par.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 8.5,
+     "timeout": 25,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 73,
+     "maxTime": 8.5
+    }
+   },
+   {
+    "name": "Rapid fire, silhouette",
+    "drill": "five-shot-par",
+    "brief": "5 shots to the body A zone.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 5.1,
+     "timeout": 20,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "silhouette"
+    },
+    "pass": {
+     "minPct": 68,
+     "maxTime": 5.1
+    }
+   },
+   {
+    "name": "Dot sequence",
+    "drill": "dot-sequence",
+    "brief": "Dots 1→5 in order.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 10.2,
+     "timeout": 30,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 78,
+     "maxTime": 10.2
+    }
+   }
+  ]
+ },
+ {
+  "id": "qual-expert",
+  "group": "qual",
+  "name": "Qualification: Expert",
+  "badge": "Expert",
+  "icon": "🥈",
+  "requires": "qual-sharpshooter",
+  "notes": "Rank 4 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 85% or better. Repeat stages as often as you like; your best run counts.",
+  "stages": [
+   {
+    "name": "Slow fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots, precision, no time pressure.",
+    "dist": "5 yd real / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 14.4,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 85
+    }
+   },
+   {
+    "name": "Timed fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots inside the par.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 7.2,
+     "timeout": 25,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 80,
+     "maxTime": 7.2
+    }
+   },
+   {
+    "name": "Rapid fire, silhouette",
+    "drill": "five-shot-par",
+    "brief": "5 shots to the body A zone.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 4.3,
+     "timeout": 20,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "silhouette"
+    },
+    "pass": {
+     "minPct": 75,
+     "maxTime": 4.3
+    }
+   },
+   {
+    "name": "Dot sequence",
+    "drill": "dot-sequence",
+    "brief": "Dots 1→5 in order.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 8.6,
+     "timeout": 30,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 85,
+     "maxTime": 8.6
+    }
+   }
+  ]
+ },
+ {
+  "id": "qual-distinguished-expert",
+  "group": "qual",
+  "name": "Qualification: Distinguished Expert",
+  "badge": "Distinguished Expert",
+  "icon": "🥇",
+  "requires": "qual-expert",
+  "notes": "Rank 5 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 92% or better. Repeat stages as often as you like; your best run counts.",
+  "stages": [
+   {
+    "name": "Slow fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots, precision, no time pressure.",
+    "dist": "5 yd real / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 12.0,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 92
+    }
+   },
+   {
+    "name": "Timed fire, bullseye",
+    "drill": "five-shot-par",
+    "brief": "5 shots inside the par.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 6.0,
+     "timeout": 25,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 87,
+     "maxTime": 6.0
+    }
+   },
+   {
+    "name": "Rapid fire, silhouette",
+    "drill": "five-shot-par",
+    "brief": "5 shots to the body A zone.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 3.6,
+     "timeout": 20,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "silhouette"
+    },
+    "pass": {
+     "minPct": 82,
+     "maxTime": 3.6
+    }
+   },
+   {
+    "name": "Dot sequence",
+    "drill": "dot-sequence",
+    "brief": "Dots 1→5 in order.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 7.2,
+     "timeout": 30,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 92,
+     "maxTime": 7.2
+    }
+   }
+  ]
+ },
+ {
+  "id": "fund-basic",
+  "group": "fund",
+  "name": "Pistol Fundamentals (Basic Pistol-style)",
+  "badge": "Fundamentals",
+  "icon": "🎯",
+  "notes": "Grip, sight alignment, trigger press. Group shooting at four scaled distances (inspired by NRA Basic Pistol-style range work; original content). Laser distance = half the standard distance on the Letter bullseye. Slow and clean beats fast.",
+  "stages": [
+   {
+    "name": "Group at 3 yd",
+    "drill": "five-shot-par",
+    "brief": "5-shot group, slow fire. Stand at 1.5 yd.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 30,
+     "timeout": 60,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 80
+    }
+   },
+   {
+    "name": "Group at 5 yd",
+    "drill": "five-shot-par",
+    "brief": "5-shot group, slow fire. Stand at 2.5 yd.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 30,
+     "timeout": 60,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 75
+    }
+   },
+   {
+    "name": "Group at 7 yd",
+    "drill": "five-shot-par",
+    "brief": "5-shot group, slow fire. Stand at 3.5 yd.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 30,
+     "timeout": 60,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 70
+    }
+   },
+   {
+    "name": "Group at 15 yd",
+    "drill": "five-shot-par",
+    "brief": "5-shot group, slow fire. Stand at 7.5 yd.",
+    "dist": "15 yd / 7.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 30,
+     "timeout": 60,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 60
+    }
+   },
+   {
+    "name": "Trigger control: dots",
+    "drill": "dot-sequence",
+    "brief": "Dots in order, no time pressure. Focus on a surprise break.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 20,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 80
+    }
+   }
+  ]
+ },
+ {
+  "id": "def-pistol",
+  "group": "def",
+  "name": "Defensive Pistol (Defensive-course-style)",
+  "badge": "Defender",
+  "icon": "🛡️",
+  "notes": "Draw from concealment, ankle draw from a kneel, movement and decision. Score at end (IDPA-style: raw time + 1 s per point down). Inspired by defensive pistol course themes; original stages. Say “start” to begin each stage.",
+  "stages": [
+   {
+    "name": "Draw to first shot",
+    "drill": "single-draw",
+    "brief": "From concealment: draw, 1 shot to body.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 1,
+     "parTime": 2.0,
+     "timeout": 8,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 60,
+     "maxTime": 2.0
+    }
+   },
+   {
+    "name": "Draw, 2 to body",
+    "drill": "single-draw",
+    "brief": "Draw, 2 shots to the -0.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 2,
+     "parTime": 3.0,
+     "timeout": 10,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "idpa-threat",
+     "scoring": "idpa",
+     "maxPerShot": 0
+    },
+    "pass": {
+     "maxFinal": 4.0
+    }
+   },
+   {
+    "name": "Ankle draw, kneeling",
+    "drill": "ankle-standing",
+    "brief": "Ankle draw, drop to a kneel behind cover, 2 to the called threat.",
+    "dist": "kneel at 2–3 yd",
+    "set": {},
+    "pass": {
+     "maxFinal": 6.0,
+     "noFail": true
+    }
+   },
+   {
+    "name": "Move off the X",
+    "drill": "single-draw",
+    "brief": "Step laterally 1–2 steps at the beep, then draw and fire 2.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 2,
+     "parTime": 3.5,
+     "timeout": 10,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "idpa-threat",
+     "scoring": "idpa",
+     "maxPerShot": 0
+    },
+    "pass": {
+     "maxFinal": 5.0
+    }
+   },
+   {
+    "name": "Shoot / don't-shoot",
+    "drill": "shoot-dont-shoot-letter",
+    "brief": "Engage only the threats; verbal command for compliant.",
+    "dist": "Letter landscape at 3 yd",
+    "set": {},
+    "pass": {
+     "maxFinal": 18.0,
+     "noFail": true
+    }
+   },
+   {
+    "name": "Multiple threats",
+    "drill": "idpa-course:idpa-multi",
+    "brief": "2 each, left to right.",
+    "dist": "3 yd laser",
+    "set": {},
+    "pass": {
+     "maxFinal": 10.0
+    }
+   }
+  ]
+ },
+ {
+  "id": "la-style",
+  "group": "la",
+  "name": "Reaction · Hunt · Eyes (Laser-Academy-style)",
+  "badge": "Quick Eyes",
+  "icon": "👁️",
+  "notes": "Original drills in the spirit of popular laser-trainer apps: reaction to the beep, hunting the called target, and eyes/decision drills. Inspired by Mantis Laser Academy-style drill types; no copied content.",
+  "stages": [
+   {
+    "name": "Reaction: single shot",
+    "drill": "five-shot-par",
+    "brief": "Random beep, 1 shot to the center.",
+    "dist": "3 yd laser",
+    "set": {
+     "shots": 1,
+     "parTime": 1.2,
+     "timeout": 5,
+     "startDelay": [
+      2,
+      6
+     ]
+    },
+    "pass": {
+     "minPct": 60,
+     "maxTime": 1.2
+    }
+   },
+   {
+    "name": "Reaction: double tap",
+    "drill": "single-draw",
+    "brief": "From ready: 2 shots to body A.",
+    "dist": "3 yd laser",
+    "set": {
+     "shots": 2,
+     "parTime": 1.6,
+     "timeout": 6,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 70,
+     "maxTime": 1.6
+    }
+   },
+   {
+    "name": "Hunt: one attribute",
+    "drill": "crowd-l1",
+    "brief": "Find the described person, 2 shots.",
+    "dist": "3 yd laser",
+    "set": {},
+    "pass": {
+     "maxFinal": 20.0
+    }
+   },
+   {
+    "name": "Hunt: two attributes",
+    "drill": "crowd-l2",
+    "brief": "Harder description.",
+    "dist": "3 yd laser",
+    "set": {},
+    "pass": {
+     "maxFinal": 28.0
+    }
+   },
+   {
+    "name": "Eyes: friend or foe",
+    "drill": "fof-tape",
+    "brief": "Shoot only foes in the window. Completion stage: score is tracked.",
+    "dist": "3 yd laser",
+    "set": {},
+    "pass": {}
+   },
+   {
+    "name": "Eyes: decision",
+    "drill": "mar-decision",
+    "brief": "Smuggler or civilian? Decide fast. Completion stage: score is tracked.",
+    "dist": "3 yd laser",
+    "set": {},
+    "pass": {}
+   }
+  ]
+ },
+ {
+  "id": "bm-fbi",
+  "group": "bm",
+  "name": "FBI-style Qualification (laser)",
+  "badge": "Qualified",
+  "icon": "⭐",
+  "notes": "Original laser adaptation of a law-enforcement-style qualification: close, fast strings then longer, slower strings. Pass ≥ 80% on every stage.",
+  "stages": [
+   {
+    "name": "3 yd: 3 rounds",
+    "drill": "five-shot-par",
+    "brief": "Draw, 3 shots, strong hand.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 3,
+     "parTime": 3.0,
+     "timeout": 10,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "silhouette"
+    },
+    "pass": {
+     "minPct": 80,
+     "maxTime": 3.0
+    }
+   },
+   {
+    "name": "5 yd: 4 rounds",
+    "drill": "five-shot-par",
+    "brief": "Draw, 4 shots.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 4,
+     "parTime": 4.0,
+     "timeout": 12,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "silhouette"
+    },
+    "pass": {
+     "minPct": 80,
+     "maxTime": 4.0
+    }
+   },
+   {
+    "name": "7 yd: 6 rounds",
+    "drill": "five-shot-par",
+    "brief": "Draw, 6 shots.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 6,
+     "parTime": 6.0,
+     "timeout": 15,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "silhouette"
+    },
+    "pass": {
+     "minPct": 80,
+     "maxTime": 6.0
+    }
+   },
+   {
+    "name": "15 yd: 5 rounds",
+    "drill": "five-shot-par",
+    "brief": "Draw, 5 shots, slower.",
+    "dist": "15 yd / 7.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 10.0,
+     "timeout": 20,
+     "startDelay": [
+      2,
+      4
+     ],
+     "target": "silhouette"
+    },
+    "pass": {
+     "minPct": 80,
+     "maxTime": 10.0
+    }
+   }
+  ]
+ },
+ {
+  "id": "bm-bill",
+  "group": "bm",
+  "name": "Bill Drill",
+  "badge": "Bill Drill",
+  "icon": "⚡",
+  "notes": "6 shots to the body A zone from the draw as fast as you can keep them in. Benchmark par 2.5 s.",
+  "stages": [
+   {
+    "name": "Bill Drill",
+    "drill": "single-draw",
+    "brief": "Draw, 6 shots to body A.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 6,
+     "parTime": 2.5,
+     "timeout": 10,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 80,
+     "maxTime": 2.5
+    }
+   }
+  ]
+ },
+ {
+  "id": "bm-elprez",
+  "group": "bm",
+  "name": "El Presidente (laser)",
+  "badge": "El Presidente",
+  "icon": "🎩",
+  "notes": "Original laser adaptation: turn from facing uprange, 2 each on three threats, simulated reload (rack/reset), 2 each again. Uses the 3-threat sheet.",
+  "stages": [
+   {
+    "name": "El Prez",
+    "drill": "idpa-course:idpa-multi",
+    "brief": "Start facing away. Turn, draw, 2-2-2, reset, 2-2-2.",
+    "dist": "3 yd laser (≈27 yd sim)",
+    "set": {
+     "shots": 12,
+     "parTime": 10.0,
+     "timeout": 25
+    },
+    "pass": {
+     "maxFinal": 16.0
+    }
+   }
+  ]
+ },
+ {
+  "id": "bm-dot",
+  "group": "bm",
+  "name": "Dot Torture (laser)",
+  "badge": "Dot Torture",
+  "icon": "🔵",
+  "notes": "Original precision drill on the 5-dot sheet: repeated slow and fast sequences. Every shot must hit its dot in order.",
+  "stages": [
+   {
+    "name": "Slow sequence",
+    "drill": "dot-sequence",
+    "brief": "Dots 1→5, slow.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 20,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 100,
+     "maxTime": 20
+    }
+   },
+   {
+    "name": "Draw sequence",
+    "drill": "dot-sequence",
+    "brief": "Draw, dots 1→5.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 12,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 100,
+     "maxTime": 12
+    }
+   },
+   {
+    "name": "Fast sequence",
+    "drill": "dot-sequence",
+    "brief": "Dots 1→5 fast.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 8,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 100,
+     "maxTime": 8
+    }
+   },
+   {
+    "name": "Speed sequence",
+    "drill": "dot-sequence",
+    "brief": "Dots 1→5 under pressure.",
+    "dist": "3 yd / 1.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 6,
+     "timeout": 40,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 100,
+     "maxTime": 6
+    }
+   }
+  ]
+ },
+ {
+  "id": "bm-3sec",
+  "group": "bm",
+  "name": "3-Seconds-or-Less (laser)",
+  "badge": "Under 3",
+  "icon": "⏱️",
+  "notes": "Original adaptation of the classic 'three seconds or less' idea: every string must finish in 3 s or less with hits.",
+  "stages": [
+   {
+    "name": "Draw, 1 shot",
+    "drill": "single-draw",
+    "brief": "Draw, 1 to body.",
+    "dist": "3 yd laser",
+    "set": {
+     "shots": 1,
+     "parTime": 3.0,
+     "timeout": 8,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 60,
+     "maxTime": 3.0
+    }
+   },
+   {
+    "name": "Draw, 2 shots",
+    "drill": "single-draw",
+    "brief": "Draw, 2 to body.",
+    "dist": "3 yd laser",
+    "set": {
+     "shots": 2,
+     "parTime": 3.0,
+     "timeout": 8,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 60,
+     "maxTime": 3.0
+    }
+   },
+   {
+    "name": "Ready, 3 shots",
+    "drill": "single-draw",
+    "brief": "From ready, 3 to body.",
+    "dist": "3 yd laser",
+    "set": {
+     "shots": 3,
+     "parTime": 3.0,
+     "timeout": 8,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 60,
+     "maxTime": 3.0
+    }
+   },
+   {
+    "name": "Head shot",
+    "drill": "single-draw",
+    "brief": "Draw, 1 to the head box.",
+    "dist": "3 yd laser",
+    "set": {
+     "shots": 1,
+     "parTime": 3.0,
+     "timeout": 8,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 100,
+     "maxTime": 3.0
+    }
+   },
+   {
+    "name": "Ankle draw, 1 shot",
+    "drill": "ankle-standing",
+    "brief": "Ankle draw to kneel, 2 shots.",
+    "dist": "kneel 2–3 yd",
+    "set": {
+     "parTime": 3.0
+    },
+    "pass": {
+     "maxTime": 3.0,
+     "noFail": true
+    }
+   }
+  ]
+ },
+ {
+  "id": "bm-core",
+  "group": "bm",
+  "name": "Core Skills (laser)",
+  "badge": "Core Skills",
+  "icon": "🧩",
+  "notes": "Original skills test in the spirit of instructor 'core skills' assessments: draw, accuracy, pairs, head shot, and a multi-threat string. Pass every stage.",
+  "stages": [
+   {
+    "name": "Draw, 1",
+    "drill": "single-draw",
+    "brief": "Draw, 1 to body A.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 1,
+     "parTime": 1.8,
+     "timeout": 6,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 80,
+     "maxTime": 1.8
+    }
+   },
+   {
+    "name": "Pair",
+    "drill": "single-draw",
+    "brief": "Draw, 2 to body A.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 2,
+     "parTime": 2.3,
+     "timeout": 8,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 80,
+     "maxTime": 2.3
+    }
+   },
+   {
+    "name": "Precision",
+    "drill": "five-shot-par",
+    "brief": "5 shots to the bullseye.",
+    "dist": "7 yd / 3.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 8.0,
+     "timeout": 20,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 80,
+     "maxTime": 8.0
+    }
+   },
+   {
+    "name": "Head",
+    "drill": "hostage-head",
+    "brief": "2 head shots, hostage present.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {},
+    "pass": {
+     "minPct": 80,
+     "maxTime": 3.0
+    }
+   },
+   {
+    "name": "Multi-threat",
+    "drill": "idpa-course:idpa-multi",
+    "brief": "2 each left to right.",
+    "dist": "3 yd laser",
+    "set": {},
+    "pass": {
+     "maxFinal": 8.0
+    }
+   }
+  ]
+ },
+ {
+  "id": "bm-5x5",
+  "group": "bm",
+  "name": "5×5 (laser)",
+  "badge": "5×5",
+  "icon": "✋",
+  "notes": "Original take on the 5×5 idea: 5 shots, 5 seconds, one small circle. Use the center ring of the bullseye; anything not 5 pts is a miss.",
+  "stages": [
+   {
+    "name": "5×5",
+    "drill": "five-shot-par",
+    "brief": "5 shots in 5 s, center ring only.",
+    "dist": "5 yd / 2.5 yd laser",
+    "set": {
+     "shots": 5,
+     "parTime": 5.0,
+     "timeout": 15,
+     "startDelay": [
+      2,
+      4
+     ]
+    },
+    "pass": {
+     "minPct": 100,
+     "maxTime": 5.0
+    }
+   }
+  ]
+ }
+]

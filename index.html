@@ -86,7 +86,7 @@ nav .brand{display:none}
   • <b>Score at end (IDPA)</b>: Self-Defense drills hide hits until the string ends, then reveal hits, points down, PE/HNT, time and a spoken summary. Fun drills give live feedback (change in Settings).<br>
   • Voice: tap 🎤 and say start · stop · reset · next · repeat · score. Bluetooth media buttons and keyboard (Space start/stop, Esc stop) work too.<br>
   • Missed or false shots? Settings › Calibrate.</div></details>
-  <div class="row" style="margin-top:12px"><button class="btn" onclick="UI.go('drills')">Pick a drill</button><button class="btn go" onclick="UI.go('shoot')">Quick start ▶</button></div></div>
+  <div class="row" style="margin-top:12px"><button class="btn" onclick="UI.go('drills')">Pick a drill</button><button class="btn" onclick="UI.go('courses')">🏅 Courses</button><button class="btn go" onclick="UI.go('shoot')">Quick start ▶</button></div></div>
  <div class="sec-h">Target gallery · <span id="gN"></span></div>
  <input type="search" id="gq" placeholder="Search targets (name, code, character…)">
  <div id="gf"></div>
@@ -98,10 +98,17 @@ nav .brand{display:none}
  <div class="top"><h1>Drills</h1><span class="pill" id="drLock">No target locked</span></div>
  <input type="search" id="dq" placeholder="Search drills">
  <div class="seg" id="dseg"><button data-c="training" class="on">Self-Defense</button><button data-c="fun">Fun</button><button data-c="course">Courses</button></div>
+ <button class="drow" style="min-height:56px" onclick="UI.go('courses')"><div class=t><b>🏅 Courses &amp; qualifications</b><span>Ranks, fundamentals, defensive, benchmarks · badges per firearm</span></div>›</button>
  <div class="chips" id="dchips"></div>
  <div id="dlist"></div>
  <select id="drillSel" class="hidden"></select>
  <div class="sticky"><button class="btn go" style="width:100%" id="dShoot" onclick="UI.go('shoot')">◎ Shoot</button></div>
+</section>
+<!-- COURSES -->
+<section class="view hidden" id="v-courses">
+ <div class="top"><h1>Courses</h1><span class="pill" id="cFw">—</span></div>
+ <div class="muted" style="margin-bottom:8px">Ordered stages built from the app's drills, with pass standards adapted for laser distances. Progress and badges are saved per firearm in your run history (included in Results › export / import / reset). Original adaptations, not official course materials.</div>
+ <div id="cBadges"></div><div id="cList"></div>
 </section>
 <!-- SHOOT -->
 <section class="view hidden" id="v-shoot">

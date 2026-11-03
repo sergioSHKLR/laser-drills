@@ -1,14 +1,14 @@
 // Laser Drills UI shell: tabs/router, gallery, drill picker, results history. Uses globals from app.js.
 const UI={view:'home',tf:null,dc:'training',chips:new Set(),cat:[],gS:{},rr:1};
 const esc=s=>String(s==null?'':s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
-const VIEWS=['home','drills','shoot','results','settings','calibrate'];
+const VIEWS=['home','drills','courses','shoot','results','settings','calibrate'];
 UI.go=v=>{if(location.hash!=='#'+v)location.hash=v;else UI.route();};
 UI.route=()=>{let v=location.hash.slice(1);if(!VIEWS.includes(v))v='home';UI.view=v;
   VIEWS.forEach(x=>$('v-'+x).classList.toggle('hidden',x!==v));
-  document.querySelectorAll('#nav [data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===(v==='calibrate'?'settings':v)));
+  document.querySelectorAll('#nav [data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v===(v==='calibrate'?'settings':v==='courses'?'drills':v)));
   $('tab-cal').classList.toggle('hidden',v!=='calibrate');
   const st=$('stage');if(v==='calibrate')$('calStage').appendChild(st);else if(st.parentNode.id==='calStage')$('v-shoot').children[1].prepend(st);
-  if(v==='drills')UI.drawDrills();if(v==='results')UI.drawResults();$('v-'+v).scrollTop=0;};
+  if(v==='drills')UI.drawDrills();if(v==='courses')UI.drawCourses();if(v==='results')UI.drawResults();$('v-'+v).scrollTop=0;};
 window.addEventListener('hashchange',UI.route);
 document.querySelectorAll('#nav [data-v]').forEach(b=>b.onclick=()=>UI.go(b.dataset.v));
 $('v-shoot').classList.add('wide');
@@ -47,7 +47,7 @@ UI.drawDrills=()=>{if(!DRILLS)return;document.querySelectorAll('#dseg button').f
   $('dchips').querySelectorAll('button').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(k==='tf')UI.tf=null;else UI.chips.has(k)?UI.chips.delete(k):UI.chips.add(k);UI.drawDrills();});
   const q=$('dq').value.trim().toLowerCase(),cur=+$('drillSel').value;
   const L=DRILLS.map((d,i)=>[d,i]).filter(([d])=>{const t=thumb(d),tab=/tabloid/.test(t)||/tabloid/i.test(d.name);
-    if(dcat(d)!==UI.dc)return false;if(q&&!(d.name+' '+(d.notes||'')).toLowerCase().includes(q))return false;
+    if(d.hidden||dcat(d)!==UI.dc)return false;if(q&&!(d.name+' '+(d.notes||'')).toLowerCase().includes(q))return false;
     if(UI.tf&&!drillsFor(UI.tf).some(([,j])=>j===DRILLS.indexOf(d)))return false;
     if(UI.chips.has('lock')&&lock&&!drillsFor(lock.key).some(([x])=>x===d)&&d.target!=='any')return false;
     if(UI.chips.has('letter')&&tab)return false;if(UI.chips.has('tabloid')&&!tab)return false;if(UI.chips.has('shotgun')&&!d.shotgun)return false;return true;});
@@ -87,11 +87,15 @@ $('fwSave').onclick=()=>{const n=$('fwName').value.trim();if(!n){$('fwErr').text
   const i=L.findIndex(x=>x.id===rec.id);if(i>=0)L[i]=rec;else L.push(rec);saveFws(L);if(!UI.fwEd)localStorage.setItem(AK,rec.id);$('fwDlg').close();UI.drawFwList();UI.drawFwPick();};
 $('fwDel').onclick=()=>{const id=UI.fwEd,n=hist().filter(r=>r.fw===id).length;if(!confirm(`Delete this firearm? Its ${n} run(s) are kept and moved to Unassigned.`))return;
   saveFws(fws().filter(f=>f.id!==id));saveHist(hist().map(r=>r.fw===id?Object.assign(r,{fw:Core.UNASSIGNED}):r));if(localStorage.getItem(AK)===id)localStorage.removeItem(AK);$('fwDlg').close();UI.drawFwList();UI.drawFwPick();};
-UI.record=()=>{try{const c=sel(),d=drill(),s=Core.drillSummary(d,state.beep,state.shots),r={ts:Date.now(),drill:c.type==='course'?`${c.name} · ${d.name}`:c.name,cat:dcat(c),shots:state.shots.length,
+UI.record=()=>{try{const c=sel(),d=drill(),s=Core.drillSummary(d,state.beep,state.shots),r={ts:Date.now(),drill:c.type==='course'?`${c.name} · ${d.name}`:c.courseId?`${(COURSES.find(x=>x.id===c.courseId)||{}).name} · ${c.name}`:c.name,cat:dcat(c),shots:state.shots.length,
     time:s.total!=null?+s.total.toFixed(2):null,score:s.score,max:s.maxScore,blind:blind(),fw:activeFw()};r.id='r'+r.ts.toString(36)+Math.random().toString(36).slice(2,6);
   if(d.scoring==='idpa'){const x=Core.idpaSummary(d,state.shots,s.total);Object.assign(r,{final:+x.final.toFixed(2),raw:+x.raw.toFixed(2),pd:x.pd,pe:x.pe,hnt:x.hnt,fail:x.fail});}
   if(d.game&&state.game)r.game=state.game.summary||'';
   if(state.fr&&state.fr.res){const f=state.fr.res;r.fr=f.fail?'FAIL':f.comply!=null?'OK':'NC';r.frLate=f.late;r.frComply=f.comply;if(r.final!=null)r.final=+(r.final+f.penalty).toFixed(2);else r.frPen=f.penalty;if(f.fail)r.fail=true;}
+  if(c.courseId){const C=COURSES.find(x=>x.id===c.courseId),S=C&&C.stages[c.stage];r.course=c.courseId;r.stage=c.stage;
+    r.pass=Core.stagePass(S&&S.pass,r,(d.calls||d.crowd||d.scenario)?0:d.shots);UI.lastStage={pass:r.pass,c:C,i:c.stage};
+    setTimeout(()=>{$('big').textContent+=r.pass?' · ✅ STAGE PASSED':' · ❌ stage not passed ('+Core.passText(S.pass)+')';},60);
+    setTimeout(()=>{try{say(r.pass?'Stage passed':'Stage not passed');}catch(e){}},2600);}
   const h=hist();h.push(r);while(h.length>5000)h.shift();saveHist(h);}catch(e){console.warn(e);}};
 const val=r=>r.final!=null?r.final:r.time;const fmt=r=>r.final!=null?r.final.toFixed(2)+' s':r.game!=null?(r.score+' pts'):r.time!=null?`${r.score!=null?r.score+'/'+r.max+' · ':''}${r.time.toFixed(2)}s`:`${r.score}/${r.max}`;
 UI.drawResults=()=>{document.querySelectorAll('#rseg button').forEach(b=>b.classList.toggle('on',+b.dataset.r===UI.rr));
@@ -107,7 +111,7 @@ UI.drawResults=()=>{document.querySelectorAll('#rseg button').forEach(b=>b.class
   $('rbody').innerHTML=fwCard+`<div class=card><div class=muted>${esc(name)} · ${same.length} timed run${same.length===1?'':'s'}</div><div class=big2>${best?'Best '+esc(fmt(best)):'—'}</div>${svg}</div>`+
    L.map(r=>`<div class=drow style="min-height:64px"><div class=t><b>${esc(r.drill)}</b><span>${new Date(r.ts).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}${r.pd!=null?` · PD ${r.pd} · PE ${r.pe} · HNT ${r.hnt}`:''}${r.fr?` · 🚨 FR ${r.fr==='OK'?'comply '+r.frComply.toFixed(2)+'s':r.fr==='FAIL'?r.frLate+' late shot(s)':'no comply'}`:''}${r.fail?' · FAIL':''}${r.game?' · '+esc(r.game):''}${rf==='all'?' · 🔫 '+esc(fwName(r.fw)):''}</span></div><b style="font-size:17px;flex:none">${esc(fmt(r))}</b></div>`).join('');};
 document.querySelectorAll('#rseg button').forEach(b=>b.onclick=()=>{UI.rr=+b.dataset.r;UI.drawResults();});
-$('csvBtn').onclick=()=>{const h=hist(),K=['ts','drill','cat','shots','time','score','max','final','raw','pd','pe','hnt','fail','game','blind','fr','frLate','frComply','frPen','fw','firearm','id'];
+$('csvBtn').onclick=()=>{const h=hist(),K=['ts','drill','cat','shots','time','score','max','final','raw','pd','pe','hnt','fail','game','blind','fr','frLate','frComply','frPen','course','stage','pass','fw','firearm','id'];
   const q=v=>v==null?'':/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':String(v);
   const csv=[['date',...K.slice(1)].join(',')].concat(h.map(r=>[new Date(r.ts).toISOString(),...K.slice(1).map(k=>q(k==='firearm'?fwName(r.fw):r[k]))].join(','))).join('\n');
   dl(csv,'text/csv','laser-drills-history.csv');};
@@ -123,6 +127,21 @@ $('clrHist').onclick=()=>{const h=hist(),opts=[['all',`All runs (${h.length})`]]
 $('resetNo').onclick=()=>$('resetDlg').close();
 $('resetYes').onclick=()=>{const s=$('resetScope').value,h=hist();saveHist(s==='all'?[]:h.filter(r=>r.fw!==s));$('resetDlg').close();UI.drawResults();UI.drawFwList();};
 UI.drawFwPick();UI.drawFwList();
+// ---- courses (courses.json; progress derived from history runs tagged course/stage/pass, per firearm)
+let COURSES=[];UI.copen=UI.copen||{};
+const CG=[['qual','Qualification ranks (NRA-style ladder)'],['fund','Fundamentals'],['def','Defensive'],['la','Reaction · Hunt · Eyes'],['bm','Benchmarks']];
+UI.runStage=(cid,i)=>{const C=COURSES.find(x=>x.id===cid);if(!C)return;const d=Core.stageDrill(DRILLS,cid,i,C.stages[i]);if(!d){alert('Stage drill missing');return;}
+  let k=DRILLS.findIndex(x=>x.id==='__cs');if(k<0){k=DRILLS.length;DRILLS.push(d);const o=new Option('Course stage',k);o.hidden=true;$('drillSel').appendChild(o);}else DRILLS[k]=d;
+  $('drillSel').value=k;$('drillSel').onchange();UI.go('shoot');};
+UI.drawCourses=()=>{const fw=activeFw(),P=Core.courseProgress(COURSES,hist(),fw);$('cFw').textContent='🔫 '+fwName(fw);
+  const E=COURSES.filter(c=>P[c.id].done);
+  $('cBadges').innerHTML=`<div class=card><div class=muted>Badges · ${esc(fwName(fw))} · ${E.length}/${COURSES.length}</div><div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">${COURSES.map(c=>`<span class="tag" title="${esc(c.name)}" style="${P[c.id].done?'':'opacity:.35;filter:grayscale(1)'}">${c.icon} ${esc(c.badge)}</span>`).join('')}</div><div class=muted style="margin-top:6px">Switch firearm in Shoot › Firearm to see its own progress.</div></div>`;
+  $('cList').innerHTML=CG.map(([g,l])=>`<div class=sec-h>${esc(l)}</div>`+COURSES.filter(c=>c.group===g).map(c=>{const p=P[c.id],op=UI.copen[c.id];
+    return `<div class=card style="padding:10px"><button class="drow" data-co="${esc(c.id)}" style="min-height:56px;width:100%"><div class=t><b>${c.icon} ${esc(c.name)}</b><span>${p.locked?'🔒 Pass '+esc((COURSES.find(x=>x.id===c.requires)||{}).badge)+' first · ':''}${p.passed}/${p.total} stages${p.done?' · ✅ '+new Date(p.earned).toLocaleDateString():''}</span></div>${op?'▾':'›'}</button>
+    ${op?`<div class=muted style="margin:6px 2px">${esc(c.notes)}</div>`+c.stages.map((s,i)=>{const q=p.stages[i];return `<div class=drow style="min-height:56px"><div class=t><b>${q.passed?'✅':'○'} ${i+1}. ${esc(s.name)}</b><span>${esc(s.dist)} · pass ${esc(Core.passText(s.pass))}${q.runs?` · ${q.runs} run(s)${q.best!=null?' · best '+q.best.toFixed(2)+'s':''}`:''}</span></div><button class="chip" data-rs="${esc(c.id)}" data-i="${i}" ${p.locked?'disabled':''}>▶ Shoot</button></div>`;}).join(''):''}</div>`;}).join('')).join('');
+  $('cList').querySelectorAll('[data-co]').forEach(b=>b.onclick=()=>{UI.copen[b.dataset.co]=!UI.copen[b.dataset.co];UI.drawCourses();});
+  $('cList').querySelectorAll('[data-rs]').forEach(b=>b.onclick=()=>UI.runStage(b.dataset.rs,+b.dataset.i));};
+fetch('courses.json').then(r=>r.json()).then(c=>{COURSES=c;if(UI.view==='courses')UI.drawCourses();}).catch(()=>{});
 // ---- boot (wait for app.js init to load DRILLS)
 fetch('targets/catalog.json').then(r=>r.json()).then(c=>{UI.cat=c;UI.drawGallery();}).catch(()=>{$('gN').textContent='offline';});
 (function wait(){if(typeof DRILLS!=='undefined'&&DRILLS&&$('drillSel').options.length){UI.onDrill();UI.route();}else setTimeout(wait,50);})();
