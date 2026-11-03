@@ -32,7 +32,13 @@
    "control": "#2F6B4F",
    "controlInk": "#FFFFFF",
    "fieldEdge": "#9AA5B0",
-   "ink": "#111111"
+   "ink": "#111111",
+   "kraft": "#A99F8C",
+   "kraftLine": "#3B3326",
+   "pWhite": "#FFFFFF",
+   "p0": "#1F3A5F",
+   "backing": "#000000",
+   "handInk": "#FFFFFF"
   }
  },
  "targets": {
@@ -385,859 +391,6 @@
     }
    ]
   },
-  "idpa-threat": {
-   "code": "LD-101",
-   "name": "IDPA-style Threat (1/4.5 scale)",
-   "markerIds": [
-    17,
-    18,
-    19,
-    20
-   ],
-   "distance": "3 yd = ~13.5 yd sim",
-   "scoring": "idpa",
-   "drills": [
-    "idpa-course"
-   ],
-   "instructions": [
-    "Scored as points down (PD): -0 / -1 / -3.",
-    "Each PD = +1 s. Miss = 5 PD.",
-    "Body -0 is the 8in circle, head -0 the 4in circle.",
-    "Approximate IDPA-style art, not official."
-   ],
-   "zones": [
-    {
-     "name": "-3",
-     "kind": "score",
-     "shape": "poly",
-     "pts": [
-      [
-       3.583,
-       2.15
-      ],
-      [
-       4.917,
-       2.15
-      ],
-      [
-       4.917,
-       3.594
-      ],
-      [
-       4.583,
-       3.817
-      ],
-      [
-       6.028,
-       4.039
-      ],
-      [
-       6.25,
-       4.372
-      ],
-      [
-       6.25,
-       8.817
-      ],
-      [
-       2.25,
-       8.817
-      ],
-      [
-       2.25,
-       4.372
-      ],
-      [
-       2.472,
-       4.039
-      ],
-      [
-       3.917,
-       3.817
-      ],
-      [
-       3.583,
-       3.594
-      ]
-     ],
-     "score": -3,
-     "pd": 3,
-     "tier": "tier1",
-     "label": [
-      4.25,
-      8.261
-     ]
-    },
-    {
-     "name": "-1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 3.672,
-     "y": 2.239,
-     "w": 1.156,
-     "h": 1.267,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      4.25,
-      3.306
-     ]
-    },
-    {
-     "name": "-1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 2.917,
-     "y": 4.261,
-     "w": 2.667,
-     "h": 3.556,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      4.25,
-      7.372
-     ]
-    },
-    {
-     "name": "-0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 4.25,
-     "cy": 2.839,
-     "r": 0.444,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5"
-    },
-    {
-     "name": "-0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 4.25,
-     "cy": 5.483,
-     "r": 0.889,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5"
-    }
-   ]
-  },
-  "idpa-hardcover": {
-   "code": "LD-102",
-   "name": "IDPA-style Partial Hard Cover",
-   "markerIds": [
-    21,
-    22,
-    23,
-    24
-   ],
-   "distance": "3 yd = ~13.5 yd sim",
-   "scoring": "idpa",
-   "drills": [
-    "idpa-course"
-   ],
-   "instructions": [
-    "Black = hard cover: hits there do not count.",
-    "A hit only in hard cover = miss (5 PD).",
-    "Work the exposed -0 circle and head.",
-    "Each PD = +1 s."
-   ],
-   "zones": [
-    {
-     "name": "-3",
-     "kind": "score",
-     "shape": "poly",
-     "pts": [
-      [
-       3.583,
-       2.15
-      ],
-      [
-       4.917,
-       2.15
-      ],
-      [
-       4.917,
-       3.594
-      ],
-      [
-       4.583,
-       3.817
-      ],
-      [
-       6.028,
-       4.039
-      ],
-      [
-       6.25,
-       4.372
-      ],
-      [
-       6.25,
-       8.817
-      ],
-      [
-       2.25,
-       8.817
-      ],
-      [
-       2.25,
-       4.372
-      ],
-      [
-       2.472,
-       4.039
-      ],
-      [
-       3.917,
-       3.817
-      ],
-      [
-       3.583,
-       3.594
-      ]
-     ],
-     "score": -3,
-     "pd": 3,
-     "tier": "tier1",
-     "label": [
-      4.25,
-      8.261
-     ]
-    },
-    {
-     "name": "-1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 3.672,
-     "y": 2.239,
-     "w": 1.156,
-     "h": 1.267,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      4.25,
-      3.306
-     ]
-    },
-    {
-     "name": "-1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 2.917,
-     "y": 4.261,
-     "w": 2.667,
-     "h": 3.556,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      4.25,
-      7.372
-     ]
-    },
-    {
-     "name": "-0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 4.25,
-     "cy": 2.839,
-     "r": 0.444,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5"
-    },
-    {
-     "name": "-0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 4.25,
-     "cy": 5.483,
-     "r": 0.889,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5"
-    },
-    {
-     "name": "HC",
-     "kind": "hardcover",
-     "shape": "rect",
-     "x": 4.027777777777778,
-     "y": 5.927777777777777,
-     "w": 2.3222222222222224,
-     "h": 2.9388888888888887,
-     "label": [
-      5.138888888888889,
-      7.4833333333333325
-     ]
-    }
-   ]
-  },
-  "idpa-nonthreat": {
-   "code": "LD-103",
-   "name": "IDPA-style Threat + Non-Threat",
-   "markerIds": [
-    25,
-    26,
-    27,
-    28
-   ],
-   "distance": "3 yd = ~13.5 yd sim",
-   "scoring": "idpa",
-   "drills": [
-    "idpa-course"
-   ],
-   "instructions": [
-    "Hatched = NON-THREAT (open hands): +5 s per hit.",
-    "A hit on the non-threat gives no threat credit.",
-    "Take the exposed head or left body.",
-    "Each PD = +1 s. Miss = 5 PD."
-   ],
-   "zones": [
-    {
-     "name": "-3",
-     "kind": "score",
-     "shape": "poly",
-     "pts": [
-      [
-       3.583,
-       2.15
-      ],
-      [
-       4.917,
-       2.15
-      ],
-      [
-       4.917,
-       3.594
-      ],
-      [
-       4.583,
-       3.817
-      ],
-      [
-       6.028,
-       4.039
-      ],
-      [
-       6.25,
-       4.372
-      ],
-      [
-       6.25,
-       8.817
-      ],
-      [
-       2.25,
-       8.817
-      ],
-      [
-       2.25,
-       4.372
-      ],
-      [
-       2.472,
-       4.039
-      ],
-      [
-       3.917,
-       3.817
-      ],
-      [
-       3.583,
-       3.594
-      ]
-     ],
-     "score": -3,
-     "pd": 3,
-     "tier": "tier1",
-     "label": [
-      4.25,
-      8.261
-     ]
-    },
-    {
-     "name": "-1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 3.672,
-     "y": 2.239,
-     "w": 1.156,
-     "h": 1.267,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      4.25,
-      3.306
-     ]
-    },
-    {
-     "name": "-1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 2.917,
-     "y": 4.261,
-     "w": 2.667,
-     "h": 3.556,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      4.25,
-      7.372
-     ]
-    },
-    {
-     "name": "-0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 4.25,
-     "cy": 2.839,
-     "r": 0.444,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5"
-    },
-    {
-     "name": "-0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 4.25,
-     "cy": 5.483,
-     "r": 0.889,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5"
-    },
-    {
-     "name": "NT",
-     "kind": "noshoot",
-     "shape": "poly",
-     "penalty": -5,
-     "ntSeconds": 5,
-     "pts": [
-      [
-       4.361111111111111,
-       4.594444444444444
-      ],
-      [
-       5.027777777777778,
-       4.15
-      ],
-      [
-       6.361111111111111,
-       4.261111111111111
-      ],
-      [
-       6.694444444444445,
-       5.038888888888889
-      ],
-      [
-       6.694444444444445,
-       8.816666666666666
-      ],
-      [
-       4.361111111111111,
-       8.816666666666666
-      ]
-     ],
-     "label": [
-      5.583333333333333,
-      6.594444444444445
-     ]
-    }
-   ]
-  },
-  "idpa-multi": {
-   "code": "LD-104",
-   "name": "IDPA-style Multiple Threats (1/9)",
-   "markerIds": [
-    29,
-    30,
-    31,
-    32
-   ],
-   "distance": "3 yd = ~27 yd sim",
-   "scoring": "idpa",
-   "drills": [
-    "idpa-course"
-   ],
-   "instructions": [
-    "Engage T1, T2, T3 left to right, 2 each.",
-    "Out-of-order engagement = PE (+3 s).",
-    "Each PD = +1 s. Miss = 5 PD.",
-    "Small scale: slow down, drive the dot."
-   ],
-   "zones": [
-    {
-     "name": "T1 -3",
-     "kind": "score",
-     "shape": "poly",
-     "pts": [
-      [
-       1.417,
-       3.4
-      ],
-      [
-       2.083,
-       3.4
-      ],
-      [
-       2.083,
-       4.122
-      ],
-      [
-       1.917,
-       4.233
-      ],
-      [
-       2.639,
-       4.344
-      ],
-      [
-       2.75,
-       4.511
-      ],
-      [
-       2.75,
-       6.733
-      ],
-      [
-       0.75,
-       6.733
-      ],
-      [
-       0.75,
-       4.511
-      ],
-      [
-       0.861,
-       4.344
-      ],
-      [
-       1.583,
-       4.233
-      ],
-      [
-       1.417,
-       4.122
-      ]
-     ],
-     "score": -3,
-     "pd": 3,
-     "tier": "tier1",
-     "label": [
-      1.75,
-      6.456
-     ],
-     "group": "T1"
-    },
-    {
-     "name": "T1 -1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 1.461,
-     "y": 3.444,
-     "w": 0.578,
-     "h": 0.633,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      1.75,
-      3.978
-     ],
-     "group": "T1"
-    },
-    {
-     "name": "T1 -1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 1.083,
-     "y": 4.456,
-     "w": 1.333,
-     "h": 1.778,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      1.75,
-      6.011
-     ],
-     "group": "T1"
-    },
-    {
-     "name": "T1 -0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 1.75,
-     "cy": 3.744,
-     "r": 0.222,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5",
-     "group": "T1"
-    },
-    {
-     "name": "T1 -0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 1.75,
-     "cy": 5.067,
-     "r": 0.444,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5",
-     "group": "T1"
-    },
-    {
-     "name": "T2 -3",
-     "kind": "score",
-     "shape": "poly",
-     "pts": [
-      [
-       3.917,
-       3.4
-      ],
-      [
-       4.583,
-       3.4
-      ],
-      [
-       4.583,
-       4.122
-      ],
-      [
-       4.417,
-       4.233
-      ],
-      [
-       5.139,
-       4.344
-      ],
-      [
-       5.25,
-       4.511
-      ],
-      [
-       5.25,
-       6.733
-      ],
-      [
-       3.25,
-       6.733
-      ],
-      [
-       3.25,
-       4.511
-      ],
-      [
-       3.361,
-       4.344
-      ],
-      [
-       4.083,
-       4.233
-      ],
-      [
-       3.917,
-       4.122
-      ]
-     ],
-     "score": -3,
-     "pd": 3,
-     "tier": "tier1",
-     "label": [
-      4.25,
-      6.456
-     ],
-     "group": "T2"
-    },
-    {
-     "name": "T2 -1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 3.961,
-     "y": 3.444,
-     "w": 0.578,
-     "h": 0.633,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      4.25,
-      3.978
-     ],
-     "group": "T2"
-    },
-    {
-     "name": "T2 -1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 3.583,
-     "y": 4.456,
-     "w": 1.333,
-     "h": 1.778,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      4.25,
-      6.011
-     ],
-     "group": "T2"
-    },
-    {
-     "name": "T2 -0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 4.25,
-     "cy": 3.744,
-     "r": 0.222,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5",
-     "group": "T2"
-    },
-    {
-     "name": "T2 -0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 4.25,
-     "cy": 5.067,
-     "r": 0.444,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5",
-     "group": "T2"
-    },
-    {
-     "name": "T3 -3",
-     "kind": "score",
-     "shape": "poly",
-     "pts": [
-      [
-       6.417,
-       3.4
-      ],
-      [
-       7.083,
-       3.4
-      ],
-      [
-       7.083,
-       4.122
-      ],
-      [
-       6.917,
-       4.233
-      ],
-      [
-       7.639,
-       4.344
-      ],
-      [
-       7.75,
-       4.511
-      ],
-      [
-       7.75,
-       6.733
-      ],
-      [
-       5.75,
-       6.733
-      ],
-      [
-       5.75,
-       4.511
-      ],
-      [
-       5.861,
-       4.344
-      ],
-      [
-       6.583,
-       4.233
-      ],
-      [
-       6.417,
-       4.122
-      ]
-     ],
-     "score": -3,
-     "pd": 3,
-     "tier": "tier1",
-     "label": [
-      6.75,
-      6.456
-     ],
-     "group": "T3"
-    },
-    {
-     "name": "T3 -1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 6.461,
-     "y": 3.444,
-     "w": 0.578,
-     "h": 0.633,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      6.75,
-      3.978
-     ],
-     "group": "T3"
-    },
-    {
-     "name": "T3 -1",
-     "kind": "score",
-     "shape": "rect",
-     "x": 6.083,
-     "y": 4.456,
-     "w": 1.333,
-     "h": 1.778,
-     "score": -1,
-     "pd": 1,
-     "tier": "tier3",
-     "label": [
-      6.75,
-      6.011
-     ],
-     "group": "T3"
-    },
-    {
-     "name": "T3 -0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 6.75,
-     "cy": 3.744,
-     "r": 0.222,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5",
-     "group": "T3"
-    },
-    {
-     "name": "T3 -0",
-     "kind": "score",
-     "shape": "circle",
-     "cx": 6.75,
-     "cy": 5.067,
-     "r": 0.444,
-     "score": 0,
-     "pd": 0,
-     "tier": "tier5",
-     "group": "T3"
-    }
-   ]
-  },
   "hostage": {
    "code": "LD-005",
    "name": "Hostage",
@@ -1424,6 +577,2601 @@
        5.45
       ]
      ]
+    }
+   ]
+  },
+  "idpa-threat": {
+   "code": "LD-101",
+   "name": "IDPA-style Threat",
+   "markerIds": [
+    17,
+    18,
+    19,
+    20
+   ],
+   "scoring": "idpa",
+   "drills": [
+    "idpa-course"
+   ],
+   "distance": "3 yd = ~13.5 yd sim (1/4.5 scale)",
+   "instructions": [
+    "Scored as points down: -0 / -1 / -3 (+1 s per PD).",
+    "Head: -0 circle, rest of head box -1. Miss = 5 PD.",
+    "Classic kraft-style threat, own artwork.",
+    "Shoot START/STOP to begin."
+   ],
+   "zones": [
+    {
+     "name": "-3",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.583,
+       2.2
+      ],
+      [
+       4.917,
+       2.2
+      ],
+      [
+       4.917,
+       3.644
+      ],
+      [
+       5.361,
+       3.644
+      ],
+      [
+       6.25,
+       4.533
+      ],
+      [
+       6.25,
+       7.978
+      ],
+      [
+       5.583,
+       8.867
+      ],
+      [
+       2.917,
+       8.867
+      ],
+      [
+       2.25,
+       7.978
+      ],
+      [
+       2.25,
+       4.533
+      ],
+      [
+       3.139,
+       3.644
+      ],
+      [
+       3.583,
+       3.644
+      ]
+     ],
+     "label": [
+      2.561,
+      6.2
+     ],
+     "score": -3,
+     "pd": 3
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "x": 3.583,
+     "y": 2.2,
+     "w": 1.333,
+     "h": 1.444,
+     "label": [
+      4.717,
+      2.444
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.361,
+       4.089
+      ],
+      [
+       5.139,
+       4.089
+      ],
+      [
+       5.694,
+       4.644
+      ],
+      [
+       5.694,
+       7.311
+      ],
+      [
+       5.25,
+       7.867
+      ],
+      [
+       3.25,
+       7.867
+      ],
+      [
+       2.806,
+       7.311
+      ],
+      [
+       2.806,
+       4.644
+      ]
+     ],
+     "label": [
+      4.25,
+      7.378
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 2.933,
+     "r": 0.444,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 5.533,
+     "r": 0.889,
+     "score": 0,
+     "pd": 0
+    }
+   ]
+  },
+  "idpa-hc-left": {
+   "code": "LD-102",
+   "name": "IDPA-style Hard Cover: Left",
+   "markerIds": [
+    21,
+    22,
+    23,
+    24
+   ],
+   "scoring": "idpa",
+   "drills": [
+    "idpa-course"
+   ],
+   "distance": "3 yd = ~13.5 yd sim (1/4.5 scale)",
+   "instructions": [
+    "Black = hard cover: hits there do not count.",
+    "Only the right half of the threat is exposed.",
+    "Scored as points down: -0 / -1 / -3 (+1 s per PD).",
+    "Hit only in hard cover = miss (5 PD)."
+   ],
+   "zones": [
+    {
+     "name": "-3",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.583,
+       2.2
+      ],
+      [
+       4.917,
+       2.2
+      ],
+      [
+       4.917,
+       3.644
+      ],
+      [
+       5.361,
+       3.644
+      ],
+      [
+       6.25,
+       4.533
+      ],
+      [
+       6.25,
+       7.978
+      ],
+      [
+       5.583,
+       8.867
+      ],
+      [
+       2.917,
+       8.867
+      ],
+      [
+       2.25,
+       7.978
+      ],
+      [
+       2.25,
+       4.533
+      ],
+      [
+       3.139,
+       3.644
+      ],
+      [
+       3.583,
+       3.644
+      ]
+     ],
+     "label": [
+      2.561,
+      6.2
+     ],
+     "score": -3,
+     "pd": 3
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "x": 3.583,
+     "y": 2.2,
+     "w": 1.333,
+     "h": 1.444,
+     "label": [
+      4.717,
+      2.444
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.361,
+       4.089
+      ],
+      [
+       5.139,
+       4.089
+      ],
+      [
+       5.694,
+       4.644
+      ],
+      [
+       5.694,
+       7.311
+      ],
+      [
+       5.25,
+       7.867
+      ],
+      [
+       3.25,
+       7.867
+      ],
+      [
+       2.806,
+       7.311
+      ],
+      [
+       2.806,
+       4.644
+      ]
+     ],
+     "label": [
+      4.25,
+      7.378
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 2.933,
+     "r": 0.444,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 5.533,
+     "r": 0.889,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "HC",
+     "kind": "hardcover",
+     "shape": "poly",
+     "pts": [
+      [
+       1.917,
+       3.422
+      ],
+      [
+       4.117,
+       3.422
+      ],
+      [
+       4.117,
+       9.089
+      ],
+      [
+       1.917,
+       9.089
+      ]
+     ],
+     "label": [
+      3.139,
+      6.644
+     ]
+    }
+   ]
+  },
+  "idpa-hc-lower": {
+   "code": "LD-103",
+   "name": "IDPA-style Hard Cover: Lower",
+   "markerIds": [
+    25,
+    26,
+    27,
+    28
+   ],
+   "scoring": "idpa",
+   "drills": [
+    "idpa-course"
+   ],
+   "distance": "3 yd = ~13.5 yd sim (1/4.5 scale)",
+   "instructions": [
+    "Lower body is behind hard cover (black).",
+    "Upper -0 arc and head are exposed.",
+    "Scored as points down: -0 / -1 / -3 (+1 s per PD).",
+    "Hit only in hard cover = miss (5 PD)."
+   ],
+   "zones": [
+    {
+     "name": "-3",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.583,
+       2.2
+      ],
+      [
+       4.917,
+       2.2
+      ],
+      [
+       4.917,
+       3.644
+      ],
+      [
+       5.361,
+       3.644
+      ],
+      [
+       6.25,
+       4.533
+      ],
+      [
+       6.25,
+       7.978
+      ],
+      [
+       5.583,
+       8.867
+      ],
+      [
+       2.917,
+       8.867
+      ],
+      [
+       2.25,
+       7.978
+      ],
+      [
+       2.25,
+       4.533
+      ],
+      [
+       3.139,
+       3.644
+      ],
+      [
+       3.583,
+       3.644
+      ]
+     ],
+     "label": [
+      2.561,
+      6.2
+     ],
+     "score": -3,
+     "pd": 3
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "x": 3.583,
+     "y": 2.2,
+     "w": 1.333,
+     "h": 1.444,
+     "label": [
+      4.717,
+      2.444
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.361,
+       4.089
+      ],
+      [
+       5.139,
+       4.089
+      ],
+      [
+       5.694,
+       4.644
+      ],
+      [
+       5.694,
+       7.311
+      ],
+      [
+       5.25,
+       7.867
+      ],
+      [
+       3.25,
+       7.867
+      ],
+      [
+       2.806,
+       7.311
+      ],
+      [
+       2.806,
+       4.644
+      ]
+     ],
+     "label": [
+      4.25,
+      7.378
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 2.933,
+     "r": 0.444,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 5.533,
+     "r": 0.889,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "HC",
+     "kind": "hardcover",
+     "shape": "poly",
+     "pts": [
+      [
+       1.917,
+       6.089
+      ],
+      [
+       5.917,
+       6.089
+      ],
+      [
+       5.917,
+       9.089
+      ],
+      [
+       1.917,
+       9.089
+      ]
+     ],
+     "label": [
+      3.917,
+      7.644
+     ]
+    }
+   ]
+  },
+  "idpa-hc-diagonal": {
+   "code": "LD-104",
+   "name": "IDPA-style Hard Cover: Diagonal",
+   "markerIds": [
+    29,
+    30,
+    31,
+    32
+   ],
+   "scoring": "idpa",
+   "drills": [
+    "idpa-course"
+   ],
+   "distance": "3 yd = ~13.5 yd sim (1/4.5 scale)",
+   "instructions": [
+    "Diagonal hard cover over the right side.",
+    "Precision on the exposed -0 edge.",
+    "Scored as points down: -0 / -1 / -3 (+1 s per PD).",
+    "Hit only in hard cover = miss (5 PD)."
+   ],
+   "zones": [
+    {
+     "name": "-3",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.583,
+       2.2
+      ],
+      [
+       4.917,
+       2.2
+      ],
+      [
+       4.917,
+       3.644
+      ],
+      [
+       5.361,
+       3.644
+      ],
+      [
+       6.25,
+       4.533
+      ],
+      [
+       6.25,
+       7.978
+      ],
+      [
+       5.583,
+       8.867
+      ],
+      [
+       2.917,
+       8.867
+      ],
+      [
+       2.25,
+       7.978
+      ],
+      [
+       2.25,
+       4.533
+      ],
+      [
+       3.139,
+       3.644
+      ],
+      [
+       3.583,
+       3.644
+      ]
+     ],
+     "label": [
+      2.561,
+      6.2
+     ],
+     "score": -3,
+     "pd": 3
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "x": 3.583,
+     "y": 2.2,
+     "w": 1.333,
+     "h": 1.444,
+     "label": [
+      4.717,
+      2.444
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.361,
+       4.089
+      ],
+      [
+       5.139,
+       4.089
+      ],
+      [
+       5.694,
+       4.644
+      ],
+      [
+       5.694,
+       7.311
+      ],
+      [
+       5.25,
+       7.867
+      ],
+      [
+       3.25,
+       7.867
+      ],
+      [
+       2.806,
+       7.311
+      ],
+      [
+       2.806,
+       4.644
+      ]
+     ],
+     "label": [
+      4.25,
+      7.378
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 2.933,
+     "r": 0.444,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 5.533,
+     "r": 0.889,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "HC",
+     "kind": "hardcover",
+     "shape": "poly",
+     "pts": [
+      [
+       4.806,
+       3.867
+      ],
+      [
+       6.583,
+       3.867
+      ],
+      [
+       6.583,
+       9.089
+      ],
+      [
+       3.583,
+       9.089
+      ]
+     ],
+     "label": [
+      5.472,
+      7.089
+     ]
+    }
+   ]
+  },
+  "idpa-nonthreat": {
+   "code": "LD-105",
+   "name": "IDPA-style Non-Threat (open hands)",
+   "markerIds": [
+    49,
+    50,
+    51,
+    52
+   ],
+   "scoring": "idpa",
+   "drills": [
+    "idpa-course"
+   ],
+   "distance": "3 yd = ~13.5 yd sim (1/4.5 scale)",
+   "instructions": [
+    "Open hands = NON-THREAT. Do not shoot.",
+    "Any hit anywhere on it = +5 s (HNT).",
+    "Use as a no-shoot / shoot-through drill.",
+    "Pair with LD-106 for threat + non-threat."
+   ],
+   "zones": [
+    {
+     "name": "NT -3",
+     "kind": "noshoot",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.583,
+       2.2
+      ],
+      [
+       4.917,
+       2.2
+      ],
+      [
+       4.917,
+       3.644
+      ],
+      [
+       5.361,
+       3.644
+      ],
+      [
+       6.25,
+       4.533
+      ],
+      [
+       6.25,
+       7.978
+      ],
+      [
+       5.583,
+       8.867
+      ],
+      [
+       2.917,
+       8.867
+      ],
+      [
+       2.25,
+       7.978
+      ],
+      [
+       2.25,
+       4.533
+      ],
+      [
+       3.139,
+       3.644
+      ],
+      [
+       3.583,
+       3.644
+      ]
+     ],
+     "label": [
+      2.561,
+      6.2
+     ],
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "NT -1",
+     "kind": "noshoot",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "x": 3.583,
+     "y": 2.2,
+     "w": 1.333,
+     "h": 1.444,
+     "label": [
+      4.717,
+      2.444
+     ],
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "NT -1",
+     "kind": "noshoot",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "pts": [
+      [
+       3.361,
+       4.089
+      ],
+      [
+       5.139,
+       4.089
+      ],
+      [
+       5.694,
+       4.644
+      ],
+      [
+       5.694,
+       7.311
+      ],
+      [
+       5.25,
+       7.867
+      ],
+      [
+       3.25,
+       7.867
+      ],
+      [
+       2.806,
+       7.311
+      ],
+      [
+       2.806,
+       4.644
+      ]
+     ],
+     "label": [
+      4.25,
+      7.378
+     ],
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "NT -0",
+     "kind": "noshoot",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 2.933,
+     "r": 0.444,
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "NT -0",
+     "kind": "noshoot",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "cx": 4.25,
+     "cy": 5.533,
+     "r": 0.889,
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "ellipse",
+     "cx": 3.65,
+     "cy": 5.867,
+     "rx": 0.356,
+     "ry": 0.422,
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       3.494,
+       5.625
+      ],
+      [
+       3.355,
+       5.133
+      ],
+      [
+       3.281,
+       5.102
+      ],
+      [
+       3.231,
+       5.164
+      ],
+      [
+       3.339,
+       5.664
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       3.652,
+       5.639
+      ],
+      [
+       3.594,
+       5.041
+      ],
+      [
+       3.527,
+       4.998
+      ],
+      [
+       3.467,
+       5.05
+      ],
+      [
+       3.492,
+       5.65
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       3.808,
+       5.65
+      ],
+      [
+       3.835,
+       5.028
+      ],
+      [
+       3.775,
+       4.976
+      ],
+      [
+       3.707,
+       5.019
+      ],
+      [
+       3.648,
+       5.639
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       3.961,
+       5.664
+      ],
+      [
+       4.074,
+       5.142
+      ],
+      [
+       4.024,
+       5.08
+      ],
+      [
+       3.95,
+       5.111
+      ],
+      [
+       3.806,
+       5.625
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       3.996,
+       6.024
+      ],
+      [
+       4.206,
+       5.824
+      ],
+      [
+       4.201,
+       5.736
+      ],
+      [
+       4.114,
+       5.715
+      ],
+      [
+       3.882,
+       5.887
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "ellipse",
+     "cx": 4.85,
+     "cy": 5.867,
+     "rx": 0.356,
+     "ry": 0.422,
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       4.694,
+       5.625
+      ],
+      [
+       4.555,
+       5.133
+      ],
+      [
+       4.481,
+       5.102
+      ],
+      [
+       4.431,
+       5.164
+      ],
+      [
+       4.539,
+       5.664
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       4.852,
+       5.639
+      ],
+      [
+       4.794,
+       5.041
+      ],
+      [
+       4.727,
+       4.998
+      ],
+      [
+       4.667,
+       5.05
+      ],
+      [
+       4.692,
+       5.65
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       5.008,
+       5.65
+      ],
+      [
+       5.035,
+       5.028
+      ],
+      [
+       4.975,
+       4.976
+      ],
+      [
+       4.907,
+       5.019
+      ],
+      [
+       4.848,
+       5.639
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       5.161,
+       5.664
+      ],
+      [
+       5.274,
+       5.142
+      ],
+      [
+       5.224,
+       5.08
+      ],
+      [
+       5.15,
+       5.111
+      ],
+      [
+       5.006,
+       5.625
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       4.618,
+       5.887
+      ],
+      [
+       4.386,
+       5.715
+      ],
+      [
+       4.299,
+       5.736
+      ],
+      [
+       4.294,
+       5.824
+      ],
+      [
+       4.504,
+       6.024
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    }
+   ]
+  },
+  "idpa-practice": {
+   "code": "LD-106",
+   "name": "IDPA-style Practice (dark -0)",
+   "markerIds": [
+    37,
+    38,
+    39,
+    40
+   ],
+   "scoring": "idpa",
+   "drills": [
+    "idpa-course"
+   ],
+   "distance": "3 yd = ~13.5 yd sim (1/4.5 scale)",
+   "instructions": [
+    "White practice face on black backing.",
+    "-0 circles are DARK BLUE, not red: a red",
+    "zone would mask the red laser dot.",
+    "Scored as points down: -0 / -1 / -3 (+1 s per PD)."
+   ],
+   "zones": [
+    {
+     "name": "backing",
+     "kind": "decor",
+     "shape": "rect",
+     "x": 0.75,
+     "y": 1.95,
+     "w": 7.0,
+     "h": 7.15,
+     "fill": "backing"
+    },
+    {
+     "name": "-3",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "pWhite",
+     "line": "outline",
+     "pts": [
+      [
+       3.583,
+       2.2
+      ],
+      [
+       4.917,
+       2.2
+      ],
+      [
+       4.917,
+       3.644
+      ],
+      [
+       5.361,
+       3.644
+      ],
+      [
+       6.25,
+       4.533
+      ],
+      [
+       6.25,
+       7.978
+      ],
+      [
+       5.583,
+       8.867
+      ],
+      [
+       2.917,
+       8.867
+      ],
+      [
+       2.25,
+       7.978
+      ],
+      [
+       2.25,
+       4.533
+      ],
+      [
+       3.139,
+       3.644
+      ],
+      [
+       3.583,
+       3.644
+      ]
+     ],
+     "label": [
+      2.561,
+      6.2
+     ],
+     "score": -3,
+     "pd": 3
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "rect",
+     "tier": "pWhite",
+     "line": "outline",
+     "x": 3.583,
+     "y": 2.2,
+     "w": 1.333,
+     "h": 1.444,
+     "label": [
+      4.717,
+      2.444
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-1",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "pWhite",
+     "line": "outline",
+     "pts": [
+      [
+       3.361,
+       4.089
+      ],
+      [
+       5.139,
+       4.089
+      ],
+      [
+       5.694,
+       4.644
+      ],
+      [
+       5.694,
+       7.311
+      ],
+      [
+       5.25,
+       7.867
+      ],
+      [
+       3.25,
+       7.867
+      ],
+      [
+       2.806,
+       7.311
+      ],
+      [
+       2.806,
+       4.644
+      ]
+     ],
+     "label": [
+      4.25,
+      7.378
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "p0",
+     "line": "outline",
+     "cx": 4.25,
+     "cy": 2.933,
+     "r": 0.444,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "-0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "p0",
+     "line": "outline",
+     "cx": 4.25,
+     "cy": 5.533,
+     "r": 0.889,
+     "score": 0,
+     "pd": 0
+    }
+   ]
+  },
+  "idpa-nt-pair": {
+   "code": "LD-107",
+   "name": "IDPA-style Threat + Non-Threat",
+   "markerIds": [
+    41,
+    42,
+    43,
+    44
+   ],
+   "scoring": "idpa",
+   "drills": [
+    "idpa-course"
+   ],
+   "distance": "3 yd = ~15 yd sim (1/5 scale)",
+   "instructions": [
+    "LEFT = non-threat (hands): +5 s per hit.",
+    "RIGHT = threat: score -0/-1/-3.",
+    "Miss on the threat = 5 PD.",
+    "1/5 scale: 3 yd = ~15 yd sim."
+   ],
+   "zones": [
+    {
+     "name": "NT -3",
+     "kind": "noshoot",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "NT",
+     "pts": [
+      [
+       1.65,
+       1.95
+      ],
+      [
+       2.85,
+       1.95
+      ],
+      [
+       2.85,
+       3.25
+      ],
+      [
+       3.25,
+       3.25
+      ],
+      [
+       4.05,
+       4.05
+      ],
+      [
+       4.05,
+       7.15
+      ],
+      [
+       3.45,
+       7.95
+      ],
+      [
+       1.05,
+       7.95
+      ],
+      [
+       0.45,
+       7.15
+      ],
+      [
+       0.45,
+       4.05
+      ],
+      [
+       1.25,
+       3.25
+      ],
+      [
+       1.65,
+       3.25
+      ]
+     ],
+     "label": [
+      0.73,
+      5.55
+     ],
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "NT -1",
+     "kind": "noshoot",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "NT",
+     "x": 1.65,
+     "y": 1.95,
+     "w": 1.2,
+     "h": 1.3,
+     "label": [
+      2.67,
+      2.17
+     ],
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "NT -1",
+     "kind": "noshoot",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "NT",
+     "pts": [
+      [
+       1.45,
+       3.65
+      ],
+      [
+       3.05,
+       3.65
+      ],
+      [
+       3.55,
+       4.15
+      ],
+      [
+       3.55,
+       6.55
+      ],
+      [
+       3.15,
+       7.05
+      ],
+      [
+       1.35,
+       7.05
+      ],
+      [
+       0.95,
+       6.55
+      ],
+      [
+       0.95,
+       4.15
+      ]
+     ],
+     "label": [
+      2.25,
+      6.61
+     ],
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "NT -0",
+     "kind": "noshoot",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "NT",
+     "cx": 2.25,
+     "cy": 2.61,
+     "r": 0.4,
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "NT -0",
+     "kind": "noshoot",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "NT",
+     "cx": 2.25,
+     "cy": 4.95,
+     "r": 0.8,
+     "penalty": -5,
+     "ntSeconds": 5,
+     "plain": true
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "ellipse",
+     "cx": 1.71,
+     "cy": 5.25,
+     "rx": 0.32,
+     "ry": 0.38,
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       1.57,
+       5.033
+      ],
+      [
+       1.445,
+       4.59
+      ],
+      [
+       1.378,
+       4.562
+      ],
+      [
+       1.333,
+       4.618
+      ],
+      [
+       1.43,
+       5.067
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       1.712,
+       5.045
+      ],
+      [
+       1.66,
+       4.507
+      ],
+      [
+       1.599,
+       4.468
+      ],
+      [
+       1.545,
+       4.515
+      ],
+      [
+       1.568,
+       5.055
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       1.852,
+       5.055
+      ],
+      [
+       1.877,
+       4.495
+      ],
+      [
+       1.822,
+       4.448
+      ],
+      [
+       1.762,
+       4.487
+      ],
+      [
+       1.708,
+       5.045
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       1.99,
+       5.067
+      ],
+      [
+       2.092,
+       4.598
+      ],
+      [
+       2.047,
+       4.542
+      ],
+      [
+       1.98,
+       4.57
+      ],
+      [
+       1.85,
+       5.033
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       2.021,
+       5.391
+      ],
+      [
+       2.21,
+       5.212
+      ],
+      [
+       2.206,
+       5.132
+      ],
+      [
+       2.128,
+       5.114
+      ],
+      [
+       1.919,
+       5.269
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "ellipse",
+     "cx": 2.79,
+     "cy": 5.25,
+     "rx": 0.32,
+     "ry": 0.38,
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       2.65,
+       5.033
+      ],
+      [
+       2.525,
+       4.59
+      ],
+      [
+       2.458,
+       4.562
+      ],
+      [
+       2.413,
+       4.618
+      ],
+      [
+       2.51,
+       5.067
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       2.792,
+       5.045
+      ],
+      [
+       2.74,
+       4.507
+      ],
+      [
+       2.679,
+       4.468
+      ],
+      [
+       2.625,
+       4.515
+      ],
+      [
+       2.648,
+       5.055
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       2.932,
+       5.055
+      ],
+      [
+       2.957,
+       4.495
+      ],
+      [
+       2.902,
+       4.448
+      ],
+      [
+       2.842,
+       4.487
+      ],
+      [
+       2.788,
+       5.045
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       3.07,
+       5.067
+      ],
+      [
+       3.172,
+       4.598
+      ],
+      [
+       3.127,
+       4.542
+      ],
+      [
+       3.06,
+       4.57
+      ],
+      [
+       2.93,
+       5.033
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "hand",
+     "kind": "decor",
+     "shape": "poly",
+     "pts": [
+      [
+       2.581,
+       5.269
+      ],
+      [
+       2.372,
+       5.114
+      ],
+      [
+       2.294,
+       5.132
+      ],
+      [
+       2.29,
+       5.212
+      ],
+      [
+       2.479,
+       5.391
+      ]
+     ],
+     "fill": "handInk",
+     "line": "ink"
+    },
+    {
+     "name": "T1 -3",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "pts": [
+      [
+       5.55,
+       1.95
+      ],
+      [
+       6.75,
+       1.95
+      ],
+      [
+       6.75,
+       3.25
+      ],
+      [
+       7.15,
+       3.25
+      ],
+      [
+       7.95,
+       4.05
+      ],
+      [
+       7.95,
+       7.15
+      ],
+      [
+       7.35,
+       7.95
+      ],
+      [
+       4.95,
+       7.95
+      ],
+      [
+       4.35,
+       7.15
+      ],
+      [
+       4.35,
+       4.05
+      ],
+      [
+       5.15,
+       3.25
+      ],
+      [
+       5.55,
+       3.25
+      ]
+     ],
+     "label": [
+      4.63,
+      5.55
+     ],
+     "score": -3,
+     "pd": 3
+    },
+    {
+     "name": "T1 -1",
+     "kind": "score",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "x": 5.55,
+     "y": 1.95,
+     "w": 1.2,
+     "h": 1.3,
+     "label": [
+      6.57,
+      2.17
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "T1 -1",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "pts": [
+      [
+       5.35,
+       3.65
+      ],
+      [
+       6.95,
+       3.65
+      ],
+      [
+       7.45,
+       4.15
+      ],
+      [
+       7.45,
+       6.55
+      ],
+      [
+       7.05,
+       7.05
+      ],
+      [
+       5.25,
+       7.05
+      ],
+      [
+       4.85,
+       6.55
+      ],
+      [
+       4.85,
+       4.15
+      ]
+     ],
+     "label": [
+      6.15,
+      6.61
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "T1 -0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "cx": 6.15,
+     "cy": 2.61,
+     "r": 0.4,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "T1 -0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "cx": 6.15,
+     "cy": 4.95,
+     "r": 0.8,
+     "score": 0,
+     "pd": 0
+    }
+   ]
+  },
+  "idpa-multi": {
+   "code": "LD-108",
+   "name": "IDPA-style Multiple Threats",
+   "markerIds": [
+    45,
+    46,
+    47,
+    48
+   ],
+   "scoring": "idpa",
+   "drills": [
+    "idpa-course"
+   ],
+   "distance": "3 yd = ~27 yd sim (1/9 scale)",
+   "instructions": [
+    "Engage T1, T2, T3 left to right, 2 each.",
+    "Out-of-order engagement = PE (+3 s).",
+    "Each PD = +1 s. Miss = 5 PD.",
+    "1/9 scale: 3 yd = ~27 yd sim."
+   ],
+   "zones": [
+    {
+     "name": "T1 -3",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "pts": [
+      [
+       1.417,
+       3.2
+      ],
+      [
+       2.083,
+       3.2
+      ],
+      [
+       2.083,
+       3.922
+      ],
+      [
+       2.306,
+       3.922
+      ],
+      [
+       2.75,
+       4.367
+      ],
+      [
+       2.75,
+       6.089
+      ],
+      [
+       2.417,
+       6.533
+      ],
+      [
+       1.083,
+       6.533
+      ],
+      [
+       0.75,
+       6.089
+      ],
+      [
+       0.75,
+       4.367
+      ],
+      [
+       1.194,
+       3.922
+      ],
+      [
+       1.417,
+       3.922
+      ]
+     ],
+     "label": [
+      0.906,
+      5.2
+     ],
+     "score": -3,
+     "pd": 3
+    },
+    {
+     "name": "T1 -1",
+     "kind": "score",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "x": 1.417,
+     "y": 3.2,
+     "w": 0.667,
+     "h": 0.722,
+     "label": [
+      1.983,
+      3.322
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "T1 -1",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "pts": [
+      [
+       1.306,
+       4.144
+      ],
+      [
+       2.194,
+       4.144
+      ],
+      [
+       2.472,
+       4.422
+      ],
+      [
+       2.472,
+       5.756
+      ],
+      [
+       2.25,
+       6.033
+      ],
+      [
+       1.25,
+       6.033
+      ],
+      [
+       1.028,
+       5.756
+      ],
+      [
+       1.028,
+       4.422
+      ]
+     ],
+     "label": [
+      1.75,
+      5.789
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "T1 -0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "cx": 1.75,
+     "cy": 3.567,
+     "r": 0.222,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "T1 -0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T1",
+     "cx": 1.75,
+     "cy": 4.867,
+     "r": 0.444,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "T2 -3",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T2",
+     "pts": [
+      [
+       3.917,
+       3.2
+      ],
+      [
+       4.583,
+       3.2
+      ],
+      [
+       4.583,
+       3.922
+      ],
+      [
+       4.806,
+       3.922
+      ],
+      [
+       5.25,
+       4.367
+      ],
+      [
+       5.25,
+       6.089
+      ],
+      [
+       4.917,
+       6.533
+      ],
+      [
+       3.583,
+       6.533
+      ],
+      [
+       3.25,
+       6.089
+      ],
+      [
+       3.25,
+       4.367
+      ],
+      [
+       3.694,
+       3.922
+      ],
+      [
+       3.917,
+       3.922
+      ]
+     ],
+     "label": [
+      3.406,
+      5.2
+     ],
+     "score": -3,
+     "pd": 3
+    },
+    {
+     "name": "T2 -1",
+     "kind": "score",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T2",
+     "x": 3.917,
+     "y": 3.2,
+     "w": 0.667,
+     "h": 0.722,
+     "label": [
+      4.483,
+      3.322
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "T2 -1",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T2",
+     "pts": [
+      [
+       3.806,
+       4.144
+      ],
+      [
+       4.694,
+       4.144
+      ],
+      [
+       4.972,
+       4.422
+      ],
+      [
+       4.972,
+       5.756
+      ],
+      [
+       4.75,
+       6.033
+      ],
+      [
+       3.75,
+       6.033
+      ],
+      [
+       3.528,
+       5.756
+      ],
+      [
+       3.528,
+       4.422
+      ]
+     ],
+     "label": [
+      4.25,
+      5.789
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "T2 -0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T2",
+     "cx": 4.25,
+     "cy": 3.567,
+     "r": 0.222,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "T2 -0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T2",
+     "cx": 4.25,
+     "cy": 4.867,
+     "r": 0.444,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "T3 -3",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T3",
+     "pts": [
+      [
+       6.417,
+       3.2
+      ],
+      [
+       7.083,
+       3.2
+      ],
+      [
+       7.083,
+       3.922
+      ],
+      [
+       7.306,
+       3.922
+      ],
+      [
+       7.75,
+       4.367
+      ],
+      [
+       7.75,
+       6.089
+      ],
+      [
+       7.417,
+       6.533
+      ],
+      [
+       6.083,
+       6.533
+      ],
+      [
+       5.75,
+       6.089
+      ],
+      [
+       5.75,
+       4.367
+      ],
+      [
+       6.194,
+       3.922
+      ],
+      [
+       6.417,
+       3.922
+      ]
+     ],
+     "label": [
+      5.906,
+      5.2
+     ],
+     "score": -3,
+     "pd": 3
+    },
+    {
+     "name": "T3 -1",
+     "kind": "score",
+     "shape": "rect",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T3",
+     "x": 6.417,
+     "y": 3.2,
+     "w": 0.667,
+     "h": 0.722,
+     "label": [
+      6.983,
+      3.322
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "T3 -1",
+     "kind": "score",
+     "shape": "poly",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T3",
+     "pts": [
+      [
+       6.306,
+       4.144
+      ],
+      [
+       7.194,
+       4.144
+      ],
+      [
+       7.472,
+       4.422
+      ],
+      [
+       7.472,
+       5.756
+      ],
+      [
+       7.25,
+       6.033
+      ],
+      [
+       6.25,
+       6.033
+      ],
+      [
+       6.028,
+       5.756
+      ],
+      [
+       6.028,
+       4.422
+      ]
+     ],
+     "label": [
+      6.75,
+      5.789
+     ],
+     "score": -1,
+     "pd": 1
+    },
+    {
+     "name": "T3 -0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T3",
+     "cx": 6.75,
+     "cy": 3.567,
+     "r": 0.222,
+     "score": 0,
+     "pd": 0
+    },
+    {
+     "name": "T3 -0",
+     "kind": "score",
+     "shape": "circle",
+     "tier": "kraft",
+     "line": "kraftLine",
+     "group": "T3",
+     "cx": 6.75,
+     "cy": 4.867,
+     "r": 0.444,
+     "score": 0,
+     "pd": 0
     }
    ]
   }

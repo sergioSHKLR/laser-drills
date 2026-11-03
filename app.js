@@ -62,7 +62,7 @@ function poly(pts,col,dash){ctx.strokeStyle=col;ctx.setLineDash(dash||[]);ctx.be
 function draw(){if(lock){ctx.lineWidth=2;const tp=DOC.template,f=tp.field,c=tp.control,T=lock.target,g=spread();
    poly(Core.outline({shape:'rect',x:f.x,y:f.y,w:f.w,h:f.h}),'#29b6f6',[6,4]);
    poly(Core.outline({shape:'rect',x:c.x,y:c.y,w:c.w,h:c.h}),state.mode==='live'||state.mode==='free'?'#ff9800':'#00e676');
-   for(const z of T.zones)poly(Core.outline(z,z.noGrow?0:g),z.kind==='noshoot'?'rgba(255,255,255,.9)':'rgba(255,235,59,.75)');}
+   for(const z of T.zones)if(z.kind!=='decor')poly(Core.outline(z,z.noGrow?0:g),z.kind==='noshoot'?'rgba(255,255,255,.9)':'rgba(255,235,59,.75)');}
   for(const m of marks){ctx.fillStyle='#00e676';ctx.beginPath();ctx.arc(m.x,m.y,5,0,7);ctx.fill();}}
 function render(){const s=Core.drillSummary(drill(),state.beep,state.shots);
   $('shots').innerHTML=state.shots.map((x,i)=>`<tr><td>${i+1}</td><td>${s.times[i].toFixed(2)}</td><td>${s.splits[i].toFixed(2)}</td><td>${x.hardcover?'HARD COVER':x.noshoot?(drill().scoring==='idpa'?'NON-THREAT':'NO-SHOOT'):x.ooo?x.zone+' (order)':(x.zone||'miss')}</td><td>${drill().scoring==='idpa'?(x.noshoot?'+5s':'-'+x.pd):x.score}</td></tr>`).join('');

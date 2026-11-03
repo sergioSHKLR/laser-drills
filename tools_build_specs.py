@@ -1,58 +1,75 @@
-"""Writes IDPA-style and hostage target specs into targets.json (geometry is generated, then stored as plain data).
-IDPA-style shapes are our own simplified, approximate artwork - NOT official IDPA dimensions or art."""
-import json
-D=json.load(open('targets.json'))
-def threat(cx,top,s,tag='',grp=None):
-    """Simplified IDPA-style threat, real-size 18x30in scaled by s (in per real in). Returns zones (outer first)."""
-    X=lambda x:round(cx+x*s,3); Y=lambda y:round(top+y*s,3)
-    g={'group':grp} if grp else {}
-    out=[[X(-3),Y(0)],[X(3),Y(0)],[X(3),Y(6.5)],[X(1.5),Y(7.5)],[X(8),Y(8.5)],[X(9),Y(10)],[X(9),Y(30)],[X(-9),Y(30)],[X(-9),Y(10)],[X(-8),Y(8.5)],[X(-1.5),Y(7.5)],[X(-3),Y(6.5)]]
-    L=lambda x,y:[X(x),Y(y)]
-    return [
-     dict(name=tag+'-3',kind='score',shape='poly',pts=out,score=-3,pd=3,tier='tier1',label=L(0,27.5),**g),
-     dict(name=tag+'-1',kind='score',shape='rect',x=X(-2.6),y=Y(0.4),w=round(5.2*s,3),h=round(5.7*s,3),score=-1,pd=1,tier='tier3',label=L(0,5.2),**g),
-     dict(name=tag+'-1',kind='score',shape='rect',x=X(-6),y=Y(9.5),w=round(12*s,3),h=round(16*s,3),score=-1,pd=1,tier='tier3',label=L(0,23.5),**g),
-     dict(name=tag+'-0',kind='score',shape='circle',cx=X(0),cy=Y(3.1),r=round(2*s,3),score=0,pd=0,tier='tier5',**g),
-     dict(name=tag+'-0',kind='score',shape='circle',cx=X(0),cy=Y(15),r=round(4*s,3),score=0,pd=0,tier='tier5',**g)]
-S=1/4.5   # 30in target -> 6.67in tall; at 3 yd looks like ~13.5 yd
-idpa_common=dict(scoring='idpa',drills=['idpa-course'])
-T=D['targets']
-T['idpa-threat']=dict(code='LD-101',name='IDPA-style Threat (1/4.5 scale)',markerIds=[17,18,19,20],distance='3 yd = ~13.5 yd sim',**idpa_common,
-  instructions=['Scored as points down (PD): -0 / -1 / -3.','Each PD = +1 s. Miss = 5 PD.','Body -0 is the 8in circle, head -0 the 4in circle.','Approximate IDPA-style art, not official.'],
-  zones=threat(4.25,2.15,S))
-hc=threat(4.25,2.15,S)
-hc.append(dict(name='HC',kind='hardcover',shape='rect',x=4.25-1*S,y=2.15+17*S,w=10*S+0.1,h=13*S+0.05,label=[4.25+4*S,2.15+24*S]))
-T['idpa-hardcover']=dict(code='LD-102',name='IDPA-style Partial Hard Cover',markerIds=[21,22,23,24],distance='3 yd = ~13.5 yd sim',**idpa_common,
-  instructions=['Black = hard cover: hits there do not count.','A hit only in hard cover = miss (5 PD).','Work the exposed -0 circle and head.','Each PD = +1 s.'],zones=hc)
-nt=threat(4.25,2.15,S)
-nt.append(dict(name='NT',kind='noshoot',shape='poly',penalty=-5,ntSeconds=5,
-  pts=[[4.25+0.5*S,2.15+11*S],[4.25+3.5*S,2.15+9*S],[4.25+9.5*S,2.15+9.5*S],[4.25+11*S,2.15+13*S],[4.25+11*S,2.15+30*S],[4.25+0.5*S,2.15+30*S]],label=[4.25+6*S,2.15+20*S]))
-T['idpa-nonthreat']=dict(code='LD-103',name='IDPA-style Threat + Non-Threat',markerIds=[25,26,27,28],distance='3 yd = ~13.5 yd sim',**idpa_common,
-  instructions=['Hatched = NON-THREAT (open hands): +5 s per hit.','A hit on the non-threat gives no threat credit.','Take the exposed head or left body.','Each PD = +1 s. Miss = 5 PD.'],zones=nt)
+"""Builds IDPA-style + hostage target specs into targets.json (geometry generated here, stored as plain data).
+IDPA-style shapes are our own simplified artwork with approximate dimensions - not official IDPA art, logo or text."""
+import json, math
+D=json.load(open('targets.json')); T=D['targets']; PAL=D['template']['palette']
+PAL.update({"kraft":"#A99F8C","kraftLine":"#3B3326","pWhite":"#FFFFFF","p0":"#1F3A5F","backing":"#000000","handInk":"#FFFFFF"})
+for k in [k for k in T if k.startswith('idpa-')]: del T[k]
+def sil(cx,top,s,style='kraft',tag='',grp=None,kind='score'):
+    X=lambda x:round(cx+x*s,3); Y=lambda y:round(top+y*s,3); P=lambda pts:[[X(a),Y(b)] for a,b in pts]
+    tier={'kraft':('kraft','kraft','kraft'),'practice':('pWhite','pWhite','p0')}[style]
+    g=dict(group=grp) if grp else {}
+    def Z(name,pd,shape,ti,**kw):
+        z=dict(name=tag+name,kind=kind,shape=shape,tier=ti,line='kraftLine' if style=='kraft' else 'outline',**g,**kw)
+        if kind=='score': z.update(score=-pd,pd=pd)
+        else: z.update(penalty=-5,ntSeconds=5,plain=True)
+        return z
+    outer=[(-3,0),(3,0),(3,6.5),(5,6.5),(9,10.5),(9,26),(6,30),(-6,30),(-9,26),(-9,10.5),(-5,6.5),(-3,6.5)]
+    band=[(-4,8.5),(4,8.5),(6.5,11),(6.5,23),(4.5,25.5),(-4.5,25.5),(-6.5,23),(-6.5,11)]
+    return [Z('-3',3,'poly',tier[0],pts=P(outer),label=[X(-7.6),Y(18)]),
+            Z('-1',1,'rect',tier[1],x=X(-3),y=Y(0),w=round(6*s,3),h=round(6.5*s,3),label=[X(2.1),Y(1.1)]),
+            Z('-1',1,'poly',tier[1],pts=P(band),label=[X(0),Y(23.3)]),
+            Z('-0',0,'circle',tier[2],cx=X(0),cy=Y(3.3),r=round(2*s,3)),
+            Z('-0',0,'circle',tier[2],cx=X(0),cy=Y(15),r=round(4*s,3))]
+def hands(cx,top,s):
+    out=[]
+    def bar(bx,by,ang,L,w):
+        a=math.radians(ang); dx,dy=math.sin(a),-math.cos(a); nx,ny=-dy,dx
+        pts=[[bx+nx*w,by+ny*w],[bx+nx*w*0.8+dx*L,by+ny*w*0.8+dy*L],[bx+dx*(L+w*0.6),by+dy*(L+w*0.6)],[bx-nx*w*0.8+dx*L,by-ny*w*0.8+dy*L],[bx-nx*w,by-ny*w]]
+        return dict(name='hand',kind='decor',shape='poly',pts=[[round(x,3),round(y,3)] for x,y in pts],fill="handInk",line="ink")
+    for side in (-1,1):
+        hx,hy=cx+side*2.7*s,top+16.5*s   # palm centre (real-inch offsets scaled)
+        out.append(dict(name='hand',kind='decor',shape='ellipse',cx=round(hx,3),cy=round(hy,3),rx=round(1.6*s,3),ry=round(1.9*s,3),fill="handInk",line="ink"))
+        for i,(off,ang,L) in enumerate([(-1.05,-14,2.3),(-0.35,-4,2.7),(0.35,4,2.8),(1.05,14,2.4)]):
+            out.append(bar(hx+off*s,hy-1.0*s,ang,L*s,0.36*s))
+        out.append(bar(hx-side*1.3*s,hy+0.4*s,-side*50,1.3*s,0.4*s))  # thumb toward body centre
+    return out
+S=1/4.5; CX,TOP=4.25,2.2
+def cover(pts,label): return dict(name='HC',kind='hardcover',shape='poly',pts=[[round(CX+a*S,3),round(TOP+b*S,3)] for a,b in pts],label=[round(CX+label[0]*S,3),round(TOP+label[1]*S,3)])
+base=dict(scoring='idpa',drills=['idpa-course'],distance='3 yd = ~13.5 yd sim (1/4.5 scale)')
+PD=['Scored as points down: -0 / -1 / -3 (+1 s per PD).','Head: -0 circle, rest of head box -1. Miss = 5 PD.']
+def add(key,code,name,ids,zones,ins,**kw): T[key]=dict(code=code,name=name,markerIds=ids,**{**base,**kw},instructions=ins,zones=zones)
+add('idpa-threat','LD-101','IDPA-style Threat',[17,18,19,20],sil(CX,TOP,S),PD+['Classic kraft-style threat, own artwork.','Shoot START/STOP to begin.'])
+add('idpa-hc-left','LD-102','IDPA-style Hard Cover: Left',[21,22,23,24],sil(CX,TOP,S)+[cover([(-10.5,5.5),(-0.6,5.5),(-0.6,31),(-10.5,31)],(-5,20))],
+    ['Black = hard cover: hits there do not count.','Only the right half of the threat is exposed.']+PD[:1]+['Hit only in hard cover = miss (5 PD).'])
+add('idpa-hc-lower','LD-103','IDPA-style Hard Cover: Lower',[25,26,27,28],sil(CX,TOP,S)+[cover([(-10.5,17.5),(7.5,17.5),(7.5,31),(-10.5,31)],(-1.5,24.5))],
+    ['Lower body is behind hard cover (black).','Upper -0 arc and head are exposed.']+PD[:1]+['Hit only in hard cover = miss (5 PD).'])
+add('idpa-hc-diagonal','LD-104','IDPA-style Hard Cover: Diagonal',[29,30,31,32],sil(CX,TOP,S)+[cover([(2.5,7.5),(10.5,7.5),(10.5,31),(-3,31)],(5.5,22))],
+    ['Diagonal hard cover over the right side.','Precision on the exposed -0 edge.']+PD[:1]+['Hit only in hard cover = miss (5 PD).'])
+add('idpa-nonthreat','LD-105','IDPA-style Non-Threat (open hands)',[49,50,51,52],sil(CX,TOP,S,kind='noshoot',tag='NT ')+hands(CX,TOP,S),
+    ['Open hands = NON-THREAT. Do not shoot.','Any hit anywhere on it = +5 s (HNT).','Use as a no-shoot / shoot-through drill.','Pair with LD-106 for threat + non-threat.'])
+add('idpa-practice','LD-106','IDPA-style Practice (dark -0)',[37,38,39,40],
+    [dict(name='backing',kind='decor',shape='rect',x=0.75,y=1.95,w=7.0,h=7.15,fill='backing')]+sil(CX,TOP,S,style='practice'),
+    ['White practice face on black backing.','-0 circles are DARK BLUE, not red: a red','zone would mask the red laser dot.']+PD[:1])
+pair=sil(2.25,1.95,1/5,kind='noshoot',tag='NT ',grp='NT')+hands(2.25,1.95,1/5)+sil(6.15,1.95,1/5,tag='T1 ',grp='T1')
+add('idpa-nt-pair','LD-107','IDPA-style Threat + Non-Threat',[41,42,43,44],pair,
+    ['LEFT = non-threat (hands): +5 s per hit.','RIGHT = threat: score -0/-1/-3.','Miss on the threat = 5 PD.','1/5 scale: 3 yd = ~15 yd sim.'],distance='3 yd = ~15 yd sim (1/5 scale)')
 m=[]
-for i,cx in enumerate((1.75,4.25,6.75)):
-    m+=threat(cx,3.4,1/9,tag=f'T{i+1} ',grp=f'T{i+1}')
-T['idpa-multi']=dict(code='LD-104',name='IDPA-style Multiple Threats (1/9)',markerIds=[29,30,31,32],distance='3 yd = ~27 yd sim',**idpa_common,
-  instructions=['Engage T1, T2, T3 left to right, 2 each.','Out-of-order engagement = PE (+3 s).','Each PD = +1 s. Miss = 5 PD.','Small scale: slow down, drive the dot.'],zones=m)
-# Hostage (our 5/3/1 system)
-h=[z for z in T['silhouette']['zones'] if z['kind']=='score']
-h=json.loads(json.dumps(h))
-h.append(dict(name='HOSTAGE',kind='noshoot',shape='poly',penalty=-10,label=[5.35,6.9],
-  pts=[[4.45,4.95],[4.6,4.55],[5.0,4.3],[5.45,4.3],[5.85,4.55],[6.0,4.95],[5.85,5.4],[6.6,5.7],[6.9,6.3],[6.9,8.9],[4.2,8.9],[4.2,6.3],[4.55,5.7],[4.65,5.45]]))
-T['hostage']=dict(code='LD-005',name='Hostage',markerIds=[33,34,35,36],distance='3-5 yd',drills=['hostage-head','five-shot-par'],
-  instructions=['Hatched figure = HOSTAGE: -10 per hit.','Hostage overlaps the threat: overlap hits count as hostage.','Head A box and left body are clean shots.','Shoot START/STOP to begin.'],zones=h)
+for i,cx in enumerate((1.75,4.25,6.75)): m+=sil(cx,3.2,1/9,tag=f'T{i+1} ',grp=f'T{i+1}')
+add('idpa-multi','LD-108','IDPA-style Multiple Threats',[45,46,47,48],m,
+    ['Engage T1, T2, T3 left to right, 2 each.','Out-of-order engagement = PE (+3 s).','Each PD = +1 s. Miss = 5 PD.','1/9 scale: 3 yd = ~27 yd sim.'],distance='3 yd = ~27 yd sim (1/9 scale)')
 json.dump(D,open('targets.json','w'),indent=1)
 dr=json.load(open('drills.json'))
-dr=[d for d in dr if d['id'] not in('idpa-course','hostage-head')]
-dr.append({"id":"hostage-head","name":"Hostage: 2 head shots (par 3s)","target":"hostage","shots":2,"startDelay":[2,4],"parTime":3.0,"timeout":10,"maxPerShot":5,"notes":"Precision under pressure; hostage hit = -10."})
-dr.append({"id":"idpa-course","name":"IDPA-style familiarization course (5 stages)","type":"course","scoring":"idpa",
- "notes":"Time + points down. Swap the printed target before each stage; the app checks the target ID. Score = raw time + PD x1s + PE x3s + HNT x5s. Lower is better.",
- "stages":[
-  {"name":"1. Basic threat","target":"idpa-threat","shots":2,"startDelay":[2,4],"parTime":3.0,"timeout":10,"brief":"From the beep: 2 shots to the body -0 circle."},
-  {"name":"2. Partial hard cover","target":"idpa-hardcover","shots":2,"startDelay":[2,4],"parTime":4.0,"timeout":10,"brief":"Lower body is behind black hard cover. 2 shots to exposed -0 / head."},
-  {"name":"3. Non-threat (hostage)","target":"idpa-nonthreat","shots":2,"startDelay":[2,4],"parTime":4.0,"timeout":10,"brief":"A non-threat covers the right side. 2 shots on the threat only."},
-  {"name":"4. Head shots","target":"idpa-threat","shots":2,"startDelay":[2,4],"parTime":4.0,"timeout":10,"zoneHint":"head","brief":"2 shots to the head -0 (4in circle)."},
-  {"name":"5. Multiple threats","target":"idpa-multi","shots":6,"order":["T1","T1","T2","T2","T3","T3"],"startDelay":[2,4],"parTime":8.0,"timeout":20,"brief":"2 shots each on T1, T2, T3 in order (left to right). Out of order = PE."}]})
 for d in dr:
-    if d['id']=='five-shot-par': d['notes']='Random delay, beep, 5 shots. Striker pistol: splits include rack time.'
+    if d['id']=='idpa-course':
+        d['name']='IDPA-style familiarization course (7 stages)'
+        d['stages']=[
+ {"name":"1. Warm-up (practice face)","target":"idpa-practice","shots":3,"startDelay":[2,4],"parTime":4.0,"timeout":10,"brief":"3 shots to the dark body -0 circle. Learn the zones."},
+ {"name":"2. Basic threat","target":"idpa-threat","shots":2,"startDelay":[2,4],"parTime":3.0,"timeout":10,"brief":"From the beep: 2 to the body -0."},
+ {"name":"3. Head shots","target":"idpa-threat","shots":2,"startDelay":[2,4],"parTime":4.0,"timeout":10,"brief":"2 to the head -0 circle; rest of the head box is -1."},
+ {"name":"4. Hard cover: left","target":"idpa-hc-left","shots":2,"startDelay":[2,4],"parTime":4.0,"timeout":10,"brief":"Left half is behind hard cover. 2 on the exposed -0."},
+ {"name":"5. Hard cover: lower","target":"idpa-hc-lower","shots":2,"startDelay":[2,4],"parTime":4.0,"timeout":10,"brief":"Lower body covered. 2 on the upper -0 or head."},
+ {"name":"6. Hard cover: diagonal","target":"idpa-hc-diagonal","shots":2,"startDelay":[2,4],"parTime":4.5,"timeout":10,"brief":"Diagonal cover. 2 on the exposed -0 edge."},
+ {"name":"7. Threat + non-threat","target":"idpa-nt-pair","shots":2,"startDelay":[2,4],"parTime":4.0,"timeout":10,"brief":"2 on the RIGHT threat only. Hands = non-threat (+5 s)."},
+ {"name":"8. Multiple threats","target":"idpa-multi","shots":6,"order":["T1","T1","T2","T2","T3","T3"],"startDelay":[2,4],"parTime":8.0,"timeout":20,"brief":"2 each on T1, T2, T3 in order. Out of order = PE."}]
+        d['name']='IDPA-style familiarization course (8 stages)'
 json.dump(dr,open('drills.json','w'),indent=1)

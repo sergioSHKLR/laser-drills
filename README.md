@@ -15,3 +15,11 @@ Static PWA. Serve over HTTPS (camera requirement) or http://localhost.
 ## IDPA-style course (approximate, not official art/dimensions)
 Score = raw time + 1 s per point down (-0/-1/-3, miss = 5 PD) + 3 s per PE + 5 s per hit on non-threat; hard-cover hits do not count.
 Sources: https://www.sk4tactic.ba/en/idpa-rules (2026.2 summary), https://brocksgapidpa.com/scoring, https://www.idpanebraska.com/faq/, official rulebook https://prod.idpa.com/documents
+
+### IDPA-style target set (own artwork; no IDPA logo or "official" text)
+Classic cardboard shape: head box (-0 circle, rest -1), torso -1 band, -3 outer, body -0 circle. Kraft tone #A99F8C is a desaturated tan so red-dominance stays <20 (true kraft is reddish and would hurt laser detection).
+- idpa-threat LD-101 (17-20) plain - idpa-hc-left LD-102 (21-24) - idpa-hc-lower LD-103 (25-28) - idpa-hc-diagonal LD-104 (29-32)
+- idpa-nonthreat LD-105 (49-52) white open hands outlined black (distinct from black hard cover; reads in grayscale)
+- idpa-practice LD-106 (37-40) white on black backing; -0 circles dark blue #1F3A5F, not red, because a red zone masks the red laser dot
+- idpa-nt-pair LD-107 (41-44) non-threat + threat - idpa-multi LD-108 (45-48)
+Course `idpa-course` now has 8 stages using these.

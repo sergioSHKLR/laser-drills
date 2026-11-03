@@ -74,13 +74,25 @@
  },
  {
   "id": "idpa-course",
-  "name": "IDPA-style familiarization course (5 stages)",
+  "name": "IDPA-style familiarization course (8 stages)",
   "type": "course",
   "scoring": "idpa",
   "notes": "Time + points down. Swap the printed target before each stage; the app checks the target ID. Score = raw time + PD x1s + PE x3s + HNT x5s. Lower is better.",
   "stages": [
    {
-    "name": "1. Basic threat",
+    "name": "1. Warm-up (practice face)",
+    "target": "idpa-practice",
+    "shots": 3,
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 4.0,
+    "timeout": 10,
+    "brief": "3 shots to the dark body -0 circle. Learn the zones."
+   },
+   {
+    "name": "2. Basic threat",
     "target": "idpa-threat",
     "shots": 2,
     "startDelay": [
@@ -89,34 +101,10 @@
     ],
     "parTime": 3.0,
     "timeout": 10,
-    "brief": "From the beep: 2 shots to the body -0 circle."
+    "brief": "From the beep: 2 to the body -0."
    },
    {
-    "name": "2. Partial hard cover",
-    "target": "idpa-hardcover",
-    "shots": 2,
-    "startDelay": [
-     2,
-     4
-    ],
-    "parTime": 4.0,
-    "timeout": 10,
-    "brief": "Lower body is behind black hard cover. 2 shots to exposed -0 / head."
-   },
-   {
-    "name": "3. Non-threat (hostage)",
-    "target": "idpa-nonthreat",
-    "shots": 2,
-    "startDelay": [
-     2,
-     4
-    ],
-    "parTime": 4.0,
-    "timeout": 10,
-    "brief": "A non-threat covers the right side. 2 shots on the threat only."
-   },
-   {
-    "name": "4. Head shots",
+    "name": "3. Head shots",
     "target": "idpa-threat",
     "shots": 2,
     "startDelay": [
@@ -125,11 +113,58 @@
     ],
     "parTime": 4.0,
     "timeout": 10,
-    "zoneHint": "head",
-    "brief": "2 shots to the head -0 (4in circle)."
+    "brief": "2 to the head -0 circle; rest of the head box is -1."
    },
    {
-    "name": "5. Multiple threats",
+    "name": "4. Hard cover: left",
+    "target": "idpa-hc-left",
+    "shots": 2,
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 4.0,
+    "timeout": 10,
+    "brief": "Left half is behind hard cover. 2 on the exposed -0."
+   },
+   {
+    "name": "5. Hard cover: lower",
+    "target": "idpa-hc-lower",
+    "shots": 2,
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 4.0,
+    "timeout": 10,
+    "brief": "Lower body covered. 2 on the upper -0 or head."
+   },
+   {
+    "name": "6. Hard cover: diagonal",
+    "target": "idpa-hc-diagonal",
+    "shots": 2,
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 4.5,
+    "timeout": 10,
+    "brief": "Diagonal cover. 2 on the exposed -0 edge."
+   },
+   {
+    "name": "7. Threat + non-threat",
+    "target": "idpa-nt-pair",
+    "shots": 2,
+    "startDelay": [
+     2,
+     4
+    ],
+    "parTime": 4.0,
+    "timeout": 10,
+    "brief": "2 on the RIGHT threat only. Hands = non-threat (+5 s)."
+   },
+   {
+    "name": "8. Multiple threats",
     "target": "idpa-multi",
     "shots": 6,
     "order": [
@@ -146,7 +181,7 @@
     ],
     "parTime": 8.0,
     "timeout": 20,
-    "brief": "2 shots each on T1, T2, T3 in order (left to right). Out of order = PE."
+    "brief": "2 each on T1, T2, T3 in order. Out of order = PE."
    }
   ]
  }

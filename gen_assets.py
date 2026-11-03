@@ -77,6 +77,17 @@ def draw_target(key,t,path):
     # zones
     for z in t['zones']:
         c.setLineWidth(1.4); d.color(PAL['outline'],True)
+        if z['kind']=='decor' and z.get('line'):
+            if z is not next(q for q in t['zones'] if q['kind']=='decor' and q.get('line')): continue
+            outl=[q for q in t['zones'] if q['kind']=='decor' and q.get('line')]
+            c.setLineJoin(1); c.setLineWidth(3.2); d.color(PAL[z['line']],True)
+            for q in outl: c.drawPath(d.path(q),stroke=1,fill=0)
+            for q in outl: d.color(PAL[q['fill']]); c.drawPath(d.path(q),stroke=0,fill=1)
+            continue
+        if z['kind']=='decor':
+            d.color(PAL[z['fill']]); c.drawPath(d.path(z),stroke=0,fill=1); continue
+        if z['kind']=='noshoot' and z.get('plain'):
+            d.color(PAL[z['tier']]); d.color(PAL[z.get('line','outline')],True); c.drawPath(d.path(z),stroke=1,fill=1); continue
         if z['kind']=='noshoot':
             d.color(PAL['noshoot']); c.drawPath(d.path(z),stroke=0,fill=1)
             d.hatch(z,PAL['noshootInk']); d.color(PAL['noshootInk'],True); c.setLineWidth(2); c.drawPath(d.path(z),stroke=1,fill=0)
@@ -90,17 +101,17 @@ def draw_target(key,t,path):
             c.setFillColor(black); c.drawPath(d.path(z),stroke=0,fill=1)
             lx,ly=d.P(*(z.get('label') or zone_center(z))); c.setFillColor(white); c.setFont('Helvetica-Bold',9)
             c.drawCentredString(lx,ly+3,'HARD'); c.drawCentredString(lx,ly-8,'COVER'); continue
-        d.color(PAL[z['tier']])
+        d.color(PAL[z['tier']]); d.color(PAL[z.get('line','outline')],True)
         if z.get('dashed'):
             c.setDash(5,3); c.drawPath(d.path(z),stroke=1,fill=1); c.setDash()
         else: c.drawPath(d.path(z),stroke=1,fill=1)
     # zone labels (after fills so they stay on top)
     for z in t['zones']:
-        if z['kind']!='score': continue
+        if z['kind']!='score' and not z.get('plain'): continue
         cx,cy=zone_center(z); dark=lum(PAL[z['tier']])<0.3
         if t.get('scoring')=='idpa':
             if 'label' in z: cx,cy=z['label']
-            c.setFillColor(white if dark else black); c.setFont('Helvetica-Bold',8 if key=='idpa-multi' else 10)
+            c.setFillColor(white if dark else black); c.setFont('Helvetica-Bold',8 if key=='idpa-multi' else (9 if key=='idpa-nt-pair' else 10))
             x,y=d.P(cx,cy); c.drawCentredString(x,y-3,z['name'].split(' ')[-1]); continue
         c.setFillColor(white if dark else black); c.setFont('Helvetica-Bold',9)
         if z['shape']=='circle' and not z.get('dashed') and z['r']>1.0: cy=cy-z['r']+0.22
@@ -135,10 +146,13 @@ def draw_target(key,t,path):
         if k in seen: continue
         seen.add(k); items.append((PAL[z['tier']],f"{'Dot' if key=='five-dot' else 'Zone'} {z['name'] if key!='clays' else ('clay' if z['score']==5 else 'pattern')}: {z['score']:+d} pts" if key!='five-dot' else f"Dots 1-5 in order: +5 each",None))
     if t.get('scoring')=='idpa':
-        items=[(PAL['tier5'],'Zone -0: 0 points down',None),(PAL['tier3'],'Zone -1: 1 PD (+1 s)',None),(PAL['tier1'],'Zone -3: 3 PD (+3 s)',None)]
+        tz={z['name'].split(' ')[-1]:z['tier'] for z in t['zones'] if z['kind'] in('score','noshoot') and 'tier' in z}
+        items=[]
+        if any(z['kind']=='score' for z in t['zones']):
+            items=[(PAL[tz['-0']],'Zone -0 (circles): 0 points down',None),(PAL[tz['-1']],'Zone -1 (head box, band): +1 s',None),(PAL[tz['-3']],'Zone -3 (outer): +3 s',None)]
         if any(z['kind']=='hardcover' for z in t['zones']): items.append(('#000000','Hard cover: no hit (miss = 5 PD)',None))
-        if any(z['kind']=='noshoot' for z in t['zones']): items.append((PAL['noshoot'],'Non-threat hit: +5 s each','hatch'))
-        items.append((PAL['control'],'START/STOP control: not scored','ctrl'))
+        if any(z['kind']=='noshoot' for z in t['zones']): items.append((PAL['kraft'],'Non-threat (open hands): +5 s per hit',None))
+        if not any(z['kind']=='score' for z in t['zones']): items.append(('#FFFFFF','Do not shoot - any hit is a penalty',None))
     elif any(z['kind']=='noshoot' for z in t['zones']):
         p=[z for z in t['zones'] if z['kind']=='noshoot'][0]['penalty']; items.append((PAL['noshoot'],f'No-shoot (hatched): {p} pts','hatch'))
     items.append((PAL['control'],'START/STOP control: not scored','ctrl'))
