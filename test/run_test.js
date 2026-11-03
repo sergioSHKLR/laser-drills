@@ -1,18 +1,21 @@
 const fs=require('fs'),vm=require('vm'),path=require('path');
 const ctx={};vm.createContext(ctx);
 for(const f of['cv.js','aruco.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'../vendor',f),'utf8'),ctx);
-const Core=require('../core.js'),T=require('../targets.json').bullseye,meta=require('./frames.json');
-vm.runInContext('this.CV=CV;this.AR=AR;',ctx);
-const det=new ctx.AR.Detector(),laser=new Core.LaserDetector();
-let lock=null,hits=[],t=0,fail=0;
-for(const name of meta.frames){const data=new Uint8ClampedArray(fs.readFileSync(path.join(__dirname,name+'.rgba')));
-  const img={width:meta.w,height:meta.h,data};
-  if(!lock){const m=det.detect(img);console.log('markers',m.map(k=>k.id));lock=Core.lockTarget(m,T);}
-  const h=laser.process(data,meta.w,meta.h,t+=100);
-  if(h&&lock){const p=Core.apply(lock.imgToTgt,h);hits.push({...p,...Core.score(T,p,0),sg:Core.score(T,p,1.5).score});}
-}
-if(!lock){console.log('FAIL no lock');process.exit(1);}
-hits.forEach((h,i)=>{const e=meta.shots[i],err=Math.hypot(h.x-e[0],h.y-e[1]);if(err>0.25)fail++;
-  console.log(`shot ${i+1}: expected (${e}) got (${h.x.toFixed(2)},${h.y.toFixed(2)}) err ${err.toFixed(2)}in zone ${h.zone} score ${h.score} shotgun ${h.sg}`);});
-if(hits.length!==meta.shots.length)fail++;
-console.log(fail?'FAIL':'PASS',hits.length,'hits');process.exit(fail?1:0);
+vm.runInContext('this.AR=AR',ctx);
+const Core=require('../core.js'),DOC=require('../targets.json'),DR=require('../drills.json'),meta=require('./frames.json');
+let fail=0;
+for(const key in meta.sets){const set=meta.sets[key],det=new ctx.AR.Detector(),laser=new Core.LaserDetector();
+  const seq=DR.find(d=>d.target===key&&d.sequence),shotgun=DR.find(d=>d.target===key&&d.shotgun);
+  let lock=null,t=0,hits=[];
+  for(const name of set.frames){const data=new Uint8ClampedArray(fs.readFileSync(path.join(__dirname,name+'.rgba')));
+    if(!lock)lock=Core.lockTarget(det.detect({width:meta.w,height:meta.h,data}),DOC);
+    const h=laser.process(data,meta.w,meta.h,t+=100);
+    if(h&&lock){const p=Core.apply(lock.imgToTgt,h),n=hits.filter(x=>!x.control).length;
+      hits.push({p,...Core.score(lock.target,p,shotgun?lock.target.spread:0,DOC.template,seq?seq.sequence[n]:null)});}}
+  if(!lock||lock.key!==key){console.log(key,'FAIL lock',lock&&lock.key);fail++;continue;}
+  console.log(`[${key}] locked as ${lock.key}`);
+  set.shots.forEach((e,i)=>{const h=hits[i];if(!h){console.log(' shot',i+1,'MISSING');fail++;return;}
+    const err=Math.hypot(h.p.x-e[0],h.p.y-e[1]),got=h.control?'CTRL':h.score,ok=err<0.25&&got===e[2];if(!ok)fail++;
+    console.log(` shot ${i+1}: (${e[0]},${e[1]}) err ${err.toFixed(2)}in -> ${got}${h.noshoot?' (no-shoot)':''}${h.outOfOrder?' (out of order)':''} expected ${e[2]} ${ok?'ok':'FAIL'}`);});
+  if(hits.length!==set.shots.length){console.log(' extra/missing hits',hits.length);fail++;}}
+console.log(fail?`FAIL (${fail})`:'PASS');process.exit(fail?1:0);

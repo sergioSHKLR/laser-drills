@@ -1,4 +1,7 @@
-[{"id":"five-shot-par","name":"5 shots on the beep (par 5.0s)","target":"bullseye","shots":5,
-  "startDelay":[2.0,5.0],"parTime":5.0,"timeout":15,
-  "notes":"Random delay, beep, fire 5 shots. Pistol: 1 shot per rack is expected with a striker gun; splits include rack time."},
- {"id":"single-draw","name":"Draw + 1 shot (par 1.8s)","target":"bullseye","shots":1,"startDelay":[2.0,6.0],"parTime":1.8,"timeout":6}]
+[{"id":"five-shot-par","name":"5 shots on the beep (par 5.0s)","target":"any","shots":5,"startDelay":[2.0,5.0],"parTime":5.0,"timeout":15,
+  "notes":"Random delay, beep, 5 shots. Striker pistol: splits include rack time."},
+ {"id":"single-draw","name":"Draw + 1 shot (par 1.8s)","target":"silhouette","shots":1,"startDelay":[2.0,6.0],"parTime":1.8,"timeout":6},
+ {"id":"dot-sequence","name":"5-dot sequence (par 8s)","target":"five-dot","shots":5,"sequence":["1","2","3","4","5"],"startDelay":[2.0,4.0],"parTime":8.0,"timeout":20,
+  "notes":"Each shot must hit the next dot in order."},
+ {"id":"clay-trio","name":"Clay trio, shotgun (par 4s)","target":"clays","shots":3,"shotgun":true,"startDelay":[1.5,4.0],"parTime":4.0,"timeout":10,
+  "notes":"Shotgun mode forced on; uses the target's spread."}]

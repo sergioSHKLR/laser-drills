@@ -1,4 +1,389 @@
-{"bullseye":{"name":"Bullseye (letter)","width":8.5,"height":11,
- "markers":[{"id":1,"x":0.5,"y":0.5,"size":1.4,"corner":0},{"id":2,"x":6.6,"y":0.5,"size":1.4,"corner":1},
-            {"id":3,"x":6.6,"y":9.1,"size":1.4,"corner":2},{"id":4,"x":0.5,"y":9.1,"size":1.4,"corner":3}],
- "zones":[{"name":"A","cx":4.25,"cy":5.5,"r":1.0,"score":5},{"name":"B","cx":4.25,"cy":5.5,"r":2.0,"score":3},{"name":"C","cx":4.25,"cy":5.5,"r":3.1,"score":1}]}}
+{
+ "template": {
+  "page": {
+   "w": 8.5,
+   "h": 11
+  },
+  "margin": 0.4,
+  "marker": {
+   "size": 1.2,
+   "quiet": 0.25
+  },
+  "field": {
+   "x": 0.4,
+   "y": 1.85,
+   "w": 7.7,
+   "h": 7.3
+  },
+  "control": {
+   "x": 6.85,
+   "y": 8.0,
+   "w": 1.15,
+   "h": 1.0
+  },
+  "palette": {
+   "tier5": "#34506E",
+   "tier3": "#8DA6BC",
+   "tier2": "#B7C7D5",
+   "tier1": "#D9E2EA",
+   "outline": "#1E2B38",
+   "noshoot": "#FFFFFF",
+   "noshootInk": "#111111",
+   "control": "#2F6B4F",
+   "controlInk": "#FFFFFF",
+   "fieldEdge": "#9AA5B0",
+   "ink": "#111111"
+  }
+ },
+ "targets": {
+  "bullseye": {
+   "code": "LD-001",
+   "name": "Bullseye",
+   "markerIds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "distance": "3-7 yd (pistol)",
+   "drills": [
+    "five-shot-par",
+    "free"
+   ],
+   "instructions": [
+    "Print at 100% on US Letter; keep corners flat.",
+    "Phone 1-3 yd away, all 4 corner markers in view.",
+    "Wait for the blue outline, then shoot START/STOP or press Start.",
+    "Aim small: center ring is 5 pts."
+   ],
+   "zones": [
+    {
+     "name": "C",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.25,
+     "cy": 5.5,
+     "r": 2.8,
+     "score": 1,
+     "tier": "tier1"
+    },
+    {
+     "name": "B",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.25,
+     "cy": 5.5,
+     "r": 1.8,
+     "score": 3,
+     "tier": "tier3"
+    },
+    {
+     "name": "A",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.25,
+     "cy": 5.5,
+     "r": 0.9,
+     "score": 5,
+     "tier": "tier5"
+    }
+   ]
+  },
+  "silhouette": {
+   "code": "LD-002",
+   "name": "Silhouette + No-Shoot",
+   "markerIds": [
+    5,
+    6,
+    7,
+    8
+   ],
+   "distance": "3-7 yd (scaled ~1/3)",
+   "drills": [
+    "single-draw",
+    "five-shot-par"
+   ],
+   "instructions": [
+    "Scaled practical silhouette: A=5, C=3, D=1.",
+    "Hatched NO-SHOOT hand: -5 per hit.",
+    "Head A box rewards precision, body A for speed.",
+    "Shoot START/STOP (bottom right) to begin."
+   ],
+   "zones": [
+    {
+     "name": "D",
+     "kind": "score",
+     "shape": "poly",
+     "pts": [
+      [
+       2.65,
+       3.95
+      ],
+      [
+       5.85,
+       3.95
+      ],
+      [
+       6.25,
+       4.7
+      ],
+      [
+       6.25,
+       8.9
+      ],
+      [
+       2.25,
+       8.9
+      ],
+      [
+       2.25,
+       4.7
+      ]
+     ],
+     "score": 1,
+     "tier": "tier1"
+    },
+    {
+     "name": "D",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.25,
+     "cy": 2.95,
+     "r": 0.8,
+     "score": 1,
+     "tier": "tier1"
+    },
+    {
+     "name": "C",
+     "kind": "score",
+     "shape": "poly",
+     "pts": [
+      [
+       3.0,
+       4.35
+      ],
+      [
+       5.5,
+       4.35
+      ],
+      [
+       5.7,
+       4.9
+      ],
+      [
+       5.7,
+       7.8
+      ],
+      [
+       2.8,
+       7.8
+      ],
+      [
+       2.8,
+       4.9
+      ]
+     ],
+     "score": 3,
+     "tier": "tier3"
+    },
+    {
+     "name": "A",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.85,
+     "y": 2.55,
+     "w": 0.8,
+     "h": 0.65,
+     "score": 5,
+     "tier": "tier5"
+    },
+    {
+     "name": "A",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.55,
+     "y": 4.6,
+     "w": 1.4,
+     "h": 2.2,
+     "score": 5,
+     "tier": "tier5"
+    },
+    {
+     "name": "NS",
+     "kind": "noshoot",
+     "shape": "rect",
+     "x": 5.35,
+     "y": 5.3,
+     "w": 1.3,
+     "h": 2.3,
+     "penalty": -5
+    }
+   ]
+  },
+  "five-dot": {
+   "code": "LD-003",
+   "name": "5-Dot Sequence",
+   "markerIds": [
+    9,
+    10,
+    11,
+    12
+   ],
+   "distance": "3-5 yd",
+   "drills": [
+    "dot-sequence",
+    "five-shot-par"
+   ],
+   "instructions": [
+    "Shoot dots 1 to 5 in order.",
+    "Out-of-order or missed dot = 0 pts.",
+    "Each correct dot = 5 pts.",
+    "Build speed only once all 5 are clean."
+   ],
+   "zones": [
+    {
+     "name": "1",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 2.2,
+     "cy": 3.2,
+     "r": 0.7,
+     "score": 5,
+     "tier": "tier5"
+    },
+    {
+     "name": "2",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 6.3,
+     "cy": 3.2,
+     "r": 0.7,
+     "score": 5,
+     "tier": "tier5"
+    },
+    {
+     "name": "3",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 4.25,
+     "cy": 5.4,
+     "r": 0.7,
+     "score": 5,
+     "tier": "tier5"
+    },
+    {
+     "name": "4",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 2.2,
+     "cy": 7.6,
+     "r": 0.7,
+     "score": 5,
+     "tier": "tier5"
+    },
+    {
+     "name": "5",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 5.6,
+     "cy": 7.6,
+     "r": 0.7,
+     "score": 5,
+     "tier": "tier5"
+    }
+   ]
+  },
+  "clays": {
+   "code": "LD-004",
+   "name": "Shotgun Clays",
+   "markerIds": [
+    13,
+    14,
+    15,
+    16
+   ],
+   "distance": "3-5 yd (shotgun cartridge)",
+   "drills": [
+    "clay-trio"
+   ],
+   "spread": 0.55,
+   "instructions": [
+    "Shotgun mode: clay zones grow by the 0.55in spread.",
+    "Dashed ring = pattern edge: 2 pts (fixed size).",
+    "Clay (incl. spread) 5 pts.",
+    "Mount, swing, shoot each clay once."
+   ],
+   "zones": [
+    {
+     "name": "Ring1",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 2.4,
+     "cy": 3.3,
+     "r": 1.3,
+     "score": 2,
+     "tier": "tier1",
+     "dashed": true,
+     "noGrow": true
+    },
+    {
+     "name": "Ring2",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 6.0,
+     "cy": 4.6,
+     "r": 1.3,
+     "score": 2,
+     "tier": "tier1",
+     "dashed": true,
+     "noGrow": true
+    },
+    {
+     "name": "Ring3",
+     "kind": "score",
+     "shape": "circle",
+     "cx": 3.4,
+     "cy": 7.4,
+     "r": 1.3,
+     "score": 2,
+     "tier": "tier1",
+     "dashed": true,
+     "noGrow": true
+    },
+    {
+     "name": "Clay1",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 2.4,
+     "cy": 3.3,
+     "rx": 0.75,
+     "ry": 0.32,
+     "score": 5,
+     "tier": "tier5"
+    },
+    {
+     "name": "Clay2",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 6.0,
+     "cy": 4.6,
+     "rx": 0.75,
+     "ry": 0.32,
+     "score": 5,
+     "tier": "tier5"
+    },
+    {
+     "name": "Clay3",
+     "kind": "score",
+     "shape": "ellipse",
+     "cx": 3.4,
+     "cy": 7.4,
+     "rx": 0.75,
+     "ry": 0.32,
+     "score": 5,
+     "tier": "tier5"
+    }
+   ]
+  }
+ }
+}
