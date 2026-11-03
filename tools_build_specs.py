@@ -56,7 +56,11 @@ pair=sil(2.25,1.95,1/5,kind='noshoot',tag='NT ',grp='NT')+hands(2.25,1.95,1/5)+s
 add('idpa-nt-pair','LD-107','IDPA-style Threat + Non-Threat',[41,42,43,44],pair,
     ['LEFT = non-threat (hands): +5 s per hit.','RIGHT = threat: score -0/-1/-3.','Miss on the threat = 5 PD.','1/5 scale: 3 yd = ~15 yd sim.'],distance='3 yd = ~15 yd sim (1/5 scale)')
 m=[]
-for i,cx in enumerate((1.75,4.25,6.75)): m+=sil(cx,3.2,1/9,tag=f'T{i+1} ',grp=f'T{i+1}')
+# tight, overlapping line: T2 stands in front of T1 and T3 (front figure owns the hit: z + sil)
+for i,cx in [(0,2.95),(2,5.55),(1,4.25)]:
+    zs=sil(cx,3.2 if i!=1 else 3.45,1/9,tag=f'T{i+1} ',grp=f'T{i+1}')
+    for q in zs: q['z']=2 if i==1 else 1
+    zs[0]['sil']=True; m+=zs
 add('idpa-multi','LD-108','IDPA-style Multiple Threats',[45,46,47,48],m,
     ['Engage T1, T2, T3 left to right, 2 each.','Out-of-order engagement = PE (+3 s).','Each PD = +1 s. Miss = 5 PD.','1/9 scale: 3 yd = ~27 yd sim.'],distance='3 yd = ~27 yd sim (1/9 scale)')
 
@@ -85,8 +89,8 @@ def allsheet(key,code,ids,W,H,s,xs,tops,lsz,dist):
       texts=texts,zones=zones,labelSize=lsz+1,
       instructions=['Drill calls targets in random order (spoken + on screen).','Mozambique (T5): 2 body, then 1 head, in order.',
         'T6 and the front figure on T8 are NON-THREATS: +5 s/hit.','Black = hard cover: hits there do not count.','Out of order / wrong Mozambique part = PE +3 s.'])
-allsheet('idpa-all-tabloid','LD-110',[53,54,55,56],17,11,1/9,[2.4,6.3,10.2,14.1],[2.2,5.85],8,'3 yd = ~27 yd sim (1/9 scale)')
-allsheet('idpa-all-letter','LD-111',[57,58,59,60],11,8.5,1/14,[1.65,4.1,6.55,9.0],[2.1,4.48],6,'3 yd = ~42 yd sim (1/14 scale)')
+allsheet('idpa-all-tabloid','LD-110',[53,54,55,56],17,11,1/9,[4.1,6.8,9.5,12.6],[2.2,5.85],8,'3 yd = ~27 yd sim (1/9 scale)')
+allsheet('idpa-all-letter','LD-111',[57,58,59,60],11,8.5,1/14,[2.75,4.5,6.25,8.25],[2.1,4.48],6,'3 yd = ~42 yd sim (1/14 scale)')
 json.dump(D,open('targets.json','w'),indent=1)
 dr=json.load(open('drills.json'))
 for d in dr:

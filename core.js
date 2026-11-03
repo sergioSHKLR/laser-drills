@@ -46,8 +46,10 @@ Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
   if(tpl){const f=tpl.field;if(!Core.inZone({shape:'rect',x:f.x,y:f.y,w:f.w,h:f.h},pt,0))return {zone:null,score:0,pd:5,outside:true};}
   for(const z of target.zones)if(z.kind==='hardcover'&&Core.inZone(z,pt,0))return {zone:'HC',score:0,pd:5,hardcover:true};
   for(const z of target.zones)if(z.kind==='noshoot'&&Core.inZone(z,pt,spread))return {zone:z.name,score:z.penalty,pd:5,noshoot:true,ntSeconds:z.ntSeconds||5};
-  let best=null;
-  for(const z of target.zones){if(z.kind!=='score')continue;if(expectName&&!target.scoring&&z.name!==expectName)continue;
+  let best=null,topZ=null;
+  // overlapping people: the front one (highest z among silhouettes containing the point) owns the hit
+  for(const z of target.zones)if(z.kind==='score'&&z.sil&&z.z!=null&&Core.inZone(z,pt,0)&&(topZ===null||z.z>topZ))topZ=z.z;
+  for(const z of target.zones){if(z.kind!=='score')continue;if(topZ!==null&&z.z!=null&&z.z!==topZ)continue;if(expectName&&!target.scoring&&z.name!==expectName)continue;
     if(Core.inZone(z,pt,z.noGrow?0:spread)&&(!best||z.score>best.score))best={zone:z.name,score:z.score,pd:z.pd!=null?z.pd:0,group:z.group,part:z.part};}
   if(best)return best;
   // backstop: bystanders sit BEHIND threats, so only shots that miss every scoring zone land on them

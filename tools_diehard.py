@@ -8,7 +8,14 @@ def safe(img):
     b,g,r=[c.astype(np.float32) for c in cv2.split(img)]
     d=r-(g+b)/2; d2=np.minimum(np.where(d>KNEE,KNEE+(d-KNEE)*KEEP,d),36); r=r-(d-d2)
     return cv2.merge([np.clip(c,0,255).astype(np.uint8) for c in (b,g,r)])
-def load(k,size=(768,1024)): return cv2.resize(cv2.imread(SRC+k+'.jpg'),size,interpolation=cv2.INTER_AREA)
+def whiten(im):   # generated sources with a faint textured backdrop: everything outside the figures -> pure white
+    m=(im.min(axis=2)<215).astype(np.uint8); m=cv2.morphologyEx(m,cv2.MORPH_CLOSE,np.ones((15,15),np.uint8))
+    n,lab,st,_=cv2.connectedComponentsWithStats(m); keep=np.isin(lab,[i for i in range(1,n) if st[i][4]>4000])
+    cs,_=cv2.findContours(keep.astype(np.uint8),cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE); f=np.zeros_like(m); cv2.drawContours(f,cs,-1,1,-1)
+    f=cv2.dilate(f,np.ones((3,3),np.uint8)); out=im.copy(); out[f==0]=255; return out
+WHITEN={'eddie','finale'}
+def load(k,size=(768,1024)):
+    im=cv2.resize(cv2.imread(SRC+k+'.jpg'),size,interpolation=cv2.INTER_AREA); return whiten(im) if k in WHITEN else im
 def mask(img,xmax=None,xmin=None):
     m=(img.min(axis=2)<232).astype(np.uint8)*255
     if xmax is not None: m[:,xmax:]=0
@@ -22,7 +29,7 @@ C={'hans':dict(head=(372,78,44,60),sh=(285,500,170),belt=(275,490,505),chest=(38
  'tony':dict(head=(380,95,40,60),sh=(240,530,180),belt=(290,480,440),chest=(385,300),rc=55),
  'franco':dict(head=(362,70,44,58),sh=(205,535,150),belt=(270,520,420),chest=(380,255),rc=60),
  'heinrich':dict(head=(363,78,40,58),sh=(240,515,150),belt=(315,500,410),chest=(395,300),rc=48),
- 'eddie':dict(head=(375,88,44,55),sh=(260,505,165),belt=(285,490,410),chest=(385,300),rc=50),
+ 'eddie':dict(head=(375,82,44,56),sh=(262,505,180),belt=(290,470,440),chest=(375,330),rc=48),
  'theo':dict(head=(382,72,42,55),sh=(285,495,170),belt=(290,470,410),chest=(385,270),rc=48),
  'billclay':dict(head=(383,95,44,60),sh=(245,530,165),belt=(300,470,415),chest=(385,270),rc=50)}
 IMG={k:safe(load(k)) for k in list(C)+['partyguest']}
@@ -104,16 +111,16 @@ one('dh-billclay','LD-208',129,'Die Hard: "Bill Clay" impostor','billclay',['dh-
 # Roof finale (movie still): Eddie | Holly | Hans behind Holly. 1024x768 image on letter portrait.
 FIN=safe(load('finale',(1024,768))); cv2.imwrite(OUT+'dh-finale.png',FIN)
 S4=7.6/1024; X4=(8.5-7.6)/2; Y4=2.4
-HOLLY=[(492,92),(530,78),(566,92),(578,140),(598,178),(606,240),(604,330),(588,420),(584,512),(562,522),(566,700),(548,726),(530,700),(516,726),(490,720),(486,522),(462,512),(452,420),(444,330),(448,230),(462,180),(484,160)]
-cE=dict(head=(365,92,38,48),sh=(275,450,140),belt=(290,440,320),chest=(362,220),rc=38)
+HOLLY=[(500,92),(535,80),(568,95),(578,140),(590,195),(606,235),(612,330),(600,420),(588,520),(570,525),(575,700),(568,730),(540,730),(520,700),(515,730),(485,730),(480,525),(462,515),(448,420),(446,330),(452,240),(470,190),(488,170)]
+cE=dict(head=(363,68,36,48),sh=(272,450,140),belt=(290,435,340),chest=(362,235),rc=38)
 z=[hostage('finale','HOLLY',X4,Y4,S4,pts=HOLLY)]
-zE=zones_for('finale','T2',X4,Y4,S4,img=FIN,xmax=462,c=cE)
+zE=zones_for('finale','T2',X4,Y4,S4,img=FIN,xmax=446,c=cE)
 zE[3].update(rx=round(18*S4,3),ry=round(22*S4,3))   # tight Eddie head -0
 TH=lambda x,y:[round(X4+x*S4,3),round(Y4+y*S4,3)]
 zH=[dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -3',shape='poly',pts=[TH(*p) for p in mask(FIN,xmin=600)],score=-3,pd=3,part='body'),
- dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -1',shape='ellipse',cx=TH(636,58)[0],cy=TH(636,58)[1],rx=round(36*S4,3),ry=round(48*S4,3),score=-1,pd=1,part='head'),
- dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(608,118),(722,140),(714,372),(608,372)]],score=-1,pd=1,part='body'),
- dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -0',shape='ellipse',cx=TH(660,255)[0],cy=TH(660,255)[1],rx=round(32*S4,3),ry=round(52*S4,3),score=0,pd=0,part='body')]
+ dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -1',shape='ellipse',cx=TH(634,52)[0],cy=TH(634,52)[1],rx=round(36*S4,3),ry=round(46*S4,3),score=-1,pd=1,part='head'),
+ dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(608,110),(722,135),(716,372),(608,372)]],score=-1,pd=1,part='body'),
+ dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -0',shape='ellipse',cx=TH(658,250)[0],cy=TH(658,250)[1],rx=round(32*S4,3),ry=round(52*S4,3),score=0,pd=0,part='body')]
 z+=zE+zH
 sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans holds Holly at gunpoint; Eddie covers him.','Exactly 2: Hans exposed chest -0, then Eddie head -0.','Holly = HOSTAGE: any hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=Y4,w=7.6,h=round(768*S4,3))],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
 # lobby: party guest (NT) + Tony, cropped 2-up on letter
@@ -121,14 +128,19 @@ S2=6.9/1024; CR=150; W2=470*S2; X2a=0.4+(7.7-2*W2)/2; X2b=X2a+W2; Y2=2.05
 z=[hostage('partyguest','GUEST',X2a,Y2,S2,crop=CR)]+zones_for('tony','T1',X2b,Y2,S2,crop=CR,img=PLAIN['tony'],cover=False)
 art=[dict(src='art/dh-partyguest.png',x=round(X2a,3),y=Y2,w=round(W2,3),h=6.9,crop=[CR,0,620,1024]),dict(src='art/dh-tony-plain.png',x=round(X2b,3),y=Y2,w=round(W2,3),h=6.9,crop=[CR,0,620,1024])]
 sheet('dh-party','LD-210',137,'Die Hard: Christmas Party',['dh-party'],['30th floor party: a guest stands beside Tony.','Find the gun: 2 to the armed man only. Unarmed guest = +5 s.','Faint outlines = scoring zones.','Say "start" or tap.'],z,art,LEG_T+[NT])
-# Nakatomi tabloid line-up
-S3=5.9/1024; W3=470*S3; X3=0.4+(16.2-6*W3)/2; Y3=2.6
+# Nakatomi tabloid line-up: tight, overlapping (each figure stands slightly in front of its left neighbour)
+STEP=255; NW=470+5*STEP; S3=6.7/1024; X3=0.4+(16.2-NW*S3)/2; Y3=2.45
 cast=[('hans','T1'),('karl','T2'),('franco','T3'),('eddie','T4'),('theo','T5'),('billclay','T6')]
-z=[];art=[];tx=[]
+z=[];tx=[]; can=np.full((1024,NW,3),255,np.uint8)
 for i,(k,g) in enumerate(cast):
-    x=X3+i*W3; z+=zones_for(k,g,x,Y3,S3,crop=CR,img=PLAIN.get(k),cover=False); art.append(dict(src=f'art/dh-{k}{"-plain" if k in PLAIN else ""}.png',x=round(x,3),y=Y3,w=round(W3,3),h=5.9,crop=[CR,0,620,1024]))
-    tx.append(dict(text=f'{g} {k.upper().replace("BILLCLAY","BILL CLAY")}',x=round(x+W3/2,3),y=2.35,size=11))
-sheet('dh-nakatomi','LD-211',141,'Die Hard: Nakatomi Plaza line-up',['dh-nakatomi-calls','dh-nakatomi-sds'],['Six crew T1-T6; app calls names.','Calls: 2 chest; "head" = 1 head.','GUN = shoot; HANDS UP = verbal.','Mic on. Print Tabloid 11x17 at 100%.'],z,art,LEG_T,dist='3 yd = ~40 yd sim (1/13 scale)',layout={'page':{'w':17,'h':11},'field':{'x':0.4,'y':1.85,'w':16.2,'h':7.4}})
+    im=(PLAIN.get(k,IMG[k]))[:,CR:620]; m=np.zeros(im.shape[:2],np.uint8); cv2.fillPoly(m,[np.array(mask(PLAIN.get(k,IMG[k])),np.int32)-[CR,0]],1)
+    ox=i*STEP; reg=can[:,ox:ox+470]; reg[m>0]=im[m>0]
+    x=X3+ox*S3; zz=zones_for(k,g,x,Y3,S3,crop=CR,img=PLAIN.get(k),cover=False)
+    for q in zz: q['z']=i
+    zz[0]['sil']=True; z+=zz
+    tx.append(dict(text=f'{g} {k.upper().replace("BILLCLAY","BILL CLAY")}',x=round(x+235*S3,3),y=2.3,size=11))
+cv2.imwrite(OUT+'dh-nakatomi.png',can); art=[dict(src='art/dh-nakatomi.png',x=round(X3,3),y=Y3,w=round(NW*S3,3),h=6.7)]
+sheet('dh-nakatomi','LD-211',141,'Die Hard: Nakatomi Plaza line-up',['dh-nakatomi-calls','dh-nakatomi-sds'],['Six crew T1-T6, overlapping: front one takes the hit.','Calls: 2 chest; "head" = 1 head.','GUN = shoot; HANDS UP = verbal.','Mic on. Print Tabloid 11x17 at 100%.'],z,art,LEG_T,dist='3 yd = ~33 yd sim (1/11 scale)',layout={'page':{'w':17,'h':11},'field':{'x':0.4,'y':1.85,'w':16.2,'h':7.4}})
 T['dh-nakatomi']['texts']=tx
 json.dump(DOC,open('targets.json','w'),indent=1)
 # drills

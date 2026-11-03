@@ -53,6 +53,12 @@ Hostages and non-threats are no longer marked on the art (no hatch, outline or t
 Single-threat Die Hard sheets have faded, smaller **bystanders** behind the threat (office workers, party guests). Any shot that misses the threat and lands on a bystander adds +10 s and is flagged **BACKSTOP FAILURE**. The flag is shown and spoken in the results. Threat zones in front of a bystander take priority, and hard cover blocks the shot. Know your target and what is beyond it.
 Red cap: art red dominance is hard-capped at 36 (detector gate 40), so lipstick and nails are slightly muted.
 
+## v12 — Tighter groups, Eddie fixed
+- Crowd, Nakatomi line-up, IDPA multi/all-variations and Roof Finale targets are packed much closer, with natural overlaps.
+- Overlaps resolve to the **front person** (zones carry `z`; the highest-z silhouette containing the hit owns it).
+- Eddie corrected: he is role-playing the security guard (gray three-piece suit, gray tie, black trousers and shoes, pistol), no actor likeness. He is not the cop.
+- New test: every overlap point on crowd/Nakatomi/idpa-multi is checked for front-person ownership.
+
 ## v11 — Crowd Hunt (Training)
 - New sheets: **LD-301 Crowd Hunt (Letter)** `crowd` and **LD-302 Crowd Hunt (Tabloid 11x17)** `crowd-tabloid`. Both have 15 full-colour people in far, mid and near rows, plus faded background bystanders.
 - Each person's attributes are stored in `targets.json` → `people[]`: skin tone (light-, medium- or dark-skinned), shirt, jacket, headwear, backpack, glasses, held object, and armed. Three people are armed, one of each skin tone.
