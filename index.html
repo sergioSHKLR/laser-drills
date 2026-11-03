@@ -26,6 +26,11 @@ main{flex:1;min-height:0;position:relative}
 input[type=search]{width:100%;height:48px;border-radius:24px;background:var(--s2);border:1px solid var(--bd);color:var(--tx);padding:0 18px;font-size:15px}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:6px 0;scrollbar-width:none;align-items:center}.chips::-webkit-scrollbar{display:none}
 .chips b{font-size:11px;color:var(--mu);min-width:62px;font-weight:500}
+.btn.danger{background:#b3261e;color:#fff;border-color:#b3261e}.btn.ghost-d{background:transparent;color:#f2b8b5;border:1px solid #8c1d18}
+dialog.dlg{background:var(--s1);color:inherit;border:1px solid #333a45;border-radius:20px;padding:18px;width:min(92vw,420px)}dialog.dlg::backdrop{background:rgba(0,0,0,.6)}
+.dlg h2{margin:0 0 10px;font-size:19px}.dlg label.f{display:block;font-size:13px;color:#aab;margin:8px 0 2px}.dlg input[type=text],.dlg select,.dlg textarea{width:100%;box-sizing:border-box;background:#0f1216;color:inherit;border:1px solid #333a45;border-radius:10px;padding:9px;font:inherit}
+.dlg .row{display:flex;gap:8px;margin-top:14px}.dlg .row .btn{flex:1}.err{color:#f2b8b5;font-size:13px;margin-top:8px;white-space:pre-wrap}.okm{color:#a8dab5;font-size:13px;margin-top:8px}
+.statg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}.statg div{background:#0f1216;border-radius:10px;padding:6px;text-align:center;font-size:12px;color:#aab}.statg b{display:block;font-size:15px;color:#fff}
 .chip{flex:none;min-height:38px;border-radius:12px;padding:0 14px;font-size:13.5px;background:var(--s1);border:1px solid #333a45;color:#c4c7cc}.chip.on{background:var(--acd);border-color:var(--ac);color:#fff}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
 .tcard{background:var(--s1);border:1px solid #252a33;border-radius:18px;overflow:hidden;cursor:pointer;text-align:left;padding:0;min-height:0}
@@ -103,7 +108,7 @@ nav .brand{display:none}
  <div class="top"><h1 id="shootH">Shoot</h1><button id="camBtn" class="pill">📷 Start Camera</button><button id="micBtn" class="pill">🎤 Voice off</button></div>
  <div><div id="stage"><canvas id="view"></canvas><div class="ov"><span class="pill" id="status">Camera off.</span></div></div>
   <div class="dsum"><div style="flex:1;min-width:0"><b id="dName"></b></div><span class="badge" id="saeBadge"></span></div>
-  <div id="drillNotes"></div></div>
+  <div class="chips" id="fwPick" style="overflow-x:auto;flex-wrap:nowrap;margin-top:6px"></div><div id="drillNotes"></div></div>
  <div><div id="big"></div><div id="heard">Say: start · stop · reset · next · repeat · score (or tap / BT media button / Space, Esc)</div>
   <div class="row" style="margin-top:8px"><button id="freeBtn" class="btn" style="flex:.6">Free fire</button><button id="goBtn" class="btn go">▶ START</button><button id="stopBtn" class="btn st hidden">■ STOP</button><button id="complyBtn" class="btn hidden" style="background:#1565c0">🙌 Comply</button></div>
   <div id="cmds"><button data-cmd="repeat">↻ Repeat</button><button data-cmd="next">Next ›</button><button data-cmd="score">🔊 Score</button><button data-cmd="reset">Reset</button></div>
@@ -111,10 +116,18 @@ nav .brand{display:none}
 </section>
 <!-- RESULTS -->
 <section class="view hidden" id="v-results">
- <div class="top"><h1>Results</h1><button class="pill" id="csvBtn">⤓ Export CSV</button></div>
+ <div class="top"><h1>Results</h1><button class="pill" id="csvBtn">⤓ CSV</button><button class="pill" id="jsonBtn">⤓ JSON</button><button class="pill" id="impBtn">⤒ Import</button></div>
+ <div class="chips" id="rfw" style="overflow-x:auto;flex-wrap:nowrap;margin-bottom:8px"></div>
  <div class="seg" id="rseg"><button data-r="1" class="on">Today</button><button data-r="7">Week</button><button data-r="0">All</button></div>
  <div id="rbody"></div>
- <button class="btn" style="width:100%;margin-top:16px" id="clrHist">Clear history</button>
+ <button class="btn ghost-d" style="width:100%;margin-top:16px" id="clrHist">🗑 Reset history…</button>
+ <dialog class="dlg" id="resetDlg"><h2>Reset history?</h2><p class="muted" style="margin:0 0 8px">This permanently deletes runs on this device. Export JSON first if you may want them back.</p>
+  <label class="f">What to delete</label><select id="resetScope"></select><div class="err" id="resetInfo"></div>
+  <div class="row"><button class="btn" id="resetNo">Cancel</button><button class="btn danger" id="resetYes">Delete</button></div></dialog>
+ <dialog class="dlg" id="impDlg"><h2>Import history (JSON)</h2>
+  <label class="f">File</label><input type="file" id="impFile" accept=".json,application/json">
+  <label class="f">Mode</label><select id="impMode"><option value="merge">Merge — keep current runs, add new ones (dedupe by run id)</option><option value="replace">Replace — delete current runs and firearms first</option></select>
+  <div id="impMsg"></div><div class="row"><button class="btn" id="impNo">Close</button><button class="btn go" id="impYes">Import</button></div></dialog>
 </section>
 <!-- SETTINGS -->
 <section class="view hidden" id="v-settings">
@@ -125,6 +138,16 @@ nav .brand{display:none}
  <label class="set"><div class="l"><b>Score at end · Fun</b><span>Off = live hits, sounds and score</span></div><input type="checkbox" class="sw" id="saeFun"></label>
  <label class="set"><div class="l"><b>Shot tick</b><span>Neutral beep per detected shot while hits are hidden</span></div><input type="checkbox" class="sw" id="tickChk"></label>
  <label class="set"><div class="l"><b>Shotgun mode</b><span>Grow hit zones by the shotgun spread</span></div><input type="checkbox" class="sw" id="shotgun"></label>
+ <div class="sec-h">Firearms</div>
+ <div id="fwList"></div><button class="btn" style="width:100%;margin:8px 0" id="fwAdd">＋ Add firearm</button>
+ <dialog class="dlg" id="fwDlg"><h2 id="fwDlgH">Firearm</h2>
+  <label class="f">Name *</label><input type="text" id="fwName" placeholder="LCP II .22 Lite Rack">
+  <label class="f">Type</label><select id="fwType"><option value="pistol">Pistol</option><option value="shotgun">Shotgun</option><option value="rifle">Rifle</option></select>
+  <label class="f">Caliber</label><input type="text" id="fwCal" placeholder=".22 LR">
+  <label class="f">Optic / laser</label><input type="text" id="fwOptic" placeholder="Viridian R5 green">
+  <label class="f">Suppressor</label><input type="text" id="fwSup" placeholder="Bowers Bitty">
+  <label class="f">Notes</label><textarea id="fwNotes" rows="2"></textarea><div class="err" id="fwErr"></div>
+  <div class="row"><button class="btn ghost-d hidden" id="fwDel">Delete</button><button class="btn" id="fwNo">Cancel</button><button class="btn go" id="fwSave">Save</button></div></dialog>
  <div class="sec-h">Viewfinder</div>
  <div class="set" style="display:block"><div class="l"><b>Viewfinder height · <span id="vfVal"></span>%</b></div><input type="range" id="vfRange" min="20" max="80" step="1">
   <div class="chips"><button class="chip" data-vf="25">Small</button><button class="chip" data-vf="45">Medium</button><button class="chip" data-vf="70">Large</button></div></div>

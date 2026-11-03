@@ -94,3 +94,7 @@ All Die Hard characters (Hans, Karl, Tony, Uli, Theo, Eddie, Franco, Heinrich, B
 - v23: blank scoring-mask template (Letter + Tabloid landscape, PDF/PNG/SVG); unified rule colours (hit/no-hit/cover/two-hit/conditional/head-only/penalty) across all -mask sheets and the Zone Editor.
 - v24: mask label placement (no overlaps), template header cleanup.
 - v35: Ankle Draw (Self-Defense), LD-601 letter + LD-602 tabloid (with masks). Retail-store scene (generic, no brand logos): kneel behind printed cover (counter, display rack, car door); threats exposed above cover for an upward angle from the kneel (some head-only); faint bystanders on the mezzanine/stock area = backstop (+10 s). Drills ankle-standing/seated/walking/any(+ -tab) with par 4.0/3.5/3.0/2.5 s, plus ankle-all. Voice start only (`voiceStart`: tap/key/BT start is ignored), score at end (training category). Built by tools_ankle.py.
+
+
+### v37 — History tools & firearms
+Results: reset (all or per firearm, confirm dialog), export JSON (lossless, includes firearms) + CSV, import JSON (merge with dedupe by run id, or replace; validated). Settings > Firearms (name, type, caliber, optic/laser, suppressor, notes); pick the active firearm on the Shoot tab; each run stores its firearm; Results filter by firearm with best/avg/trend/fails. Older runs migrate to Unassigned.

@@ -63,27 +63,66 @@ setInterval(()=>{const busy=['wait','live','free','fr'].includes(state.mode);$('
   const l=lock?`● Locked ${lock.target.code}`:'No target locked';if($('drLock').textContent!==l){$('drLock').textContent=l;$('drLock').className='pill'+(lock?' ok':'');}
   $('status').className='pill'+(lock?' ok':'');},200);
 // ---- results history
-const HK='ld.history';const hist=()=>{try{return JSON.parse(localStorage.getItem(HK)||'[]');}catch(e){return[];}};
+const HK='ld.history',FK='ld.firearms',AK='ld.fw';
+const saveHist=h=>localStorage.setItem(HK,JSON.stringify(h));
+const hist=()=>{try{return JSON.parse(localStorage.getItem(HK)||'[]');}catch(e){return[];}};
+// one-time migration: give every run an id and assign legacy runs to 'Unassigned'
+(()=>{const h=hist();if(h.some(r=>!r.id||!r.fw))saveHist(Core.histMigrate(h));})();
+const fws=()=>{try{return JSON.parse(localStorage.getItem(FK)||'[]');}catch(e){return[];}};const saveFws=f=>localStorage.setItem(FK,JSON.stringify(f));
+const activeFw=()=>{const a=localStorage.getItem(AK);return fws().some(f=>f.id===a)?a:Core.UNASSIGNED;};
+const fwName=id=>id===Core.UNASSIGNED||!id?'Unassigned':((fws().find(f=>f.id===id)||{}).name||'Deleted firearm');
+const dl=(txt,type,name)=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+UI.setFw=id=>{localStorage.setItem(AK,id);const f=fws().find(x=>x.id===id);if(f&&$('shotgun').checked!==(f.type==='shotgun')){$('shotgun').checked=f.type==='shotgun';$('shotgun').dispatchEvent(new Event('change'));}UI.drawFwPick();};
+UI.drawFwPick=()=>{const a=activeFw(),L=[{id:Core.UNASSIGNED,name:'Unassigned'}].concat(fws());
+  $('fwPick').innerHTML='<b>Firearm</b>'+L.map(f=>`<button class="chip${f.id===a?' on':''}" data-fw="${esc(f.id)}">${f.id===Core.UNASSIGNED?'—':'🔫 '}${esc(f.name)}${f.suppressor?' · S':''}</button>`).join('')+'<button class="chip" data-fw="+">＋</button>';
+  $('fwPick').querySelectorAll('[data-fw]').forEach(b=>b.onclick=()=>{if(b.dataset.fw==='+')UI.editFw(null);else UI.setFw(b.dataset.fw);});};
+UI.drawFwList=()=>{const L=fws(),h=hist();$('fwList').innerHTML=L.length?L.map(f=>`<button class="drow" data-ed="${esc(f.id)}" style="min-height:60px"><div class=t><b>${esc(f.name)}</b><span>${esc([f.type,f.caliber,f.optic,f.suppressor&&('suppressor: '+f.suppressor)].filter(Boolean).join(' · '))} · ${h.filter(r=>r.fw===f.id).length} runs</span></div>›</button>`).join(''):'<div class="muted" style="padding:6px 4px">No firearms yet. Runs are saved as “Unassigned”.</div>';
+  $('fwList').querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>UI.editFw(b.dataset.ed));};
+UI.editFw=id=>{const f=fws().find(x=>x.id===id)||{type:'pistol'};UI.fwEd=id;$('fwDlgH').textContent=id?'Edit firearm':'Add firearm';
+  [['fwName','name'],['fwType','type'],['fwCal','caliber'],['fwOptic','optic'],['fwSup','suppressor'],['fwNotes','notes']].forEach(([e,k])=>$(e).value=f[k]||(k==='type'?'pistol':''));
+  $('fwErr').textContent='';$('fwDel').classList.toggle('hidden',!id);$('fwDlg').showModal();};
+$('fwAdd').onclick=()=>UI.editFw(null);$('fwNo').onclick=()=>$('fwDlg').close();
+$('fwSave').onclick=()=>{const n=$('fwName').value.trim();if(!n){$('fwErr').textContent='Name is required.';return;}
+  const L=fws(),rec={id:UI.fwEd||('fw'+Date.now().toString(36)),name:n,type:$('fwType').value,caliber:$('fwCal').value.trim(),optic:$('fwOptic').value.trim(),suppressor:$('fwSup').value.trim(),notes:$('fwNotes').value.trim()};
+  const i=L.findIndex(x=>x.id===rec.id);if(i>=0)L[i]=rec;else L.push(rec);saveFws(L);if(!UI.fwEd)localStorage.setItem(AK,rec.id);$('fwDlg').close();UI.drawFwList();UI.drawFwPick();};
+$('fwDel').onclick=()=>{const id=UI.fwEd,n=hist().filter(r=>r.fw===id).length;if(!confirm(`Delete this firearm? Its ${n} run(s) are kept and moved to Unassigned.`))return;
+  saveFws(fws().filter(f=>f.id!==id));saveHist(hist().map(r=>r.fw===id?Object.assign(r,{fw:Core.UNASSIGNED}):r));if(localStorage.getItem(AK)===id)localStorage.removeItem(AK);$('fwDlg').close();UI.drawFwList();UI.drawFwPick();};
 UI.record=()=>{try{const c=sel(),d=drill(),s=Core.drillSummary(d,state.beep,state.shots),r={ts:Date.now(),drill:c.type==='course'?`${c.name} · ${d.name}`:c.name,cat:dcat(c),shots:state.shots.length,
-    time:s.total!=null?+s.total.toFixed(2):null,score:s.score,max:s.maxScore,blind:blind()};
+    time:s.total!=null?+s.total.toFixed(2):null,score:s.score,max:s.maxScore,blind:blind(),fw:activeFw()};r.id='r'+r.ts.toString(36)+Math.random().toString(36).slice(2,6);
   if(d.scoring==='idpa'){const x=Core.idpaSummary(d,state.shots,s.total);Object.assign(r,{final:+x.final.toFixed(2),raw:+x.raw.toFixed(2),pd:x.pd,pe:x.pe,hnt:x.hnt,fail:x.fail});}
   if(d.game&&state.game)r.game=state.game.summary||'';
   if(state.fr&&state.fr.res){const f=state.fr.res;r.fr=f.fail?'FAIL':f.comply!=null?'OK':'NC';r.frLate=f.late;r.frComply=f.comply;if(r.final!=null)r.final=+(r.final+f.penalty).toFixed(2);else r.frPen=f.penalty;if(f.fail)r.fail=true;}
-  const h=hist();h.push(r);while(h.length>1000)h.shift();localStorage.setItem(HK,JSON.stringify(h));}catch(e){console.warn(e);}};
-const val=r=>r.final!=null?r.final:r.time;const fmt=r=>r.final!=null?r.final.toFixed(2)+' s':r.game!=null?(r.score+' pts'):r.time!=null?`${r.score}/${r.max} · ${r.time.toFixed(2)}s`:`${r.score}/${r.max}`;
+  const h=hist();h.push(r);while(h.length>5000)h.shift();saveHist(h);}catch(e){console.warn(e);}};
+const val=r=>r.final!=null?r.final:r.time;const fmt=r=>r.final!=null?r.final.toFixed(2)+' s':r.game!=null?(r.score+' pts'):r.time!=null?`${r.score!=null?r.score+'/'+r.max+' · ':''}${r.time.toFixed(2)}s`:`${r.score}/${r.max}`;
 UI.drawResults=()=>{document.querySelectorAll('#rseg button').forEach(b=>b.classList.toggle('on',+b.dataset.r===UI.rr));
   const now=Date.now(),day=new Date();day.setHours(0,0,0,0);const from=UI.rr===1?day.getTime():UI.rr?now-UI.rr*864e5:0;
-  const L=hist().filter(r=>r.ts>=from).reverse();if(!L.length){$('rbody').innerHTML='<div class=card><div class=muted>No runs yet in this range. Finished drill strings are saved here automatically (on this device).</div></div>';return;}
-  const name=L[0].drill,same=hist().filter(r=>r.drill===name&&val(r)!=null&&!r.game),best=same.length?same.reduce((a,r)=>val(r)<val(a)?r:a):null;
-  let svg='';const pts=same.slice(-20).map(val);if(pts.length>1){const mx=Math.max(...pts),mn=Math.min(...pts),w=340,hh=70;svg=`<svg viewBox="0 0 ${w} ${hh+10}" style="width:100%;height:80px"><polyline fill=none stroke="#8ab4f8" stroke-width=3 points="${pts.map((v,i)=>`${(i/(pts.length-1)*w).toFixed(1)},${(5+(mx===mn?hh/2:(v-mn)/(mx-mn)*hh)).toFixed(1)}`).join(' ')}"/></svg><div class=muted>Last ${pts.length} runs · lower is better (higher on chart = slower)</div>`;}
-  $('rbody').innerHTML=`<div class=card><div class=muted>${esc(name)} · ${same.length} timed run${same.length===1?'':'s'}</div><div class=big2>${best?'Best '+esc(fmt(best)):'—'}</div>${svg}</div>`+
-   L.map(r=>`<div class=drow style="min-height:64px"><div class=t><b>${esc(r.drill)}</b><span>${new Date(r.ts).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}${r.pd!=null?` · PD ${r.pd} · PE ${r.pe} · HNT ${r.hnt}`:''}${r.fr?` · 🚨 FR ${r.fr==='OK'?'comply '+r.frComply.toFixed(2)+'s':r.fr==='FAIL'?r.frLate+' late shot(s)':'no comply'}`:''}${r.fail?' · FAIL':''}${r.game?' · '+esc(r.game):''}</span></div><b style="font-size:17px;flex:none">${esc(fmt(r))}</b></div>`).join('');};
+  const all=hist(),used=new Set(all.map(r=>r.fw)),FL=[{id:Core.UNASSIGNED,name:'Unassigned'}].concat(fws()).filter(f=>used.has(f.id)||f.id!==Core.UNASSIGNED);
+  if(UI.rf&&UI.rf!=='all'&&!FL.some(f=>f.id===UI.rf))UI.rf='all';const rf=UI.rf||'all',H=rf==='all'?all:all.filter(r=>r.fw===rf);
+  $('rfw').innerHTML='<b>Firearm</b>'+[{id:'all',name:'All'}].concat(FL).map(f=>`<button class="chip${f.id===rf?' on':''}" data-rf="${esc(f.id)}">${esc(f.name)}</button>`).join('');
+  $('rfw').querySelectorAll('[data-rf]').forEach(b=>b.onclick=()=>{UI.rf=b.dataset.rf;UI.drawResults();});
+  const L=H.filter(r=>r.ts>=from).reverse();if(!L.length){$('rbody').innerHTML='<div class=card><div class=muted>No runs yet in this range. Finished drill strings are saved here automatically (on this device).</div></div>';return;}
+  const name=L[0].drill,same=H.filter(r=>r.drill===name&&val(r)!=null&&!r.game),best=same.length?same.reduce((a,r)=>val(r)<val(a)?r:a):null;
+  let svg='';const pts=same.slice(-20).map(val);if(pts.length>1){const mx=Math.max(...pts),mn=Math.min(...pts),w=340,hh=70;svg=`<svg viewBox="0 0 ${w} ${hh+10}" style="width:100%;height:80px"><polyline fill=none stroke="#8ab4f8" stroke-width=3 points="${pts.map((v,i)=>`${(i/(pts.length-1)*w).toFixed(1)},${(5+(mx===mn?hh/2:(v-mn)/(mx-mn)*hh)).toFixed(1)}`).join(' ')}"/></svg><div class=muted>Last ${pts.length} runs · higher on chart = faster</div>`;}
+  const st=Core.fwStats(H.filter(r=>r.drill===name)),fwCard=rf==='all'?'':`<div class=card><div class=muted>🔫 ${esc(fwName(rf))} · ${esc(name)}</div><div class=statg><div><b>${st.runs}</b>runs</div><div><b>${st.best?esc(fmt(st.best)):'—'}</b>best</div><div><b>${st.avg!=null?st.avg.toFixed(2)+'s':'—'}</b>avg</div><div><b>${st.trend==null?'—':(st.trend<=0?'▼ ':'▲ ')+Math.abs(st.trend).toFixed(2)+'s'}</b>trend</div></div><div class=muted style="margin-top:6px">${st.fails} fail(s) · trend = recent half vs earlier half (▼ faster)</div></div>`;
+  $('rbody').innerHTML=fwCard+`<div class=card><div class=muted>${esc(name)} · ${same.length} timed run${same.length===1?'':'s'}</div><div class=big2>${best?'Best '+esc(fmt(best)):'—'}</div>${svg}</div>`+
+   L.map(r=>`<div class=drow style="min-height:64px"><div class=t><b>${esc(r.drill)}</b><span>${new Date(r.ts).toLocaleString([], {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})}${r.pd!=null?` · PD ${r.pd} · PE ${r.pe} · HNT ${r.hnt}`:''}${r.fr?` · 🚨 FR ${r.fr==='OK'?'comply '+r.frComply.toFixed(2)+'s':r.fr==='FAIL'?r.frLate+' late shot(s)':'no comply'}`:''}${r.fail?' · FAIL':''}${r.game?' · '+esc(r.game):''}${rf==='all'?' · 🔫 '+esc(fwName(r.fw)):''}</span></div><b style="font-size:17px;flex:none">${esc(fmt(r))}</b></div>`).join('');};
 document.querySelectorAll('#rseg button').forEach(b=>b.onclick=()=>{UI.rr=+b.dataset.r;UI.drawResults();});
-$('csvBtn').onclick=()=>{const h=hist(),K=['ts','drill','cat','shots','time','score','max','final','raw','pd','pe','hnt','fail','game','blind','fr','frLate','frComply','frPen'];
+$('csvBtn').onclick=()=>{const h=hist(),K=['ts','drill','cat','shots','time','score','max','final','raw','pd','pe','hnt','fail','game','blind','fr','frLate','frComply','frPen','fw','firearm','id'];
   const q=v=>v==null?'':/[",\n]/.test(String(v))?'"'+String(v).replace(/"/g,'""')+'"':String(v);
-  const csv=[['date',...K.slice(1)].join(',')].concat(h.map(r=>[new Date(r.ts).toISOString(),...K.slice(1).map(k=>q(r[k]))].join(','))).join('\n');
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='laser-drills-history.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
-$('clrHist').onclick=()=>{if(confirm('Clear all run history on this device?')){localStorage.removeItem(HK);UI.drawResults();}};
+  const csv=[['date',...K.slice(1)].join(',')].concat(h.map(r=>[new Date(r.ts).toISOString(),...K.slice(1).map(k=>q(k==='firearm'?fwName(r.fw):r[k]))].join(','))).join('\n');
+  dl(csv,'text/csv','laser-drills-history.csv');};
+$('jsonBtn').onclick=()=>dl(JSON.stringify(Core.histExport(hist(),fws()),null,1),'application/json',`laser-drills-history-${new Date().toISOString().slice(0,10)}.json`);
+$('impBtn').onclick=()=>{$('impMsg').innerHTML='';$('impFile').value='';$('impDlg').showModal();};$('impNo').onclick=()=>$('impDlg').close();
+$('impYes').onclick=async()=>{const f=$('impFile').files[0],m=$('impMsg');if(!f){m.innerHTML='<div class=err>Choose a .json file first.</div>';return;}
+  try{const txt=await f.text(),mode=$('impMode').value;if(mode==='replace'&&!confirm('Replace ALL current runs and firearms with this file?'))return;
+    const r=Core.histImport(hist(),fws(),txt,mode);saveHist(r.runs);saveFws(r.firearms);
+    m.innerHTML=`<div class=okm>Imported ${r.added} run(s)${r.skipped?`, skipped ${r.skipped} duplicate(s)`:''} · ${r.firearms.length} firearm(s).</div>`;UI.drawResults();UI.drawFwList();UI.drawFwPick();}
+  catch(e){m.innerHTML=`<div class=err>Import failed: ${esc(e.message)}</div>`;}};
+$('clrHist').onclick=()=>{const h=hist(),opts=[['all',`All runs (${h.length})`]].concat([{id:Core.UNASSIGNED,name:'Unassigned'}].concat(fws()).map(f=>[f.id,`Only ${f.name} (${h.filter(r=>r.fw===f.id).length})`]));
+  $('resetScope').innerHTML=opts.map(([v,t])=>`<option value="${esc(v)}">${esc(t)}</option>`).join('');if(UI.rf&&UI.rf!=='all')$('resetScope').value=UI.rf;$('resetInfo').textContent='';$('resetDlg').showModal();};
+$('resetNo').onclick=()=>$('resetDlg').close();
+$('resetYes').onclick=()=>{const s=$('resetScope').value,h=hist();saveHist(s==='all'?[]:h.filter(r=>r.fw!==s));$('resetDlg').close();UI.drawResults();UI.drawFwList();};
+UI.drawFwPick();UI.drawFwList();
 // ---- boot (wait for app.js init to load DRILLS)
 fetch('targets/catalog.json').then(r=>r.json()).then(c=>{UI.cat=c;UI.drawGallery();}).catch(()=>{$('gN').textContent='offline';});
 (function wait(){if(typeof DRILLS!=='undefined'&&DRILLS&&$('drillSel').options.length){UI.onDrill();UI.route();}else setTimeout(wait,50);})();

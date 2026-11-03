@@ -16,4 +16,12 @@ assert(C.score(T3,{x:1,y:3}).vestStrike);assert.equal(C.score(T3,{x:1,y:1}).zone
  let r=C.frScore({first:2,shots:[1.5],comply:3.2});assert.equal(r.late,0);assert.equal(r.comply,1.2);assert.equal(r.penalty,0);assert(!r.fail);
  r=C.frScore({first:2,shots:[2.5,4],comply:null});assert.equal(r.late,2);assert.equal(r.penalty,45);assert(r.fail);
  assert(C.FR_COMPLY.test("okay don't shoot"));assert(!C.FR_COMPLY.test('drop the weapon'));}
+// history / firearms
+{const old=[{ts:1,drill:'A',time:3},{ts:2,drill:'A',time:2.5,fw:'g1'}];const m=C.histMigrate(old);assert.equal(m[0].fw,'unassigned');assert(m[0].id&&m[1].id!==m[0].id);
+ const ex=C.histExport(old,[{id:'g1',name:'LCP II'}]);const rt=C.histImport([],[],JSON.stringify(ex),'replace');assert.equal(rt.runs.length,2);assert.equal(rt.firearms[0].name,'LCP II');
+ const mg=C.histImport(m,[{id:'g1',name:'LCP II'}],ex,'merge');assert.equal(mg.added,0);assert.equal(mg.skipped,2);assert.equal(mg.firearms.length,1);
+ const mg2=C.histImport(m,[],{runs:[{ts:5,drill:'B',time:4}]},'merge');assert.equal(mg2.added,1);assert.equal(mg2.runs.length,3);
+ assert.throws(()=>C.histImport([],[],'{oops','merge'),/Not valid JSON/);assert.throws(()=>C.histImport([],[],{foo:1},'merge'),/missing "runs"/);
+ assert.throws(()=>C.histImport([],[],{runs:[{ts:'x'}]},'merge'),/rejected/);
+ const st=C.fwStats([{time:4},{time:3.5},{time:3},{time:2.5,fail:true},{game:'x',score:5}]);assert.equal(st.best.time,2.5);assert.equal(st.timed,4);assert(st.trend<0);assert.equal(st.fails,1);}
 console.log('GAME PASS');

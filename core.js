@@ -213,5 +213,23 @@ Core.frPlan=function(rnd){rnd=rnd||Math.random;const pool=Core.FR_CMDS.slice(),n
 // fr: {first:sec of 1st command (null=never issued), shots:[sec], comply:sec|null}; times relative to string end
 Core.frScore=function(fr){const late=(fr.shots||[]).filter(t=>fr.first!=null&&t>=fr.first).length,c=fr.comply!=null&&fr.first!=null&&fr.comply>=fr.first?+(fr.comply-fr.first).toFixed(2):null;
   const penalty=late*20+(c==null?5:0);return {late,comply:c,penalty,fail:late>0,text:late?`FIRST RESPONDERS: ${late} shot(s) after "${fr.cmd1||'command'}" · +${late*20}s · FAIL`:c!=null?`FIRST RESPONDERS: complied in ${c.toFixed(2)}s`:'FIRST RESPONDERS: no compliance +5s'};};
+// ---- History / firearms (pure; storage lives in ui.js)
+Core.UNASSIGNED='unassigned';
+Core.runId=r=>r.id||('r'+r.ts+'-'+String(r.drill||'').replace(/[^a-z0-9]/gi,'').slice(0,12));
+Core.histMigrate=function(h){return (Array.isArray(h)?h:[]).filter(r=>r&&typeof r.ts==='number').map(r=>Object.assign({},r,{id:Core.runId(r),fw:r.fw||Core.UNASSIGNED}));};
+Core.histExport=(runs,firearms)=>({app:'laser-drills',kind:'history',version:1,exported:new Date().toISOString(),firearms:firearms||[],runs:Core.histMigrate(runs)});
+// returns {runs,firearms,added,skipped} or throws Error with a user-facing message
+Core.histImport=function(cur,curFw,data,mode){if(typeof data==='string'){try{data=JSON.parse(data);}catch(e){throw new Error('Not valid JSON: '+e.message);}}
+  if(Array.isArray(data))data={runs:data};if(!data||typeof data!=='object'||!Array.isArray(data.runs))throw new Error('Not a Laser Drills history file (missing "runs" array).');
+  if(data.app&&data.app!=='laser-drills')throw new Error('File is from another app: '+data.app);
+  const bad=data.runs.filter(r=>!r||typeof r.ts!=='number'||typeof r.drill!=='string').length;if(bad)throw new Error(bad+' run(s) are missing ts/drill — file rejected, nothing imported.');
+  const fws=(Array.isArray(data.firearms)?data.firearms:[]).filter(f=>f&&f.id&&f.name);const inc=Core.histMigrate(data.runs);
+  if(mode==='replace')return {runs:inc.sort((a,b)=>a.ts-b.ts),firearms:fws,added:inc.length,skipped:0};
+  const ids=new Set(cur.map(Core.runId)),add=inc.filter(r=>!ids.has(r.id)),fwIds=new Set((curFw||[]).map(f=>f.id));
+  return {runs:cur.concat(add).sort((a,b)=>a.ts-b.ts),firearms:(curFw||[]).concat(fws.filter(f=>!fwIds.has(f.id))),added:add.length,skipped:inc.length-add.length};};
+Core.fwStats=function(runs){const v=r=>r.final!=null?r.final:r.time,t=runs.filter(r=>v(r)!=null&&!r.game),vals=t.map(v);
+  const best=t.length?t.reduce((a,r)=>v(r)<v(a)?r:a):null,avg=vals.length?vals.reduce((a,b)=>a+b,0)/vals.length:null;
+  const h=Math.floor(vals.length/2),trend=vals.length>=4?(vals.slice(h).reduce((a,b)=>a+b,0)/(vals.length-h))-(vals.slice(0,h).reduce((a,b)=>a+b,0)/h):null;
+  return {runs:runs.length,timed:t.length,best,avg,trend,fails:runs.filter(r=>r.fail).length,series:vals.slice(-20)};};
 if(typeof module!=='undefined')module.exports=Core;else root.Core=Core;
 })(this);
