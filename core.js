@@ -40,16 +40,27 @@ Core.outline=function(z,g){g=g||0;const o=[];
   else if(z.shape==='rect')[[z.x-g,z.y-g],[z.x+z.w+g,z.y-g],[z.x+z.w+g,z.y+z.h+g],[z.x-g,z.y+z.h+g],[z.x-g,z.y-g]].forEach(q=>o.push({x:q[0],y:q[1]}));
   else {z.pts.forEach(q=>o.push({x:q[0],y:q[1]}));o.push({x:z.pts[0][0],y:z.pts[0][1]});}
   return o;};
-// Classify a hit (target inches). Returns {control:true} | {zone,score,noshoot?}.
+// Classify a hit (target inches). expect: zone name (sequence) or group (IDPA order) to enforce.
+// Returns {control} | {hardcover} | {noshoot,score(penalty)} | {zone,score,pd,group} | miss {zone:null,score:0,pd:5}
 Core.score=function(target,pt,spread,tpl,expectName){spread=spread||0;
   if(tpl&&Core.inZone(Object.assign({shape:'rect'},tpl.control),pt,0))return {control:true,zone:'CTRL',score:0};
-  if(tpl){const f=tpl.field;if(!Core.inZone({shape:'rect',x:f.x,y:f.y,w:f.w,h:f.h},pt,0))return {zone:null,score:0,outside:true};}
-  for(const z of target.zones)if(z.kind==='noshoot'&&Core.inZone(z,pt,spread))return {zone:z.name,score:z.penalty,noshoot:true};
-  let best={zone:null,score:0};
-  for(const z of target.zones){if(z.kind!=='score')continue;if(expectName&&z.name!==expectName)continue;
-    if(Core.inZone(z,pt,z.noGrow?0:spread)&&z.score>best.score)best={zone:z.name,score:z.score};}
-  if(expectName&&!best.zone){for(const z of target.zones)if(z.kind==='score'&&Core.inZone(z,pt,spread))return {zone:z.name,score:0,outOfOrder:true};}
-  return best;};
+  if(tpl){const f=tpl.field;if(!Core.inZone({shape:'rect',x:f.x,y:f.y,w:f.w,h:f.h},pt,0))return {zone:null,score:0,pd:5,outside:true};}
+  for(const z of target.zones)if(z.kind==='hardcover'&&Core.inZone(z,pt,0))return {zone:'HC',score:0,pd:5,hardcover:true};
+  for(const z of target.zones)if(z.kind==='noshoot'&&Core.inZone(z,pt,spread))return {zone:z.name,score:z.penalty,pd:5,noshoot:true,ntSeconds:z.ntSeconds||5};
+  let best=null;
+  for(const z of target.zones){if(z.kind!=='score')continue;if(expectName&&!target.scoring&&z.name!==expectName)continue;
+    if(Core.inZone(z,pt,z.noGrow?0:spread)&&(!best||z.score>best.score))best={zone:z.name,score:z.score,pd:z.pd!=null?z.pd:0,group:z.group};}
+  if(best)return best;
+  if(expectName&&!target.scoring){for(const z of target.zones)if(z.kind==='score'&&Core.inZone(z,pt,spread))return {zone:z.name,score:0,pd:5,outOfOrder:true};}
+  return {zone:null,score:0,pd:5};};
+// IDPA-style stage result: raw + PD*1s + PE*3s + HNT*5s. Each required hit missing (or on hard cover / non-threat) = 5 PD.
+Core.idpaSummary=function(stage,shots,rawTime){
+  const req=stage.shots,cnt=shots.slice(0,Math.max(req,shots.length));let pd=0,valid=0,hnt=0,pe=0;
+  for(const s of cnt){if(s.noshoot)hnt++;if(s.zone&&!s.noshoot&&!s.hardcover&&s.zone!=='CTRL'){if(valid<req){pd+=s.pd;valid++;}}}
+  pd+=5*Math.max(0,req-valid);
+  if(stage.order){const got=cnt.filter(s=>s.group).map(s=>s.group);for(let i=0;i<got.length;i++)if(stage.order[i]&&got[i]!==stage.order[i]){pe=1;break;}}
+  const raw=rawTime==null?stage.timeout:rawTime;
+  return {raw,pd,pe,hnt,final:raw+pd+3*pe+5*hnt};};
 // Laser detector: frame differencing on a red-dominance score.
 Core.LaserDetector=function(opts){
   this.o=Object.assign({redMin:180,redDom:40,diffMin:60,minPixels:2,maxPixels:4000,refractoryMs:200,bgAlpha:0.15},opts||{});

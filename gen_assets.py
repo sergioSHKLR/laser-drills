@@ -80,10 +80,16 @@ def draw_target(key,t,path):
         if z['kind']=='noshoot':
             d.color(PAL['noshoot']); c.drawPath(d.path(z),stroke=0,fill=1)
             d.hatch(z,PAL['noshootInk']); d.color(PAL['noshootInk'],True); c.setLineWidth(2); c.drawPath(d.path(z),stroke=1,fill=0)
-            cx,cy=zone_center(z); c.setFont('Helvetica-Bold',11); bx,by=d.P(cx,cy)
-            c.setFillColor(white); c.rect(bx-38,by-6,76,17,stroke=0,fill=1); c.setFillColor(black)
-            c.drawCentredString(bx,by,f"NO SHOOT {z['penalty']}")
+            cx,cy=z.get('label') or zone_center(z); c.setFont('Helvetica-Bold',9); bx,by=d.P(cx,cy)
+            txt=('NON-THREAT +5s' if t.get('scoring')=='idpa' else f"{z['name'].replace('NS','NO SHOOT')} {z['penalty']}")
+            tw=c.stringWidth(txt,'Helvetica-Bold',9)+8
+            c.setFillColor(white); c.rect(bx-tw/2,by-5,tw,15,stroke=0,fill=1); c.setFillColor(black)
+            c.drawCentredString(bx,by,txt)
             continue
+        if z['kind']=='hardcover':
+            c.setFillColor(black); c.drawPath(d.path(z),stroke=0,fill=1)
+            lx,ly=d.P(*(z.get('label') or zone_center(z))); c.setFillColor(white); c.setFont('Helvetica-Bold',9)
+            c.drawCentredString(lx,ly+3,'HARD'); c.drawCentredString(lx,ly-8,'COVER'); continue
         d.color(PAL[z['tier']])
         if z.get('dashed'):
             c.setDash(5,3); c.drawPath(d.path(z),stroke=1,fill=1); c.setDash()
@@ -92,10 +98,15 @@ def draw_target(key,t,path):
     for z in t['zones']:
         if z['kind']!='score': continue
         cx,cy=zone_center(z); dark=lum(PAL[z['tier']])<0.3
+        if t.get('scoring')=='idpa':
+            if 'label' in z: cx,cy=z['label']
+            c.setFillColor(white if dark else black); c.setFont('Helvetica-Bold',8 if key=='idpa-multi' else 10)
+            x,y=d.P(cx,cy); c.drawCentredString(x,y-3,z['name'].split(' ')[-1]); continue
         c.setFillColor(white if dark else black); c.setFont('Helvetica-Bold',9)
         if z['shape']=='circle' and not z.get('dashed') and z['r']>1.0: cy=cy-z['r']+0.22
         if z.get('dashed'): cy=cy+z['r']-0.2
-        if key=='silhouette' and z['shape']=='poly': cy=cy+ (1.9 if z['name']=='D' else 1.2)
+        if 'label' in z: cx,cy=z['label']
+        elif key in('silhouette','hostage') and z['shape']=='poly': cy=cy+ (1.9 if z['name']=='D' else 1.2)
         lab=z['name'] if key=='five-dot' else f"{z['name']} {z['score']}"
         if key=='five-dot': c.setFont('Helvetica-Bold',22)
         x,y=d.P(cx,cy); c.drawCentredString(x,y-3,lab)
@@ -123,7 +134,12 @@ def draw_target(key,t,path):
         k=(z['tier'],z['score'])
         if k in seen: continue
         seen.add(k); items.append((PAL[z['tier']],f"{'Dot' if key=='five-dot' else 'Zone'} {z['name'] if key!='clays' else ('clay' if z['score']==5 else 'pattern')}: {z['score']:+d} pts" if key!='five-dot' else f"Dots 1-5 in order: +5 each",None))
-    if any(z['kind']=='noshoot' for z in t['zones']):
+    if t.get('scoring')=='idpa':
+        items=[(PAL['tier5'],'Zone -0: 0 points down',None),(PAL['tier3'],'Zone -1: 1 PD (+1 s)',None),(PAL['tier1'],'Zone -3: 3 PD (+3 s)',None)]
+        if any(z['kind']=='hardcover' for z in t['zones']): items.append(('#000000','Hard cover: no hit (miss = 5 PD)',None))
+        if any(z['kind']=='noshoot' for z in t['zones']): items.append((PAL['noshoot'],'Non-threat hit: +5 s each','hatch'))
+        items.append((PAL['control'],'START/STOP control: not scored','ctrl'))
+    elif any(z['kind']=='noshoot' for z in t['zones']):
         p=[z for z in t['zones'] if z['kind']=='noshoot'][0]['penalty']; items.append((PAL['noshoot'],f'No-shoot (hatched): {p} pts','hatch'))
     items.append((PAL['control'],'START/STOP control: not scored','ctrl'))
     items.append(('#FFFFFF','Outside zones: miss, 0 pts',None))

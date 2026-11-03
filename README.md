@@ -5,3 +5,13 @@ Static PWA. Serve over HTTPS (camera requirement) or http://localhost.
 - Quick host options: GitHub Pages / Netlify Drop (drag folder), or on ChromeOS Linux: `python3 -m http.server 8000` then open http://localhost:8000 (localhost counts as secure).
 - Phone via USB: `adb reverse tcp:8000 tcp:8000` then open http://localhost:8000 in Chrome on the phone.
 - Shotgun mode: zones grow by `shotgunSpread` inches (default 1.5). Idea for next step: score a pattern circle and allow multiple-pellet "hit" credit.
+
+## Target template rules
+- US Letter, 0.4in print-safe margin; 1.2in ArUco (js-aruco 5x5) markers in the 4 corners, each target has its own 4 IDs (auto-detected); 0.25in white quiet zone.
+- Scan field x 0.4-8.1in, y 1.85-9.15in (dashed line). Header/footer bands are no-scan: name, code, distance, paired drills, how-to, scoring map.
+- START/STOP control zone (green, hatched) always at bottom-right of the field; shooting it starts/stops the drill.
+- Colors: cool blue-grey tiers (no red/orange), dark tier for top score; no-shoot = white + black hatch; hard cover = solid black; gen_assets.py asserts low red-dominance and grayscale luminance steps.
+
+## IDPA-style course (approximate, not official art/dimensions)
+Score = raw time + 1 s per point down (-0/-1/-3, miss = 5 PD) + 3 s per PE + 5 s per hit on non-threat; hard-cover hits do not count.
+Sources: https://www.sk4tactic.ba/en/idpa-rules (2026.2 summary), https://brocksgapidpa.com/scoring, https://www.idpanebraska.com/faq/, official rulebook https://prod.idpa.com/documents
