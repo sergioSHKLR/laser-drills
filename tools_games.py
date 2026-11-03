@@ -86,6 +86,34 @@ def carnival():
        dict(id='carnival-calls',name='Carnival Shoot: called shots',category='fun',target='carnival',shots=40,startDelay=[2,3],parTime=60,timeout=120,game=dict(type='calls',calls=calls,rounds=8,wrong=-2),notes='The app calls an item ("duck 3", "all pigs"); hit it to get the next call. Wrong item -2.')]
     upsert('carnival',t,D)
 GAMES=dict(carnival=carnival)
+
+# ---------------------------------------------------------------- PIL helpers (vector-ish text / suit glyphs)
+from PIL import Image,ImageDraw,ImageFont
+def font(sz,bold=True): return ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans%s.ttf'%('-Bold' if bold else ''),int(sz))
+def pil(F,col=(255,255,255)): return Image.new('RGB',(int(F['w']*DPI),int(F['h']*DPI)),col)
+def tocv(im): return cv2.cvtColor(np.array(im),cv2.COLOR_RGB2BGR)
+def ctext(d,xy,t,f,fill): d.text(xy,t,font=f,fill=fill,anchor='mm')
+
+# ---------------------------------------------------------------- Sink-the-Ship (8x8 battleship grid)
+def battle(key='battle',F=LETTER,mk=(304,305,306,307),code='LD-402',n=8):
+    im=pil(F); d=ImageDraw.Draw(im); cell=min((F['w']-0.6)/n,(F['h']-0.6)/n); gx=F['x']+(F['w']-cell*n)/2+0.25; gy=F['y']+(F['h']-cell*n)/2+0.25
+    P=lambda x,y:((x-F['x'])*DPI,(y-F['y'])*DPI); zones=[]
+    for r in range(n):
+        ctext(d,P(gx-0.27,gy+(r+.5)*cell),chr(65+r),font(0.34*DPI),(31,45,90))
+        for c in range(n):
+            x0,y0=gx+c*cell,gy+r*cell; col=(214,232,246) if (r+c)%2 else (190,216,238)
+            d.rectangle([P(x0,y0),P(x0+cell,y0+cell)],fill=col,outline=(31,45,90),width=3)
+            ctext(d,P(x0+cell/2,y0+cell/2),f'{chr(65+r)}{c+1}',font(0.16*DPI,False),(120,140,170))
+            zones.append(dict(name=f'{chr(65+r)}{c+1}',kind='score',shape='rect',x=round(x0,3),y=round(y0,3),w=round(cell,3),h=round(cell,3),score=1,tier='tier1',subtle=True,art=True,noGrow=True,tags=[f'{chr(65+r)}{c+1}']))
+    for c in range(n): ctext(d,P(gx+(c+.5)*cell,gy-0.27),str(c+1),font(0.34*DPI),(31,45,90))
+    can=tocv(im); check_zones(key,can,zones,F); cv2.imwrite(f'art/{key}.png',can)
+    ships=[dict(name='carrier',len=5),dict(name='battleship',len=4),dict(name='cruiser',len=3),dict(name='submarine',len=3),dict(name='destroyer',len=2)]
+    t=dict(code=code,name='Sink-the-Ship (8x8)',markerIds=list(mk),distance='3-7 yd',set='games',art=[dict(src=f'art/{key}.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'])],zones=zones,
+        instructions=['The app hides a random fleet (5 ships, 17 cells).','Shoot a cell: it says hit, miss or "you sunk my cruiser".','Score = shots to sink the whole fleet (lower is better).','Timed mode: same game against a 3 min clock.'])
+    D=[dict(id='battle-classic',name='Sink-the-Ship: sink the fleet',category='fun',target=key,shots=64,startDelay=[1,2],parTime=600,timeout=1800,game=dict(type='battle',rows=n,cols=n,ships=ships),notes='Random hidden fleet. Fewest shots wins.'),
+       dict(id='battle-timed',name='Sink-the-Ship: timed (3 min)',category='fun',target=key,shots=64,startDelay=[1,2],parTime=180,timeout=180,game=dict(type='battle',rows=n,cols=n,ships=ships),notes='Sink as much as you can in 3 minutes.')]
+    upsert(key,t,D)
+GAMES['battle']=battle
 if __name__=='__main__':
     for k in (sys.argv[1:] or list(GAMES)): GAMES[k]()
     save(); print('ok games')

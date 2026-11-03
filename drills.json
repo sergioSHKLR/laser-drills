@@ -1061,5 +1061,87 @@
    "wrong": -2
   },
   "notes": "The app calls an item (\"duck 3\", \"all pigs\"); hit it to get the next call. Wrong item -2."
+ },
+ {
+  "id": "battle-classic",
+  "name": "Sink-the-Ship: sink the fleet",
+  "category": "fun",
+  "target": "battle",
+  "shots": 64,
+  "startDelay": [
+   1,
+   2
+  ],
+  "parTime": 600,
+  "timeout": 1800,
+  "game": {
+   "type": "battle",
+   "rows": 8,
+   "cols": 8,
+   "ships": [
+    {
+     "name": "carrier",
+     "len": 5
+    },
+    {
+     "name": "battleship",
+     "len": 4
+    },
+    {
+     "name": "cruiser",
+     "len": 3
+    },
+    {
+     "name": "submarine",
+     "len": 3
+    },
+    {
+     "name": "destroyer",
+     "len": 2
+    }
+   ]
+  },
+  "notes": "Random hidden fleet. Fewest shots wins."
+ },
+ {
+  "id": "battle-timed",
+  "name": "Sink-the-Ship: timed (3 min)",
+  "category": "fun",
+  "target": "battle",
+  "shots": 64,
+  "startDelay": [
+   1,
+   2
+  ],
+  "parTime": 180,
+  "timeout": 180,
+  "game": {
+   "type": "battle",
+   "rows": 8,
+   "cols": 8,
+   "ships": [
+    {
+     "name": "carrier",
+     "len": 5
+    },
+    {
+     "name": "battleship",
+     "len": 4
+    },
+    {
+     "name": "cruiser",
+     "len": 3
+    },
+    {
+     "name": "submarine",
+     "len": 3
+    },
+    {
+     "name": "destroyer",
+     "len": 2
+    }
+   ]
+  },
+  "notes": "Sink as much as you can in 3 minutes."
  }
 ]

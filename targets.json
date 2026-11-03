@@ -9125,6 +9125,1134 @@
     "weapon": "pistol"
    }
   },
+  "battle": {
+   "code": "LD-402",
+   "name": "Sink-the-Ship (8x8)",
+   "markerIds": [
+    304,
+    305,
+    306,
+    307
+   ],
+   "distance": "3-7 yd",
+   "set": "games",
+   "art": [
+    {
+     "src": "art/battle.png",
+     "x": 0.4,
+     "y": 1.85,
+     "w": 7.7,
+     "h": 7.3
+    }
+   ],
+   "zones": [
+    {
+     "name": "A1",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.15,
+     "y": 2.4,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "A1"
+     ]
+    },
+    {
+     "name": "A2",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.987,
+     "y": 2.4,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "A2"
+     ]
+    },
+    {
+     "name": "A3",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.825,
+     "y": 2.4,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "A3"
+     ]
+    },
+    {
+     "name": "A4",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.663,
+     "y": 2.4,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "A4"
+     ]
+    },
+    {
+     "name": "A5",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.5,
+     "y": 2.4,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "A5"
+     ]
+    },
+    {
+     "name": "A6",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.338,
+     "y": 2.4,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "A6"
+     ]
+    },
+    {
+     "name": "A7",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.175,
+     "y": 2.4,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "A7"
+     ]
+    },
+    {
+     "name": "A8",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.012,
+     "y": 2.4,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "A8"
+     ]
+    },
+    {
+     "name": "B1",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.15,
+     "y": 3.237,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "B1"
+     ]
+    },
+    {
+     "name": "B2",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.987,
+     "y": 3.237,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "B2"
+     ]
+    },
+    {
+     "name": "B3",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.825,
+     "y": 3.237,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "B3"
+     ]
+    },
+    {
+     "name": "B4",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.663,
+     "y": 3.237,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "B4"
+     ]
+    },
+    {
+     "name": "B5",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.5,
+     "y": 3.237,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "B5"
+     ]
+    },
+    {
+     "name": "B6",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.338,
+     "y": 3.237,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "B6"
+     ]
+    },
+    {
+     "name": "B7",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.175,
+     "y": 3.237,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "B7"
+     ]
+    },
+    {
+     "name": "B8",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.012,
+     "y": 3.237,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "B8"
+     ]
+    },
+    {
+     "name": "C1",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.15,
+     "y": 4.075,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "C1"
+     ]
+    },
+    {
+     "name": "C2",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.987,
+     "y": 4.075,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "C2"
+     ]
+    },
+    {
+     "name": "C3",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.825,
+     "y": 4.075,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "C3"
+     ]
+    },
+    {
+     "name": "C4",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.663,
+     "y": 4.075,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "C4"
+     ]
+    },
+    {
+     "name": "C5",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.5,
+     "y": 4.075,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "C5"
+     ]
+    },
+    {
+     "name": "C6",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.338,
+     "y": 4.075,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "C6"
+     ]
+    },
+    {
+     "name": "C7",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.175,
+     "y": 4.075,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "C7"
+     ]
+    },
+    {
+     "name": "C8",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.012,
+     "y": 4.075,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "C8"
+     ]
+    },
+    {
+     "name": "D1",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.15,
+     "y": 4.912,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "D1"
+     ]
+    },
+    {
+     "name": "D2",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.987,
+     "y": 4.912,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "D2"
+     ]
+    },
+    {
+     "name": "D3",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.825,
+     "y": 4.912,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "D3"
+     ]
+    },
+    {
+     "name": "D4",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.663,
+     "y": 4.912,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "D4"
+     ]
+    },
+    {
+     "name": "D5",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.5,
+     "y": 4.912,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "D5"
+     ]
+    },
+    {
+     "name": "D6",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.338,
+     "y": 4.912,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "D6"
+     ]
+    },
+    {
+     "name": "D7",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.175,
+     "y": 4.912,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "D7"
+     ]
+    },
+    {
+     "name": "D8",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.012,
+     "y": 4.912,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "D8"
+     ]
+    },
+    {
+     "name": "E1",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.15,
+     "y": 5.75,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "E1"
+     ]
+    },
+    {
+     "name": "E2",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.987,
+     "y": 5.75,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "E2"
+     ]
+    },
+    {
+     "name": "E3",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.825,
+     "y": 5.75,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "E3"
+     ]
+    },
+    {
+     "name": "E4",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.663,
+     "y": 5.75,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "E4"
+     ]
+    },
+    {
+     "name": "E5",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.5,
+     "y": 5.75,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "E5"
+     ]
+    },
+    {
+     "name": "E6",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.338,
+     "y": 5.75,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "E6"
+     ]
+    },
+    {
+     "name": "E7",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.175,
+     "y": 5.75,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "E7"
+     ]
+    },
+    {
+     "name": "E8",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.012,
+     "y": 5.75,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "E8"
+     ]
+    },
+    {
+     "name": "F1",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.15,
+     "y": 6.588,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "F1"
+     ]
+    },
+    {
+     "name": "F2",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.987,
+     "y": 6.588,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "F2"
+     ]
+    },
+    {
+     "name": "F3",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.825,
+     "y": 6.588,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "F3"
+     ]
+    },
+    {
+     "name": "F4",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.663,
+     "y": 6.588,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "F4"
+     ]
+    },
+    {
+     "name": "F5",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.5,
+     "y": 6.588,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "F5"
+     ]
+    },
+    {
+     "name": "F6",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.338,
+     "y": 6.588,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "F6"
+     ]
+    },
+    {
+     "name": "F7",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.175,
+     "y": 6.588,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "F7"
+     ]
+    },
+    {
+     "name": "F8",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.012,
+     "y": 6.588,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "F8"
+     ]
+    },
+    {
+     "name": "G1",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.15,
+     "y": 7.425,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "G1"
+     ]
+    },
+    {
+     "name": "G2",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.987,
+     "y": 7.425,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "G2"
+     ]
+    },
+    {
+     "name": "G3",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.825,
+     "y": 7.425,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "G3"
+     ]
+    },
+    {
+     "name": "G4",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.663,
+     "y": 7.425,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "G4"
+     ]
+    },
+    {
+     "name": "G5",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.5,
+     "y": 7.425,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "G5"
+     ]
+    },
+    {
+     "name": "G6",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.338,
+     "y": 7.425,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "G6"
+     ]
+    },
+    {
+     "name": "G7",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.175,
+     "y": 7.425,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "G7"
+     ]
+    },
+    {
+     "name": "G8",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.012,
+     "y": 7.425,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "G8"
+     ]
+    },
+    {
+     "name": "H1",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.15,
+     "y": 8.262,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "H1"
+     ]
+    },
+    {
+     "name": "H2",
+     "kind": "score",
+     "shape": "rect",
+     "x": 1.987,
+     "y": 8.262,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "H2"
+     ]
+    },
+    {
+     "name": "H3",
+     "kind": "score",
+     "shape": "rect",
+     "x": 2.825,
+     "y": 8.262,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "H3"
+     ]
+    },
+    {
+     "name": "H4",
+     "kind": "score",
+     "shape": "rect",
+     "x": 3.663,
+     "y": 8.262,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "H4"
+     ]
+    },
+    {
+     "name": "H5",
+     "kind": "score",
+     "shape": "rect",
+     "x": 4.5,
+     "y": 8.262,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "H5"
+     ]
+    },
+    {
+     "name": "H6",
+     "kind": "score",
+     "shape": "rect",
+     "x": 5.338,
+     "y": 8.262,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "H6"
+     ]
+    },
+    {
+     "name": "H7",
+     "kind": "score",
+     "shape": "rect",
+     "x": 6.175,
+     "y": 8.262,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "H7"
+     ]
+    },
+    {
+     "name": "H8",
+     "kind": "score",
+     "shape": "rect",
+     "x": 7.012,
+     "y": 8.262,
+     "w": 0.838,
+     "h": 0.838,
+     "score": 1,
+     "tier": "tier1",
+     "subtle": true,
+     "art": true,
+     "noGrow": true,
+     "tags": [
+      "H8"
+     ]
+    }
+   ],
+   "instructions": [
+    "The app hides a random fleet (5 ships, 17 cells).",
+    "Shoot a cell: it says hit, miss or \"you sunk my cruiser\".",
+    "Score = shots to sink the whole fleet (lower is better).",
+    "Timed mode: same game against a 3 min clock."
+   ],
+   "drills": [
+    "battle-classic",
+    "battle-timed"
+   ],
+   "meta": {
+    "category": "fun",
+    "paper": "letter",
+    "people": "none",
+    "features": [],
+    "weapon": "pistol"
+   }
+  },
   "idpa-threat": {
    "code": "LD-101",
    "name": "IDPA-style Threat",
