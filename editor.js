@@ -39,7 +39,7 @@ document.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>setTool(b.dataset
 function setTool(t){tool=t;polyPts=null;document.querySelectorAll('[data-t]').forEach(b=>b.classList.toggle('on',b.dataset.t===t));cv.style.cursor=t==='sel'?'default':'crosshair';redraw();}
 cv.onwheel=e=>{e.preventDefault();const p=I(e.offsetX,e.offsetY),f=e.deltaY<0?1.15:1/1.15;view.s*=f;view.ox=e.offsetX-p.x*view.s;view.oy=e.offsetY-p.y*view.s;redraw();};
 cv.oncontextmenu=e=>{e.preventDefault();const i=hitTest(I(e.offsetX,e.offsetY));if(i<0)return;sel=i;redraw();panel();const m=$('menu');
-  m.innerHTML=Object.entries(RULES).map(([k,v])=>`<div data-r="${k}">${ruleOf(zones[i])===k?'✓ ':''}${v}</div>`).join('')+'<div data-r="del">Delete zone</div>';
+  m.innerHTML=Object.entries(RULES).map(([k,v])=>`<div data-r="${k}">${ruleOf(zones[i])===k?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px"><path d="M20 6 9 17l-5-5"/></svg>':''}${v}</div>`).join('')+'<div data-r="del">Delete zone</div>';
   m.style.left=e.clientX+'px';m.style.top=e.clientY+'px';m.style.display='block';
   m.querySelectorAll('div').forEach(d=>d.onclick=()=>{m.style.display='none';if(d.dataset.r==='del')del();else{setRule(zones[sel],d.dataset.r);panel();redraw();}});};
 addEventListener('mousedown',e=>{if(!$('menu').contains(e.target))$('menu').style.display='none';});

@@ -4,7 +4,7 @@
   "group": "qual",
   "name": "Qualification: Pro-Marksman",
   "badge": "Pro-Marksman",
-  "icon": "🥉",
+  "icon": "medal",
   "requires": null,
   "notes": "Rank 1 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 60% or better. Repeat stages as often as you like; your best run counts.",
   "stages": [
@@ -91,7 +91,7 @@
   "group": "qual",
   "name": "Qualification: Marksman",
   "badge": "Marksman",
-  "icon": "🎖️",
+  "icon": "award",
   "requires": "qual-pro-marksman",
   "notes": "Rank 2 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 70% or better. Repeat stages as often as you like; your best run counts.",
   "stages": [
@@ -178,7 +178,7 @@
   "group": "qual",
   "name": "Qualification: Sharpshooter",
   "badge": "Sharpshooter",
-  "icon": "🏅",
+  "icon": "crosshair",
   "requires": "qual-marksman",
   "notes": "Rank 3 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 78% or better. Repeat stages as often as you like; your best run counts.",
   "stages": [
@@ -265,7 +265,7 @@
   "group": "qual",
   "name": "Qualification: Expert",
   "badge": "Expert",
-  "icon": "🥈",
+  "icon": "trophy",
   "requires": "qual-sharpshooter",
   "notes": "Rank 4 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 85% or better. Repeat stages as often as you like; your best run counts.",
   "stages": [
@@ -352,7 +352,7 @@
   "group": "qual",
   "name": "Qualification: Distinguished Expert",
   "badge": "Distinguished Expert",
-  "icon": "🥇",
+  "icon": "crown",
   "requires": "qual-expert",
   "notes": "Rank 5 of 5 in a progressive marksmanship ladder (inspired by NRA-style qualification ranks; original laser standards). Pass every stage at 92% or better. Repeat stages as often as you like; your best run counts.",
   "stages": [
@@ -439,7 +439,7 @@
   "group": "fund",
   "name": "Pistol Fundamentals (Basic Pistol-style)",
   "badge": "Fundamentals",
-  "icon": "🎯",
+  "icon": "target",
   "notes": "Grip, sight alignment, trigger press. Group shooting at four scaled distances (inspired by NRA Basic Pistol-style range work; original content). Laser distance = half the standard distance on the Letter bullseye. Slow and clean beats fast.",
   "stages": [
    {
@@ -539,7 +539,7 @@
   "group": "def",
   "name": "Defensive Pistol (Defensive-course-style)",
   "badge": "Defender",
-  "icon": "🛡️",
+  "icon": "shield",
   "notes": "Draw from concealment, ankle draw from a kneel, movement and decision. Score at end (IDPA-style: raw time + 1 s per point down). Inspired by defensive pistol course themes; original stages. Say “start” to begin each stage.",
   "stages": [
    {
@@ -642,7 +642,7 @@
   "group": "la",
   "name": "Reaction · Hunt · Eyes (Laser-Academy-style)",
   "badge": "Quick Eyes",
-  "icon": "👁️",
+  "icon": "eye",
   "notes": "Original drills in the spirit of popular laser-trainer apps: reaction to the beep, hunting the called target, and eyes/decision drills. Inspired by Mantis Laser Academy-style drill types; no copied content.",
   "stages": [
    {
@@ -726,7 +726,7 @@
   "group": "bm",
   "name": "FBI-style Qualification (laser)",
   "badge": "Qualified",
-  "icon": "⭐",
+  "icon": "star",
   "notes": "Original laser adaptation of a law-enforcement-style qualification: close, fast strings then longer, slower strings. Pass ≥ 80% on every stage.",
   "stages": [
    {
@@ -816,7 +816,7 @@
   "group": "bm",
   "name": "Bill Drill",
   "badge": "Bill Drill",
-  "icon": "⚡",
+  "icon": "zap",
   "notes": "6 shots to the body A zone from the draw as fast as you can keep them in. Benchmark par 2.5 s.",
   "stages": [
    {
@@ -845,7 +845,7 @@
   "group": "bm",
   "name": "El Presidente (laser)",
   "badge": "El Presidente",
-  "icon": "🎩",
+  "icon": "users",
   "notes": "Original laser adaptation: turn from facing uprange, 2 each on three threats, simulated reload (rack/reset), 2 each again. Uses the 3-threat sheet.",
   "stages": [
    {
@@ -869,7 +869,7 @@
   "group": "bm",
   "name": "Dot Torture (laser)",
   "badge": "Dot Torture",
-  "icon": "🔵",
+  "icon": "circle-dot",
   "notes": "Original precision drill on the 5-dot sheet: repeated slow and fast sequences. Every shot must hit its dot in order.",
   "stages": [
    {
@@ -955,7 +955,7 @@
   "group": "bm",
   "name": "3-Seconds-or-Less (laser)",
   "badge": "Under 3",
-  "icon": "⏱️",
+  "icon": "timer",
   "notes": "Original adaptation of the classic 'three seconds or less' idea: every string must finish in 3 s or less with hits.",
   "stages": [
    {
@@ -1054,7 +1054,7 @@
   "group": "bm",
   "name": "Core Skills (laser)",
   "badge": "Core Skills",
-  "icon": "🧩",
+  "icon": "puzzle",
   "notes": "Original skills test in the spirit of instructor 'core skills' assessments: draw, accuracy, pairs, head shot, and a multi-threat string. Pass every stage.",
   "stages": [
    {
@@ -1142,7 +1142,7 @@
   "group": "bm",
   "name": "5×5 (laser)",
   "badge": "5×5",
-  "icon": "✋",
+  "icon": "hand",
   "notes": "Original take on the 5×5 idea: 5 shots, 5 seconds, one small circle. Use the center ring of the bullseye; anything not 5 pts is a miss.",
   "stages": [
    {

@@ -1,4 +1,5 @@
 const $=id=>document.getElementById(id);
+const I=n=>`<svg class=ic><use href="#i-${n}"/></svg>`;
 const DEF={redMin:180,redDom:40,diffMin:60,minPixels:2,maxPixels:4000,refractoryMs:200,bgAlpha:0.15,shotgunSpread:1.5};
 const RANGES={redMin:[50,255,1],redDom:[5,200,1],diffMin:[5,200,1],minPixels:[1,50,1],maxPixels:[50,20000,50],refractoryMs:[50,1000,10],bgAlpha:[0.01,0.5,0.01],shotgunSpread:[0,4,0.1]};
 let settings=Object.assign({},DEF,JSON.parse(localStorage.getItem('ld-settings')||'{}'));
@@ -42,7 +43,7 @@ $('resetBtn').onclick=()=>{settings=Object.assign({},DEF);localStorage.removeIte
 let camStream=null,camGen=0;
 function stopCamera(){camGen++;if(camStream)camStream.getTracks().forEach(t=>t.stop());camStream=null;
   if(video){video.pause();video.srcObject=null;}video=null;reset();laser=new Core.LaserDetector(settings);lock=null;lockAge=0;mask=null;lastDetect=0;marks=[];
-  ctx.clearRect(0,0,view.width,view.height);$('fps').textContent='0';$('camBtn').textContent='📷 Start Camera';$('camBtn').classList.remove('on');if(typeof UI!=='undefined')UI.cam(false);$('status').textContent='Camera stopped.';}
+  ctx.clearRect(0,0,view.width,view.height);$('fps').textContent='0';$('camBtn').innerHTML=I('camera')+' Start Camera';$('camBtn').classList.remove('on');if(typeof UI!=='undefined')UI.cam(false);$('status').textContent='Camera stopped.';}
 $('camBtn').onclick=async()=>{if(camStream){stopCamera();return;}ac.resume();$('camBtn').disabled=true;try{
   const st=await navigator.mediaDevices.getUserMedia({audio:false,video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720},frameRate:{ideal:60}}});
   video=document.createElement('video');video.playsInline=true;video.muted=true;video.srcObject=st;camStream=st;await video.play();
@@ -50,7 +51,7 @@ $('camBtn').onclick=async()=>{if(camStream){stopCamera();return;}ac.resume();$('
   // Lock exposure low if supported: laser pops more on a darker image.
   try{const adv={};if(caps.exposureMode&&caps.exposureMode.includes('manual'))adv.exposureMode='manual';
     if(caps.focusMode&&caps.focusMode.includes('continuous'))adv.focusMode='continuous';await tr.applyConstraints({advanced:[adv]});}catch(e){}
-  W=Math.min(video.videoWidth||640,1280);H=Math.round(W*video.videoHeight/video.videoWidth);view.width=W;view.height=H;$('camBtn').disabled=false;$('camBtn').textContent='📷 Stop Camera';$('camBtn').classList.add('on');if(typeof UI!=='undefined')UI.cam(true);loop();
+  W=Math.min(video.videoWidth||640,1280);H=Math.round(W*video.videoHeight/video.videoWidth);view.width=W;view.height=H;$('camBtn').disabled=false;$('camBtn').innerHTML=I('camera-off')+' Stop Camera';$('camBtn').classList.add('on');if(typeof UI!=='undefined')UI.cam(true);loop();
  }catch(e){$('camBtn').disabled=false;if(camStream)stopCamera();$('status').textContent='Camera error: '+e.message+' (needs HTTPS + permission)';}};
 function buildMask(){mask=new Uint8Array(W*H);const f=TPL().field,p=[[f.x,f.y],[f.x+f.w,f.y],[f.x+f.w,f.y+f.h],[f.x,f.y+f.h]].map(q=>Core.apply(lock.tgtToImg,{x:q[0],y:q[1]}));
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){let inside=false;for(let i=0,j=3;i<4;j=i++){const a=p[i],b=p[j];
@@ -66,7 +67,7 @@ function tick(now){ctx.drawImage(video,0,0,W,H);const img=ctx.getImageData(0,0,W
   if($('showMask').checked&&!$('tab-cal').classList.contains('hidden')&&laser.lastCount){const o=laser.o,d=img.data;
     for(let i=0;i<W*H;i++){const r=d[i*4],s=r-(d[i*4+1]+d[i*4+2])/2;if(r>=o.redMin&&s>=o.redDom){d[i*4]=255;d[i*4+1]=0;d[i*4+2]=255;}}ctx.putImageData(img,0,0);}
   if(hit)onHit(hit,now);draw();
-  const d=drill();$('status').textContent=lock?(`Locked: ${lock.target.name} (${lock.target.code})`+(d.target!=='any'&&d.target!==lock.key&&!(d.targets||[]).includes(lock.key)?` ⚠ drill expects '${d.target}'`:'')):'Looking for 4 corner markers…';}
+  const d=drill();$('status').textContent=lock?(`Locked: ${lock.target.name} (${lock.target.code})`+(d.target!=='any'&&d.target!==lock.key&&!(d.targets||[]).includes(lock.key)?` · drill expects '${d.target}'`:'')):'Looking for 4 corner markers…';}
 function onHit(h,now){if(state.mode==='fr'){frShot(now);return;}const T=target(),d=drill();
   if(d.game&&state.mode==='live'&&state.game&&lock){const p=Core.apply(lock.imgToTgt,h),sc=Core.score(T,p,spread(),TPL()),r=Core.gameShot(state.game,T,sc);
     marks.push({x:h.x,y:h.y,t:now});state.shots.push(Object.assign({},sc,{t:now,p,score:r.pts,zone:r.msg,noshoot:false,bystander:false,hardcover:false}));
@@ -86,7 +87,7 @@ function render(){const s=Core.drillSummary(drill(),state.beep,state.shots);
   if(state.mode==='done'&&drill().scoring==='idpa'){const r=Core.idpaSummary(drill(),state.shots,s.total);
     $('big').textContent=`${drill().name||'Stage'}: raw ${r.raw.toFixed(2)}s + PD ${r.pd} + PE ${r.pe}×3 + HNT ${r.hnt}×5${r.fc!=null&&drill().scenario?` + no-command ${r.fc}×${drill().failCommand}`:''} = ${r.final.toFixed(2)}${r.wp?` + WRONG PERSON ${r.wp}×${drill().crowd.wrongPenalty||5}`:''}${r.ff?` + FRIENDLY FIRE ${r.ff}×10`:''}${r.bys?` + BYSTANDER ${r.bys}×10 · BACKSTOP FAILURE`:''}${r.fail?(r.ff?' · FAIL: friendly fire':' · FAIL: hostage hit'):''}`+(drill().scenario?` · calls: ${drill().text} · verbal at ${(state.verbal||[]).map(x=>x.toFixed(1)+'s').join(', ')||'none'}`:'');}
   else if(state.mode==='done'&&drill().game&&state.game)$('big').textContent='RESULT: '+(state.game.summary||'no shots');
-  else if(state.mode==='done')$('big').textContent=`${s.score}/${s.maxScore} pts · ${s.total!=null?s.total.toFixed(2)+'s':'—'} ${s.underPar?'✅ under par':'❌ over par/incomplete'}`;
+  else if(state.mode==='done')$('big').textContent=`${s.score}/${s.maxScore} pts · ${s.total!=null?s.total.toFixed(2)+'s':'—'} ${s.underPar?'· under par':'· over par/incomplete'}`;
   if(state.mode==='done'&&state.fr&&state.fr.res)$('big').textContent+=' · '+state.fr.res.text;}
 function reset(){clearTimeout(state.timer);clearTimeout(state.par);frClear();state={mode:'idle',shots:[],beep:0};if(typeof Voice!=='undefined')Voice.resume();marks=[];$('shots').innerHTML='';$('big').textContent='';}
 $('goBtn').onclick=()=>{ac.resume();reset();const d=drill();if(!lock){$('big').textContent='No target lock yet';return;}
@@ -122,9 +123,9 @@ function frClear(){(state.frT||[]).forEach(clearTimeout);state.frT=[];$('complyB
 function frStart(){const p=Core.frPlan();state.mode='fr';state.fr={t0:performance.now(),first:null,cmd1:null,shots:[],comply:null,plan:p};state.frT=[];
   render();$('big').textContent='String over · stay alert…';$('complyBtn').classList.remove('hidden');Voice.resume();
   p.cmds.forEach((c,i)=>state.frT.push(setTimeout(()=>{if(state.mode!=='fr')return;if(i===0){state.fr.first=(performance.now()-state.fr.t0)/1000;state.fr.cmd1=c.say;}
-    say(c.say);$('big').textContent='🚨 '+c.say;},c.at*1000)));
+    say(c.say);$('big').innerHTML=I('siren')+' '+c.say;},c.at*1000)));
   state.frT.push(setTimeout(frEnd,p.end*1000));}
-function frShot(now){const f=state.fr,t=(now-f.t0)/1000;f.shots.push(t);if(f.first!=null){tone(300,250);$('big').textContent='🚨 SHOT AFTER COMMAND · FAIL';}}
+function frShot(now){const f=state.fr,t=(now-f.t0)/1000;f.shots.push(t);if(f.first!=null){tone(300,250);$('big').innerHTML=I('siren')+' SHOT AFTER COMMAND · FAIL';}}
 function frComply(src){const f=state.fr;if(state.mode!=='fr'||f.comply!=null||f.first==null)return;f.comply=(performance.now()-f.t0)/1000;tone(1200,60);$('heard').textContent='complied ('+src+')';}
 function frEnd(){if(state.mode!=='fr')return;frClear();state.fr.res=Core.frScore(state.fr);state.mode='done';render();
   lastSay=spokenResult()+'. '+state.fr.res.text.replace('FIRST RESPONDERS:','Responders:');if(typeof UI!=='undefined')UI.record();setTimeout(()=>{say(lastSay);Voice.resume();},400);}
@@ -152,7 +153,7 @@ try{if('mediaSession'in navigator){navigator.mediaSession.setActionHandler('play
 // Continuous, wake-word-free listening with auto-restart. While a drill is LIVE app commands are ignored
 // (normal drills: recognition is stopped; scenario drills: only verbal de-escalation phrases are accepted).
 const Voice={on:false,paused:false,verbal:false,muted:false,rec:null,
-  init(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$('micBtn').disabled=true;$('micBtn').textContent='🎤 n/a';return;}
+  init(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$('micBtn').disabled=true;$('micBtn').innerHTML=I('mic-off')+' n/a';return;}
     const r=this.rec=new SR();r.continuous=true;r.interimResults=true;r.lang=navigator.language||'en-US';r.maxAlternatives=3;
     r.onresult=e=>{if(this.paused||this.muted)return;const now=performance.now();
       for(let i=e.resultIndex;i<e.results.length;i++){const res=e.results[i];
@@ -169,7 +170,7 @@ const Voice={on:false,paused:false,verbal:false,muted:false,rec:null,
   verbalMode(){this.verbal=true;this.paused=false;this.ui();},
   resume(){this.verbal=false;if(!this.paused){this.ui();return;}this.paused=false;if(this.rec&&this.on)try{this.rec.start();}catch(e){}this.ui();},
   mute(v){this.muted=v;},
-  ui(){const b=$('micBtn');if(!b)return;b.classList.toggle('on',this.on);b.textContent=!this.on?'🎤 Voice off':this.paused?'🎤 paused (live)':this.verbal?'🎤 verbal only':'🎤 listening';}};
+  ui(){const b=$('micBtn');if(!b)return;b.classList.toggle('on',this.on);b.innerHTML=!this.on?I('mic-off')+' Voice off':I('mic')+(this.paused?' paused (live)':this.verbal?' verbal only':' listening');}};
 Voice.init();$('micBtn').onclick=()=>{ac.resume();Voice.toggle();};
 init();
 
