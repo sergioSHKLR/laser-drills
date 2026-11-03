@@ -82,3 +82,6 @@ Save keeps the set in this browser's localStorage, and the app uses it there. Ex
 
 ## v15 – Faceless Die Hard art
 All Die Hard characters (Hans, Karl, Tony, Uli, Theo, Eddie, Franco, Heinrich, Bill Clay, Powell, party guest, bystanders, roof finale) were regenerated as faceless figures: smooth, blank faces with hair, skin tone and facial hair kept. Reference stills guided the outfits only. Zones were re-checked against the new art.
+
+### v16
+- dh-finale redone: Hans shields behind Holly (only head + side-chest exposed, small -0), Eddie with MP5, wavy brown hair, gray three-piece; Holly rust suede suit (auto-desaturated toward brown for detector safety). Zones refit.

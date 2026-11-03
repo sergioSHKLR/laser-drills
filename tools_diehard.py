@@ -129,17 +129,19 @@ one('dh-billclay','LD-208',129,'Die Hard: "Bill Clay" impostor','billclay',['dh-
 FIN=safe(load('finale',(1024,768))); cv2.imwrite(OUT+'dh-finale.png',FIN)
 fx0,fy0,fx1,fy1=bbox(FIN); S4,X4,Y4=fit(fx1-fx0,fy1-fy0)
 TH=lambda x,y:[round(X4+(x-fx0)*S4,3),round(Y4+(y-fy0)*S4,3)]
-HOLLY=[(495,85),(545,80),(570,110),(575,180),(600,200),(608,300),(605,400),(590,445),(585,520),(565,525),(560,700),(560,728),(525,728),(520,700),(505,728),(470,728),(465,525),(450,520),(445,445),(428,400),(428,300),(440,200),(470,180),(475,110)]
-cE=dict(head=(322,62,36,48),sh=(230,420,140),belt=(230,425,380),chest=(325,250),rc=40)
+HOLLY=[(600,95),(640,70),(690,85),(705,140),(700,185),(738,200),(742,300),(738,410),(720,420),(715,530),(690,535),(688,700),(690,728),(655,728),(645,560),(632,728),(605,728),(598,560),(582,530),(580,420),(558,410),(555,300),(565,200),(595,185),(588,140)]
+cE=dict(head=(287,58,40,48),sh=(200,440,115),belt=(215,380,370),chest=(295,240),rc=40)
 z=[hostage('finale','HOLLY',X4,Y4-fy0*S4,S4,crop=fx0,pts=HOLLY)]
-zE=zones_for('finale','T2',X4,Y4-fy0*S4,S4,crop=fx0,img=FIN,xmax=428,c=cE)
+zE=zones_for('finale','T2',X4,Y4-fy0*S4,S4,crop=fx0,img=FIN,xmax=470,c=cE)
 zE[3].update(rx=round(18*S4,3),ry=round(22*S4,3))   # tight Eddie head -0
-zH=[dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -3',shape='poly',pts=[TH(*p) for p in mask(FIN,xmin=609)],score=-3,pd=3,part='body'),
- dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -1',shape='ellipse',cx=TH(683,60)[0],cy=TH(683,60)[1],rx=round(36*S4,3),ry=round(50*S4,3),score=-1,pd=1,part='head'),
- dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(612,200),(790,145),(780,395),(612,395)]],score=-1,pd=1,part='body'),
- dict(kind='score',tier='tier1',group='T1',subtle=True,name='T1 -0',shape='ellipse',cx=TH(705,265)[0],cy=TH(705,265)[1],rx=round(40*S4,3),ry=round(55*S4,3),score=0,pd=0,part='body')]
+HANS=[(680,30),(720,15),(750,30),(752,100),(790,120),(825,180),(830,260),(800,300),(800,690),(760,700),(740,560),(740,400),(742,190),(705,150),(690,110),(678,70)]
+G1=dict(kind='score',tier='tier1',group='T1',subtle=True)
+zH=[dict(G1,name='T1 -3',shape='poly',pts=[TH(*p) for p in HANS],score=-3,pd=3,part='body'),
+ dict(G1,name='T1 -1',shape='ellipse',cx=TH(714,62)[0],cy=TH(714,62)[1],rx=round(32*S4,3),ry=round(44*S4,3),score=-1,pd=1,part='head'),
+ dict(G1,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(742,110),(825,180),(805,390),(742,390)]],score=-1,pd=1,part='body'),
+ dict(G1,name='T1 -0',shape='ellipse',cx=TH(774,232)[0],cy=TH(774,232)[1],rx=round(20*S4,3),ry=round(36*S4,3),score=0,pd=0,part='body')]
 z+=zE+zH
-sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans holds Holly at gunpoint; Eddie covers him.','Exactly 2: Hans exposed chest -0, then Eddie head -0.','Holly = HOSTAGE: any hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=round(Y4,3),w=round((fx1-fx0)*S4,3),h=round((fy1-fy0)*S4,3),crop=[fx0,fy0,fx1,fy1])],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
+sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans shields behind Holly; Eddie (MP5) covers him.','Exactly 2: Hans exposed side-chest -0, then Eddie head -0.','Holly = HOSTAGE: any hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=round(Y4,3),w=round((fx1-fx0)*S4,3),h=round((fy1-fy0)*S4,3),crop=[fx0,fy0,fx1,fy1])],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
 # 2-up sheets (left person | right person), each cropped to its own content, scaled to fill the field
 def twoup(L,R):
     bl=[bbox(L[0]),bbox(R[0])]; y0=min(b[1] for b in bl); y1=max(b[3] for b in bl); wl=bl[0][2]-bl[0][0]; wr=bl[1][2]-bl[1][0]

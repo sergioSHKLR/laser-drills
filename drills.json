@@ -374,6 +374,81 @@
   "category": "training"
  },
  {
+  "id": "crowd-l1",
+  "name": "Crowd Hunt L1 (one attribute)",
+  "target": "crowd",
+  "targets": [
+   "crowd",
+   "crowd-tabloid"
+  ],
+  "scoring": "idpa",
+  "category": "training",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 4.0,
+  "timeout": 30,
+  "crowd": {
+   "level": 1,
+   "rounds": 3,
+   "shots": 2,
+   "wrongPenalty": 5
+  },
+  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
+ },
+ {
+  "id": "crowd-l2",
+  "name": "Crowd Hunt L2 (two attributes)",
+  "target": "crowd",
+  "targets": [
+   "crowd",
+   "crowd-tabloid"
+  ],
+  "scoring": "idpa",
+  "category": "training",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 6.0,
+  "timeout": 30,
+  "crowd": {
+   "level": 2,
+   "rounds": 3,
+   "shots": 2,
+   "wrongPenalty": 5
+  },
+  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
+ },
+ {
+  "id": "crowd-l3",
+  "name": "Crowd Hunt L3 (three+ / relative position)",
+  "target": "crowd",
+  "targets": [
+   "crowd",
+   "crowd-tabloid"
+  ],
+  "scoring": "idpa",
+  "category": "training",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 9.0,
+  "timeout": 30,
+  "crowd": {
+   "level": 3,
+   "rounds": 3,
+   "shots": 2,
+   "wrongPenalty": 5
+  },
+  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
+ },
+ {
   "scoring": "idpa",
   "maxPerShot": 0,
   "startDelay": [
@@ -871,80 +946,5 @@
    }
   ],
   "category": "fun"
- },
- {
-  "id": "crowd-l1",
-  "name": "Crowd Hunt L1 (one attribute)",
-  "target": "crowd",
-  "targets": [
-   "crowd",
-   "crowd-tabloid"
-  ],
-  "scoring": "idpa",
-  "category": "training",
-  "maxPerShot": 0,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 4.0,
-  "timeout": 30,
-  "crowd": {
-   "level": 1,
-   "rounds": 3,
-   "shots": 2,
-   "wrongPenalty": 5
-  },
-  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
- },
- {
-  "id": "crowd-l2",
-  "name": "Crowd Hunt L2 (two attributes)",
-  "target": "crowd",
-  "targets": [
-   "crowd",
-   "crowd-tabloid"
-  ],
-  "scoring": "idpa",
-  "category": "training",
-  "maxPerShot": 0,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 6.0,
-  "timeout": 30,
-  "crowd": {
-   "level": 2,
-   "rounds": 3,
-   "shots": 2,
-   "wrongPenalty": 5
-  },
-  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
- },
- {
-  "id": "crowd-l3",
-  "name": "Crowd Hunt L3 (three+ / relative position)",
-  "target": "crowd",
-  "targets": [
-   "crowd",
-   "crowd-tabloid"
-  ],
-  "scoring": "idpa",
-  "category": "training",
-  "maxPerShot": 0,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 9.0,
-  "timeout": 30,
-  "crowd": {
-   "level": 3,
-   "rounds": 3,
-   "shots": 2,
-   "wrongPenalty": 5
-  },
-  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
  }
 ]
