@@ -29,3 +29,13 @@ Manual check before a release: headless Chromium at 390 and 1280 widths, every t
 2. Run the tests.
 3. Commit and push to `main`. GitHub Pages deploys in about 1 minute.
 4. Check the live `sw.js`, `manifest.webmanifest`, and a hard reload of the app.
+
+## Versioning / About
+
+- `version.json`: `{version, build, commit, cache}` shown in Settings › About and precached by `sw.js`.
+- Release flow: bump `const C='ld-vNN'` in `sw.js` → commit → `python3 tools_version.py [X.Y.Z]` (semver; keeps the current one if omitted; starts 1.0.0) → commit `version.json` → push.
+- `build` is the stamp time in America/Sao_Paulo (`YYYY-MM-DD HH:MM`); `commit` is the short hash of HEAD when stamped (the source commit); `cache` is read from `sw.js`.
+
+## Branding
+
+- `brand/wordmark.svg`, `brand/mark.svg`; raster icons/og image from `tools_pwa_assets.py`. Red only in the bullseye centre; printed target sheets stay red-free.

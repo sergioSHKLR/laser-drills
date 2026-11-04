@@ -1,3 +1,5 @@
+<p align="center"><img src="brand/wordmark.svg" alt="LASER DRILLS" width="420"></p>
+
 # Laser Drills: dry-fire laser trainer (PWA)
 
 **Live:** https://sergioshklr.github.io/laser-drills/ · **Repo:** `sergioSHKLR/laser-drills`
@@ -127,7 +129,7 @@ Tap the **mic** in Shoot to turn on continuous listening (no wake word). Command
 - Print the mask sheet only if you want to see where the zones are. Don't shoot at it.
 
 ## Offline use and installing
-The service worker (`sw.js`, cache `ld-v42`) precaches the app shell, data, icons and the Lucide sprite. It's network-first, falling back to the cache, so updates arrive as soon as you're online and old caches are deleted on activation. To install: in Chrome/Edge use **Install app** in the address bar or menu. On iOS Safari use **Share › Add to Home Screen**. The manifest provides maskable icons, narrow and wide screenshots, and shortcuts to Shoot, Drills, Courses and Results.
+The service worker (`sw.js`, cache `ld-v43`) precaches the app shell, data, icons and the Lucide sprite. It's network-first, falling back to the cache, so updates arrive as soon as you're online and old caches are deleted on activation. To install: in Chrome/Edge use **Install app** in the address bar or menu. On iOS Safari use **Share › Add to Home Screen**. The manifest provides maskable icons, narrow and wide screenshots, and shortcuts to Shoot, Drills, Courses and Results.
 
 ## Laser-safe colors
 Detection looks for red-dominant flashes, so **scoring zones never use red or orange**. Tiers are cool blue/grey, the top score is the darkest tier, the IDPA practice -0 circles are dark blue, and the kraft tone is desaturated. `gen_assets.py` and `tools_diehard_safe.py` check red-dominance (kept under about 40) and grayscale luminance steps, so zones can still be told apart in grayscale. Green lasers work too.
@@ -139,7 +141,7 @@ app.js                camera, detection loop, drill runner, voice, First Respond
 ui.js                 router/tabs, gallery, drill picker, results/history, firearms, courses
 core.js               pure logic (scoring, IDPA, games, history import/export, courses); Node-testable
 editor.html/.js       zone editor
-sw.js                 service worker (cache ld-v42)
+sw.js                 service worker (cache ld-v43)
 manifest.webmanifest  PWA manifest
 targets.json          target specs: markers, layout, zones, meta
 drills.json           drill definitions
@@ -191,3 +193,11 @@ GitHub Pages serves `main` from the repo root. Bump the cache name in `sw.js` (`
 - **js-aruco** © 2011 Juan Mellado, MIT License (`vendor/aruco.js`, `vendor/cv.js`)
 - IDPA-style, NRA-style, FBI-style and Laser-Academy-style content is **original work inspired by** those formats. It isn't affiliated with or endorsed by IDPA, NRA, the FBI or Mantis. Target artwork is original, with faceless characters.
 - Safety: use only with an unloaded firearm, a dedicated laser trainer or a snap cap, in a room with no live ammunition.
+
+## Versioning
+
+Settings › About shows the semver version (starting 1.0.0), build date/time (America/Sao_Paulo), short commit hash and service-worker cache name, read from `version.json`. Stamp it with `python3 tools_version.py [X.Y.Z]` after committing the source (the hash is that source commit), then commit `version.json`. See `docs/development.md`.
+
+## Branding
+
+`brand/wordmark.svg` (gray bold LASER ◎ DRILLS) and `brand/mark.svg` (bullseye). Red appears only in the bullseye centre of the app/brand art, never on printed sheets (the PDF header is plain text). Icons, maskable icons, favicons and `og-image.png` are regenerated with `python3 tools_pwa_assets.py`.

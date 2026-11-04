@@ -212,9 +212,11 @@ GAMES['maritime-tabloid']=lambda:maritime('maritime-tabloid',TAB,(316,317,318,31
 
 # ---------------------------------------------------------------- Counter-Terror (market street; militants by kit; civilians no-shoot; vest = head-only)
 FIG=dict(  # head ellipse (fx,fy,frx,fry), torso rect (fx0,fy0,fx1,fy1) in cropped-sprite fractions
-    hamas=dict(head=(.47,.07,.13,.06),torso=(.15,.14,.8,.5),tags=['hamas','headband','camo','ak'],say='green headband'),
+    hamas=dict(head=(.57,.08,.12,.07),torso=(.33,.17,.88,.45),tags=['hamas','headband','camo','ak'],say='green headband'),
     hezb=dict(head=(.6,.15,.12,.06),torso=(.3,.22,.9,.52),tags=['hezbollah','olive','rpg'],say='olive with R P G'),
-    irgc=dict(head=(.52,.07,.12,.06),torso=(.2,.14,.85,.5),tags=['irgc','uniform','cap'],say='uniform and cap'),
+    irgc=dict(head=(.45,.1,.12,.07),torso=(.2,.18,.78,.47),tags=['irgc','uniform','cap','scarf'],say='olive with scarf'),
+    burqa=dict(head=(.62,.07,.13,.06),torso=(.42,.16,.92,.55),tags=['burqa','detonator'],say='armed burqa'),
+    burqanc=dict(civ=True,tags=['civilian','burqa-civ']),
     houthi=dict(head=(.45,.07,.15,.06),torso=(.15,.14,.8,.5),tags=['houthi','thobe','jambiya','keffiyeh'],say='thobe and dagger'),
     vest=dict(head=(.45,.07,.13,.06),torso=(.08,.13,.92,.56),tags=['vest'],say='vest!'),
     civ1=dict(civ=True,tags=['civilian']),civ2=dict(civ=True,tags=['civilian']),civ3=dict(civ=True,tags=['civilian']))
@@ -254,17 +256,17 @@ def ct(key='ct',F=LETTER,mk=(320,321,322,323),code='LD-503',place=None,lay=None)
     sfx='-tab' if lay else ''; nmx=' (Tabloid)' if lay else ''
     G=lambda c,r:dict(type='calls',calls=c,rounds=r,noShoot=-20,vest=-5,wrong=-2)
     t=dict(code=code,name='Counter-Terror'+nmx,markerIds=list(mk),distance='5-7 yd',art=[dict(src=f'art/{key}.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'],warm=True)],zones=zones,
-        instructions=['Head -0, body -1. Militants are told apart by kit only.','Civilians are NO-SHOOT: -20.','Vest wearer: head shot only. Any body hit = VEST STRIKE (+5 s, -5).','Mic on. Say "start" or tap.'])
+        instructions=['Head -0, body -1. Militants are told apart by kit only.','Civilians (incl. unarmed burqa, open empty hands) are NO-SHOOT: -20.','PID by hands: burqa with pistol + detonator = threat.','Vest wearer: head shot only. Any body hit = VEST STRIKE (+5 s, -5).','Mic on. Say "start" or tap.'])
     if lay: t['layout']=lay
     D=[dict(id='ct-kit'+sfx,name='Counter-Terror: call by kit'+nmx,category='training',target=key,shots=20,startDelay=[2,3],parTime=30,timeout=60,game=G(calls,6),notes='The app calls a kit ("green headband", "thobe and dagger", "vest!"). Civilians -20.'),
        dict(id='ct-vest'+sfx,name='Counter-Terror: vest!'+nmx,category='training',target=key,shots=10,startDelay=[2,5],parTime=10,timeout=30,game=G([dict(say='vest!',tags=['vest'])],3),notes='Head-only on the vest wearer. Body hit = vest strike.'),
        dict(id='ct-clear'+sfx,name='Counter-Terror: clear the street'+nmx,category='training',target=key,shots=30,startDelay=[2,3],parTime=30,timeout=60,game=G(allm+[dict(say='vest!',tags=['vest'])],2),notes='Every militant, then the vest wearer (head only).')]
     upsert(key,t,D)
-GAMES['ct']=lambda:ct(place=[('hamas',.12,.3,3.2,False),('civ1',.37,.33,2.6,False),('irgc',.62,.3,3.2,True),('civ2',.88,.33,2.6,False),
-    ('hezb',.13,.76,3.3,False),('vest',.39,.76,3.3,False),('civ3',.64,.78,2.9,True),('houthi',.88,.76,3.3,True)])
+GAMES['ct']=lambda:ct(place=[('hamas',.12,.3,3.2,False),('civ1',.37,.33,2.6,False),('irgc',.62,.3,3.2,True),('burqanc',.88,.32,3.0,False),
+    ('hezb',.13,.76,3.3,False),('vest',.37,.76,3.3,False),('civ3',.62,.78,2.9,True),('burqa',.87,.76,3.2,False)])
 GAMES['ct-tabloid']=lambda:ct('ct-tabloid',TAB,(324,325,326,327),'LD-504',lay=TABLAY,place=[
-    ('hamas',.06,.3,3.2,False),('civ1',.19,.33,2.6,False),('irgc',.32,.3,3.2,True),('civ2',.45,.33,2.6,False),('houthi',.58,.3,3.2,False),('civ3',.72,.33,2.6,False),('hezb',.87,.3,3.2,True),
-    ('hezb',.07,.76,3.3,False),('civ2',.2,.78,2.9,True),('vest',.34,.76,3.3,False),('civ1',.48,.78,2.9,True),('hamas',.62,.76,3.3,True),('civ3',.76,.78,2.9,False),('houthi',.92,.76,3.3,True)])
+    ('hamas',.06,.3,3.2,False),('civ1',.19,.33,2.6,False),('irgc',.32,.3,3.2,True),('burqanc',.45,.32,3.0,False),('houthi',.58,.3,3.2,False),('civ3',.72,.33,2.6,False),('hezb',.87,.3,3.2,True),
+    ('hezb',.07,.76,3.3,False),('civ2',.2,.78,2.9,True),('vest',.34,.76,3.3,False),('civ1',.48,.78,2.9,True),('hamas',.62,.76,3.3,True),('civ3',.76,.78,2.9,False),('burqa',.92,.76,3.2,False)])
 
 # ---------------------------------------------------------------- Friend or Foe (same camo; tape bands yellow / blue vs white; partial cover)
 SOL=dict(  # head ellipse + torso rect in cropped-sprite fractions; side tag = tape colour

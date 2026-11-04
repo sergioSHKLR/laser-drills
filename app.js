@@ -186,3 +186,5 @@ document.querySelectorAll('[data-vf]').forEach(b=>b.onclick=()=>VF.set({h:+b.dat
 $('vfHide').onchange=e=>VF.set({hide:e.target.checked});$('vfMin').onchange=e=>VF.set({min:e.target.checked});
 {let lm;setInterval(()=>{if(state.mode!==lm){lm=state.mode;VF.apply();}},150);}
 VF.apply();
+// About: version.json is stamped by tools_version.py
+fetch('version.json',{cache:'no-cache'}).then(r=>r.json()).then(v=>{$('abVer').textContent='v'+v.version;$('abBuild').textContent=v.build;const a=$('abCommit');a.textContent=v.commit;a.href='https://github.com/sergioSHKLR/laser-drills/commit/'+v.commit;$('abCache').textContent=v.cache;}).catch(()=>{});

@@ -69,6 +69,11 @@ The target sets `maxPerShot: 10`, so percentages use 10 points per shot. It's us
 - **Carnival**: pigs have legs; colours are more saturated but zones stay under red-dominance 40.
 - **Qualification Silhouette**: zones are colour-filled in the artwork to match the legend.
 
+### ld-v43 target notes
+
+- ct: added Hamas-style (balaclava, headband, plate carrier) and IRGC-style (olive, cap, face scarf) faceless fighters, no insignia; burqa woman in two variants: unarmed open palms = NO-SHOOT (-20), pistol + detonator = threat (PID by hands). Zone red-dominance max 28.
+- fof drones (FPV/Mavic/hexa/Shahed) and silhouette filled zones were already present (ld-v41).
+
 ### ld-v42 target notes
 - **ankle / ankle-tabloid:** cover and mezzanine removed; open single-level store. Relaxed shoppers (basket, phone, bag, box) are NO-SHOOT -10; masked robbers aiming pistols are threats. All figures share one medium skin tone, so PID relies on hands, weapons and behavior.
 - **dh-finale:** Hans moved clear of Holly; his full center mass is a scoring zone.

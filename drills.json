@@ -767,242 +767,6 @@
   "notes": "Some fast boats are civilian (no cargo). Only engage boats with bales/drums or the semi-sub."
  },
  {
-  "id": "ct-kit",
-  "name": "Counter-Terror: call by kit",
-  "category": "training",
-  "target": "ct",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "green headband",
-     "tags": [
-      "hamas"
-     ]
-    },
-    {
-     "say": "olive with R P G",
-     "tags": [
-      "hezbollah"
-     ]
-    },
-    {
-     "say": "uniform and cap",
-     "tags": [
-      "irgc"
-     ]
-    },
-    {
-     "say": "thobe and dagger",
-     "tags": [
-      "houthi"
-     ]
-    },
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 6,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "The app calls a kit (\"green headband\", \"thobe and dagger\", \"vest!\"). Civilians -20."
- },
- {
-  "id": "ct-vest",
-  "name": "Counter-Terror: vest!",
-  "category": "training",
-  "target": "ct",
-  "shots": 10,
-  "startDelay": [
-   2,
-   5
-  ],
-  "parTime": 10,
-  "timeout": 30,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 3,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "Head-only on the vest wearer. Body hit = vest strike."
- },
- {
-  "id": "ct-clear",
-  "name": "Counter-Terror: clear the street",
-  "category": "training",
-  "target": "ct",
-  "shots": 30,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "all militants",
-     "tags": [
-      "militant"
-     ],
-     "n": 4
-    },
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 2,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "Every militant, then the vest wearer (head only)."
- },
- {
-  "id": "ct-kit-tab",
-  "name": "Counter-Terror: call by kit (Tabloid)",
-  "category": "training",
-  "target": "ct-tabloid",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "green headband",
-     "tags": [
-      "hamas"
-     ]
-    },
-    {
-     "say": "olive with R P G",
-     "tags": [
-      "hezbollah"
-     ]
-    },
-    {
-     "say": "uniform and cap",
-     "tags": [
-      "irgc"
-     ]
-    },
-    {
-     "say": "thobe and dagger",
-     "tags": [
-      "houthi"
-     ]
-    },
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 6,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "The app calls a kit (\"green headband\", \"thobe and dagger\", \"vest!\"). Civilians -20."
- },
- {
-  "id": "ct-vest-tab",
-  "name": "Counter-Terror: vest! (Tabloid)",
-  "category": "training",
-  "target": "ct-tabloid",
-  "shots": 10,
-  "startDelay": [
-   2,
-   5
-  ],
-  "parTime": 10,
-  "timeout": 30,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 3,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "Head-only on the vest wearer. Body hit = vest strike."
- },
- {
-  "id": "ct-clear-tab",
-  "name": "Counter-Terror: clear the street (Tabloid)",
-  "category": "training",
-  "target": "ct-tabloid",
-  "shots": 30,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "all militants",
-     "tags": [
-      "militant"
-     ],
-     "n": 7
-    },
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 2,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "Every militant, then the vest wearer (head only)."
- },
- {
   "id": "fof-sides",
   "name": "Friend or Foe: sides",
   "category": "training",
@@ -3070,5 +2834,247 @@
    "wrong": -2
   },
   "notes": "Hit the called card (\"queen of hearts\", \"any club\")."
+ },
+ {
+  "id": "ct-kit",
+  "name": "Counter-Terror: call by kit",
+  "category": "training",
+  "target": "ct",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "green headband",
+     "tags": [
+      "hamas"
+     ]
+    },
+    {
+     "say": "olive with R P G",
+     "tags": [
+      "hezbollah"
+     ]
+    },
+    {
+     "say": "olive with scarf",
+     "tags": [
+      "irgc"
+     ]
+    },
+    {
+     "say": "armed burqa",
+     "tags": [
+      "burqa"
+     ]
+    },
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 6,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "The app calls a kit (\"green headband\", \"thobe and dagger\", \"vest!\"). Civilians -20."
+ },
+ {
+  "id": "ct-vest",
+  "name": "Counter-Terror: vest!",
+  "category": "training",
+  "target": "ct",
+  "shots": 10,
+  "startDelay": [
+   2,
+   5
+  ],
+  "parTime": 10,
+  "timeout": 30,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 3,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "Head-only on the vest wearer. Body hit = vest strike."
+ },
+ {
+  "id": "ct-clear",
+  "name": "Counter-Terror: clear the street",
+  "category": "training",
+  "target": "ct",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "all militants",
+     "tags": [
+      "militant"
+     ],
+     "n": 4
+    },
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 2,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "Every militant, then the vest wearer (head only)."
+ },
+ {
+  "id": "ct-kit-tab",
+  "name": "Counter-Terror: call by kit (Tabloid)",
+  "category": "training",
+  "target": "ct-tabloid",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "green headband",
+     "tags": [
+      "hamas"
+     ]
+    },
+    {
+     "say": "olive with R P G",
+     "tags": [
+      "hezbollah"
+     ]
+    },
+    {
+     "say": "olive with scarf",
+     "tags": [
+      "irgc"
+     ]
+    },
+    {
+     "say": "armed burqa",
+     "tags": [
+      "burqa"
+     ]
+    },
+    {
+     "say": "thobe and dagger",
+     "tags": [
+      "houthi"
+     ]
+    },
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 6,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "The app calls a kit (\"green headband\", \"thobe and dagger\", \"vest!\"). Civilians -20."
+ },
+ {
+  "id": "ct-vest-tab",
+  "name": "Counter-Terror: vest! (Tabloid)",
+  "category": "training",
+  "target": "ct-tabloid",
+  "shots": 10,
+  "startDelay": [
+   2,
+   5
+  ],
+  "parTime": 10,
+  "timeout": 30,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 3,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "Head-only on the vest wearer. Body hit = vest strike."
+ },
+ {
+  "id": "ct-clear-tab",
+  "name": "Counter-Terror: clear the street (Tabloid)",
+  "category": "training",
+  "target": "ct-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "all militants",
+     "tags": [
+      "militant"
+     ],
+     "n": 7
+    },
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 2,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "Every militant, then the vest wearer (head only)."
  }
 ]
