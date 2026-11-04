@@ -22,13 +22,15 @@ zones=[
 ]
 for z in zones[1:4]: z['label']=[RC[0],round(RC[1]-z['r']+0.13,3)]
 line=lambda z:{k:v for k,v in z.items() if k in('shape','cx','cy','r','rx','ry','x','y','w','h','pts')}
-art=[dict(HEAD,shape='ellipse')]+[line(z) for z in zones[:5]]+[dict(shape='poly',pts=[P(*q) for q in BODY],open=True),
+C5,C8,C9,C10,CX='#C9DDF0','#6FC3BA','#4F86C6','#1F4E9A','#0E2A55'
+for z,cc in zip(zones,(CX,C10,C9,C8,C10,C5,C5)): z['shade']=cc
+art=[dict(shape='poly',pts=[P(*q) for q in BODY],fill=C5),dict(HEAD,shape='ellipse',fill=C5)]+[dict(line(zones[i]),fill=c) for i,c in ((3,C8),(2,C9),(1,C10),(0,CX),(4,C10))]+[dict(shape='poly',pts=[P(*q) for q in BODY],open=True),
      dict(shape='poly',pts=[P(236,447),P(275,630)],open=True),dict(shape='poly',pts=[P(554,447),P(516,630)],open=True)]
 t=D['targets']['silhouette']
 t.update(name='Qualification Silhouette',distance='3-7 yd (scaled ~1/3)',drills=['single-draw','five-shot-par'],maxPerShot=10,
  instructions=['Center mass: X/10 ring 10, 9 ring 9, 8 ring 8.','Head box 10; rest of head and body 5.','Outside the silhouette: miss.','X (center oval) scores 10; count Xs for tiebreaks.'],
  zones=zones,lineart=art,
- legend=[['#163A75','X (center oval): 10 pts (X = tiebreak)'],['#1F4E9A','10 ring, head box: 10 pts'],['#2D5FAE','9 ring: 9 pts'],['#4F7BC0','8 ring: 8 pts'],['#AFC4E6','Rest of head and body: 5 pts'],['#FFFFFF','Outside silhouette: miss, 0 pts']])
+ legend=[[CX,'X (center oval): 10 pts (X = tiebreak)'],[C10,'10 ring, head box: 10 pts'],[C9,'9 ring: 9 pts'],[C8,'8 ring: 8 pts'],[C5,'Rest of head and body: 5 pts'],['#FFFFFF','Outside silhouette: miss, 0 pts']])
 t['meta']=dict(category='tactical',paper='letter',people='single',features=[],weapon='pistol')
 t.pop('art',None); t.pop('scoring',None)
 json.dump(D,open('targets.json','w'),indent=1,ensure_ascii=False)

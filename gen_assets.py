@@ -165,6 +165,7 @@ def draw_target(key,t,path,maskmode=False):
             p=c.beginPath(); p.moveTo(*d.P(*a['pts'][0]))
             for q in a['pts'][1:]: p.lineTo(*d.P(*q))
             c.drawPath(p,stroke=1,fill=0)
+        elif a.get('fill'): c.setFillColor(HexColor(a['fill'])); c.drawPath(d.path(a),stroke=1,fill=1)
         else: c.drawPath(d.path(a),stroke=1,fill=0)
         xs=[q[0] for q in a['pts']] if 'pts' in a else [a.get('cx',a.get('x',0))-a.get('rx',a.get('r',0)),a.get('cx',a.get('x',0))+a.get('rx',a.get('r',a.get('w',0)))]
         ys=[q[1] for q in a['pts']] if 'pts' in a else [a.get('cy',a.get('y',0))-a.get('ry',a.get('r',0)),a.get('cy',a.get('y',0))+a.get('ry',a.get('r',a.get('h',0)))]

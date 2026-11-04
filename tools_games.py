@@ -58,10 +58,10 @@ def carnival():
     """Carnival booth on plain white: 3 winged pigs / 2+3 bullseyes (navy-white-teal) / 4 small ducks on a dark rail / 3 big ducks on posts."""
     F=LETTER; can=canvas(F); zones=[]
     Pp=lambda x,y:(int((x-F['x'])*DPI),int((y-F['y'])*DPI))
-    pig=tint(sprite('art/src2/pig.jpg'),(250,208,226),0.5); duck=tint(sprite('art/src2/duck.jpg'),(250,240,182),0.45)
+    pig=tint(sprite('art/src2/pig2.jpg'),(232,146,240),0.5); duck=tint(sprite('art/src2/duck.jpg'),(240,234,172),0.62)
     for i,cx in enumerate([1.6,4.25,6.9]):   # winged pigs, all flying right
-        x0,y0,x1,y1=paste(can,pig,cx,2.55,2.0,F)
-        zones.append(dict(name=f'PIG{i+1}',kind='score',shape='ellipse',cx=round((x0+x1)/2+0.12,3),cy=round(y0+(y1-y0)*0.62,3),rx=round((x1-x0)*0.38,3),ry=round((y1-y0)*0.27,3),score=3,tier='tier3',art=True,subtle=True,tags=['pig','P'+str(i+1)],group='P'+str(i+1)))
+        x0,y0,x1,y1=paste(can,pig,cx,2.6,1.9,F)
+        zones.append(dict(name=f'PIG{i+1}',kind='score',shape='ellipse',cx=round((x0+x1)/2+0.12,3),cy=round(y0+(y1-y0)*0.55,3),rx=round((x1-x0)*0.32,3),ry=round((y1-y0)*0.2,3),score=3,tier='tier3',art=True,subtle=True,tags=['pig','P'+str(i+1)],group='P'+str(i+1)))
     for i,(cx,cy,r) in enumerate([(3.25,3.85,0.55),(5.25,3.85,0.55),(2.0,5.15,0.62),(4.25,5.15,0.62),(6.5,5.15,0.62)]):
         for f,col,sc in [(1,(154,78,31),1),(0.64,(255,255,255),3),(0.32,(180,163,0),5)]:
             cv2.circle(can,Pp(cx,cy),int(r*f*DPI),col,-1,cv2.LINE_AA)
@@ -69,7 +69,7 @@ def carnival():
         cv2.circle(can,Pp(cx,cy),int(r*DPI),(40,30,20),3,cv2.LINE_AA)
     n=0
     for cx in [1.2,3.15,5.1,7.05]:   # small ducks on the rail
-        n+=1; x0,y0,x1,y1=paste(can,duck,cx,6.32,1.2,F)
+        n+=1; x0,y0,x1,y1=paste(can,duck,cx,6.36,1.12,F)
         zones.append(dict(name=f'DUCK{n}',kind='score',shape='ellipse',cx=round(cx,3),cy=round(y0+(y1-y0)*0.33,3),rx=round((x1-x0)*0.42,3),ry=round((y1-y0)*0.22,3),score=2,tier='tier1',art=True,subtle=True,tags=['duck','D'+str(n),'small'],group='D'+str(n)))
     cv2.rectangle(can,Pp(0.55,6.88),Pp(7.95,7.02),(60,55,55),-1)
     for cx in [1.6,4.25,6.9]:   # big ducks on posts, facing right
@@ -79,7 +79,7 @@ def carnival():
     cv2.imwrite('art/carnival.png',can)
     calls=[dict(say=f'duck {i}',tags=[f'D{i}']) for i in range(1,8)]+[dict(say=f'pig {i}',tags=[f'P{i}']) for i in range(1,4)]+[dict(say=f'bullseye {i}',tags=[f'B{i}']) for i in range(1,6)]+[dict(say='all pigs',tags=['pig'],n=3),dict(say='any duck',tags=['duck']),dict(say='two ducks',tags=['duck'],n=2),dict(say='small duck',tags=['small']),dict(say='big duck',tags=['big'])]
     t=dict(code='LD-401',name='Carnival Shoot',markerIds=[300,301,302,303],distance='3-5 yd',set='games',art=[dict(src='art/carnival.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'])],zones=zones,
-        legend=[['#F4C9DC','Flying pig (P1-P3): 3 pts'],['#00A3B4','Bullseye center (teal): 5 pts'],['#FFFFFF','Bullseye white ring: 3 pts'],['#1F4E9A','Bullseye navy ring: 1 pt'],['#FFF0AF','Duck (D1-D4 rail, D5-D7 posts): 2 pts'],['#FFFFFF','Background: miss, 0 pts']],
+        legend=[['#E892F0','Flying pig (P1-P3): 3 pts'],['#00A3B4','Bullseye center (teal): 5 pts'],['#FFFFFF','Bullseye white ring: 3 pts'],['#1F4E9A','Bullseye navy ring: 1 pt'],['#F0EAAC','Duck (D1-D4 rail, D5-D7 posts): 2 pts'],['#FFFFFF','Background: miss, 0 pts']],
         instructions=['Free fire: pig 3, duck 2, bullseye 5/3/1.','Pigs P1-3 left to right; bullseyes B1-B5 top row first.','Ducks D1-D4 on the rail, D5-D7 on posts.','Called mode: "duck 3", "all pigs"... wrong item -2.','Mic on. Say "start" or tap.'])
     D=[dict(id='carnival-free',name='Carnival Shoot: free fire (60 s)',category='fun',target='carnival',shots=20,startDelay=[2,3],parTime=30,timeout=60,notes='Shoot anything: pig 3, duck 2, bullseye 5/3/1.'),
        dict(id='carnival-calls',name='Carnival Shoot: called shots',category='fun',target='carnival',shots=40,startDelay=[2,3],parTime=60,timeout=120,game=dict(type='calls',calls=calls,rounds=8,wrong=-2),notes='The app calls an item ("duck 3", "bullseye 5", "all pigs", "small duck"); hit it to get the next call. Wrong item -2.')]
@@ -257,7 +257,7 @@ SOL=dict(  # head ellipse + torso rect in cropped-sprite fractions; side tag = t
     w1=dict(head=(.37,.1,.14,.08),torso=(.1,.18,.62,.5),tape='white'),
     w2=dict(head=(.37,.14,.13,.09),torso=(.06,.25,.6,.63),tape='white'),
     b1=dict(head=(.47,.08,.14,.07),torso=(.15,.15,.85,.47),tape='blue'))
-def fof(key='fof',F=LETTER,mk=(328,329,330,331),code='LD-505',rows=None,lay=None):
+def fof(key='fof',F=LETTER,mk=(328,329,330,331),code='LD-505',rows=None,lay=None,drones=()):
     Wp,Hp=int(F['w']*DPI),int(F['h']*DPI); bg=cv2.resize(cv2.imread('art/src3/fofbg.jpg'),(Wp,Hp),interpolation=cv2.INTER_AREA)
     bg=cv2.addWeighted(bg,0.8,np.full_like(bg,255),0.2,0); can=bg.copy(); zones=[]; cnt={}
     def poly(pts): m=np.zeros((Hp,Wp),np.uint8); cv2.fillPoly(m,[np.array([(int(x*Wp),int(y*Hp)) for x,y in pts],np.int32)],1); return m>0
@@ -278,12 +278,21 @@ def fof(key='fof',F=LETTER,mk=(328,329,330,331),code='LD-505',rows=None,lay=None
             zones.append(dict(name=n+' HEAD',kind='score',score=0,tier='tier5',z=2*ri+2,group=n,shape='ellipse',cx=round(x0+hx*W,3),cy=round(y0+hy*H,3),rx=round(rx*W,3),ry=round(ry*H,3),tags=tg,art=True,subtle=True,noGrow=True))
             if yb>y0+b*H+0.1: zones.append(dict(name=n+' BODY',kind='score',score=-1,tier='tier3',z=2*ri+1,group=n,shape='rect',x=round(x0+a*W,3),y=round(y0+b*H,3),w=round((c-a)*W,3),h=round(yb-(y0+b*H),3),tags=tg,art=True,subtle=True,noGrow=True))
         if cover: m=poly(cover); can[m]=bg[m]
+    import tools_ankle_split as TS
+    DS=[TS.split(f'art/src5/drone{i}.png')[0] for i in range(4)]
+    DN=[('FPV','fpv quad',5),('MAVIC','mavic quad',4),('HEXA','bomber hexacopter',3),('SHAHED','shahed',2)]
+    for di,fx,fy,w in drones:
+        sp=safe(DS[di]); tmp=np.full_like(can,255); paste(tmp,sp,F['x']+fx*F['w'],F['y']+fy*F['h'],w,F); m=tmp.min(2)<238; can[m]=tmp[m]
+        mm=cv2.morphologyEx(m.astype(np.uint8),cv2.MORPH_CLOSE,np.ones((25,25),np.uint8))
+        cs,_=cv2.findContours(mm,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE); c=cv2.approxPolyDP(max(cs,key=cv2.contourArea),3,True)[:,0]
+        nm,say,sc=DN[di]; cnt[nm]=cnt.get(nm,0)+1; n=f'{nm}{cnt[nm]}'
+        zones.append(dict(name=n,kind='score',score=sc,tier='tier1',z=20,group=n,shape='poly',pts=[[round(F['x']+x/DPI,3),round(F['y']+y/DPI,3)] for x,y in c],tags=['drone',nm.lower(),n],art=True,subtle=True))
     for nmc,pts in (('SANDBAGS',SAND),('TRENCH',TR)):
         zones.append(dict(name=nmc,kind='hardcover',shape='poly',pts=[[round(F['x']+x*F['w'],3),round(F['y']+y*F['h'],3)] for x,y in pts],art=True,subtle=True))
     m=np.any([zone_mask(z,F,can.shape) for z in zones if z['kind']=='score'],axis=0)
     can=np.where(np.repeat(m[...,None],3,2),safe(can),can)
     check_zones(key,can,[z for z in zones if z['kind']=='score'],F); cv2.imwrite(f'art/{key}.png',can)
-    sides=sorted({z['tags'][0] for z in zones if z['kind']=='score'})
+    sides=sorted({z['tags'][0] for z in zones if z['kind']=='score' and 'drone' not in z['tags']})
     A=[s for s in sides if s!='white']
     calls=[dict(say='friendlies '+' and '.join(A)+'. Engage white tape',tags=['white'],forbid=A),
            dict(say='friendlies white. Engage '+' and '.join(A)+' tape',tags=A,forbid=['white'])]+\
@@ -291,18 +300,24 @@ def fof(key='fof',F=LETTER,mk=(328,329,330,331),code='LD-505',rows=None,lay=None
     sfx='-tab' if lay else ''; nmx=' (Tabloid)' if lay else ''
     G=lambda c,r:dict(type='calls',calls=c,rounds=r,fratricide=-25,wrong=-2)
     t=dict(code=code,name='Friend or Foe'+nmx,markerIds=list(mk),distance='5-10 yd',art=[dict(src=f'art/{key}.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'])],zones=zones,
-        instructions=['Same camo on both sides: read the TAPE bands (yellow, blue, white).','Each round the app names the friendly side and the tape to engage.','Hitting a friendly = FRATRICIDE -25. Head -0, body -1.','Sandbags / trench are hard cover (no score). Mic on, say "start".'])
+        instructions=['Same camo on both sides: read the TAPE bands (yellow, blue, white).','Each round the app names the friendly side and the tape to engage.','Hitting a friendly = FRATRICIDE -25. Head -0, body -1.','Drones overhead are always hostile: FPV 5, Mavic 4, hexacopter 3, Shahed 2.','Sandbags / trench are hard cover (no score). Mic on, say "start".'],
+        legend=[['tier5','Soldier head: -0'],['tier3','Soldier body: -1'],['noshoot','Friendly tape hit = FRATRICIDE -25'],['tier1','Drone: FPV 5 / Mavic 4 / hexa 3 / Shahed 2'],['cover','Sandbags / trench = hard cover'],['#FFFFFF','Outside: miss']])
     if lay: t['layout']=lay
     D=[dict(id='fof-sides'+sfx,name='Friend or Foe: sides'+nmx,category='training',target=key,shots=30,startDelay=[2,3],parTime=30,timeout=60,game=G(calls[:2],4),notes='The app assigns the friendly side each round. Fratricide -25.'),
        dict(id='fof-tape'+sfx,name='Friend or Foe: single tape'+nmx,category='training',target=key,shots=30,startDelay=[2,4],parTime=20,timeout=45,game=G(calls[2:],5),notes='Engage one tape colour only; all others are friendly. Fratricide -25.')]
+    if drones:
+        dc=[dict(say='drone! '+say,tags=[nm.lower()]) for nm,say,_ in DN]+[dict(say='any drone',tags=['drone'])]
+        D.append(dict(id='fof-drones'+sfx,name='Friend or Foe: counter-drone'+nmx,category='training',target=key,shots=30,startDelay=[2,4],parTime=20,timeout=45,game=dict(type='calls',calls=dc,rounds=6,wrong=-2),notes='The app calls a drone type (FPV, Mavic, hexacopter, Shahed); hit it. Smaller drone = more points. Soldier hits count as wrong (-2).'))
     upsert(key,t,D)
 SAND=[(0,.47),(.2,.45),(.5,.44),(.8,.45),(1,.5),(1,.62),(0,.58)]; TR=[(0,.67),(.5,.72),(1,.81),(1,1),(0,1)]
 GAMES['fof']=lambda:fof(rows=[(None,[('b1',.3,.4,1.6,False),('w1',.68,.4,1.6,True)]),
     (SAND,[('y1',.13,.555,2.6,False),('w1',.5,.555,2.6,False),('b1',.87,.555,2.6,True)]),
-    (TR,[('y2',.27,.9,2.9,False),('w2',.73,.93,2.9,True)])])
+    (TR,[('y2',.27,.9,2.9,False),('w2',.73,.93,2.9,True)])],
+    drones=[(0,.1,.1,0.6),(1,.3,.08,0.9),(2,.55,.1,1.4),(3,.84,.09,1.9)])
 GAMES['fof-tabloid']=lambda:fof('fof-tabloid',TAB,(332,333,334,335),'LD-506',lay=TABLAY,rows=[(None,[('b1',.17,.4,1.6,False),('w1',.37,.4,1.6,True),('y1',.57,.4,1.6,True),('w2',.78,.4,1.5,False)]),
     (SAND,[('y1',.07,.555,2.6,False),('w1',.27,.555,2.6,False),('b1',.47,.555,2.6,True),('w1',.67,.555,2.6,True),('y1',.88,.555,2.6,True)]),
-    (TR,[('y2',.14,.9,2.9,False),('w2',.38,.92,2.9,True),('b1',.6,.95,3.0,False),('w2',.84,.95,2.9,False)])])
+    (TR,[('y2',.14,.9,2.9,False),('w2',.38,.92,2.9,True),('b1',.6,.95,3.0,False),('w2',.84,.95,2.9,False)])],
+    drones=[(0,.06,.1,0.6),(1,.2,.08,0.9),(3,.36,.09,1.9),(0,.52,.08,0.55),(2,.68,.1,1.4),(1,.82,.08,0.85),(3,.95,.09,1.3)])
 if __name__=='__main__':
     for k in (sys.argv[1:] or list(GAMES)): GAMES[k]()
     save(); print('ok games')

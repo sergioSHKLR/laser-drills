@@ -19,7 +19,7 @@ Generated from `targets/catalog.json` (built by `gen_assets.py`). Every target h
 | `maritime-tabloid` | LD-502 | Maritime Interdiction (Tabloid) | tactical | tabloid | 5-10 yd | no-shoot |
 | `ct` | LD-503 | Counter-Terror | tactical | letter | 5-7 yd | head-only, no-shoot |
 | `ct-tabloid` | LD-504 | Counter-Terror (Tabloid) | tactical | tabloid | 5-7 yd | head-only, no-shoot |
-| `fof` | LD-505 | Friend or Foe | tactical | letter | 5-10 yd | hard cover |
+| `fof` | LD-505 | Friend or Foe (tape IFF infantry + drones: FPV 5, Mavic 4, hexacopter 3, Shahed 2) | tactical | letter | 5-10 yd | hard cover |
 | `fof-tabloid` | LD-506 | Friend or Foe (Tabloid) | tactical | tabloid | 5-10 yd | hard cover |
 | `ankle` | LD-601 | Ankle Draw: Store | self-defense | letter | 3 yd, shooter kneeling (aim slightly upward) | backstop, hard cover |
 | `ankle-tabloid` | LD-602 | Ankle Draw: Store (Tabloid) | self-defense | tabloid | 3 yd, shooter kneeling (aim slightly upward) | backstop, hard cover |
@@ -62,3 +62,9 @@ Clean vector line art: an oval head with a square head box, and a torso with arm
 | Outside the silhouette | miss (0) |
 
 The target sets `maxPerShot: 10`, so percentages use 10 points per shot. It's used by the *Draw + 1 shot* and *Bill Drill* drills, the NRA-style "Rapid fire, silhouette" stages, and the Pistol Fundamentals stages. `tools_silhouette.py` rebuilds the spec, and `gen_assets.py` renders it.
+
+### ld-v41 target notes
+- **Ankle Draw: Store**: threats are masked and hold a gun two-handed, pointed at you. Non-threats are faceless shoppers with empty open hands raised (NO-SHOOT -10). Cover is a checkout counter, metal shelving and a display table, all hard cover. Sprites have no white halos.
+- **Friend or Foe**: drones overhead are always hostile scoring zones (smaller = harder = more points): FPV 5, Mavic 4, bomber hexacopter 3, Shahed 2. Drill `fof-drones` calls drone types.
+- **Carnival**: pigs have legs; colours are more saturated but zones stay under red-dominance 40.
+- **Qualification Silhouette**: zones are colour-filled in the artwork to match the legend.

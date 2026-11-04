@@ -2310,494 +2310,6 @@
   "notes": "Every militant, then the vest wearer (head only)."
  },
  {
-  "id": "fof-sides",
-  "name": "Friend or Foe: sides",
-  "category": "training",
-  "target": "fof",
-  "shots": 30,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "friendlies blue and yellow. Engage white tape",
-     "tags": [
-      "white"
-     ],
-     "forbid": [
-      "blue",
-      "yellow"
-     ]
-    },
-    {
-     "say": "friendlies white. Engage blue and yellow tape",
-     "tags": [
-      "blue",
-      "yellow"
-     ],
-     "forbid": [
-      "white"
-     ]
-    }
-   ],
-   "rounds": 4,
-   "fratricide": -25,
-   "wrong": -2
-  },
-  "notes": "The app assigns the friendly side each round. Fratricide -25."
- },
- {
-  "id": "fof-tape",
-  "name": "Friend or Foe: single tape",
-  "category": "training",
-  "target": "fof",
-  "shots": 30,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 20,
-  "timeout": 45,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "engage blue tape only",
-     "tags": [
-      "blue"
-     ],
-     "forbid": [
-      "white",
-      "yellow"
-     ]
-    },
-    {
-     "say": "engage white tape only",
-     "tags": [
-      "white"
-     ],
-     "forbid": [
-      "blue",
-      "yellow"
-     ]
-    },
-    {
-     "say": "engage yellow tape only",
-     "tags": [
-      "yellow"
-     ],
-     "forbid": [
-      "blue",
-      "white"
-     ]
-    }
-   ],
-   "rounds": 5,
-   "fratricide": -25,
-   "wrong": -2
-  },
-  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
- },
- {
-  "id": "fof-sides-tab",
-  "name": "Friend or Foe: sides (Tabloid)",
-  "category": "training",
-  "target": "fof-tabloid",
-  "shots": 30,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "friendlies blue and yellow. Engage white tape",
-     "tags": [
-      "white"
-     ],
-     "forbid": [
-      "blue",
-      "yellow"
-     ]
-    },
-    {
-     "say": "friendlies white. Engage blue and yellow tape",
-     "tags": [
-      "blue",
-      "yellow"
-     ],
-     "forbid": [
-      "white"
-     ]
-    }
-   ],
-   "rounds": 4,
-   "fratricide": -25,
-   "wrong": -2
-  },
-  "notes": "The app assigns the friendly side each round. Fratricide -25."
- },
- {
-  "id": "fof-tape-tab",
-  "name": "Friend or Foe: single tape (Tabloid)",
-  "category": "training",
-  "target": "fof-tabloid",
-  "shots": 30,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 20,
-  "timeout": 45,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "engage blue tape only",
-     "tags": [
-      "blue"
-     ],
-     "forbid": [
-      "white",
-      "yellow"
-     ]
-    },
-    {
-     "say": "engage white tape only",
-     "tags": [
-      "white"
-     ],
-     "forbid": [
-      "blue",
-      "yellow"
-     ]
-    },
-    {
-     "say": "engage yellow tape only",
-     "tags": [
-      "yellow"
-     ],
-     "forbid": [
-      "blue",
-      "white"
-     ]
-    }
-   ],
-   "rounds": 5,
-   "fratricide": -25,
-   "wrong": -2
-  },
-  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
- },
- {
-  "id": "ankle-standing",
-  "name": "Ankle Draw L1: Standing",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "standing",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 4.0,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "shots": 2
-   }
-  ],
-  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 4.0s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-seated",
-  "name": "Ankle Draw L2: Seated",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "seated",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 3.5,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T2",
-    "label": "rack",
-    "say": "Threat 2, rack",
-    "shots": 2
-   }
-  ],
-  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.5s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-walking",
-  "name": "Ankle Draw L3: Walking",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "walking",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 3.0,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T3",
-    "label": "door",
-    "say": "Threat 3, door",
-    "shots": 2
-   }
-  ],
-  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.0s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-any",
-  "name": "Ankle Draw L4: Random start",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "any",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": true,
-  "parTime": 5.2,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "parts": [
-     "head"
-    ]
-   }
-  ],
-  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, the app calls one threat: 1 head shot. Par 2.5s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-all",
-  "name": "Ankle Draw: all threats",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "any",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": true,
-  "parTime": 5.5,
-  "timeout": 20,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "shots": 2
-   },
-   {
-    "group": "T2",
-    "label": "rack",
-    "say": "Threat 2, rack",
-    "shots": 2
-   },
-   {
-    "group": "T3",
-    "label": "door",
-    "say": "Threat 3, door",
-    "shots": 2
-   }
-  ],
-  "notes": "Random start position. Kneel, 2 to every threat in the called order. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-standing-tab",
-  "name": "Ankle Draw L1: Standing (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "standing",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 4.0,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "shots": 2
-   }
-  ],
-  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 4.0s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-seated-tab",
-  "name": "Ankle Draw L2: Seated (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "seated",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 3.5,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T2",
-    "label": "rack",
-    "say": "Threat 2, rack",
-    "shots": 2
-   }
-  ],
-  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.5s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-walking-tab",
-  "name": "Ankle Draw L3: Walking (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "walking",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 3.0,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T3",
-    "label": "door",
-    "say": "Threat 3, door",
-    "shots": 2
-   }
-  ],
-  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.0s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-any-tab",
-  "name": "Ankle Draw L4: Random start (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "any",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": true,
-  "parTime": 7.8,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "parts": [
-     "head"
-    ]
-   }
-  ],
-  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, the app calls one threat: 1 head shot. Par 2.5s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-all-tab",
-  "name": "Ankle Draw: all threats (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "any",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": true,
-  "parTime": 7.5,
-  "timeout": 20,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "shots": 2
-   },
-   {
-    "group": "T2",
-    "label": "rack",
-    "say": "Threat 2, rack",
-    "shots": 2
-   },
-   {
-    "group": "T3",
-    "label": "door",
-    "say": "Threat 3, door",
-    "shots": 2
-   },
-   {
-    "group": "T4",
-    "label": "counter",
-    "say": "Threat 4, counter",
-    "shots": 2
-   },
-   {
-    "group": "T5",
-    "label": "door",
-    "say": "Threat 5, door",
-    "shots": 2
-   }
-  ],
-  "notes": "Random start position. Kneel, 2 to every threat in the called order. Bystanders above = +10 s."
- },
- {
   "id": "carnival-free",
   "name": "Carnival Shoot: free fire (60 s)",
   "category": "fun",
@@ -2953,5 +2465,595 @@
    "wrong": -2
   },
   "notes": "The app calls an item (\"duck 3\", \"bullseye 5\", \"all pigs\", \"small duck\"); hit it to get the next call. Wrong item -2."
+ },
+ {
+  "id": "ankle-standing",
+  "name": "Ankle Draw L1: Standing",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "standing",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 4.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "shots": 2
+   }
+  ],
+  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 4.0s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-seated",
+  "name": "Ankle Draw L2: Seated",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "seated",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.5,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T2",
+    "label": "shelf",
+    "say": "Threat 2, shelf",
+    "shots": 2
+   }
+  ],
+  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.5s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-walking",
+  "name": "Ankle Draw L3: Walking",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "walking",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T3",
+    "label": "table",
+    "say": "Threat 3, table",
+    "shots": 2
+   }
+  ],
+  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.0s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-any",
+  "name": "Ankle Draw L4: Random start",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 5.2,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "parts": [
+     "head"
+    ]
+   }
+  ],
+  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, the app calls one threat: 1 head shot. Par 2.5s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-all",
+  "name": "Ankle Draw: all threats",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 5.5,
+  "timeout": 20,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "shelf",
+    "say": "Threat 2, shelf",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "table",
+    "say": "Threat 3, table",
+    "shots": 2
+   }
+  ],
+  "notes": "Random start position. Kneel, 2 to every threat in the called order. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-standing-tab",
+  "name": "Ankle Draw L1: Standing (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "standing",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 4.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "shots": 2
+   }
+  ],
+  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 4.0s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-seated-tab",
+  "name": "Ankle Draw L2: Seated (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "seated",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.5,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T2",
+    "label": "shelf",
+    "say": "Threat 2, shelf",
+    "shots": 2
+   }
+  ],
+  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.5s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-walking-tab",
+  "name": "Ankle Draw L3: Walking (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "walking",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T3",
+    "label": "table",
+    "say": "Threat 3, table",
+    "shots": 2
+   }
+  ],
+  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.0s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-any-tab",
+  "name": "Ankle Draw L4: Random start (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 7.8,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "parts": [
+     "head"
+    ]
+   }
+  ],
+  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, the app calls one threat: 1 head shot. Par 2.5s. Bystanders above = +10 s."
+ },
+ {
+  "id": "ankle-all-tab",
+  "name": "Ankle Draw: all threats (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 7.5,
+  "timeout": 20,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "counter",
+    "say": "Threat 1, counter",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "shelf",
+    "say": "Threat 2, shelf",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "table",
+    "say": "Threat 3, table",
+    "shots": 2
+   },
+   {
+    "group": "T4",
+    "label": "counter",
+    "say": "Threat 4, counter",
+    "shots": 2
+   },
+   {
+    "group": "T5",
+    "label": "table",
+    "say": "Threat 5, table",
+    "shots": 2
+   }
+  ],
+  "notes": "Random start position. Kneel, 2 to every threat in the called order. Bystanders above = +10 s."
+ },
+ {
+  "id": "fof-sides",
+  "name": "Friend or Foe: sides",
+  "category": "training",
+  "target": "fof",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "friendlies blue and yellow. Engage white tape",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "friendlies white. Engage blue and yellow tape",
+     "tags": [
+      "blue",
+      "yellow"
+     ],
+     "forbid": [
+      "white"
+     ]
+    }
+   ],
+   "rounds": 4,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "The app assigns the friendly side each round. Fratricide -25."
+ },
+ {
+  "id": "fof-tape",
+  "name": "Friend or Foe: single tape",
+  "category": "training",
+  "target": "fof",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "engage blue tape only",
+     "tags": [
+      "blue"
+     ],
+     "forbid": [
+      "white",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage white tape only",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage yellow tape only",
+     "tags": [
+      "yellow"
+     ],
+     "forbid": [
+      "blue",
+      "white"
+     ]
+    }
+   ],
+   "rounds": 5,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
+ },
+ {
+  "id": "fof-drones",
+  "name": "Friend or Foe: counter-drone",
+  "category": "training",
+  "target": "fof",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "drone! fpv quad",
+     "tags": [
+      "fpv"
+     ]
+    },
+    {
+     "say": "drone! mavic quad",
+     "tags": [
+      "mavic"
+     ]
+    },
+    {
+     "say": "drone! bomber hexacopter",
+     "tags": [
+      "hexa"
+     ]
+    },
+    {
+     "say": "drone! shahed",
+     "tags": [
+      "shahed"
+     ]
+    },
+    {
+     "say": "any drone",
+     "tags": [
+      "drone"
+     ]
+    }
+   ],
+   "rounds": 6,
+   "wrong": -2
+  },
+  "notes": "The app calls a drone type (FPV, Mavic, hexacopter, Shahed); hit it. Smaller drone = more points. Soldier hits count as wrong (-2)."
+ },
+ {
+  "id": "fof-sides-tab",
+  "name": "Friend or Foe: sides (Tabloid)",
+  "category": "training",
+  "target": "fof-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "friendlies blue and yellow. Engage white tape",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "friendlies white. Engage blue and yellow tape",
+     "tags": [
+      "blue",
+      "yellow"
+     ],
+     "forbid": [
+      "white"
+     ]
+    }
+   ],
+   "rounds": 4,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "The app assigns the friendly side each round. Fratricide -25."
+ },
+ {
+  "id": "fof-tape-tab",
+  "name": "Friend or Foe: single tape (Tabloid)",
+  "category": "training",
+  "target": "fof-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "engage blue tape only",
+     "tags": [
+      "blue"
+     ],
+     "forbid": [
+      "white",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage white tape only",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage yellow tape only",
+     "tags": [
+      "yellow"
+     ],
+     "forbid": [
+      "blue",
+      "white"
+     ]
+    }
+   ],
+   "rounds": 5,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
+ },
+ {
+  "id": "fof-drones-tab",
+  "name": "Friend or Foe: counter-drone (Tabloid)",
+  "category": "training",
+  "target": "fof-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "drone! fpv quad",
+     "tags": [
+      "fpv"
+     ]
+    },
+    {
+     "say": "drone! mavic quad",
+     "tags": [
+      "mavic"
+     ]
+    },
+    {
+     "say": "drone! bomber hexacopter",
+     "tags": [
+      "hexa"
+     ]
+    },
+    {
+     "say": "drone! shahed",
+     "tags": [
+      "shahed"
+     ]
+    },
+    {
+     "say": "any drone",
+     "tags": [
+      "drone"
+     ]
+    }
+   ],
+   "rounds": 6,
+   "wrong": -2
+  },
+  "notes": "The app calls a drone type (FPV, Mavic, hexacopter, Shahed); hit it. Smaller drone = more points. Soldier hits count as wrong (-2)."
  }
 ]

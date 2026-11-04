@@ -57,6 +57,8 @@ Generated from `drills.json`. `dyn` = shot count set at run time by calls/scenar
 | `fof-tape` | Friend or Foe: single tape | training | fof | 30 | 20 | game |
 | `fof-sides-tab` | Friend or Foe: sides (Tabloid) | training | fof-tabloid | 30 | 30 | game |
 | `fof-tape-tab` | Friend or Foe: single tape (Tabloid) | training | fof-tabloid | 30 | 20 | game |
+| `fof-drones` | Friend or Foe: counter-drone | training | fof | 30 | 20 | game |
+| `fof-drones-tab` | Friend or Foe: counter-drone (Tabloid) | training | fof-tabloid | 30 | 20 | game |
 | `ankle-standing` | Ankle Draw L1: Standing | training | ankle | dyn | 4.0 | idpa |
 | `ankle-seated` | Ankle Draw L2: Seated | training | ankle | dyn | 3.5 | idpa |
 | `ankle-walking` | Ankle Draw L3: Walking | training | ankle | dyn | 3.0 | idpa |
