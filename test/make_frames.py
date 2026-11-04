@@ -30,7 +30,7 @@ CASES={
  'idpa-multi':[(2.95,4.867,'T1 -0'),(4.25,5.117,'T2 -0'),(5.55,3.567,'T3 -0')],
  'idpa-all-tabloid':S('idpa-all-tabloid','T1 -0#1','HC','T4 -0#0','T6 NT -3','T7 -0#1')+[(12.4,7.5,'T8 -3'),(13.9,7.5,'T8 NT -3')],
  'idpa-all-letter':[(2.75,2.1+15/14,'T1 -0'),(6.25,4.48+15/14,'T7 -0'),(4.5,4.48+3.3/14,'T6 NT -3')],
- 'hostage':[(5.3,6.5,-10),(4.25,2.85,5),(3.8,5.5,5)],
+ 'hostage':S('hostage','HOSTAGE','X','HEAD BOX'),
  'dh-hans':S('dh-hans','T1 -0#0','T1 -0#1','BYSTANDER 1')+[(1.0,4.0,'MISS')],
  'dh-karl':S('dh-karl','HC','T1 -0#1'),
  'dh-finale':S('dh-finale','HOLLY NT','T1 -0#0','T2 -0#0'),
@@ -38,7 +38,7 @@ CASES={
  'dh-uli':S('dh-uli','T1 -0#1','BYSTANDER 2'),
  'dh-powell':S('dh-powell','POWELL FRIENDLY'),
  'dh-lobby':S('dh-lobby','T1 -0#1','POWELL FRIENDLY'),
- 'carnival':[(1.72,2.69,3),(2.0,5.15,5),(2.0,5.45,3),(2.0,5.65,1),(4.25,7.99,2),(4.25,3.85,0)],
+ 'carnival':S('carnival','PIG1','BULL1 5','BULL3 5','DUCK1','DUCK5'),
  'battle':[(1.57,2.82,1),(4.92,5.33,1),(7.43,8.68,1),(0.62,5.0,0)],
  'cards':[(0.88,2.37,1),(4.73,4.46,1),(5.69,8.63,1),(0.45,9.05,0)],
  'cards-tabloid':[(1.02,2.76,1),(9.75,4.59,1),(15.98,8.24,1),(0.45,9.1,0)],
@@ -48,8 +48,8 @@ CASES={
  'ct-tabloid':S('ct-tabloid','IRGC1 HEAD','HAMAS2 BODY','VEST1 HEAD','CIV3 NS'),
  'fof':S('fof','YELLOW1 HEAD','WHITE2 BODY','BLUE2 HEAD','FPV1','SHAHED1')+[(*Z('fof','SANDBAGS',0),'HC')],
  'fof-tabloid':S('fof-tabloid','WHITE1 HEAD','YELLOW3 BODY','HEXA1','MAVIC2')+[(*Z('fof-tabloid','TRENCH',0),'HC')],
- 'ankle':S('ankle','T1 -0#0','T2 -0#0','BYSTANDER 2','T3 -0#0')+[(*Z('ankle','HC SHELF'),'HC'),(*Z('ankle','NT1 NO-SHOOT'),'NT1 NO-SHOOT'),(1.0,9.0,'MISS')],
- 'ankle-tabloid':S('ankle-tabloid','T1 -0#1','T4 -0#0','BYSTANDER 5')+[(*Z('ankle-tabloid','HC SHELF'),'HC')],
+ 'ankle':S('ankle','T1 -0#0','T2 -0#0','T3 -0#0')+[(*Z('ankle','NT1 NO-SHOOT'),'NT1 NO-SHOOT'),(1.0,9.0,'MISS')],
+ 'ankle-tabloid':S('ankle-tabloid','T1 -0#1','T4 -0#0','NT3 NO-SHOOT'),
  'clays':[(2.45,3.55,5),(5.85,5.15,5),(5.85,6.45,2),(2.95+1.15,7.55-0.3,3),(7.6,2.5,0)],  # 1-2 dome 5; 4th orange rim via spread 3
 }
 meta={'w':W,'h':H,'sets':{}}

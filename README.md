@@ -127,7 +127,7 @@ Tap the **mic** in Shoot to turn on continuous listening (no wake word). Command
 - Print the mask sheet only if you want to see where the zones are. Don't shoot at it.
 
 ## Offline use and installing
-The service worker (`sw.js`, cache `ld-v41`) precaches the app shell, data, icons and the Lucide sprite. It's network-first, falling back to the cache, so updates arrive as soon as you're online and old caches are deleted on activation. To install: in Chrome/Edge use **Install app** in the address bar or menu. On iOS Safari use **Share › Add to Home Screen**. The manifest provides maskable icons, narrow and wide screenshots, and shortcuts to Shoot, Drills, Courses and Results.
+The service worker (`sw.js`, cache `ld-v42`) precaches the app shell, data, icons and the Lucide sprite. It's network-first, falling back to the cache, so updates arrive as soon as you're online and old caches are deleted on activation. To install: in Chrome/Edge use **Install app** in the address bar or menu. On iOS Safari use **Share › Add to Home Screen**. The manifest provides maskable icons, narrow and wide screenshots, and shortcuts to Shoot, Drills, Courses and Results.
 
 ## Laser-safe colors
 Detection looks for red-dominant flashes, so **scoring zones never use red or orange**. Tiers are cool blue/grey, the top score is the darkest tier, the IDPA practice -0 circles are dark blue, and the kraft tone is desaturated. `gen_assets.py` and `tools_diehard_safe.py` check red-dominance (kept under about 40) and grayscale luminance steps, so zones can still be told apart in grayscale. Green lasers work too.
@@ -139,7 +139,7 @@ app.js                camera, detection loop, drill runner, voice, First Respond
 ui.js                 router/tabs, gallery, drill picker, results/history, firearms, courses
 core.js               pure logic (scoring, IDPA, games, history import/export, courses); Node-testable
 editor.html/.js       zone editor
-sw.js                 service worker (cache ld-v41)
+sw.js                 service worker (cache ld-v42)
 manifest.webmanifest  PWA manifest
 targets.json          target specs: markers, layout, zones, meta
 drills.json           drill definitions

@@ -33,12 +33,14 @@ def zone_mask(z,F,shape):
     elif z['shape']=='rect': cv2.rectangle(m,P(z['x'],z['y']),P(z['x']+z['w'],z['y']+z['h']),1,-1)
     else: cv2.fillPoly(m,[np.array([P(*p) for p in z['pts']],np.int32)],1)
     return m>0
-def check_zones(key,can,zones,F,lim=40):
+def check_zones(key,can,zones,F,lim=40,ignore=None):
     """detection check: max red-dominance inside every scoring / no-shoot zone must stay < lim (laser adds ~+100)."""
     rd=reddom(can); rep=[]
     for z in zones:
         if z['kind'] in('decor',): continue
-        v=float(rd[zone_mask(z,F,can.shape)].max()); rep.append((z['name'],round(v)))
+        zm=zone_mask(z,F,can.shape)
+        if ignore is not None: zm=zm&~ignore   # red decor (e.g. card pips) is non-scoring, excluded
+        v=float(rd[zm].max()); rep.append((z['name'],round(v)))
         assert v<lim, f'{key}: zone {z["name"]} too red ({v:.0f})'
     print(f'{key}: zone red-dominance max {max(v for _,v in rep)} (limit {lim}); whole art max {rd.max():.0f}')
 def upsert(key,t,drills):
@@ -55,33 +57,47 @@ def put_text(can,F,txt,cx,cy,hin,col=(255,255,255),th=None):
 
 # ---------------------------------------------------------------- Carnival Shoot
 def carnival():
-    """Carnival booth on plain white: 3 winged pigs / 2+3 bullseyes (navy-white-teal) / 4 small ducks on a dark rail / 3 big ducks on posts."""
-    F=LETTER; can=canvas(F); zones=[]
-    Pp=lambda x,y:(int((x-F['x'])*DPI),int((y-F['y'])*DPI))
-    pig=tint(sprite('art/src2/pig2.jpg'),(232,146,240),0.5); duck=tint(sprite('art/src2/duck.jpg'),(240,234,172),0.62)
-    for i,cx in enumerate([1.6,4.25,6.9]):   # winged pigs, all flying right
-        x0,y0,x1,y1=paste(can,pig,cx,2.6,1.9,F)
-        zones.append(dict(name=f'PIG{i+1}',kind='score',shape='ellipse',cx=round((x0+x1)/2+0.12,3),cy=round(y0+(y1-y0)*0.55,3),rx=round((x1-x0)*0.32,3),ry=round((y1-y0)*0.2,3),score=3,tier='tier3',art=True,subtle=True,tags=['pig','P'+str(i+1)],group='P'+str(i+1)))
-    for i,(cx,cy,r) in enumerate([(3.25,3.85,0.55),(5.25,3.85,0.55),(2.0,5.15,0.62),(4.25,5.15,0.62),(6.5,5.15,0.62)]):
-        for f,col,sc in [(1,(154,78,31),1),(0.64,(255,255,255),3),(0.32,(180,163,0),5)]:
-            cv2.circle(can,Pp(cx,cy),int(r*f*DPI),col,-1,cv2.LINE_AA)
-            zones.append(dict(name=f'BULL{i+1} {sc}',kind='score',shape='circle',cx=cx,cy=cy,r=round(r*f,3),score=sc,tier='tier1',art=True,subtle=True,tags=['bull','B'+str(i+1)],group='B'+str(i+1)))
-        cv2.circle(can,Pp(cx,cy),int(r*DPI),(40,30,20),3,cv2.LINE_AA)
-    n=0
-    for cx in [1.2,3.15,5.1,7.05]:   # small ducks on the rail
-        n+=1; x0,y0,x1,y1=paste(can,duck,cx,6.36,1.12,F)
-        zones.append(dict(name=f'DUCK{n}',kind='score',shape='ellipse',cx=round(cx,3),cy=round(y0+(y1-y0)*0.33,3),rx=round((x1-x0)*0.42,3),ry=round((y1-y0)*0.22,3),score=2,tier='tier1',art=True,subtle=True,tags=['duck','D'+str(n),'small'],group='D'+str(n)))
-    cv2.rectangle(can,Pp(0.55,6.88),Pp(7.95,7.02),(60,55,55),-1)
-    for cx in [1.6,4.25,6.9]:   # big ducks on posts, facing right
-        n+=1; x0,y0,x1,y1=paste(can,duck,cx,8.28,1.6,F,flip=True)
-        zones.append(dict(name=f'DUCK{n}',kind='score',shape='ellipse',cx=round(cx,3),cy=round(y0+(y1-y0)*0.33,3),rx=round((x1-x0)*0.42,3),ry=round((y1-y0)*0.22,3),score=2,tier='tier1',art=True,subtle=True,tags=['duck','D'+str(n),'big'],group='D'+str(n)))
-    check_zones('carnival',can,zones,F)
+    """Carnival booth traced from Sergio's reference flat illustration (art/src2/carnival_ref.png): same pink winged pigs,
+    red/white/blue bullseyes, yellow ducks with orange beaks, dark rail and posts; striped background removed.
+    Red rings are decor (non-scoring); scoring = pig 3, duck 2, bullseye white 3 / blue center 5."""
+    F=LETTER; zones=[]
+    ref=cv2.imread('art/src2/carnival_ref.png')[419:2075,92:1838].copy()
+    ref[:, :180]=255; ref[:,1580:]=255                       # drop the frame edge lines
+    ref[ref.min(2)>190]=255                                  # stripes (peach / off-white) -> plain white
+    Wp,Hp=int(F['w']*DPI),int(F['h']*DPI); can=cv2.resize(ref,(Wp,Hp),interpolation=cv2.INTER_AREA)
+    k=Wp/ref.shape[1]; b,g,r=[c.astype(int) for c in cv2.split(can)]
+    def comps(m,minA):
+        m=cv2.morphologyEx(m.astype(np.uint8),cv2.MORPH_CLOSE,np.ones((5,5),np.uint8))
+        cs,_=cv2.findContours(m,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE); cs=[c for c in cs if cv2.contourArea(c)>minA]
+        return sorted(cs,key=lambda c:(round(cv2.boundingRect(c)[1]/60),cv2.boundingRect(c)[0]))
+    IN=lambda x,y:(round(F['x']+x/DPI,3),round(F['y']+y/DPI,3))
+    poly=lambda c:[list(IN(*p)) for p in cv2.approxPolyDP(c,2,True)[:,0]]
+    pink=(r>190)&(b>170)&(g<190); yel=(r>200)&(g>190)&(b<120)
+    blue=(b>180)&(r<90); red=(r>180)&(g<80)&(b<80)
+    for i,c in enumerate(comps(pink,800)):   # pigs: body contour (+ wing, enclosed by outline close)
+        zones.append(dict(name=f'PIG{i+1}',kind='score',shape='poly',pts=poly(c),score=3,tier='tier3',art=True,subtle=True,tags=['pig','P'+str(i+1)],group='P'+str(i+1)))
+    for i,c in enumerate(comps(red,800)):
+        (x,y),R=cv2.minEnclosingCircle(c); cx,cy=IN(x,y); Rin=R/DPI
+        bl=[cv2.minEnclosingCircle(q)[1] for q in comps(blue&(np.hypot(*np.meshgrid(np.arange(Wp)-x,np.arange(Hp)-y))<R),50)]
+        rb=(max(bl) if bl else R*0.3)/DPI
+        rr_=[np.hypot(*(np.argwhere(red[int(y)-int(R):int(y)+int(R)+1,int(x)-int(R):int(x)+int(R)+1])-[R,R]).T).min()]
+        rw=(rr_[0]-2)/DPI
+        for rr,sc in [(rw,3),(rb,5)]:
+            zones.append(dict(name=f'BULL{i+1} {sc}',kind='score',shape='circle',cx=cx,cy=cy,r=round(rr,3),score=sc,tier='tier1',art=True,subtle=True,tags=['bull','B'+str(i+1)],group='B'+str(i+1)))
+    ds=comps(yel,800); ys=sorted(cv2.boundingRect(c)[1] for c in ds); mid=(ys[0]+ys[-1])/2
+    for i,c in enumerate(ds):
+        big=cv2.boundingRect(c)[1]>mid
+        zones.append(dict(name=f'DUCK{i+1}',kind='score',shape='poly',pts=poly(c),score=2,tier='tier1',art=True,subtle=True,tags=['duck','D'+str(i+1),'big' if big else 'small'],group='D'+str(i+1)))
+    rd=reddom(can); rep={z['name']:(round(float(rd[zone_mask(z,F,can.shape)].max())),round(float(np.median(rd[zone_mask(z,F,can.shape)])))) for z in zones}
+    risk={n:v for n,v in rep.items() if v[1]>=40}
+    print('carnival: zones',len(zones),'| red-dominance per zone (max, median)',rep,'| AT RISK (median>=40):',risk or 'none')
+    json.dump(rep,open('/tmp/carnival_rd.json','w'))
     cv2.imwrite('art/carnival.png',can)
     calls=[dict(say=f'duck {i}',tags=[f'D{i}']) for i in range(1,8)]+[dict(say=f'pig {i}',tags=[f'P{i}']) for i in range(1,4)]+[dict(say=f'bullseye {i}',tags=[f'B{i}']) for i in range(1,6)]+[dict(say='all pigs',tags=['pig'],n=3),dict(say='any duck',tags=['duck']),dict(say='two ducks',tags=['duck'],n=2),dict(say='small duck',tags=['small']),dict(say='big duck',tags=['big'])]
-    t=dict(code='LD-401',name='Carnival Shoot',markerIds=[300,301,302,303],distance='3-5 yd',set='games',art=[dict(src='art/carnival.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'])],zones=zones,
-        legend=[['#E892F0','Flying pig (P1-P3): 3 pts'],['#00A3B4','Bullseye center (teal): 5 pts'],['#FFFFFF','Bullseye white ring: 3 pts'],['#1F4E9A','Bullseye navy ring: 1 pt'],['#F0EAAC','Duck (D1-D4 rail, D5-D7 posts): 2 pts'],['#FFFFFF','Background: miss, 0 pts']],
-        instructions=['Free fire: pig 3, duck 2, bullseye 5/3/1.','Pigs P1-3 left to right; bullseyes B1-B5 top row first.','Ducks D1-D4 on the rail, D5-D7 on posts.','Called mode: "duck 3", "all pigs"... wrong item -2.','Mic on. Say "start" or tap.'])
-    D=[dict(id='carnival-free',name='Carnival Shoot: free fire (60 s)',category='fun',target='carnival',shots=20,startDelay=[2,3],parTime=30,timeout=60,notes='Shoot anything: pig 3, duck 2, bullseye 5/3/1.'),
+    t=dict(code='LD-401',name='Carnival Shoot',markerIds=[300,301,302,303],distance='3-5 yd',set='games',art=[dict(src='art/carnival.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'],warm=True)],zones=zones,
+        legend=[['#E99AD8','Flying pig (P1-P3): 3 pts'],['#1AA3E0','Bullseye blue center: 5 pts'],['#FFFFFF','Bullseye white ring: 3 pts'],['#E52020','Red ring: decor, 0 pts'],['#FFE600','Duck (D1-D4 rail, D5-D7 posts): 2 pts'],['#FFFFFF','Background: miss, 0 pts']],
+        instructions=['Free fire: pig 3, duck 2, bullseye blue 5 / white 3 (red ring 0).','Pigs P1-3 left to right; bullseyes B1-B5 top row first.','Ducks D1-D4 on the rail, D5-D7 on posts.','Called mode: "duck 3", "all pigs"... wrong item -2.','Mic on. Say "start" or tap.'])
+    D=[dict(id='carnival-free',name='Carnival Shoot: free fire (60 s)',category='fun',target='carnival',shots=20,startDelay=[2,3],parTime=30,timeout=60,notes='Shoot anything: pig 3, duck 2, bullseye blue 5 / white 3; red ring scores 0.'),
        dict(id='carnival-calls',name='Carnival Shoot: called shots',category='fun',target='carnival',shots=40,startDelay=[2,3],parTime=60,timeout=120,game=dict(type='calls',calls=calls,rounds=8,wrong=-2),notes='The app calls an item ("duck 3", "bullseye 5", "all pigs", "small duck"); hit it to get the next call. Wrong item -2.')]
     upsert('carnival',t,D)
 GAMES=dict(carnival=carnival)
@@ -114,8 +130,8 @@ def battle(key='battle',F=LETTER,mk=(304,305,306,307),code='LD-402',n=8):
     upsert(key,t,D)
 GAMES['battle']=battle
 
-# ---------------------------------------------------------------- Card game (52-card 4-colour deck; poker + call-out)
-SUITS=[('S','\u2660','spades',(25,25,25)),('H','\u2665','hearts',(105,45,110)),('D','\u2666','diamonds',(31,78,154)),('C','\u2663','clubs',(25,105,55))]
+# ---------------------------------------------------------------- Card game (52-card standard 2-colour deck; pastel-red hearts/diamonds, laser-safe; poker + call-out)
+SUITS=[('S','\u2660','spades',(25,25,25)),('H','\u2665','hearts',(222,188,188)),('D','\u2666','diamonds',(222,188,188)),('C','\u2663','clubs',(25,25,25))]
 RANKS=[('A','ace'),('2','two'),('3','three'),('4','four'),('5','five'),('6','six'),('7','seven'),('8','eight'),('9','nine'),('T','ten'),('J','jack'),('Q','queen'),('K','king')]
 def cards(key='cards',F=LETTER,mk=(308,309,310,311),code='LD-403',grid=(8,7),lay=None):
     im=pil(F,(236,240,236)); d=ImageDraw.Draw(im); P=lambda x,y:((x-F['x'])*DPI,(y-F['y'])*DPI); zones=[]
@@ -132,7 +148,7 @@ def cards(key='cards',F=LETTER,mk=(308,309,310,311),code='LD-403',grid=(8,7),lay
     can=tocv(im); check_zones(key,can,zones,F); cv2.imwrite(f'art/{key}.png',can)
     calls=[dict(say=f'{rn} of {sw}',tags=[r+sc]) for r,rn in RANKS for sc,_,sw,_ in SUITS]+[dict(say=f'any {sw[:-1]}',tags=[sw]) for _,_,sw,_ in SUITS]+[dict(say=f'any {rn}',tags=[rn+'s']) for _,rn in RANKS[::3]]
     t=dict(code=code,name='Card Shoot'+(' (Tabloid)' if lay else ''),markerIds=list(mk),distance='3-5 yd',set='games',art=[dict(src=f'art/{key}.png',x=F['x'],y=F['y'],w=F['w'],h=F['h'])],zones=zones,
-        instructions=['4-colour deck: spades black, hearts plum, diamonds blue, clubs green.','Poker: shoot 5 cards, the app scores your best hand.','Call-out: the app calls "queen of hearts", "any club"...','Wrong card -2.'])
+        instructions=['Standard deck: spades/clubs black, hearts/diamonds pastel red (laser-safe).','The whole card scores, pips included.','Poker: shoot 5 cards, the app scores your best hand.','Call-out: the app calls "queen of hearts", "any club"...','Wrong card -2.'])
     if lay: t['layout']=lay
     sfx='' if not lay else '-tab'
     D=[dict(id='cards-poker'+sfx,name='Card Shoot: poker hand'+(' (Tabloid)' if lay else ''),category='fun',target=key,shots=5,startDelay=[1,2],parTime=30,timeout=120,game=dict(type='poker'),notes='Shoot five different cards; score = hand rank x10 (royal flush 90).'),

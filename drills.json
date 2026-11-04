@@ -73,13 +73,13 @@
   ],
   "parTime": 3.0,
   "timeout": 10,
-  "maxPerShot": 5,
-  "notes": "Precision under pressure; hostage hit = -10.",
+  "maxPerShot": 10,
+  "notes": "Two in the head box (10 each); hostage hit = -10.",
   "category": "training"
  },
  {
   "id": "idpa-course",
-  "name": "IDPA-style familiarization course (8 stages)",
+  "name": "Familiarization course (8 stages)",
   "type": "course",
   "scoring": "idpa",
   "notes": "Time + points down. Swap the printed target before each stage; the app checks the target ID. Score = raw time + PD x1s + PE x3s + HNT x5s. Lower is better.",
@@ -193,7 +193,7 @@
  },
  {
   "id": "idpa-all-calls-letter",
-  "name": "IDPA-style random calls (letter landscape)",
+  "name": "Random calls (letter landscape)",
   "target": "idpa-all-letter",
   "scoring": "idpa",
   "maxPerShot": 0,
@@ -253,7 +253,7 @@
  },
  {
   "id": "idpa-all-calls",
-  "name": "IDPA-style random calls (tabloid 11x17)",
+  "name": "Random calls (tabloid 11x17)",
   "target": "idpa-all-tabloid",
   "scoring": "idpa",
   "maxPerShot": 0,
@@ -372,6 +372,925 @@
   "timeout": 20,
   "notes": "At the beep 4 targets are called: 'GUN' = threat, shoot it 2x; 'HANDS UP' = compliant: do NOT shoot, give a verbal command ('Drop it!', 'Show me your hands!', 'Police, don't move!') within 3 s. Each hit on a compliant target = +5 s; each compliant target without a command in time = +3 s. Mic must be on. Only command phrases are heard while live.",
   "category": "training"
+ },
+ {
+  "id": "crowd-l1",
+  "name": "Crowd Hunt L1 (one attribute)",
+  "target": "crowd",
+  "targets": [
+   "crowd",
+   "crowd-tabloid"
+  ],
+  "scoring": "idpa",
+  "category": "training",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 4.0,
+  "timeout": 30,
+  "crowd": {
+   "level": 1,
+   "rounds": 3,
+   "shots": 2,
+   "wrongPenalty": 5
+  },
+  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
+ },
+ {
+  "id": "crowd-l2",
+  "name": "Crowd Hunt L2 (two attributes)",
+  "target": "crowd",
+  "targets": [
+   "crowd",
+   "crowd-tabloid"
+  ],
+  "scoring": "idpa",
+  "category": "training",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 6.0,
+  "timeout": 30,
+  "crowd": {
+   "level": 2,
+   "rounds": 3,
+   "shots": 2,
+   "wrongPenalty": 5
+  },
+  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
+ },
+ {
+  "id": "crowd-l3",
+  "name": "Crowd Hunt L3 (three+ / relative position)",
+  "target": "crowd",
+  "targets": [
+   "crowd",
+   "crowd-tabloid"
+  ],
+  "scoring": "idpa",
+  "category": "training",
+  "maxPerShot": 0,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 9.0,
+  "timeout": 30,
+  "crowd": {
+   "level": 3,
+   "rounds": 3,
+   "shots": 2,
+   "wrongPenalty": 5
+  },
+  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
+ },
+ {
+  "id": "battle-classic",
+  "name": "Sink-the-Ship: sink the fleet",
+  "category": "training",
+  "target": "battle",
+  "shots": 64,
+  "startDelay": [
+   1,
+   2
+  ],
+  "parTime": 600,
+  "timeout": 1800,
+  "game": {
+   "type": "battle",
+   "rows": 8,
+   "cols": 8,
+   "ships": [
+    {
+     "name": "carrier",
+     "len": 5
+    },
+    {
+     "name": "battleship",
+     "len": 4
+    },
+    {
+     "name": "cruiser",
+     "len": 3
+    },
+    {
+     "name": "submarine",
+     "len": 3
+    },
+    {
+     "name": "destroyer",
+     "len": 2
+    }
+   ]
+  },
+  "notes": "Random hidden fleet. Fewest shots wins."
+ },
+ {
+  "id": "battle-timed",
+  "name": "Sink-the-Ship: timed (3 min)",
+  "category": "training",
+  "target": "battle",
+  "shots": 64,
+  "startDelay": [
+   1,
+   2
+  ],
+  "parTime": 180,
+  "timeout": 180,
+  "game": {
+   "type": "battle",
+   "rows": 8,
+   "cols": 8,
+   "ships": [
+    {
+     "name": "carrier",
+     "len": 5
+    },
+    {
+     "name": "battleship",
+     "len": 4
+    },
+    {
+     "name": "cruiser",
+     "len": 3
+    },
+    {
+     "name": "submarine",
+     "len": 3
+    },
+    {
+     "name": "destroyer",
+     "len": 2
+    }
+   ]
+  },
+  "notes": "Sink as much as you can in 3 minutes."
+ },
+ {
+  "id": "mar-easy",
+  "name": "Maritime: easy (named target)",
+  "category": "training",
+  "target": "maritime",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "disable go-fast 1, engine",
+     "tags": [
+      "GOFAST1"
+     ]
+    },
+    {
+     "say": "disable semi-sub 1, engine",
+     "tags": [
+      "SEMISUB1"
+     ]
+    }
+   ],
+   "rounds": 2,
+   "noShoot": -20,
+   "wrong": -2
+  },
+  "notes": "The app names the boat. Aim at the engines."
+ },
+ {
+  "id": "mar-med",
+  "name": "Maritime: medium (by type)",
+  "category": "training",
+  "target": "maritime",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "disable the semi-sub",
+     "tags": [
+      "semisub"
+     ]
+    },
+    {
+     "say": "disable a go-fast",
+     "tags": [
+      "gofast"
+     ]
+    },
+    {
+     "say": "stop all smugglers",
+     "tags": [
+      "smuggler"
+     ],
+     "n": 2
+    }
+   ],
+   "rounds": 4,
+   "noShoot": -20,
+   "wrong": -2
+  },
+  "notes": "The app calls a craft type. Civilians -20."
+ },
+ {
+  "id": "mar-decision",
+  "name": "Maritime: decision (smuggler or civilian?)",
+  "category": "training",
+  "target": "maritime",
+  "shots": 20,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "engage the smuggler",
+     "tags": [
+      "smuggler"
+     ]
+    },
+    {
+     "say": "stop the drug boat",
+     "tags": [
+      "gofast"
+     ]
+    },
+    {
+     "say": "fast mover with cargo, disable",
+     "tags": [
+      "gofast"
+     ]
+    }
+   ],
+   "rounds": 4,
+   "noShoot": -20,
+   "wrong": -2
+  },
+  "notes": "Some fast boats are civilian (no cargo). Only engage boats with bales/drums or the semi-sub."
+ },
+ {
+  "id": "mar-easy-tab",
+  "name": "Maritime: easy (named target) (Tabloid)",
+  "category": "training",
+  "target": "maritime-tabloid",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "disable go-fast 1, engine",
+     "tags": [
+      "GOFAST1"
+     ]
+    },
+    {
+     "say": "disable go-fast 2, engine",
+     "tags": [
+      "GOFAST2"
+     ]
+    },
+    {
+     "say": "disable semi-sub 1, engine",
+     "tags": [
+      "SEMISUB1"
+     ]
+    }
+   ],
+   "rounds": 3,
+   "noShoot": -20,
+   "wrong": -2
+  },
+  "notes": "The app names the boat. Aim at the engines."
+ },
+ {
+  "id": "mar-med-tab",
+  "name": "Maritime: medium (by type) (Tabloid)",
+  "category": "training",
+  "target": "maritime-tabloid",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "disable the semi-sub",
+     "tags": [
+      "semisub"
+     ]
+    },
+    {
+     "say": "disable a go-fast",
+     "tags": [
+      "gofast"
+     ]
+    },
+    {
+     "say": "stop all smugglers",
+     "tags": [
+      "smuggler"
+     ],
+     "n": 3
+    }
+   ],
+   "rounds": 4,
+   "noShoot": -20,
+   "wrong": -2
+  },
+  "notes": "The app calls a craft type. Civilians -20."
+ },
+ {
+  "id": "mar-decision-tab",
+  "name": "Maritime: decision (smuggler or civilian?) (Tabloid)",
+  "category": "training",
+  "target": "maritime-tabloid",
+  "shots": 20,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "engage the smuggler",
+     "tags": [
+      "smuggler"
+     ]
+    },
+    {
+     "say": "stop the drug boat",
+     "tags": [
+      "gofast"
+     ]
+    },
+    {
+     "say": "fast mover with cargo, disable",
+     "tags": [
+      "gofast"
+     ]
+    }
+   ],
+   "rounds": 4,
+   "noShoot": -20,
+   "wrong": -2
+  },
+  "notes": "Some fast boats are civilian (no cargo). Only engage boats with bales/drums or the semi-sub."
+ },
+ {
+  "id": "ct-kit",
+  "name": "Counter-Terror: call by kit",
+  "category": "training",
+  "target": "ct",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "green headband",
+     "tags": [
+      "hamas"
+     ]
+    },
+    {
+     "say": "olive with R P G",
+     "tags": [
+      "hezbollah"
+     ]
+    },
+    {
+     "say": "uniform and cap",
+     "tags": [
+      "irgc"
+     ]
+    },
+    {
+     "say": "thobe and dagger",
+     "tags": [
+      "houthi"
+     ]
+    },
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 6,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "The app calls a kit (\"green headband\", \"thobe and dagger\", \"vest!\"). Civilians -20."
+ },
+ {
+  "id": "ct-vest",
+  "name": "Counter-Terror: vest!",
+  "category": "training",
+  "target": "ct",
+  "shots": 10,
+  "startDelay": [
+   2,
+   5
+  ],
+  "parTime": 10,
+  "timeout": 30,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 3,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "Head-only on the vest wearer. Body hit = vest strike."
+ },
+ {
+  "id": "ct-clear",
+  "name": "Counter-Terror: clear the street",
+  "category": "training",
+  "target": "ct",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "all militants",
+     "tags": [
+      "militant"
+     ],
+     "n": 4
+    },
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 2,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "Every militant, then the vest wearer (head only)."
+ },
+ {
+  "id": "ct-kit-tab",
+  "name": "Counter-Terror: call by kit (Tabloid)",
+  "category": "training",
+  "target": "ct-tabloid",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "green headband",
+     "tags": [
+      "hamas"
+     ]
+    },
+    {
+     "say": "olive with R P G",
+     "tags": [
+      "hezbollah"
+     ]
+    },
+    {
+     "say": "uniform and cap",
+     "tags": [
+      "irgc"
+     ]
+    },
+    {
+     "say": "thobe and dagger",
+     "tags": [
+      "houthi"
+     ]
+    },
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 6,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "The app calls a kit (\"green headband\", \"thobe and dagger\", \"vest!\"). Civilians -20."
+ },
+ {
+  "id": "ct-vest-tab",
+  "name": "Counter-Terror: vest! (Tabloid)",
+  "category": "training",
+  "target": "ct-tabloid",
+  "shots": 10,
+  "startDelay": [
+   2,
+   5
+  ],
+  "parTime": 10,
+  "timeout": 30,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 3,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "Head-only on the vest wearer. Body hit = vest strike."
+ },
+ {
+  "id": "ct-clear-tab",
+  "name": "Counter-Terror: clear the street (Tabloid)",
+  "category": "training",
+  "target": "ct-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "all militants",
+     "tags": [
+      "militant"
+     ],
+     "n": 7
+    },
+    {
+     "say": "vest!",
+     "tags": [
+      "vest"
+     ]
+    }
+   ],
+   "rounds": 2,
+   "noShoot": -20,
+   "vest": -5,
+   "wrong": -2
+  },
+  "notes": "Every militant, then the vest wearer (head only)."
+ },
+ {
+  "id": "fof-sides",
+  "name": "Friend or Foe: sides",
+  "category": "training",
+  "target": "fof",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "friendlies blue and yellow. Engage white tape",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "friendlies white. Engage blue and yellow tape",
+     "tags": [
+      "blue",
+      "yellow"
+     ],
+     "forbid": [
+      "white"
+     ]
+    }
+   ],
+   "rounds": 4,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "The app assigns the friendly side each round. Fratricide -25."
+ },
+ {
+  "id": "fof-tape",
+  "name": "Friend or Foe: single tape",
+  "category": "training",
+  "target": "fof",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "engage blue tape only",
+     "tags": [
+      "blue"
+     ],
+     "forbid": [
+      "white",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage white tape only",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage yellow tape only",
+     "tags": [
+      "yellow"
+     ],
+     "forbid": [
+      "blue",
+      "white"
+     ]
+    }
+   ],
+   "rounds": 5,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
+ },
+ {
+  "id": "fof-drones",
+  "name": "Friend or Foe: counter-drone",
+  "category": "training",
+  "target": "fof",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "drone! fpv quad",
+     "tags": [
+      "fpv"
+     ]
+    },
+    {
+     "say": "drone! mavic quad",
+     "tags": [
+      "mavic"
+     ]
+    },
+    {
+     "say": "drone! bomber hexacopter",
+     "tags": [
+      "hexa"
+     ]
+    },
+    {
+     "say": "drone! shahed",
+     "tags": [
+      "shahed"
+     ]
+    },
+    {
+     "say": "any drone",
+     "tags": [
+      "drone"
+     ]
+    }
+   ],
+   "rounds": 6,
+   "wrong": -2
+  },
+  "notes": "The app calls a drone type (FPV, Mavic, hexacopter, Shahed); hit it. Smaller drone = more points. Soldier hits count as wrong (-2)."
+ },
+ {
+  "id": "fof-sides-tab",
+  "name": "Friend or Foe: sides (Tabloid)",
+  "category": "training",
+  "target": "fof-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 30,
+  "timeout": 60,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "friendlies blue and yellow. Engage white tape",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "friendlies white. Engage blue and yellow tape",
+     "tags": [
+      "blue",
+      "yellow"
+     ],
+     "forbid": [
+      "white"
+     ]
+    }
+   ],
+   "rounds": 4,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "The app assigns the friendly side each round. Fratricide -25."
+ },
+ {
+  "id": "fof-tape-tab",
+  "name": "Friend or Foe: single tape (Tabloid)",
+  "category": "training",
+  "target": "fof-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "engage blue tape only",
+     "tags": [
+      "blue"
+     ],
+     "forbid": [
+      "white",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage white tape only",
+     "tags": [
+      "white"
+     ],
+     "forbid": [
+      "blue",
+      "yellow"
+     ]
+    },
+    {
+     "say": "engage yellow tape only",
+     "tags": [
+      "yellow"
+     ],
+     "forbid": [
+      "blue",
+      "white"
+     ]
+    }
+   ],
+   "rounds": 5,
+   "fratricide": -25,
+   "wrong": -2
+  },
+  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
+ },
+ {
+  "id": "fof-drones-tab",
+  "name": "Friend or Foe: counter-drone (Tabloid)",
+  "category": "training",
+  "target": "fof-tabloid",
+  "shots": 30,
+  "startDelay": [
+   2,
+   4
+  ],
+  "parTime": 20,
+  "timeout": 45,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "drone! fpv quad",
+     "tags": [
+      "fpv"
+     ]
+    },
+    {
+     "say": "drone! mavic quad",
+     "tags": [
+      "mavic"
+     ]
+    },
+    {
+     "say": "drone! bomber hexacopter",
+     "tags": [
+      "hexa"
+     ]
+    },
+    {
+     "say": "drone! shahed",
+     "tags": [
+      "shahed"
+     ]
+    },
+    {
+     "say": "any drone",
+     "tags": [
+      "drone"
+     ]
+    }
+   ],
+   "rounds": 6,
+   "wrong": -2
+  },
+  "notes": "The app calls a drone type (FPV, Mavic, hexacopter, Shahed); hit it. Smaller drone = more points. Soldier hits count as wrong (-2)."
  },
  {
   "scoring": "idpa",
@@ -873,161 +1792,476 @@
   "category": "fun"
  },
  {
-  "id": "crowd-l1",
-  "name": "Crowd Hunt L1 (one attribute)",
-  "target": "crowd",
-  "targets": [
-   "crowd",
-   "crowd-tabloid"
+  "id": "carnival-free",
+  "name": "Carnival Shoot: free fire (60 s)",
+  "category": "fun",
+  "target": "carnival",
+  "shots": 20,
+  "startDelay": [
+   2,
+   3
   ],
-  "scoring": "idpa",
-  "category": "training",
-  "maxPerShot": 0,
+  "parTime": 30,
+  "timeout": 60,
+  "notes": "Shoot anything: pig 3, duck 2, bullseye blue 5 / white 3; red ring scores 0."
+ },
+ {
+  "id": "carnival-calls",
+  "name": "Carnival Shoot: called shots",
+  "category": "fun",
+  "target": "carnival",
+  "shots": 40,
+  "startDelay": [
+   2,
+   3
+  ],
+  "parTime": 60,
+  "timeout": 120,
+  "game": {
+   "type": "calls",
+   "calls": [
+    {
+     "say": "duck 1",
+     "tags": [
+      "D1"
+     ]
+    },
+    {
+     "say": "duck 2",
+     "tags": [
+      "D2"
+     ]
+    },
+    {
+     "say": "duck 3",
+     "tags": [
+      "D3"
+     ]
+    },
+    {
+     "say": "duck 4",
+     "tags": [
+      "D4"
+     ]
+    },
+    {
+     "say": "duck 5",
+     "tags": [
+      "D5"
+     ]
+    },
+    {
+     "say": "duck 6",
+     "tags": [
+      "D6"
+     ]
+    },
+    {
+     "say": "duck 7",
+     "tags": [
+      "D7"
+     ]
+    },
+    {
+     "say": "pig 1",
+     "tags": [
+      "P1"
+     ]
+    },
+    {
+     "say": "pig 2",
+     "tags": [
+      "P2"
+     ]
+    },
+    {
+     "say": "pig 3",
+     "tags": [
+      "P3"
+     ]
+    },
+    {
+     "say": "bullseye 1",
+     "tags": [
+      "B1"
+     ]
+    },
+    {
+     "say": "bullseye 2",
+     "tags": [
+      "B2"
+     ]
+    },
+    {
+     "say": "bullseye 3",
+     "tags": [
+      "B3"
+     ]
+    },
+    {
+     "say": "bullseye 4",
+     "tags": [
+      "B4"
+     ]
+    },
+    {
+     "say": "bullseye 5",
+     "tags": [
+      "B5"
+     ]
+    },
+    {
+     "say": "all pigs",
+     "tags": [
+      "pig"
+     ],
+     "n": 3
+    },
+    {
+     "say": "any duck",
+     "tags": [
+      "duck"
+     ]
+    },
+    {
+     "say": "two ducks",
+     "tags": [
+      "duck"
+     ],
+     "n": 2
+    },
+    {
+     "say": "small duck",
+     "tags": [
+      "small"
+     ]
+    },
+    {
+     "say": "big duck",
+     "tags": [
+      "big"
+     ]
+    }
+   ],
+   "rounds": 8,
+   "wrong": -2
+  },
+  "notes": "The app calls an item (\"duck 3\", \"bullseye 5\", \"all pigs\", \"small duck\"); hit it to get the next call. Wrong item -2."
+ },
+ {
+  "id": "hostage-cm",
+  "name": "Hostage: 2 center mass (par 3s)",
+  "target": "hostage",
+  "shots": 2,
   "startDelay": [
    2,
    4
   ],
+  "parTime": 3.0,
+  "timeout": 10,
+  "maxPerShot": 10,
+  "category": "training",
+  "notes": "Two to the threat's exposed center mass (X/10/9); the hostage covers his right side. Hostage hit = -10."
+ },
+ {
+  "id": "ankle-standing",
+  "name": "Ankle Draw L1: Standing",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "standing",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
   "parTime": 4.0,
-  "timeout": 30,
-  "crowd": {
-   "level": 1,
-   "rounds": 3,
-   "shots": 2,
-   "wrongPenalty": 5
-  },
-  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Threat 1",
+    "say": "Threat 1",
+    "shots": 2
+   }
+  ],
+  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel, 2 to the called threat. Par 4.0s. Shoppers = -10."
  },
  {
-  "id": "crowd-l2",
-  "name": "Crowd Hunt L2 (two attributes)",
-  "target": "crowd",
-  "targets": [
-   "crowd",
-   "crowd-tabloid"
-  ],
-  "scoring": "idpa",
+  "id": "ankle-seated",
+  "name": "Ankle Draw L2: Seated",
   "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
   "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "seated",
   "startDelay": [
    2,
    4
   ],
-  "parTime": 6.0,
-  "timeout": 30,
-  "crowd": {
-   "level": 2,
-   "rounds": 3,
-   "shots": 2,
-   "wrongPenalty": 5
-  },
-  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
+  "randomize": false,
+  "parTime": 3.5,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T2",
+    "label": "Threat 2",
+    "say": "Threat 2",
+    "shots": 2
+   }
+  ],
+  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel, 2 to the called threat. Par 3.5s. Shoppers = -10."
  },
  {
-  "id": "crowd-l3",
-  "name": "Crowd Hunt L3 (three+ / relative position)",
-  "target": "crowd",
-  "targets": [
-   "crowd",
-   "crowd-tabloid"
-  ],
-  "scoring": "idpa",
+  "id": "ankle-walking",
+  "name": "Ankle Draw L3: Walking",
   "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
   "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "walking",
   "startDelay": [
    2,
    4
   ],
-  "parTime": 9.0,
-  "timeout": 30,
-  "crowd": {
-   "level": 3,
-   "rounds": 3,
-   "shots": 2,
-   "wrongPenalty": 5
-  },
-  "notes": "Description is spoken and shown. Each call matches exactly one person. 2 shots per call, 3 random rounds. Wrong person +5 s, bystander +10 s (backstop failure)."
+  "randomize": false,
+  "parTime": 3.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T3",
+    "label": "Threat 3",
+    "say": "Threat 3",
+    "shots": 2
+   }
+  ],
+  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel, 2 to the called threat. Par 3.0s. Shoppers = -10."
  },
  {
-  "id": "battle-classic",
-  "name": "Sink-the-Ship: sink the fleet",
-  "category": "fun",
-  "target": "battle",
-  "shots": 64,
+  "id": "ankle-any",
+  "name": "Ankle Draw L4: Random start",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
   "startDelay": [
-   1,
-   2
+   2,
+   4
   ],
-  "parTime": 600,
-  "timeout": 1800,
-  "game": {
-   "type": "battle",
-   "rows": 8,
-   "cols": 8,
-   "ships": [
-    {
-     "name": "carrier",
-     "len": 5
-    },
-    {
-     "name": "battleship",
-     "len": 4
-    },
-    {
-     "name": "cruiser",
-     "len": 3
-    },
-    {
-     "name": "submarine",
-     "len": 3
-    },
-    {
-     "name": "destroyer",
-     "len": 2
-    }
-   ]
-  },
-  "notes": "Random hidden fleet. Fewest shots wins."
+  "randomize": true,
+  "parTime": 5.2,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Threat 1",
+    "say": "Threat 1",
+    "parts": [
+     "head"
+    ]
+   }
+  ],
+  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel, the app calls one threat: 1 head shot. Par 2.5s. Shoppers = -10."
  },
  {
-  "id": "battle-timed",
-  "name": "Sink-the-Ship: timed (3 min)",
-  "category": "fun",
-  "target": "battle",
-  "shots": 64,
+  "id": "ankle-all",
+  "name": "Ankle Draw: all threats",
+  "category": "training",
+  "target": "ankle",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
   "startDelay": [
-   1,
-   2
+   2,
+   4
   ],
-  "parTime": 180,
-  "timeout": 180,
-  "game": {
-   "type": "battle",
-   "rows": 8,
-   "cols": 8,
-   "ships": [
-    {
-     "name": "carrier",
-     "len": 5
-    },
-    {
-     "name": "battleship",
-     "len": 4
-    },
-    {
-     "name": "cruiser",
-     "len": 3
-    },
-    {
-     "name": "submarine",
-     "len": 3
-    },
-    {
-     "name": "destroyer",
-     "len": 2
-    }
-   ]
-  },
-  "notes": "Sink as much as you can in 3 minutes."
+  "randomize": true,
+  "parTime": 5.5,
+  "timeout": 20,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Threat 1",
+    "say": "Threat 1",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "Threat 2",
+    "say": "Threat 2",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "Threat 3",
+    "say": "Threat 3",
+    "shots": 2
+   }
+  ],
+  "notes": "Random start position. Kneel, 2 to every threat in the called order. Shoppers = -10."
+ },
+ {
+  "id": "ankle-standing-tab",
+  "name": "Ankle Draw L1: Standing (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "standing",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 4.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Threat 1",
+    "say": "Threat 1",
+    "shots": 2
+   }
+  ],
+  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel, 2 to the called threat. Par 4.0s. Shoppers = -10."
+ },
+ {
+  "id": "ankle-seated-tab",
+  "name": "Ankle Draw L2: Seated (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "seated",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.5,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T2",
+    "label": "Threat 2",
+    "say": "Threat 2",
+    "shots": 2
+   }
+  ],
+  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel, 2 to the called threat. Par 3.5s. Shoppers = -10."
+ },
+ {
+  "id": "ankle-walking-tab",
+  "name": "Ankle Draw L3: Walking (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "walking",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": false,
+  "parTime": 3.0,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T3",
+    "label": "Threat 3",
+    "say": "Threat 3",
+    "shots": 2
+   }
+  ],
+  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel, 2 to the called threat. Par 3.0s. Shoppers = -10."
+ },
+ {
+  "id": "ankle-any-tab",
+  "name": "Ankle Draw L4: Random start (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 7.8,
+  "timeout": 15,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Threat 1",
+    "say": "Threat 1",
+    "parts": [
+     "head"
+    ]
+   }
+  ],
+  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel, the app calls one threat: 1 head shot. Par 2.5s. Shoppers = -10."
+ },
+ {
+  "id": "ankle-all-tab",
+  "name": "Ankle Draw: all threats (Tabloid)",
+  "category": "training",
+  "target": "ankle-tabloid",
+  "scoring": "idpa",
+  "maxPerShot": 0,
+  "voiceStart": true,
+  "startPos": "any",
+  "startDelay": [
+   2,
+   4
+  ],
+  "randomize": true,
+  "parTime": 7.5,
+  "timeout": 20,
+  "calls": [
+   {
+    "group": "T1",
+    "label": "Threat 1",
+    "say": "Threat 1",
+    "shots": 2
+   },
+   {
+    "group": "T2",
+    "label": "Threat 2",
+    "say": "Threat 2",
+    "shots": 2
+   },
+   {
+    "group": "T3",
+    "label": "Threat 3",
+    "say": "Threat 3",
+    "shots": 2
+   },
+   {
+    "group": "T4",
+    "label": "Threat 4",
+    "say": "Threat 4",
+    "shots": 2
+   },
+   {
+    "group": "T5",
+    "label": "Threat 5",
+    "say": "Threat 5",
+    "shots": 2
+   }
+  ],
+  "notes": "Random start position. Kneel, 2 to every threat in the called order. Shoppers = -10."
  },
  {
   "id": "cards-poker",
@@ -1836,1224 +3070,5 @@
    "wrong": -2
   },
   "notes": "Hit the called card (\"queen of hearts\", \"any club\")."
- },
- {
-  "id": "mar-easy",
-  "name": "Maritime: easy (named target)",
-  "category": "training",
-  "target": "maritime",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "disable go-fast 1, engine",
-     "tags": [
-      "GOFAST1"
-     ]
-    },
-    {
-     "say": "disable semi-sub 1, engine",
-     "tags": [
-      "SEMISUB1"
-     ]
-    }
-   ],
-   "rounds": 2,
-   "noShoot": -20,
-   "wrong": -2
-  },
-  "notes": "The app names the boat. Aim at the engines."
- },
- {
-  "id": "mar-med",
-  "name": "Maritime: medium (by type)",
-  "category": "training",
-  "target": "maritime",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "disable the semi-sub",
-     "tags": [
-      "semisub"
-     ]
-    },
-    {
-     "say": "disable a go-fast",
-     "tags": [
-      "gofast"
-     ]
-    },
-    {
-     "say": "stop all smugglers",
-     "tags": [
-      "smuggler"
-     ],
-     "n": 2
-    }
-   ],
-   "rounds": 4,
-   "noShoot": -20,
-   "wrong": -2
-  },
-  "notes": "The app calls a craft type. Civilians -20."
- },
- {
-  "id": "mar-decision",
-  "name": "Maritime: decision (smuggler or civilian?)",
-  "category": "training",
-  "target": "maritime",
-  "shots": 20,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 20,
-  "timeout": 45,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "engage the smuggler",
-     "tags": [
-      "smuggler"
-     ]
-    },
-    {
-     "say": "stop the drug boat",
-     "tags": [
-      "gofast"
-     ]
-    },
-    {
-     "say": "fast mover with cargo, disable",
-     "tags": [
-      "gofast"
-     ]
-    }
-   ],
-   "rounds": 4,
-   "noShoot": -20,
-   "wrong": -2
-  },
-  "notes": "Some fast boats are civilian (no cargo). Only engage boats with bales/drums or the semi-sub."
- },
- {
-  "id": "mar-easy-tab",
-  "name": "Maritime: easy (named target) (Tabloid)",
-  "category": "training",
-  "target": "maritime-tabloid",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "disable go-fast 1, engine",
-     "tags": [
-      "GOFAST1"
-     ]
-    },
-    {
-     "say": "disable go-fast 2, engine",
-     "tags": [
-      "GOFAST2"
-     ]
-    },
-    {
-     "say": "disable semi-sub 1, engine",
-     "tags": [
-      "SEMISUB1"
-     ]
-    }
-   ],
-   "rounds": 3,
-   "noShoot": -20,
-   "wrong": -2
-  },
-  "notes": "The app names the boat. Aim at the engines."
- },
- {
-  "id": "mar-med-tab",
-  "name": "Maritime: medium (by type) (Tabloid)",
-  "category": "training",
-  "target": "maritime-tabloid",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "disable the semi-sub",
-     "tags": [
-      "semisub"
-     ]
-    },
-    {
-     "say": "disable a go-fast",
-     "tags": [
-      "gofast"
-     ]
-    },
-    {
-     "say": "stop all smugglers",
-     "tags": [
-      "smuggler"
-     ],
-     "n": 3
-    }
-   ],
-   "rounds": 4,
-   "noShoot": -20,
-   "wrong": -2
-  },
-  "notes": "The app calls a craft type. Civilians -20."
- },
- {
-  "id": "mar-decision-tab",
-  "name": "Maritime: decision (smuggler or civilian?) (Tabloid)",
-  "category": "training",
-  "target": "maritime-tabloid",
-  "shots": 20,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 20,
-  "timeout": 45,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "engage the smuggler",
-     "tags": [
-      "smuggler"
-     ]
-    },
-    {
-     "say": "stop the drug boat",
-     "tags": [
-      "gofast"
-     ]
-    },
-    {
-     "say": "fast mover with cargo, disable",
-     "tags": [
-      "gofast"
-     ]
-    }
-   ],
-   "rounds": 4,
-   "noShoot": -20,
-   "wrong": -2
-  },
-  "notes": "Some fast boats are civilian (no cargo). Only engage boats with bales/drums or the semi-sub."
- },
- {
-  "id": "ct-kit",
-  "name": "Counter-Terror: call by kit",
-  "category": "training",
-  "target": "ct",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "green headband",
-     "tags": [
-      "hamas"
-     ]
-    },
-    {
-     "say": "olive with R P G",
-     "tags": [
-      "hezbollah"
-     ]
-    },
-    {
-     "say": "uniform and cap",
-     "tags": [
-      "irgc"
-     ]
-    },
-    {
-     "say": "thobe and dagger",
-     "tags": [
-      "houthi"
-     ]
-    },
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 6,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "The app calls a kit (\"green headband\", \"thobe and dagger\", \"vest!\"). Civilians -20."
- },
- {
-  "id": "ct-vest",
-  "name": "Counter-Terror: vest!",
-  "category": "training",
-  "target": "ct",
-  "shots": 10,
-  "startDelay": [
-   2,
-   5
-  ],
-  "parTime": 10,
-  "timeout": 30,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 3,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "Head-only on the vest wearer. Body hit = vest strike."
- },
- {
-  "id": "ct-clear",
-  "name": "Counter-Terror: clear the street",
-  "category": "training",
-  "target": "ct",
-  "shots": 30,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "all militants",
-     "tags": [
-      "militant"
-     ],
-     "n": 4
-    },
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 2,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "Every militant, then the vest wearer (head only)."
- },
- {
-  "id": "ct-kit-tab",
-  "name": "Counter-Terror: call by kit (Tabloid)",
-  "category": "training",
-  "target": "ct-tabloid",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "green headband",
-     "tags": [
-      "hamas"
-     ]
-    },
-    {
-     "say": "olive with R P G",
-     "tags": [
-      "hezbollah"
-     ]
-    },
-    {
-     "say": "uniform and cap",
-     "tags": [
-      "irgc"
-     ]
-    },
-    {
-     "say": "thobe and dagger",
-     "tags": [
-      "houthi"
-     ]
-    },
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 6,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "The app calls a kit (\"green headband\", \"thobe and dagger\", \"vest!\"). Civilians -20."
- },
- {
-  "id": "ct-vest-tab",
-  "name": "Counter-Terror: vest! (Tabloid)",
-  "category": "training",
-  "target": "ct-tabloid",
-  "shots": 10,
-  "startDelay": [
-   2,
-   5
-  ],
-  "parTime": 10,
-  "timeout": 30,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 3,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "Head-only on the vest wearer. Body hit = vest strike."
- },
- {
-  "id": "ct-clear-tab",
-  "name": "Counter-Terror: clear the street (Tabloid)",
-  "category": "training",
-  "target": "ct-tabloid",
-  "shots": 30,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "all militants",
-     "tags": [
-      "militant"
-     ],
-     "n": 7
-    },
-    {
-     "say": "vest!",
-     "tags": [
-      "vest"
-     ]
-    }
-   ],
-   "rounds": 2,
-   "noShoot": -20,
-   "vest": -5,
-   "wrong": -2
-  },
-  "notes": "Every militant, then the vest wearer (head only)."
- },
- {
-  "id": "carnival-free",
-  "name": "Carnival Shoot: free fire (60 s)",
-  "category": "fun",
-  "target": "carnival",
-  "shots": 20,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "notes": "Shoot anything: pig 3, duck 2, bullseye 5/3/1."
- },
- {
-  "id": "carnival-calls",
-  "name": "Carnival Shoot: called shots",
-  "category": "fun",
-  "target": "carnival",
-  "shots": 40,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 60,
-  "timeout": 120,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "duck 1",
-     "tags": [
-      "D1"
-     ]
-    },
-    {
-     "say": "duck 2",
-     "tags": [
-      "D2"
-     ]
-    },
-    {
-     "say": "duck 3",
-     "tags": [
-      "D3"
-     ]
-    },
-    {
-     "say": "duck 4",
-     "tags": [
-      "D4"
-     ]
-    },
-    {
-     "say": "duck 5",
-     "tags": [
-      "D5"
-     ]
-    },
-    {
-     "say": "duck 6",
-     "tags": [
-      "D6"
-     ]
-    },
-    {
-     "say": "duck 7",
-     "tags": [
-      "D7"
-     ]
-    },
-    {
-     "say": "pig 1",
-     "tags": [
-      "P1"
-     ]
-    },
-    {
-     "say": "pig 2",
-     "tags": [
-      "P2"
-     ]
-    },
-    {
-     "say": "pig 3",
-     "tags": [
-      "P3"
-     ]
-    },
-    {
-     "say": "bullseye 1",
-     "tags": [
-      "B1"
-     ]
-    },
-    {
-     "say": "bullseye 2",
-     "tags": [
-      "B2"
-     ]
-    },
-    {
-     "say": "bullseye 3",
-     "tags": [
-      "B3"
-     ]
-    },
-    {
-     "say": "bullseye 4",
-     "tags": [
-      "B4"
-     ]
-    },
-    {
-     "say": "bullseye 5",
-     "tags": [
-      "B5"
-     ]
-    },
-    {
-     "say": "all pigs",
-     "tags": [
-      "pig"
-     ],
-     "n": 3
-    },
-    {
-     "say": "any duck",
-     "tags": [
-      "duck"
-     ]
-    },
-    {
-     "say": "two ducks",
-     "tags": [
-      "duck"
-     ],
-     "n": 2
-    },
-    {
-     "say": "small duck",
-     "tags": [
-      "small"
-     ]
-    },
-    {
-     "say": "big duck",
-     "tags": [
-      "big"
-     ]
-    }
-   ],
-   "rounds": 8,
-   "wrong": -2
-  },
-  "notes": "The app calls an item (\"duck 3\", \"bullseye 5\", \"all pigs\", \"small duck\"); hit it to get the next call. Wrong item -2."
- },
- {
-  "id": "ankle-standing",
-  "name": "Ankle Draw L1: Standing",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "standing",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 4.0,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "shots": 2
-   }
-  ],
-  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 4.0s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-seated",
-  "name": "Ankle Draw L2: Seated",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "seated",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 3.5,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T2",
-    "label": "shelf",
-    "say": "Threat 2, shelf",
-    "shots": 2
-   }
-  ],
-  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.5s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-walking",
-  "name": "Ankle Draw L3: Walking",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "walking",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 3.0,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T3",
-    "label": "table",
-    "say": "Threat 3, table",
-    "shots": 2
-   }
-  ],
-  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.0s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-any",
-  "name": "Ankle Draw L4: Random start",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "any",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": true,
-  "parTime": 5.2,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "parts": [
-     "head"
-    ]
-   }
-  ],
-  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, the app calls one threat: 1 head shot. Par 2.5s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-all",
-  "name": "Ankle Draw: all threats",
-  "category": "training",
-  "target": "ankle",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "any",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": true,
-  "parTime": 5.5,
-  "timeout": 20,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "shots": 2
-   },
-   {
-    "group": "T2",
-    "label": "shelf",
-    "say": "Threat 2, shelf",
-    "shots": 2
-   },
-   {
-    "group": "T3",
-    "label": "table",
-    "say": "Threat 3, table",
-    "shots": 2
-   }
-  ],
-  "notes": "Random start position. Kneel, 2 to every threat in the called order. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-standing-tab",
-  "name": "Ankle Draw L1: Standing (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "standing",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 4.0,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "shots": 2
-   }
-  ],
-  "notes": "Standing start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 4.0s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-seated-tab",
-  "name": "Ankle Draw L2: Seated (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "seated",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 3.5,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T2",
-    "label": "shelf",
-    "say": "Threat 2, shelf",
-    "shots": 2
-   }
-  ],
-  "notes": "Seated start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.5s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-walking-tab",
-  "name": "Ankle Draw L3: Walking (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "walking",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": false,
-  "parTime": 3.0,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T3",
-    "label": "table",
-    "say": "Threat 3, table",
-    "shots": 2
-   }
-  ],
-  "notes": "Walking start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, 2 to the called threat. Par 3.0s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-any-tab",
-  "name": "Ankle Draw L4: Random start (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "any",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": true,
-  "parTime": 7.8,
-  "timeout": 15,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "parts": [
-     "head"
-    ]
-   }
-  ],
-  "notes": "Random start start, say \"start\". Beep: ankle draw, drop to a kneel behind cover, the app calls one threat: 1 head shot. Par 2.5s. Bystanders above = +10 s."
- },
- {
-  "id": "ankle-all-tab",
-  "name": "Ankle Draw: all threats (Tabloid)",
-  "category": "training",
-  "target": "ankle-tabloid",
-  "scoring": "idpa",
-  "maxPerShot": 0,
-  "voiceStart": true,
-  "startPos": "any",
-  "startDelay": [
-   2,
-   4
-  ],
-  "randomize": true,
-  "parTime": 7.5,
-  "timeout": 20,
-  "calls": [
-   {
-    "group": "T1",
-    "label": "counter",
-    "say": "Threat 1, counter",
-    "shots": 2
-   },
-   {
-    "group": "T2",
-    "label": "shelf",
-    "say": "Threat 2, shelf",
-    "shots": 2
-   },
-   {
-    "group": "T3",
-    "label": "table",
-    "say": "Threat 3, table",
-    "shots": 2
-   },
-   {
-    "group": "T4",
-    "label": "counter",
-    "say": "Threat 4, counter",
-    "shots": 2
-   },
-   {
-    "group": "T5",
-    "label": "table",
-    "say": "Threat 5, table",
-    "shots": 2
-   }
-  ],
-  "notes": "Random start position. Kneel, 2 to every threat in the called order. Bystanders above = +10 s."
- },
- {
-  "id": "fof-sides",
-  "name": "Friend or Foe: sides",
-  "category": "training",
-  "target": "fof",
-  "shots": 30,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "friendlies blue and yellow. Engage white tape",
-     "tags": [
-      "white"
-     ],
-     "forbid": [
-      "blue",
-      "yellow"
-     ]
-    },
-    {
-     "say": "friendlies white. Engage blue and yellow tape",
-     "tags": [
-      "blue",
-      "yellow"
-     ],
-     "forbid": [
-      "white"
-     ]
-    }
-   ],
-   "rounds": 4,
-   "fratricide": -25,
-   "wrong": -2
-  },
-  "notes": "The app assigns the friendly side each round. Fratricide -25."
- },
- {
-  "id": "fof-tape",
-  "name": "Friend or Foe: single tape",
-  "category": "training",
-  "target": "fof",
-  "shots": 30,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 20,
-  "timeout": 45,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "engage blue tape only",
-     "tags": [
-      "blue"
-     ],
-     "forbid": [
-      "white",
-      "yellow"
-     ]
-    },
-    {
-     "say": "engage white tape only",
-     "tags": [
-      "white"
-     ],
-     "forbid": [
-      "blue",
-      "yellow"
-     ]
-    },
-    {
-     "say": "engage yellow tape only",
-     "tags": [
-      "yellow"
-     ],
-     "forbid": [
-      "blue",
-      "white"
-     ]
-    }
-   ],
-   "rounds": 5,
-   "fratricide": -25,
-   "wrong": -2
-  },
-  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
- },
- {
-  "id": "fof-drones",
-  "name": "Friend or Foe: counter-drone",
-  "category": "training",
-  "target": "fof",
-  "shots": 30,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 20,
-  "timeout": 45,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "drone! fpv quad",
-     "tags": [
-      "fpv"
-     ]
-    },
-    {
-     "say": "drone! mavic quad",
-     "tags": [
-      "mavic"
-     ]
-    },
-    {
-     "say": "drone! bomber hexacopter",
-     "tags": [
-      "hexa"
-     ]
-    },
-    {
-     "say": "drone! shahed",
-     "tags": [
-      "shahed"
-     ]
-    },
-    {
-     "say": "any drone",
-     "tags": [
-      "drone"
-     ]
-    }
-   ],
-   "rounds": 6,
-   "wrong": -2
-  },
-  "notes": "The app calls a drone type (FPV, Mavic, hexacopter, Shahed); hit it. Smaller drone = more points. Soldier hits count as wrong (-2)."
- },
- {
-  "id": "fof-sides-tab",
-  "name": "Friend or Foe: sides (Tabloid)",
-  "category": "training",
-  "target": "fof-tabloid",
-  "shots": 30,
-  "startDelay": [
-   2,
-   3
-  ],
-  "parTime": 30,
-  "timeout": 60,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "friendlies blue and yellow. Engage white tape",
-     "tags": [
-      "white"
-     ],
-     "forbid": [
-      "blue",
-      "yellow"
-     ]
-    },
-    {
-     "say": "friendlies white. Engage blue and yellow tape",
-     "tags": [
-      "blue",
-      "yellow"
-     ],
-     "forbid": [
-      "white"
-     ]
-    }
-   ],
-   "rounds": 4,
-   "fratricide": -25,
-   "wrong": -2
-  },
-  "notes": "The app assigns the friendly side each round. Fratricide -25."
- },
- {
-  "id": "fof-tape-tab",
-  "name": "Friend or Foe: single tape (Tabloid)",
-  "category": "training",
-  "target": "fof-tabloid",
-  "shots": 30,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 20,
-  "timeout": 45,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "engage blue tape only",
-     "tags": [
-      "blue"
-     ],
-     "forbid": [
-      "white",
-      "yellow"
-     ]
-    },
-    {
-     "say": "engage white tape only",
-     "tags": [
-      "white"
-     ],
-     "forbid": [
-      "blue",
-      "yellow"
-     ]
-    },
-    {
-     "say": "engage yellow tape only",
-     "tags": [
-      "yellow"
-     ],
-     "forbid": [
-      "blue",
-      "white"
-     ]
-    }
-   ],
-   "rounds": 5,
-   "fratricide": -25,
-   "wrong": -2
-  },
-  "notes": "Engage one tape colour only; all others are friendly. Fratricide -25."
- },
- {
-  "id": "fof-drones-tab",
-  "name": "Friend or Foe: counter-drone (Tabloid)",
-  "category": "training",
-  "target": "fof-tabloid",
-  "shots": 30,
-  "startDelay": [
-   2,
-   4
-  ],
-  "parTime": 20,
-  "timeout": 45,
-  "game": {
-   "type": "calls",
-   "calls": [
-    {
-     "say": "drone! fpv quad",
-     "tags": [
-      "fpv"
-     ]
-    },
-    {
-     "say": "drone! mavic quad",
-     "tags": [
-      "mavic"
-     ]
-    },
-    {
-     "say": "drone! bomber hexacopter",
-     "tags": [
-      "hexa"
-     ]
-    },
-    {
-     "say": "drone! shahed",
-     "tags": [
-      "shahed"
-     ]
-    },
-    {
-     "say": "any drone",
-     "tags": [
-      "drone"
-     ]
-    }
-   ],
-   "rounds": 6,
-   "wrong": -2
-  },
-  "notes": "The app calls a drone type (FPV, Mavic, hexacopter, Shahed); hit it. Smaller drone = more points. Soldier hits count as wrong (-2)."
  }
 ]

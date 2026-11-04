@@ -9,9 +9,9 @@ Generated from `drills.json`. `dyn` = shot count set at run time by calls/scenar
 | `dot-sequence` | 5-dot sequence (par 8s) | training | five-dot | 5 | 8.0 | points |
 | `clay-trio` | Clay trio, shotgun (par 4s) | training | clays | 3 | 4.0 | points |
 | `hostage-head` | Hostage: 2 head shots (par 3s) | training | hostage | 2 | 3.0 | points |
-| `idpa-course` | IDPA-style familiarization course (8 stages) | course | idpa-hc-diagonal, idpa-hc-left, idpa-hc-lower, idpa-multi, idpa-nt-pair, idpa-practice, idpa-threat | 8 | — | idpa |
-| `idpa-all-calls-letter` | IDPA-style random calls (letter landscape) | training | idpa-all-letter | dyn | 15.0 | idpa |
-| `idpa-all-calls` | IDPA-style random calls (tabloid 11x17) | training | idpa-all-tabloid | dyn | 15.0 | idpa |
+| `idpa-course` | Familiarization course (8 stages) | course | idpa-hc-diagonal, idpa-hc-left, idpa-hc-lower, idpa-multi, idpa-nt-pair, idpa-practice, idpa-threat | 8 | — | idpa |
+| `idpa-all-calls-letter` | Random calls (letter landscape) | training | idpa-all-letter | dyn | 15.0 | idpa |
+| `idpa-all-calls` | Random calls (tabloid 11x17) | training | idpa-all-tabloid | dyn | 15.0 | idpa |
 | `shoot-dont-shoot` | Shoot / don't-shoot: threat vs compliant (tabloid 11x17) | training | idpa-all-tabloid | dyn | 10.0 | idpa |
 | `shoot-dont-shoot-letter` | Shoot / don't-shoot: threat vs compliant (letter landscape) | training | idpa-all-letter | dyn | 10.0 | idpa |
 | `dh-hans-mozambique` | Die Hard: Hans Mozambique | fun | dh-hans | dyn | 4.0 | idpa |

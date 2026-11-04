@@ -125,23 +125,18 @@ one('dh-uli','LD-212',157,'Die Hard: Uli (AUG, lobby)','uli',['dh-uli','dh-cours
 S,X,Yo,cr,art=solo('powell')
 sheet('dh-powell','LD-213',153,'Die Hard: Sgt. Powell (FRIENDLY)',['dh-powell'],['LAPD sergeant arrives: FRIENDLY, do not shoot.','Hold fire 4 s, say "Police! Friendly!"','Any hit = friendly fire +10 s and FAIL.','Say "start" or tap.'],[friendly('powell',X,Yo,S,crop=cr)]+byz('powell',X-cr*S,Yo,S),art,[FF,BY,LEG_T[3]])
 one('dh-billclay','LD-208',129,'Die Hard: "Bill Clay" impostor','billclay',['dh-billclay','dh-course'],['Roof stairs: a "hostage" with an accent. Wait for the call.','HANDS UP = verbal "Get down!" within 3 s.','GUN = 2 chest + 1 head.','Hit on a compliant call = +5 s. Mic on.'])
-# Roof finale: Eddie | Holly | Hans behind Holly (right hand on her shoulder, pistol at her head, right half of torso exposed). 1024x768 source.
+# Roof finale: Eddie | Holly | Hans to her right (pistol at her head, full torso exposed). 1024x768 source.
 FIN=safe(load('finale',(1024,768))); cv2.imwrite(OUT+'dh-finale.png',FIN)
 fx0,fy0,fx1,fy1=bbox(FIN); S4,X4,Y4=fit(fx1-fx0,fy1-fy0)
 TH=lambda x,y:[round(X4+(x-fx0)*S4,3),round(Y4+(y-fy0)*S4,3)]
-HOLLY=[(600,95),(640,70),(690,85),(705,140),(715,185),(745,215),(760,160),(795,170),(785,235),(770,280),(730,300),(722,410),(715,530),(690,535),(688,700),(690,728),(655,728),(645,560),(632,728),(605,728),(598,560),(582,530),(575,410),(580,300),(545,295),(525,240),(512,165),(535,155),(560,225),(595,185),(588,140)]
-cE=dict(head=(290,55,40,48),sh=(195,420,120),belt=(195,400,340),chest=(290,232),rc=40)
-z=[hostage('finale','HOLLY',X4,Y4-fy0*S4,S4,crop=fx0,pts=HOLLY)]
-zE=zones_for('finale','T2',X4,Y4-fy0*S4,S4,crop=fx0,img=FIN,xmax=470,c=cE)
+cE=dict(head=(252,75,38,48),sh=(160,360,135),belt=(170,335,330),chest=(255,225),rc=38)
+z=[dict(hostage('finale','HOLLY',X4,Y4-fy0*S4,S4,crop=fx0,pts=mask(FIN,xmin=410,xmax=700)))]
+zE=zones_for('finale','T2',X4,Y4-fy0*S4,S4,crop=fx0,img=FIN,xmax=410,c=cE)
 zE[3].update(rx=round(18*S4,3),ry=round(22*S4,3))   # tight Eddie head -0
-HANS=[(728,40),(760,15),(795,25),(802,95),(845,120),(860,180),(862,255),(840,265),(840,390),(845,690),(800,705),(770,560),(745,690),(705,690),(718,420),(728,300),(770,280),(786,235),(760,205),(735,150),(728,100)]
-G1=dict(kind='score',tier='tier1',group='T1',subtle=True)
-zH=[dict(G1,name='T1 -3',shape='poly',pts=[TH(*p) for p in HANS],score=-3,pd=3,part='body'),
- dict(G1,name='T1 -1',shape='ellipse',cx=TH(760,62)[0],cy=TH(760,62)[1],rx=round(32*S4,3),ry=round(44*S4,3),score=-1,pd=1,part='head'),
- dict(G1,name='T1 -1',shape='poly',pts=[TH(*p) for p in [(770,240),(800,150),(850,170),(840,390),(745,390)]],score=-1,pd=1,part='body'),
- dict(G1,name='T1 -0',shape='ellipse',cx=TH(800,250)[0],cy=TH(800,250)[1],rx=round(28*S4,3),ry=round(40*S4,3),score=0,pd=0,part='body')]
+# Hans now stands clear to Holly's right (v41): full chest exposed, pistol arm reaching to her head.
+zH=zones_for('finale','T1',X4,Y4-fy0*S4,S4,crop=fx0,img=FIN,xmin=700,c=dict(head=(828,62,32,44),sh=(745,915,130),belt=(775,905,320),chest=(835,215),rc=40))
 z+=zE+zH
-sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans shields behind Holly; Eddie (MP5A3 at low ready) covers him.','Exactly 2: Hans exposed side-chest -0, then Eddie head -0.','Holly = HOSTAGE: any hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=round(Y4,3),w=round((fx1-fx0)*S4,3),h=round((fy1-fy0)*S4,3),crop=[fx0,fy0,fx1,fy1])],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
+sheet('dh-finale','LD-209',133,'Die Hard: Roof Finale',['dh-finale','dh-course'],['Roof finale: Hans holds a pistol to Holly\'s head; Eddie (MP5A3) covers.','Exactly 2: Hans center mass -0, then Eddie head -0.','Holly = HOSTAGE: any hit = +5 s and FAIL.','Say "start" or tap.'],z,[dict(src='art/dh-finale.png',x=round(X4,3),y=round(Y4,3),w=round((fx1-fx0)*S4,3),h=round((fy1-fy0)*S4,3),crop=[fx0,fy0,fx1,fy1])],[LEG_T[0],LEG_T[1],LEG_T[2],LEG_T[3],NT])
 # 2-up sheets (left person | right person), each cropped to its own content, scaled to fill the field
 def twoup(L,R):
     bl=[bbox(L[0]),bbox(R[0])]; y0=min(b[1] for b in bl); y1=max(b[3] for b in bl); wl=bl[0][2]-bl[0][0]; wr=bl[1][2]-bl[1][0]

@@ -12,11 +12,11 @@ Static PWA. Serve over HTTPS (camera requirement) or http://localhost.
 - No shoot-to-start zone (it forced a pre-draw and flagged others). Control is by voice, big tap buttons, or a Bluetooth media button.
 - Colors: cool blue-grey tiers (no red/orange), dark tier for top score; no-shoot = white + black hatch; hard cover = solid black; gen_assets.py asserts low red-dominance and grayscale luminance steps.
 
-## IDPA-style course (approximate, not official art/dimensions)
+## Defensive course (approximate, not official art/dimensions)
 Score = raw time + 1 s per point down (-0/-1/-3, miss = 5 PD) + 3 s per PE + 5 s per hit on non-threat; hard-cover hits do not count.
 Sources: https://www.sk4tactic.ba/en/idpa-rules (2026.2 summary), https://brocksgapidpa.com/scoring, https://www.idpanebraska.com/faq/, official rulebook https://prod.idpa.com/documents
 
-### IDPA-style target set (own artwork; no IDPA logo or "official" text)
+### Defensive target set (own artwork; no IDPA logo or "official" text)
 Classic cardboard shape: head box (-0 circle, rest -1), torso -1 band, -3 outer, body -0 circle. Kraft tone #A99F8C is a desaturated tan so red-dominance stays <20 (true kraft is reddish and would hurt laser detection).
 - idpa-threat LD-101 (17-20) plain - idpa-hc-left LD-102 (21-24) - idpa-hc-lower LD-103 (25-28) - idpa-hc-diagonal LD-104 (29-32)
 - idpa-nonthreat LD-105 (49-52) white open hands outlined black (distinct from black hard cover; reads in grayscale)

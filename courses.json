@@ -68,7 +68,7 @@
    {
     "name": "Dot sequence",
     "drill": "dot-sequence",
-    "brief": "Dots 1→5 in order.",
+    "brief": "Dots 1\u21925 in order.",
     "dist": "3 yd / 1.5 yd laser",
     "set": {
      "shots": 5,
@@ -155,7 +155,7 @@
    {
     "name": "Dot sequence",
     "drill": "dot-sequence",
-    "brief": "Dots 1→5 in order.",
+    "brief": "Dots 1\u21925 in order.",
     "dist": "3 yd / 1.5 yd laser",
     "set": {
      "shots": 5,
@@ -242,7 +242,7 @@
    {
     "name": "Dot sequence",
     "drill": "dot-sequence",
-    "brief": "Dots 1→5 in order.",
+    "brief": "Dots 1\u21925 in order.",
     "dist": "3 yd / 1.5 yd laser",
     "set": {
      "shots": 5,
@@ -329,7 +329,7 @@
    {
     "name": "Dot sequence",
     "drill": "dot-sequence",
-    "brief": "Dots 1→5 in order.",
+    "brief": "Dots 1\u21925 in order.",
     "dist": "3 yd / 1.5 yd laser",
     "set": {
      "shots": 5,
@@ -416,7 +416,7 @@
    {
     "name": "Dot sequence",
     "drill": "dot-sequence",
-    "brief": "Dots 1→5 in order.",
+    "brief": "Dots 1\u21925 in order.",
     "dist": "3 yd / 1.5 yd laser",
     "set": {
      "shots": 5,
@@ -540,7 +540,7 @@
   "name": "Defensive Pistol (Defensive-course-style)",
   "badge": "Defender",
   "icon": "shield",
-  "notes": "Draw from concealment, ankle draw from a kneel, movement and decision. Score at end (IDPA-style: raw time + 1 s per point down). Inspired by defensive pistol course themes; original stages. Say “start” to begin each stage.",
+  "notes": "Draw from concealment, ankle draw from a kneel, movement and decision. Score at end (IDPA-style: raw time + 1 s per point down). Inspired by defensive pistol course themes; original stages. Say \u201cstart\u201d to begin each stage.",
   "stages": [
    {
     "name": "Draw to first shot",
@@ -586,7 +586,7 @@
     "name": "Ankle draw, kneeling",
     "drill": "ankle-standing",
     "brief": "Ankle draw, drop to a kneel behind cover, 2 to the called threat.",
-    "dist": "kneel at 2–3 yd",
+    "dist": "kneel at 2\u20133 yd",
     "set": {},
     "pass": {
      "maxFinal": 6.0,
@@ -596,7 +596,7 @@
    {
     "name": "Move off the X",
     "drill": "single-draw",
-    "brief": "Step laterally 1–2 steps at the beep, then draw and fire 2.",
+    "brief": "Step laterally 1\u20132 steps at the beep, then draw and fire 2.",
     "dist": "5 yd / 2.5 yd laser",
     "set": {
      "shots": 2,
@@ -640,7 +640,7 @@
  {
   "id": "la-style",
   "group": "la",
-  "name": "Reaction · Hunt · Eyes (Laser-Academy-style)",
+  "name": "Reaction \u00b7 Hunt \u00b7 Eyes (Laser-Academy-style)",
   "badge": "Quick Eyes",
   "icon": "eye",
   "notes": "Original drills in the spirit of popular laser-trainer apps: reaction to the beep, hunting the called target, and eyes/decision drills. Inspired by Mantis Laser Academy-style drill types; no copied content.",
@@ -727,7 +727,7 @@
   "name": "FBI-style Qualification (laser)",
   "badge": "Qualified",
   "icon": "star",
-  "notes": "Original laser adaptation of a law-enforcement-style qualification: close, fast strings then longer, slower strings. Pass ≥ 80% on every stage.",
+  "notes": "Original laser adaptation of a law-enforcement-style qualification: close, fast strings then longer, slower strings. Pass \u2265 80% on every stage.",
   "stages": [
    {
     "name": "3 yd: 3 rounds",
@@ -852,7 +852,7 @@
     "name": "El Prez",
     "drill": "idpa-course:idpa-multi",
     "brief": "Start facing away. Turn, draw, 2-2-2, reset, 2-2-2.",
-    "dist": "3 yd laser (≈27 yd sim)",
+    "dist": "3 yd laser (\u224827 yd sim)",
     "set": {
      "shots": 12,
      "parTime": 10.0,
@@ -875,7 +875,7 @@
    {
     "name": "Slow sequence",
     "drill": "dot-sequence",
-    "brief": "Dots 1→5, slow.",
+    "brief": "Dots 1\u21925, slow.",
     "dist": "3 yd / 1.5 yd laser",
     "set": {
      "shots": 5,
@@ -894,7 +894,7 @@
    {
     "name": "Draw sequence",
     "drill": "dot-sequence",
-    "brief": "Draw, dots 1→5.",
+    "brief": "Draw, dots 1\u21925.",
     "dist": "3 yd / 1.5 yd laser",
     "set": {
      "shots": 5,
@@ -913,7 +913,7 @@
    {
     "name": "Fast sequence",
     "drill": "dot-sequence",
-    "brief": "Dots 1→5 fast.",
+    "brief": "Dots 1\u21925 fast.",
     "dist": "3 yd / 1.5 yd laser",
     "set": {
      "shots": 5,
@@ -932,7 +932,7 @@
    {
     "name": "Speed sequence",
     "drill": "dot-sequence",
-    "brief": "Dots 1→5 under pressure.",
+    "brief": "Dots 1\u21925 under pressure.",
     "dist": "3 yd / 1.5 yd laser",
     "set": {
      "shots": 5,
@@ -1038,7 +1038,7 @@
     "name": "Ankle draw, 1 shot",
     "drill": "ankle-standing",
     "brief": "Ankle draw to kneel, 2 shots.",
-    "dist": "kneel 2–3 yd",
+    "dist": "kneel 2\u20133 yd",
     "set": {
      "parTime": 3.0
     },
@@ -1140,13 +1140,13 @@
  {
   "id": "bm-5x5",
   "group": "bm",
-  "name": "5×5 (laser)",
-  "badge": "5×5",
+  "name": "5\u00d75 (laser)",
+  "badge": "5\u00d75",
   "icon": "hand",
-  "notes": "Original take on the 5×5 idea: 5 shots, 5 seconds, one small circle. Use the center ring of the bullseye; anything not 5 pts is a miss.",
+  "notes": "Original take on the 5\u00d75 idea: 5 shots, 5 seconds, one small circle. Use the center ring of the bullseye; anything not 5 pts is a miss.",
   "stages": [
    {
-    "name": "5×5",
+    "name": "5\u00d75",
     "drill": "five-shot-par",
     "brief": "5 shots in 5 s, center ring only.",
     "dist": "5 yd / 2.5 yd laser",

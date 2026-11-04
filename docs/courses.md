@@ -2,9 +2,9 @@
 
 Generated from `courses.json` (source: `tools_courses.py`). These are **original laser adaptations** inspired by well-known program formats (NRA-style qualification ranks, Basic/Defensive Pistol-style curricula, Laser-Academy-style drill types, popular benchmark drills). They are not official course materials and confer no certification.
 
-**Laser distances:** Letter bullseye/silhouette stages are shot at half the standard distance; IDPA-style sheets carry their own printed scale (e.g. 3 yd ≈ 13.5 yd sim).
+**Laser distances:** Letter bullseye/silhouette stages are shot at half the standard distance; Sheets carry their own printed scale (e.g. 3 yd ≈ 13.5 yd sim).
 
-**Pass logic** (`Core.stagePass`): all listed criteria must hold on a single run; `≥N%` = score / max score; `≤T s` = time from beep to last shot; `final` = IDPA-style raw + penalties; required shot count must be fired (dynamic-call drills excepted). Best run counts; a badge is earned when every stage of a course is passed with the same firearm profile. Qualification ranks unlock in order.
+**Pass logic** (`Core.stagePass`): all listed criteria must hold on a single run; `≥N%` = score / max score; `≤T s` = time from beep to last shot; `final` = Raw + penalties; required shot count must be fired (dynamic-call drills excepted). Best run counts; a badge is earned when every stage of a course is passed with the same firearm profile. Qualification ranks unlock in order.
 
 ### Qualification: Pro-Marksman  
 `qual-pro-marksman` · badge **Pro-Marksman** (Lucide `medal`)

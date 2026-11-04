@@ -23,16 +23,16 @@ Generated from `targets/catalog.json` (built by `gen_assets.py`). Every target h
 | `fof-tabloid` | LD-506 | Friend or Foe (Tabloid) | tactical | tabloid | 5-10 yd | hard cover |
 | `ankle` | LD-601 | Ankle Draw: Store | self-defense | letter | 3 yd, shooter kneeling (aim slightly upward) | backstop, hard cover |
 | `ankle-tabloid` | LD-602 | Ankle Draw: Store (Tabloid) | self-defense | tabloid | 3 yd, shooter kneeling (aim slightly upward) | backstop, hard cover |
-| `idpa-threat` | LD-101 | IDPA-style Threat | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) |  |
-| `idpa-hc-left` | LD-102 | IDPA-style Hard Cover: Left | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) | hard cover |
-| `idpa-hc-lower` | LD-103 | IDPA-style Hard Cover: Lower | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) | hard cover |
-| `idpa-hc-diagonal` | LD-104 | IDPA-style Hard Cover: Diagonal | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) | hard cover |
-| `idpa-nonthreat` | LD-105 | IDPA-style Non-Threat (open hands) | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) | no-shoot |
-| `idpa-practice` | LD-106 | IDPA-style Practice (dark -0) | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) |  |
-| `idpa-nt-pair` | LD-107 | IDPA-style Threat + Non-Threat | tactical | letter | 3 yd = ~15 yd sim (1/5 scale) | no-shoot |
-| `idpa-multi` | LD-108 | IDPA-style Multiple Threats | tactical | letter | 3 yd = ~27 yd sim (1/9 scale) |  |
-| `idpa-all-tabloid` | LD-110 | IDPA-style All Variations | tactical | tabloid | 3 yd = ~27 yd sim (1/9 scale) | hard cover, no-shoot |
-| `idpa-all-letter` | LD-111 | IDPA-style All Variations | tactical | letter | 3 yd = ~42 yd sim (1/14 scale) | hard cover, no-shoot |
+| `idpa-threat` | LD-101 | Threat | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) |  |
+| `idpa-hc-left` | LD-102 | Hard Cover: Left | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) | hard cover |
+| `idpa-hc-lower` | LD-103 | Hard Cover: Lower | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) | hard cover |
+| `idpa-hc-diagonal` | LD-104 | Hard Cover: Diagonal | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) | hard cover |
+| `idpa-nonthreat` | LD-105 | Non-Threat (open hands) | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) | no-shoot |
+| `idpa-practice` | LD-106 | Practice (dark -0) | tactical | letter | 3 yd = ~13.5 yd sim (1/4.5 scale) |  |
+| `idpa-nt-pair` | LD-107 | Threat + Non-Threat | tactical | letter | 3 yd = ~15 yd sim (1/5 scale) | no-shoot |
+| `idpa-multi` | LD-108 | Multiple Threats | tactical | letter | 3 yd = ~27 yd sim (1/9 scale) |  |
+| `idpa-all-tabloid` | LD-110 | All Variations | tactical | tabloid | 3 yd = ~27 yd sim (1/9 scale) | hard cover, no-shoot |
+| `idpa-all-letter` | LD-111 | All Variations | tactical | letter | 3 yd = ~42 yd sim (1/14 scale) | hard cover, no-shoot |
 | `dh-hans` | LD-201 | Die Hard: Hans (HK P7) | themed | letter | 3 yd = ~30 yd sim (figure ~1/10 scale) | backstop |
 | `dh-karl` | LD-202 | Die Hard: Karl (MP5A3, stairwell) | themed | letter | 3 yd = ~30 yd sim (figure ~1/10 scale) | backstop, hard cover |
 | `dh-tony` | LD-203 | Die Hard: Tony (MP5A3, cabinet) | themed | letter | 3 yd = ~30 yd sim (figure ~1/10 scale) | backstop, hard cover |
@@ -68,3 +68,11 @@ The target sets `maxPerShot: 10`, so percentages use 10 points per shot. It's us
 - **Friend or Foe**: drones overhead are always hostile scoring zones (smaller = harder = more points): FPV 5, Mavic 4, bomber hexacopter 3, Shahed 2. Drill `fof-drones` calls drone types.
 - **Carnival**: pigs have legs; colours are more saturated but zones stay under red-dominance 40.
 - **Qualification Silhouette**: zones are colour-filled in the artwork to match the legend.
+
+### ld-v42 target notes
+- **ankle / ankle-tabloid:** cover and mezzanine removed; open single-level store. Relaxed shoppers (basket, phone, bag, box) are NO-SHOOT -10; masked robbers aiming pistols are threats. All figures share one medium skin tone, so PID relies on hands, weapons and behavior.
+- **dh-finale:** Hans moved clear of Holly; his full center mass is a scoring zone.
+- **carnival:** uses Sergio's reference art and colors as-is. Red rings are décor (no score); BULL white ring 3, blue center 5. Pigs (red-dominance max ~68) and ducks (~142) exceed the 40 laser-safe limit, so red-laser detection there may be unreliable.
+- **hostage:** threat is the Qualification Silhouette design; the hostage overlaps lower right as a no-hit (-10).
+- **cards / cards-tabloid:** standard 2-colour deck; spades/clubs black, hearts/diamonds pastel red (222,188,188), red-dominance 34 < 40, so pips score as part of the card.
+- Display names dropped the "IDPA-style" prefix; ids are unchanged.
